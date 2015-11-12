@@ -57,3 +57,7 @@ $.connection.bindingHub.client.receiveShowWindow = function (windowHtml) {
     });
 };
 
+$.connection.bindingHub.client.receiveScript = function (script) {
+    eval(script);
+};
+

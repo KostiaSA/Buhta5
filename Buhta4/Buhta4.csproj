@@ -169,6 +169,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xGridColumn.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xInput.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xWindow.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />

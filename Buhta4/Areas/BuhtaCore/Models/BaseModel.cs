@@ -259,12 +259,23 @@ namespace Buhta
             }
         }
 
-        public void ShowWindow(string viewName, object model)
-        {
-            var windowHtml = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
-            Hub.Clients.Group(BindingId).receiveShowWindow(windowHtml);
 
+        public xWindow CreateWindow(string viewName=null, BaseModel model=null)
+        {
+            var win = new xWindow();
+            win.ParentModel = this;
+            win.Controller = Controller;
+            win.ViewName = viewName;
+            win.ViewModel = model;
+            return win;
         }
+
+        //public void ShowWindow(string viewName, object model)
+        //{
+        //    var windowHtml = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
+        //    Hub.Clients.Group(BindingId).receiveShowWindow(windowHtml);
+
+        //}
 
         public virtual void SaveButtonClick(dynamic args)
         {
