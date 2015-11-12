@@ -1,11 +1,9 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +23,7 @@ namespace Buhta
 
         private string nameForToolbar;
         [DisplayName("Имя для toolbar-а"), Description("Имя пункта меню для toolbar-а в главном окне."), Category(Menu_category)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
+        ////[Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string NameForToolbar
         {
             get { return nameForToolbar; }

@@ -29,19 +29,19 @@ namespace Buhta
         {
             return true;
         }
-        public override IEditControl GetEditControl()
-        {
-            var ctl = new StringEditControl<int?>();
-            ctl.Name = Column.Table.Name + "_" + Column.Name; ;
-            ctl.Text = Column.Table.Name + "_" + Column.Name; ;
-            ctl.Caption = Column.Name;
-            ctl.BindFieldName = Column.Name;
+        ////public override IEditControl GetEditControl()
+        ////{
+        ////    var ctl = new StringEditControl<int?>();
+        ////    ctl.Name = Column.Table.Name + "_" + Column.Name; ;
+        ////    ctl.Text = Column.Table.Name + "_" + Column.Name; ;
+        ////    ctl.Caption = Column.Name;
+        ////    ctl.BindFieldName = Column.Name;
 
-            if (ctl.MaximumSize.Width == 0 || ctl.MaximumSize.Width > 200)
-                ctl.MaximumSize = new System.Drawing.Size(200, ctl.MaximumSize.Height);
+        ////    if (ctl.MaximumSize.Width == 0 || ctl.MaximumSize.Width > 200)
+        ////        ctl.MaximumSize = new System.Drawing.Size(200, ctl.MaximumSize.Height);
 
-            return ctl;
-        }
+        ////    return ctl;
+        ////}
 
     }
 }

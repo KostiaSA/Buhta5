@@ -1,13 +1,11 @@
 ﻿using BLToolkit.Data;
 using BLToolkit.Data.DataProvider;
-using DevExpress.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -168,7 +166,7 @@ namespace Buhta
 
 
             //            if (SqlDB == null)
-            //                MessageBox.Show("В конфигурации '" + mongoDatabase + "' нет настроенных SQL-баз данных.");
+            //                throw new Exception("В конфигурации '" + mongoDatabase + "' нет настроенных SQL-баз данных.");
 
         }
 

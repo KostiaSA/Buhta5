@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +11,7 @@ namespace Buhta
 {
     public enum QueryOrderBy { None = 0, Asc1 = 1, Asc2 = 3, Asc3 = 5, Asc4 = 7, Asc5 = 9, Asc6 = 11, Desc1 = 2, Desc2 = 4, Desc3 = 6, Desc4 = 8, Desc5 = 10, Desc6 = 12 }
 
-    public class SchemaQueryBaseColumn : IViewColumn, ISupportInitialize, TreeList.IVirtualTreeListData, INotifyPropertyChanged
+    public class SchemaQueryBaseColumn : IViewColumn, ISupportInitialize,  INotifyPropertyChanged
     {
         public const string Колонка_category = "  Колонка";
 
@@ -98,29 +97,29 @@ namespace Buhta
         {
         }
 
-        public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = (info.Node as SchemaQueryBaseColumn).Name;
-            else
-                if (info.Column.FieldName == "Alias")
-                    info.CellData = (info.Node as SchemaQueryBaseColumn).Alias;
-                else
-                    if (info.Column.FieldName == "Position")
-                        info.CellData = (info.Node as SchemaQueryBaseColumn).Position;
-                    else
-                        info.CellData = null;
-        }
+        ////public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = (info.Node as SchemaQueryBaseColumn).Name;
+        ////    else
+        ////        if (info.Column.FieldName == "Alias")
+        ////            info.CellData = (info.Node as SchemaQueryBaseColumn).Alias;
+        ////        else
+        ////            if (info.Column.FieldName == "Position")
+        ////                info.CellData = (info.Node as SchemaQueryBaseColumn).Position;
+        ////            else
+        ////                info.CellData = null;
+        ////}
 
-        public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = null;
-        }
+        ////public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = null;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

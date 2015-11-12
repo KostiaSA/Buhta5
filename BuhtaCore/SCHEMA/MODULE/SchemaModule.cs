@@ -1,8 +1,5 @@
 ﻿using BLToolkit.DataAccess;
 using BLToolkit.Mapping;
-using csscript;
-using CSScriptLibrary;
-using DevExpress.XtraTreeList;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -35,7 +31,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaModuleDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaModuleDesigner_page() { EditedRecord = this }");
         }
 
         public override string GetTypeDisplay
@@ -57,12 +53,12 @@ namespace Buhta
 
         public override Bitmap GetImage()
         {
-            return global::Buhta.Properties.Resources.SchemaModule_16;
+            return new Bitmap("global::Buhta.Properties.Resources.SchemaModule_16");
         }
 
         public override Color GetSchemaDesinerColor()
         {
-            return Цвета.ДизайнерСхемы_Модуль;
+            return new Color("Цвета.ДизайнерСхемы_Модуль");
         }
 
     }

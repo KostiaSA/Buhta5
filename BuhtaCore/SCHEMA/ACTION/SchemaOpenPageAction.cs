@@ -6,7 +6,6 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -14,7 +13,7 @@ namespace Buhta
     public class SchemaOpenPageAction : SchemaAction
     {
         Guid? formID;
-        [Editor(typeof(SchemaFormSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[Editor(typeof(SchemaFormSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(SchemaFormSelectorTypeConverter))]
         [DisplayName("Форма")]
         public Guid? FormID
@@ -48,7 +47,7 @@ namespace Buhta
                 form.OpenInMainFormTab(App.Schema.GetObjectName(formID));
             }
             else
-                MessageBox.Show("Не заполнен Action.FormID");
+                throw new Exception("Не заполнен Action.FormID");
         }
 
     }
@@ -72,32 +71,32 @@ namespace Buhta
 
     }
 
-    public class SchemaFormSelectorEditor : ObjectSelectorEditor
-    {
-        protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
-          ITypeDescriptorContext theCtx, IServiceProvider theProvider)
-        {
-            base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
+    ////public class SchemaFormSelectorEditor : ObjectSelectorEditor
+    ////{
+    ////    protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
+    ////      ITypeDescriptorContext theCtx, IServiceProvider theProvider)
+    ////    {
+    ////        base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
 
-            //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
+    ////        //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
 
-            //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
-            //{
-            //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
-            //theSel.Nodes.Add(aNd);
-            //}
+    ////        //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
+    ////        //{
+    ////        //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
+    ////        //theSel.Nodes.Add(aNd);
+    ////        //}
 
-            foreach (SchemaObject_cache form in App.Schema.Objects_cache.Values)
-            {
-                if (form.RootClass == typeof(SchemaForm).Name)
-                {
-                    SelectorNode aNd = new SelectorNode(form.Name, form.ID);
-                    theSel.Nodes.Add(aNd);
-                }
-            }
+    ////        foreach (SchemaObject_cache form in App.Schema.Objects_cache.Values)
+    ////        {
+    ////            if (form.RootClass == typeof(SchemaForm).Name)
+    ////            {
+    ////                SelectorNode aNd = new SelectorNode(form.Name, form.ID);
+    ////                theSel.Nodes.Add(aNd);
+    ////            }
+    ////        }
 
-        }
+    ////    }
 
-    }
+    ////}
 
 }

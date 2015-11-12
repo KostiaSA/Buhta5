@@ -48,26 +48,26 @@ namespace Buhta
                 return Microsoft.SqlServer.Management.Smo.DataType.NVarChar(MaxSize);
         }
 
-        public override IEditControl GetEditControl()
-        {
-            var ctl = new StringEditControl<string>();
-            ctl.Name = Column.Table.Name + "_" + Column.Name; ;
-            ctl.Text = Column.Table.Name + "_" + Column.Name; ;
-            ctl.Caption = Column.Name;
-            ctl.BindFieldName = Column.Name;
-            if (MaxSize != 0)
-            {
-                ctl.Properties.MaxLength = MaxSize;
-                ctl.Text = new String('0', MaxSize);
-                ctl.MaximumSize = ctl.CalcBestSize();
-                ctl.Text = null;
-            }
+        ////public override IEditControl GetEditControl()
+        ////{
+        ////    var ctl = new StringEditControl<string>();
+        ////    ctl.Name = Column.Table.Name + "_" + Column.Name; ;
+        ////    ctl.Text = Column.Table.Name + "_" + Column.Name; ;
+        ////    ctl.Caption = Column.Name;
+        ////    ctl.BindFieldName = Column.Name;
+        ////    if (MaxSize != 0)
+        ////    {
+        ////        ctl.Properties.MaxLength = MaxSize;
+        ////        ctl.Text = new String('0', MaxSize);
+        ////        ctl.MaximumSize = ctl.CalcBestSize();
+        ////        ctl.Text = null;
+        ////    }
 
-            if (ctl.MaximumSize.Width == 0 || ctl.MaximumSize.Width >800)
-                ctl.MaximumSize = new System.Drawing.Size(800, ctl.MaximumSize.Height);
+        ////    if (ctl.MaximumSize.Width == 0 || ctl.MaximumSize.Width >800)
+        ////        ctl.MaximumSize = new System.Drawing.Size(800, ctl.MaximumSize.Height);
 
-            return ctl;
-        }
+        ////    return ctl;
+        ////}
 
         public override SqlDataType Clone()
         {

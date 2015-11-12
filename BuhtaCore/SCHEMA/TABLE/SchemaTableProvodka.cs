@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 namespace Buhta
 {
 
-    public class SchemaTableProvodka : INotifyPropertyChanged, TreeList.IVirtualTreeListData
+    public class SchemaTableProvodka : INotifyPropertyChanged
     {
         [Browsable(false)]
         public Guid ID { get; set; }
@@ -40,8 +39,8 @@ namespace Buhta
 
 
         private Guid? dbRegistrID;
-        [Editor(typeof(SchemaTableSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(ForeingTableSelectorTypeConverter))]
+        ////[Editor(typeof(SchemaTableSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(ForeingTableSelectorTypeConverter))]
         public Guid? DbRegistrID
         {
             get { return dbRegistrID; }
@@ -49,8 +48,8 @@ namespace Buhta
         }
 
         private Guid? krRegistrID;
-        [Editor(typeof(SchemaTableSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(ForeingTableSelectorTypeConverter))]
+        ////[Editor(typeof(SchemaTableSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(ForeingTableSelectorTypeConverter))]
         public Guid? KrRegistrID
         {
             get { return krRegistrID; }
@@ -115,8 +114,8 @@ namespace Buhta
         }
 
         private Guid? detailQueryID;
-        [Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
+        ////[Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
         public Guid? DetailQueryID
         {
             get { return detailQueryID; }
@@ -149,22 +148,22 @@ namespace Buhta
             return Name;
         }
 
-        public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = info.Node.ToString();
-            else
-                info.CellData = "<пусто>";
-        }
+        ////public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = info.Node.ToString();
+        ////    else
+        ////        info.CellData = "<пусто>";
+        ////}
 
-        public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = Provodkas;
-        }
+        ////public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = Provodkas;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
     }
 }

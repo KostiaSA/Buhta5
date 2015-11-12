@@ -5,7 +5,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -13,8 +12,8 @@ namespace Buhta
     public class SchemaOpenQueryAction : SchemaAction
     {
         Guid? queryID;
-        [Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
+        ////[Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
         [DisplayName("Запрос")]
         public Guid? QueryID
         {
@@ -60,9 +59,9 @@ namespace Buhta
                 form.OpenInMainFormTab("запрос: " + App.Schema.GetObjectName(queryID));
             }
             else
-                MessageBox.Show("Не заполнен Action.QueryID");
+                throw new Exception("Не заполнен Action.QueryID");
 
-            //MessageBox.Show("Щзут йгукн");
+            //throw new Exception("Щзут йгукн");
         }
 
     }

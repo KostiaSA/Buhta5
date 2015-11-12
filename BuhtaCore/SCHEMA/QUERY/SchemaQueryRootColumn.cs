@@ -1,15 +1,12 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -17,7 +14,7 @@ namespace Buhta
     public class SchemaQueryRootColumn : SchemaQueryJoinColumn
     {
         Guid? sourceQueryTableID;
-        [Editor(typeof(SchemaTableOrQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[Editor(typeof(SchemaTableOrQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(SchemaTableOrQuerySelectorTypeConverter))]
         [DisplayName(" Таблица/запрос"), Description("Корневая таблица или запрос"), Category(" Таблица/запрос")]
         public Guid? SourceQueryTableID
@@ -27,8 +24,8 @@ namespace Buhta
         }
 
         SchemaVirtualTableProperties virtualTableProperties;
-        [Editor(typeof(VirtualTablePropertiesSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(VirtualTablePropertiesSelectorTypeConverter))]
+        ////[Editor(typeof(VirtualTablePropertiesSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(VirtualTablePropertiesSelectorTypeConverter))]
         [DisplayName("Настройка таблицы/запроса"), Description("Настройка корневой таблицы/запроса"), Category(" Таблица/запрос")]
         public SchemaVirtualTableProperties VirtualTableProperties
         {
@@ -48,18 +45,18 @@ namespace Buhta
         //}
 
 
-        public override void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-            {
-                if (GetJoinView() != null)
-                    info.CellData = GetJoinView().GetDisplayName();
-                else
-                    info.CellData = "Root table or query";
-            }
-            else
-                info.CellData = null;
-        }
+        ////public override void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////    {
+        ////        if (GetJoinView() != null)
+        ////            info.CellData = GetJoinView().GetDisplayName();
+        ////        else
+        ////            info.CellData = "Root table or query";
+        ////    }
+        ////    else
+        ////        info.CellData = null;
+        ////}
 
         IViewColumn joinView_cached;
         public override IViewColumn GetJoinView()
@@ -220,136 +217,136 @@ namespace Buhta
         }
     }
 
-    public class SchemaTableOrQuerySelectorEditor : ObjectSelectorEditor
-    {
-        public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
-        {
-            return UITypeEditorEditStyle.Modal;
-        }
+    ////public class SchemaTableOrQuerySelectorEditor : ObjectSelectorEditor
+    ////{
+    ////    public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+    ////    {
+    ////        return UITypeEditorEditStyle.Modal;
+    ////    }
 
-        void dialog_OnFilterSchemaObject(Object schemaObject, out bool visible)
-        {
-            visible = schemaObject is SchemaTable || schemaObject is SchemaQuery || schemaObject is Таблица_TableRole || schemaObject is SchemaVirtualTable;
-        }
+    ////    void dialog_OnFilterSchemaObject(Object schemaObject, out bool visible)
+    ////    {
+    ////        visible = schemaObject is SchemaTable || schemaObject is SchemaQuery || schemaObject is Таблица_TableRole || schemaObject is SchemaVirtualTable;
+    ////    }
 
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-        {
-            if (context != null && context.Instance != null && provider != null)
-            {
-                SchemaQueryJoinColumn editedColumn = (SchemaQueryJoinColumn)context.Instance;
+    ////    public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+    ////    {
+    ////        if (context != null && context.Instance != null && provider != null)
+    ////        {
+    ////            SchemaQueryJoinColumn editedColumn = (SchemaQueryJoinColumn)context.Instance;
 
-                var dialog = new SchemaObjectSelect_dialog<ISchemaTreeListNode>();
-                dialog.IsIncludeRoleTables = true;
-                dialog.OnFilterSchemaObject += dialog_OnFilterSchemaObject;
-                dialog.LoadData();
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    //editedColumn.SourceQueryTableID = dialog.SelectedObject.ID;
-                    if (editedColumn is SchemaQueryRootColumn)
-                    {
-                        if (dialog.SelectedObject is SchemaVirtualTable)
-                        {
-                            (editedColumn as SchemaQueryRootColumn).VirtualTableProperties = (dialog.SelectedObject as SchemaVirtualTable).Properties;
-                            (editedColumn as SchemaQueryRootColumn).VirtualTableProperties.ParentQueryColumn = editedColumn as SchemaQueryRootColumn;
-                        }
-                        else
-                            (editedColumn as SchemaQueryRootColumn).VirtualTableProperties = null;
-                    }
+    ////            var dialog = new SchemaObjectSelect_dialog<ISchemaTreeListNode>();
+    ////            dialog.IsIncludeRoleTables = true;
+    ////            dialog.OnFilterSchemaObject += dialog_OnFilterSchemaObject;
+    ////            dialog.LoadData();
+    ////            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+    ////            {
+    ////                //editedColumn.SourceQueryTableID = dialog.SelectedObject.ID;
+    ////                if (editedColumn is SchemaQueryRootColumn)
+    ////                {
+    ////                    if (dialog.SelectedObject is SchemaVirtualTable)
+    ////                    {
+    ////                        (editedColumn as SchemaQueryRootColumn).VirtualTableProperties = (dialog.SelectedObject as SchemaVirtualTable).Properties;
+    ////                        (editedColumn as SchemaQueryRootColumn).VirtualTableProperties.ParentQueryColumn = editedColumn as SchemaQueryRootColumn;
+    ////                    }
+    ////                    else
+    ////                        (editedColumn as SchemaQueryRootColumn).VirtualTableProperties = null;
+    ////                }
 
-                    return (dialog.SelectedObject as ISchemaTreeListNode).ID;
-                }
+    ////                return (dialog.SelectedObject as ISchemaTreeListNode).ID;
+    ////            }
 
-            }
-            return value;
-        }
-        //protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
-        //  ITypeDescriptorContext theCtx, IServiceProvider theProvider)
-        //{
-        //    base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
+    ////        }
+    ////        return value;
+    ////    }
+    ////    //protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
+    ////    //  ITypeDescriptorContext theCtx, IServiceProvider theProvider)
+    ////    //{
+    ////    //    base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
 
-        //    //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
+    ////    //    //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
 
-        //    //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
-        //    //{
-        //    //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
-        //    //theSel.Nodes.Add(aNd);
-        //    //}
+    ////    //    //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
+    ////    //    //{
+    ////    //    //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
+    ////    //    //theSel.Nodes.Add(aNd);
+    ////    //    //}
 
-        //    foreach (SchemaObject_cache query in App.Schema.Objects_cache.Values)
-        //    {
-        //        if (query.RootClass == typeof(SchemaTable).Name)
-        //        {
-        //            SelectorNode aNd = new SelectorNode(App.Schema.GetObjectTypeAndName(query.ID), query.ID);
-        //            theSel.Nodes.Add(aNd);
-        //        }
+    ////    //    foreach (SchemaObject_cache query in App.Schema.Objects_cache.Values)
+    ////    //    {
+    ////    //        if (query.RootClass == typeof(SchemaTable).Name)
+    ////    //        {
+    ////    //            SelectorNode aNd = new SelectorNode(App.Schema.GetObjectTypeAndName(query.ID), query.ID);
+    ////    //            theSel.Nodes.Add(aNd);
+    ////    //        }
 
-        //        if (query.RootClass == typeof(SchemaQuery).Name)
-        //        {
-        //            SelectorNode aNd = new SelectorNode(App.Schema.GetObjectTypeAndName(query.ID), query.ID);
-        //            theSel.Nodes.Add(aNd);
-        //        }
-        //    }
+    ////    //        if (query.RootClass == typeof(SchemaQuery).Name)
+    ////    //        {
+    ////    //            SelectorNode aNd = new SelectorNode(App.Schema.GetObjectTypeAndName(query.ID), query.ID);
+    ////    //            theSel.Nodes.Add(aNd);
+    ////    //        }
+    ////    //    }
 
-        //}
+    ////    //}
 
-    }
+    ////}
 
-    public class VirtualTablePropertiesSelectorTypeConverter : TypeConverter
-    {
-        private TypeConverter mTypeConverter;
+    ////public class VirtualTablePropertiesSelectorTypeConverter : TypeConverter
+    ////{
+    ////    private TypeConverter mTypeConverter;
 
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
-        {
-            if (mTypeConverter == null)
-                mTypeConverter = TypeDescriptor.GetConverter(context.PropertyDescriptor.PropertyType);
+    ////    public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+    ////    {
+    ////        if (mTypeConverter == null)
+    ////            mTypeConverter = TypeDescriptor.GetConverter(context.PropertyDescriptor.PropertyType);
 
-            if (context != null && destinationType == typeof(string))
-            {
-                if (value == null)
-                    value = "";
-                else
-                    value = (value as SchemaVirtualTableProperties).DisplayName;
-                //if (SchemaBaseRole.Roles.ContainsKey((Guid)value))
-                //    value = (SchemaBaseRole.Roles[(Guid)value] as Таблица_TableRole).DisplayName;
-                //else
-                //    value = App.Schema.GetObjectTypeAndName((Guid?)value);
-            }
-            return mTypeConverter.ConvertTo(context, culture, value, destinationType);
-        }
-    }
+    ////        if (context != null && destinationType == typeof(string))
+    ////        {
+    ////            if (value == null)
+    ////                value = "";
+    ////            else
+    ////                value = (value as SchemaVirtualTableProperties).DisplayName;
+    ////            //if (SchemaBaseRole.Roles.ContainsKey((Guid)value))
+    ////            //    value = (SchemaBaseRole.Roles[(Guid)value] as Таблица_TableRole).DisplayName;
+    ////            //else
+    ////            //    value = App.Schema.GetObjectTypeAndName((Guid?)value);
+    ////        }
+    ////        return mTypeConverter.ConvertTo(context, culture, value, destinationType);
+    ////    }
+    ////}
 
-    public class VirtualTablePropertiesSelectorEditor : ObjectSelectorEditor
-    {
-        public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
-        {
-            return UITypeEditorEditStyle.Modal;
-        }
+    ////public class VirtualTablePropertiesSelectorEditor : ObjectSelectorEditor
+    ////{
+    ////    public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+    ////    {
+    ////        return UITypeEditorEditStyle.Modal;
+    ////    }
 
-        void dialog_OnFilterSchemaObject(Object schemaObject, out bool visible)
-        {
-            visible = schemaObject is SchemaTable || schemaObject is SchemaQuery || schemaObject is Таблица_TableRole;
-        }
+    ////    void dialog_OnFilterSchemaObject(Object schemaObject, out bool visible)
+    ////    {
+    ////        visible = schemaObject is SchemaTable || schemaObject is SchemaQuery || schemaObject is Таблица_TableRole;
+    ////    }
 
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-        {
-            if (context != null && context.Instance != null && provider != null)
-            {
-                SchemaQueryJoinColumn editedColumn = (SchemaQueryJoinColumn)context.Instance;
+    ////    public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+    ////    {
+    ////        if (context != null && context.Instance != null && provider != null)
+    ////        {
+    ////            SchemaQueryJoinColumn editedColumn = (SchemaQueryJoinColumn)context.Instance;
 
-                if ((editedColumn as SchemaQueryRootColumn).VirtualTableProperties != null)
-                {
-                    var dialog = new OborotkaPropertiesSetup_dialog();
-                    dialog.EditedProperties = (editedColumn as SchemaQueryRootColumn).VirtualTableProperties as OborotkaProperties;
-                    dialog.LoadData();
-                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        //editedColumn.SourceQueryTableID = dialog.SelectedObject.ID;
-                        return dialog.EditedProperties;
-                    }
-                }
-            }
-            return value;
-        }
+    ////            if ((editedColumn as SchemaQueryRootColumn).VirtualTableProperties != null)
+    ////            {
+    ////                var dialog = new OborotkaPropertiesSetup_dialog();
+    ////                dialog.EditedProperties = (editedColumn as SchemaQueryRootColumn).VirtualTableProperties as OborotkaProperties;
+    ////                dialog.LoadData();
+    ////                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+    ////                {
+    ////                    //editedColumn.SourceQueryTableID = dialog.SelectedObject.ID;
+    ////                    return dialog.EditedProperties;
+    ////                }
+    ////            }
+    ////        }
+    ////        return value;
+    ////    }
 
-    }
+    ////}
 }

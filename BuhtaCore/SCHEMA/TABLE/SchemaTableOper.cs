@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Buhta
 {
-    public class SchemaTableOper : INotifyPropertyChanged, TreeList.IVirtualTreeListData
+    public class SchemaTableOper : INotifyPropertyChanged
     {
         [Browsable(false)]
         public Guid ID { get; set; }
@@ -81,22 +80,22 @@ namespace Buhta
         }
 
 
-        public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = info.Node.ToString();
-            else
-                info.CellData = "";
-        }
+        ////public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = info.Node.ToString();
+        ////    else
+        ////        info.CellData = "";
+        ////}
 
-        public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = (info.Node as SchemaTableOper).Provodkas;
-        }
+        ////public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = (info.Node as SchemaTableOper).Provodkas;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
     }
 }

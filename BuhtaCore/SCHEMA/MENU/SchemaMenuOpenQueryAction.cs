@@ -6,7 +6,6 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -14,7 +13,7 @@ namespace Buhta
     public class SchemaMenuOpenQueryAction : SchemaMenuBaseAction
     {
         Guid? queryID;
-        [Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
         [DisplayName("Запрос")]
         public Guid? QueryID
@@ -64,9 +63,9 @@ namespace Buhta
                 form.OpenInMainFormTab("запрос: " + App.Schema.GetObjectName(queryID));
             }
             else
-                MessageBox.Show("Не заполнен Action.QueryID");
+                throw new Exception("Не заполнен Action.QueryID");
 
-            //MessageBox.Show("Щзут йгукн");
+            //throw new Exception("Щзут йгукн");
         }
 
         public class SchemaFormDataGridQuerySelectorTypeConverter : TypeConverter
@@ -90,33 +89,33 @@ namespace Buhta
             }
         }
 
-        public class SchemaFormDataGridQuerySelectorEditor : ObjectSelectorEditor
-        {
-            protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
-              ITypeDescriptorContext theCtx, IServiceProvider theProvider)
-            {
-                base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
+        ////public class SchemaFormDataGridQuerySelectorEditor : ObjectSelectorEditor
+        ////{
+        ////    protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
+        ////      ITypeDescriptorContext theCtx, IServiceProvider theProvider)
+        ////    {
+        ////        base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
 
-                //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
+        ////        //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
 
-                //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
-                //{
-                //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
-                //theSel.Nodes.Add(aNd);
-                //}
+        ////        //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
+        ////        //{
+        ////        //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
+        ////        //theSel.Nodes.Add(aNd);
+        ////        //}
 
-                foreach (SchemaObject_cache query in App.Schema.Objects_cache.Values)
-                {
-                    if (query.RootClass == typeof(SchemaQuery).Name)
-                    {
-                        SelectorNode aNd = new SelectorNode(query.Name, query.ID);
-                        theSel.Nodes.Add(aNd);
-                    }
-                }
+        ////        foreach (SchemaObject_cache query in App.Schema.Objects_cache.Values)
+        ////        {
+        ////            if (query.RootClass == typeof(SchemaQuery).Name)
+        ////            {
+        ////                SelectorNode aNd = new SelectorNode(query.Name, query.ID);
+        ////                theSel.Nodes.Add(aNd);
+        ////            }
+        ////        }
 
-            }
+        ////    }
 
-        }
+        ////}
 
     }
 }

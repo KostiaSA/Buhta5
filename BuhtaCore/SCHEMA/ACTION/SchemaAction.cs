@@ -45,7 +45,7 @@ namespace Buhta
 
         public virtual void Execute()
         {
-            MessageBox.Show("Action.Execute() не определен.");
+            throw new Exception("Action.Execute() не определен.");
         }
     }
 
@@ -67,39 +67,39 @@ namespace Buhta
     //    }
     //}
 
-    public class SchemaActionSelectorEditor : ObjectSelectorEditor
-    {
-        protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
-          ITypeDescriptorContext theCtx, IServiceProvider theProvider)
-        {
-            base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
+    ////public class SchemaActionSelectorEditor : ObjectSelectorEditor
+    ////{
+    ////    protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
+    ////      ITypeDescriptorContext theCtx, IServiceProvider theProvider)
+    ////    {
+    ////        base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
 
-            object parentButton = theCtx.Instance;
+    ////        object parentButton = theCtx.Instance;
 
-            //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
-            //{
-            //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
-            //theSel.Nodes.Add(aNd);
-            //}
+    ////        //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
+    ////        //{
+    ////        //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
+    ////        //theSel.Nodes.Add(aNd);
+    ////        //}
 
-            foreach (Lazy<SchemaAction> dt in App.Mef.SchemaActions)
-            {
-                var actionInstance = Activator.CreateInstance(dt.Value.GetType());
+    ////        foreach (Lazy<SchemaAction> dt in App.Mef.SchemaActions)
+    ////        {
+    ////            var actionInstance = Activator.CreateInstance(dt.Value.GetType());
 
-                if (parentButton is SchemaFormControl)
-                    (actionInstance as SchemaAction).ParentControl = (parentButton as SchemaFormControl);
-                else
-                    MessageBox.Show("Action parent not SchemaFormControl");
-
-
-
-                SelectorNode aNd = new SelectorNode(dt.Value.GetDisplayName(), actionInstance);
-                theSel.Nodes.Add(aNd);
-            }
+    ////            if (parentButton is SchemaFormControl)
+    ////                (actionInstance as SchemaAction).ParentControl = (parentButton as SchemaFormControl);
+    ////            else
+    ////                throw new Exception("Action parent not SchemaFormControl");
 
 
-        }
 
-    }
+    ////            SelectorNode aNd = new SelectorNode(dt.Value.GetDisplayName(), actionInstance);
+    ////            theSel.Nodes.Add(aNd);
+    ////        }
+
+
+    ////    }
+
+    ////}
 
 }

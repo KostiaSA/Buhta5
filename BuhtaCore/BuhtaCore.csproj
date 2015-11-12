@@ -32,8 +32,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BLToolkit.4, Version=4.3.2.0, Culture=neutral, PublicKeyToken=b1d3f6ab3aadaca3, processorArchitecture=MSIL">
+      <HintPath>..\packages\BLToolkit.4.3.2\lib\net40\BLToolkit.4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.Smo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Microsoft.SQLServer.SMO.11.0.3000.0\lib\Microsoft.SqlServer.SqlEnum.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -41,6 +65,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -61,9 +88,125 @@
     <Compile Include="App.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SCHEMA\ACTION\SchemaAction.cs" />
+    <Compile Include="SCHEMA\ACTION\SchemaOpenPageAction.cs" />
+    <Compile Include="SCHEMA\ACTION\SchemaOpenQueryAction.cs" />
+    <Compile Include="SCHEMA\DATABASE\SchemaDatabase.cs" />
+    <Compile Include="SCHEMA\DATATYPE\BinaryDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\BitDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\ByteDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\DateDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\DateTimeDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\DbKrSaldoDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\DecimalDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\DocumentDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\ForeingKeyDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\GuidDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\IntDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\MasterDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\MoneyDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\QuantityDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\SqlDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\StringDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\TimeDataType.cs" />
+    <Compile Include="SCHEMA\DATATYPE\TimestampDataType.cs" />
+    <Compile Include="SCHEMA\FOLDER\SchemaFolder.cs" />
+    <Compile Include="SCHEMA\FORM\button\SchemaFormButton.cs" />
+    <Compile Include="SCHEMA\FORM\datagrid\SchemaFormDataGrid.cs" />
+    <Compile Include="SCHEMA\FORM\page\SchemaFormPage.cs" />
+    <Compile Include="SCHEMA\FORM\page\SchemaFormPageBotomPanel.cs" />
+    <Compile Include="SCHEMA\FORM\page\SchemaFormPageMiddlePanel.cs" />
+    <Compile Include="SCHEMA\FORM\page\SchemaFormPageTopPanel.cs" />
+    <Compile Include="SCHEMA\FORM\panel\SchemaFormPanel.cs" />
+    <Compile Include="SCHEMA\FORM\SchemaForm.cs" />
+    <Compile Include="SCHEMA\FORM\SchemaFormContainer.cs" />
+    <Compile Include="SCHEMA\FORM\SchemaFormControl.cs" />
+    <Compile Include="SCHEMA\HELPER-TABLES\Base_HelperTable.cs" />
+    <Compile Include="SCHEMA\HELPER-TABLES\SchemaTableDetailOperProvodka_HelperTable.cs" />
+    <Compile Include="SCHEMA\HELPER-TABLES\SchemaTableDetailOper_HelperTable.cs" />
+    <Compile Include="SCHEMA\HELPER-TABLES\SchemaTableDetail_HelperTable.cs" />
+    <Compile Include="SCHEMA\HELPER-TABLES\SchemaTable_HelperTable.cs" />
+    <Compile Include="SCHEMA\MENU\SchemaMenu.cs" />
+    <Compile Include="SCHEMA\MENU\SchemaMenuActionItem.cs" />
+    <Compile Include="SCHEMA\MENU\SchemaMenuBaseAction.cs" />
+    <Compile Include="SCHEMA\MENU\SchemaMenuBaseItem.cs" />
+    <Compile Include="SCHEMA\MENU\SchemaMenuFolderItem.cs" />
+    <Compile Include="SCHEMA\MENU\SchemaMenuOpenQueryAction.cs" />
+    <Compile Include="SCHEMA\MODULE\SchemaModule.cs" />
+    <Compile Include="SCHEMA\QUERY\PIVOT\PivotLayout.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQuery.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQueryBaseColumn.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQueryCoumputedColumn.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQueryExplicitJoinColumn.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQueryJoinColumn.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQueryRootColumn.cs" />
+    <Compile Include="SCHEMA\QUERY\SchemaQuerySelectColumn.cs" />
+    <Compile Include="SCHEMA\REPORT\SchemaReport.cs" />
+    <Compile Include="SCHEMA\REPORT\SchemaReportBand.cs" />
+    <Compile Include="SCHEMA\ROLE\RoleConst.cs" />
+    <Compile Include="SCHEMA\ROLE\SchemaBaseRole.cs" />
+    <Compile Include="SCHEMA\ROLE\ВложеннаяТаблица\ВложеннаяТаблица_TableRole.cs" />
+    <Compile Include="SCHEMA\ROLE\ВложеннаяТаблица\ВложеннаяТаблицаБизнесОперация_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\ВложеннаяТаблица\ВложеннаяТаблицаМастер_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Документ\Документ_TableRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Документ\ДокументДата_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Документ\ДокументСумма_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\Регистр_TableRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрДата_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрДбКр_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрДеталь_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрИзмерение_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрКонфигБизнесОперация_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрКонфигДеталь_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрКонфигПроводка_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрМастер_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрМера_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Регистр\РегистрРеквизит_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Справочник\Справочник_TableRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Справочник\СправочникНазвание_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Справочник\СправочникНомер_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\Колонка_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\Таблица_TableRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\ТаблицаДатаВремя_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\ТаблицаКлюч_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\ТаблицаСсылка_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\ТаблицаСтрока_ColumnRole.cs" />
+    <Compile Include="SCHEMA\ROLE\Таблица\ТаблицаЧисло_ColumnRole.cs" />
+    <Compile Include="SCHEMA\Schema.cs" />
+    <Compile Include="SCHEMA\SchemaConfig.cs" />
+    <Compile Include="SCHEMA\DATABASE\SchemaExternalDatabase.cs" />
     <Compile Include="SCHEMA\SchemaObject.cs" />
-    <Compile Include="SCHEMA\SchemaTable.cs" />
-    <Compile Include="SCHEMA\SchemaTableColumn.cs" />
+    <Compile Include="SCHEMA\TABLE\REGISTR\RegistrSubcontoDataType.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTable.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableColumn.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableDetail.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableLinkedReport.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableOper.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableProvodka.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableProvodkaField.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableRow.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTableSystemColumn.cs" />
+    <Compile Include="SCHEMA\TABLE\SchemaTable_GenProc.cs" />
+    <Compile Include="SCHEMA\USER\AccessTree.cs" />
+    <Compile Include="SCHEMA\USER\AccessTreeNode.cs" />
+    <Compile Include="SCHEMA\USER\AccessTreeQueriesFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\AccessTreeQueryNode.cs" />
+    <Compile Include="SCHEMA\USER\AccessTreeTablesSelectivelyFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\SchemaAccessRole.cs" />
+    <Compile Include="SCHEMA\USER\SchemaAccessRoleItem.cs" />
+    <Compile Include="SCHEMA\USER\SchemaAccessRolePermission.cs" />
+    <Compile Include="SCHEMA\USER\SchemaUser.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTableNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesAllDeleteFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesAllDeleteOwnedFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesAllInsertFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesAllReadFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesAllUpdateFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesAllUpdateOwnedFolderNode.cs" />
+    <Compile Include="SCHEMA\USER\Table\AccessTreeTablesFolderNode.cs" />
+    <Compile Include="SCHEMA\VIRTUAL-TABLE\Oborotka\Oborotka_VirtualTable.cs" />
+    <Compile Include="SCHEMA\VIRTUAL-TABLE\SchemaVirtualTable.cs" />
+    <Compile Include="SCHEMA\VIRTUAL-TABLE\SchemaVirtualTableColumn.cs" />
     <Compile Include="SQL.cs" />
     <Compile Include="TestClass1.cs" />
     <Compile Include="UTILS\SystemClassExtensions.cs" />

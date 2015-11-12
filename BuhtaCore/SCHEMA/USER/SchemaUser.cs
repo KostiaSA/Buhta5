@@ -1,6 +1,4 @@
 ﻿using BLToolkit.Aspects;
-using DevExpress.XtraPivotGrid;
-using DevExpress.XtraTreeList;
 using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
@@ -52,7 +50,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaMenuDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaMenuDesigner_page() { EditedRecord = this }");
         }
 
 
@@ -70,7 +68,7 @@ namespace Buhta
 
         public override Bitmap GetImage()
         {
-            return global::Buhta.Properties.Resources.SchemaUser_16;
+            return new Bitmap("global::Buhta.Properties.Resources.SchemaUser_16");
         }
 
     }

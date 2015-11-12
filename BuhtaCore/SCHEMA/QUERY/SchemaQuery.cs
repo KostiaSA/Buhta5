@@ -1,6 +1,4 @@
 ﻿using BLToolkit.Aspects;
-using DevExpress.XtraPivotGrid;
-using DevExpress.XtraTreeList;
 using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
@@ -115,7 +113,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaQueryDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaQueryDesigner_page() { EditedRecord = this }");
         }
 
 
@@ -432,19 +430,19 @@ namespace Buhta
             return null;
         }
 
-        public void GreatePivotFields(PivotGridControl pivotGrid)
-        {
-            int dataIndex = 0;
-            foreach (var col in GetAllColumns().Where(col => col is SchemaQuerySelectColumn))
-            {
-                PivotGridField field;
-                field = pivotGrid.Fields.Add(col.GetFullAlias(), PivotArea.DataArea);
-                field.AreaIndex = dataIndex++;
-                field.Caption = col.GetFullAlias();
-                field.Name = "__" + col.GetFullAlias().AsValidCSharpIdentifier() + "__";
-                field.Visible = false;
-            }
-        }
+        ////public void GreatePivotFields(PivotGridControl pivotGrid)
+        ////{
+        ////    int dataIndex = 0;
+        ////    foreach (var col in GetAllColumns().Where(col => col is SchemaQuerySelectColumn))
+        ////    {
+        ////        PivotGridField field;
+        ////        field = pivotGrid.Fields.Add(col.GetFullAlias(), PivotArea.DataArea);
+        ////        field.AreaIndex = dataIndex++;
+        ////        field.Caption = col.GetFullAlias();
+        ////        field.Name = "__" + col.GetFullAlias().AsValidCSharpIdentifier() + "__";
+        ////        field.Visible = false;
+        ////    }
+        ////}
 
         public DataTable GreatePivotSampleDataSource()
         {
@@ -497,9 +495,10 @@ namespace Buhta
         {
             return null;
         }
+
         public override Bitmap GetImage()
         {
-            return global::Buhta.Properties.Resources.SchemaQuery_16;
+            return new Bitmap("global::Buhta.Properties.Resources.SchemaQuery_16");
         }
 
         public bool GetIsSupportReadPermission()

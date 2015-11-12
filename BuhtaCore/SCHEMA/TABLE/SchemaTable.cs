@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTab;
-using Microsoft.SqlServer.Management.Smo;
+﻿using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -343,7 +341,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaTableDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaTableDesigner_page() { EditedRecord = this }");
         }
 
         public override string GetTypeDisplay
@@ -531,67 +529,67 @@ namespace Buhta
             throw new NotImplementedException();
         }
 
-        public TableRecordBaseEditForm_page OpenRecordEditPage(object recordID, CrudMode mode, SchemaTableRow masterTableRow)
-        {
-            if (!IsUserEditable)
-                throw new Exception("Таблица " + Name + " не может редактироваться (!IsUserEditable) ");
+        ////public TableRecordBaseEditForm_page OpenRecordEditPage(object recordID, CrudMode mode, SchemaTableRow masterTableRow)
+        ////{
+        ////    if (!IsUserEditable)
+        ////        throw new Exception("Таблица " + Name + " не может редактироваться (!IsUserEditable) ");
 
-            XtraTabPage tabPage;
-            tabPage = new XtraTabPage();
+        ////    XtraTabPage tabPage;
+        ////    tabPage = new XtraTabPage();
 
-            Guid? newBussinesOperID = null;
+        ////    Guid? newBussinesOperID = null;
 
-            if (masterTableRow != null)
-            {
-                foreach (var detail in masterTableRow.Table.Details)
-                {
-                    if (detail.DetailTableID == ID)
-                    {
-                        if (detail.Opers.Count > 0)
-                        {
-                            if (mode == CrudMode.Add)
-                            {
-                                if (detail.Opers.Count == 1)
-                                    newBussinesOperID = detail.Opers[0].ID;
-                                else
-                                    MessageBox.Show("Выбор бизнес-операции");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Да-редактирование");
-                            }
-                        }
-                    }
-                }
-            }
+        ////    if (masterTableRow != null)
+        ////    {
+        ////        foreach (var detail in masterTableRow.Table.Details)
+        ////        {
+        ////            if (detail.DetailTableID == ID)
+        ////            {
+        ////                if (detail.Opers.Count > 0)
+        ////                {
+        ////                    if (mode == CrudMode.Add)
+        ////                    {
+        ////                        if (detail.Opers.Count == 1)
+        ////                            newBussinesOperID = detail.Opers[0].ID;
+        ////                        else
+        ////                            throw new Exception("Выбор бизнес-операции");
+        ////                    }
+        ////                    else
+        ////                    {
+        ////                        throw new Exception("Да-редактирование");
+        ////                    }
+        ////                }
+        ////            }
+        ////        }
+        ////    }
 
 
 
-            var page = new TableRecordEditForm_page();
-            page.Dock = DockStyle.Fill;
-            page.NewBussinesOperID = newBussinesOperID;
-            page.MasterTableRow = masterTableRow;
-            page.Table = this;
-            page.RecordID = recordID;
-            page.CrudMode = mode;
+        ////    var page = new TableRecordEditForm_page();
+        ////    page.Dock = DockStyle.Fill;
+        ////    page.NewBussinesOperID = newBussinesOperID;
+        ////    page.MasterTableRow = masterTableRow;
+        ////    page.Table = this;
+        ////    page.RecordID = recordID;
+        ////    page.CrudMode = mode;
 
-            page.AfterClose += new Base_page.AfterCloseEventHandler(sender_page =>
-            {
-                //tabPages.Remove(focusedElement.ID);
-                //App.MainTabControl.SelectedTabPage = this.Parent as XtraTabPage;
-                //treeList.RefreshDataSource();
-                //treeList.SetFocusedNode(editedNode);
-            });
+        ////    page.AfterClose += new Base_page.AfterCloseEventHandler(sender_page =>
+        ////    {
+        ////        //tabPages.Remove(focusedElement.ID);
+        ////        //App.MainTabControl.SelectedTabPage = this.Parent as XtraTabPage;
+        ////        //treeList.RefreshDataSource();
+        ////        //treeList.SetFocusedNode(editedNode);
+        ////    });
 
-            tabPage.Controls.Add(page);
-            tabPage.Text = "Запись";
-            App.MainTabControl.TabPages.Add(tabPage);
-            page.LoadData();
-            //tabPages.Add(focusedElement.ID, tabPage);
+        ////    tabPage.Controls.Add(page);
+        ////    tabPage.Text = "Запись";
+        ////    App.MainTabControl.TabPages.Add(tabPage);
+        ////    page.LoadData();
+        ////    //tabPages.Add(focusedElement.ID, tabPage);
 
-            App.MainTabControl.SelectedTabPage = tabPage;
-            return page;
-        }
+        ////    App.MainTabControl.SelectedTabPage = tabPage;
+        ////    return page;
+        ////}
 
 
         public SchemaTable GetRootNativeTable()
@@ -698,9 +696,9 @@ namespace Buhta
         public override Bitmap GetImage()
         {
             if (TableRoles.Contains(RoleConst.Регистр))
-                return global::Buhta.Properties.Resources.RegistrRole;
+                return new Bitmap("global::Buhta.Properties.Resources.RegistrRole");
             else
-                return global::Buhta.Properties.Resources.SchemaTable_16;
+                return new Bitmap("global::Buhta.Properties.Resources.SchemaTable_16");
         }
 
         public void EmitSaveToLogSql(StringBuilder sql, string id_variable, SchemaTable masterTable, string indent)

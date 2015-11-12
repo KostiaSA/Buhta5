@@ -20,6 +20,11 @@ CREATE TABLE [dbo].[__undo__](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
      */
 
+    public enum CrudMode { View = 0, Add = 1, Edit = 2, Delete = 3 }
+    public delegate void OnSaveChangesEventHandler();
+    public delegate void OnInitNewRecordEventHandler();
+    public delegate void SaveChangesEventHandler(SchemaTableRow sender);
+
     public class SchemaTableRow
     {
         public enum ValueState { Unbind = 0, Unchanged = 1, Changed = 2, BindError = 3, UserError = 4, Empty = 5 }

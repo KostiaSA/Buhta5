@@ -1,6 +1,4 @@
 ﻿using BLToolkit.Aspects;
-using DevExpress.XtraPivotGrid;
-using DevExpress.XtraTreeList;
 using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
@@ -52,7 +50,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaAccessRoleDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaAccessRoleDesigner_page() { EditedRecord = this }");
         }
 
 
@@ -71,7 +69,7 @@ namespace Buhta
 
         public override Bitmap GetImage()
         {
-            return global::Buhta.Properties.Resources.SchemaAccessRole_16;
+            return new Bitmap("global::Buhta.Properties.Resources.SchemaAccessRole_16");
         }
 
         public static List<SchemaAccessRoleItem> GetAllItems(Guid? parentItemID)

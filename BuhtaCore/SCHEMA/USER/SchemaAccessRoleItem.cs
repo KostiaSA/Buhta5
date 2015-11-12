@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 namespace Buhta
 {
 
-    public class SchemaAccessRoleItem : ISupportInitialize, TreeList.IVirtualTreeListData, INotifyPropertyChanged
+    public class SchemaAccessRoleItem : ISupportInitialize,  INotifyPropertyChanged
     {
         public const string Role_category = "  Роль";
 
@@ -119,26 +118,26 @@ namespace Buhta
         {
         }
 
-        public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = (info.Node as SchemaAccessRoleItem).Name;
-            else
-                if (info.Column.FieldName == "Description")
-                    info.CellData = (info.Node as SchemaAccessRoleItem).Description;
-                else
-                    info.CellData = null;
-        }
+        ////public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = (info.Node as SchemaAccessRoleItem).Name;
+        ////    else
+        ////        if (info.Column.FieldName == "Description")
+        ////            info.CellData = (info.Node as SchemaAccessRoleItem).Description;
+        ////        else
+        ////            info.CellData = null;
+        ////}
 
-        public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = null;
-        }
+        ////public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = null;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

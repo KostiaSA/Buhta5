@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraTreeList;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Buhta
 {
-    public class SchemaTableDetail : INotifyPropertyChanged, TreeList.IVirtualTreeListData
+    public class SchemaTableDetail : INotifyPropertyChanged
     {
         public Guid ID;
 
@@ -84,8 +84,8 @@ namespace Buhta
 
 
         private Guid? detailTableID;
-        [Editor(typeof(ForeingTableSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(ForeingTableSelectorTypeConverter))]
+        ////[Editor(typeof(ForeingTableSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(ForeingTableSelectorTypeConverter))]
         [DisplayName("Деталь-таблица"), Description(""), Category(" Табличная часть")]
         public Guid? DetailTableID
         {
@@ -94,8 +94,8 @@ namespace Buhta
         }
 
         private Guid? detailQueryID;
-        [Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
+        ////[Editor(typeof(SchemaFormDataGridQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[TypeConverter(typeof(SchemaFormDataGridQuerySelectorTypeConverter))]
         [DisplayName("Запрос для просмотра"), Description(""), Category(" Табличная часть")]
         public Guid? DetailQueryID
         {
@@ -121,24 +121,24 @@ namespace Buhta
         }
 
 
-        public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = info.Node.ToString();
-            else
-                info.CellData = "";
-        }
+        ////public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = info.Node.ToString();
+        ////    else
+        ////        info.CellData = "";
+        ////}
 
-        public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = (info.Node as SchemaTableDetail).Opers;
+        ////public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = (info.Node as SchemaTableDetail).Opers;
 
-        }
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public override string ToString()
         {

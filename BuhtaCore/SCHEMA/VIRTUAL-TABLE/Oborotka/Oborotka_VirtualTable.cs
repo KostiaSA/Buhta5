@@ -6,7 +6,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -119,7 +118,7 @@ namespace Buhta
 
             if (props.Registers.Count == 0)
             {
-                MessageBox.Show("Не указан список регистров для оборотной ведомости.");
+                throw new Exception("Не указан список регистров для оборотной ведомости.");
                 return;
             }
             var cte_sql = new StringBuilder();

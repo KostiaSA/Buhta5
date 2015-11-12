@@ -1,6 +1,5 @@
 ﻿using BLToolkit.Data;
 using BLToolkit.Data.DataProvider;
-using DevExpress.XtraTreeList;
 using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
@@ -10,7 +9,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -27,7 +25,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaDatabaseDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaDatabaseDesigner_page() { EditedRecord = this };");
         }
 
         public override string GetTypeDisplay
@@ -148,7 +146,7 @@ namespace Buhta
 
         public override Bitmap GetImage()
         {
-            return global::Buhta.Properties.Resources.SchemaDatabase_16;
+            return new Bitmap("global::Buhta.Properties.Resources.SchemaDatabase_16");
         }
 
         public void SynchronizeSchemaHelperTables(Schema schema)

@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +13,7 @@ namespace Buhta
     public class SchemaQueryJoinColumn : SchemaQueryBaseColumn
     {
         Guid? foreingQueryTableID;
-        [Editor(typeof(SchemaTableOrQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[Editor(typeof(SchemaTableOrQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(SchemaTableOrQuerySelectorTypeConverter))]
         [DisplayName("Внешняя таблица/запрос")]
         public Guid? ForeingQueryTableID
@@ -31,10 +30,10 @@ namespace Buhta
             Columns.CollectionChanged += Columns_CollectionChanged;
         }
 
-        public override void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = Columns;
-        }
+        ////public override void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = Columns;
+        ////}
 
         void Columns_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -66,39 +65,39 @@ namespace Buhta
         }
 
 
-        public override void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (foreingQueryTableID == null)
-            {
-                if (info.Column.FieldName == "Name")
-                {
-                    if (GetJoinView() != null)
-                        info.CellData = Name + " -> " + GetJoinView().GetDisplayName();
-                    else
-                        info.CellData = Name + " -> ?";
-                }
-                else
-                    if (info.Column.FieldName == "Position")
-                        info.CellData = (info.Node as SchemaQueryBaseColumn).Position;
-                    else
-                        info.CellData = null;
-            }
-            else
-            {
-                if (info.Column.FieldName == "Name")
-                {
-                    if (GetJoinView() != null)
-                        info.CellData = Name + " -> " + GetJoinView().GetDisplayName();
-                    else
-                        info.CellData = Name + " -> ?";
-                }
-                else
-                    if (info.Column.FieldName == "Position")
-                        info.CellData = (info.Node as SchemaQueryBaseColumn).Position;
-                    else
-                        info.CellData = null;
-            }
-        }
+        ////public override void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (foreingQueryTableID == null)
+        ////    {
+        ////        if (info.Column.FieldName == "Name")
+        ////        {
+        ////            if (GetJoinView() != null)
+        ////                info.CellData = Name + " -> " + GetJoinView().GetDisplayName();
+        ////            else
+        ////                info.CellData = Name + " -> ?";
+        ////        }
+        ////        else
+        ////            if (info.Column.FieldName == "Position")
+        ////                info.CellData = (info.Node as SchemaQueryBaseColumn).Position;
+        ////            else
+        ////                info.CellData = null;
+        ////    }
+        ////    else
+        ////    {
+        ////        if (info.Column.FieldName == "Name")
+        ////        {
+        ////            if (GetJoinView() != null)
+        ////                info.CellData = Name + " -> " + GetJoinView().GetDisplayName();
+        ////            else
+        ////                info.CellData = Name + " -> ?";
+        ////        }
+        ////        else
+        ////            if (info.Column.FieldName == "Position")
+        ////                info.CellData = (info.Node as SchemaQueryBaseColumn).Position;
+        ////            else
+        ////                info.CellData = null;
+        ////    }
+        ////}
 
         //public override IViewColumn GetJoinView()
         //{

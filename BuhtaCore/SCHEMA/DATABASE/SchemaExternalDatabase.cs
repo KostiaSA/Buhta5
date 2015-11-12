@@ -1,6 +1,5 @@
 ﻿using BLToolkit.Data;
 using BLToolkit.Data.DataProvider;
-using DevExpress.XtraTreeList;
 using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +8,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -47,7 +45,7 @@ namespace Buhta
 
         public override Bitmap GetImage()
         {
-            return global::Buhta.Properties.Resources.SchemaExternalDatabase_16;
+            return new Bitmap("global::Buhta.Properties.Resources.SchemaExternalDatabase_16");
         }
     }
 

@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Buhta
 {
-    public class SchemaReportBand : ISupportInitialize, TreeList.IVirtualTreeListData, INotifyPropertyChanged
+    public class SchemaReportBand : ISupportInitialize,  INotifyPropertyChanged
     {
 
         private string name;
@@ -24,7 +23,7 @@ namespace Buhta
         }
 
         private Guid? queryID;
-        [Editor(typeof(SchemaReportBandQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[Editor(typeof(SchemaReportBandQuerySelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(SchemaReportBandQuerySelectorTypeConverter))]
         [DisplayName("Запрос")]
         public Guid? QueryID
@@ -89,26 +88,26 @@ namespace Buhta
         {
         }
 
-        public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = (info.Node as SchemaReportBand).Name;
-            else
-                if (info.Column.FieldName == "Query")
-                    info.CellData = App.Schema.GetSampleObject<SchemaQuery>((info.Node as SchemaReportBand).QueryID).DisplayName;
-                else
-                    info.CellData = null;
-        }
+        ////public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = (info.Node as SchemaReportBand).Name;
+        ////    else
+        ////        if (info.Column.FieldName == "Query")
+        ////            info.CellData = App.Schema.GetSampleObject<SchemaQuery>((info.Node as SchemaReportBand).QueryID).DisplayName;
+        ////        else
+        ////            info.CellData = null;
+        ////}
 
-        public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = Bands;
-        }
+        ////public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = Bands;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -198,32 +197,32 @@ namespace Buhta
         }
     }
 
-    public class SchemaReportBandQuerySelectorEditor : ObjectSelectorEditor
-    {
-        protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
-          ITypeDescriptorContext theCtx, IServiceProvider theProvider)
-        {
-            base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
+    ////public class SchemaReportBandQuerySelectorEditor : ObjectSelectorEditor
+    ////{
+    ////    protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
+    ////      ITypeDescriptorContext theCtx, IServiceProvider theProvider)
+    ////    {
+    ////        base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
 
-            //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
+    ////        //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
 
-            //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
-            //{
-            //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
-            //theSel.Nodes.Add(aNd);
-            //}
+    ////        //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
+    ////        //{
+    ////        //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
+    ////        //theSel.Nodes.Add(aNd);
+    ////        //}
 
-            foreach (SchemaObject_cache query in App.Schema.Objects_cache.Values)
-            {
-                if (query.RootClass == typeof(SchemaQuery).Name)
-                {
-                    SelectorNode aNd = new SelectorNode(query.Name, query.ID);
-                    theSel.Nodes.Add(aNd);
-                }
-            }
+    ////        foreach (SchemaObject_cache query in App.Schema.Objects_cache.Values)
+    ////        {
+    ////            if (query.RootClass == typeof(SchemaQuery).Name)
+    ////            {
+    ////                SelectorNode aNd = new SelectorNode(query.Name, query.ID);
+    ////                theSel.Nodes.Add(aNd);
+    ////            }
+    ////        }
 
-        }
+    ////    }
 
-    }
+    ////}
 
 }

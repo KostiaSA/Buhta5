@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 namespace Buhta
 {
 
-    public class SchemaMenuBaseItem : ISupportInitialize, TreeList.IVirtualTreeListData, INotifyPropertyChanged
+    public class SchemaMenuBaseItem : ISupportInitialize, INotifyPropertyChanged
     {
         public const string Menu_category = "  Меню";
         public const string Image_category = "Иконка";
@@ -43,7 +42,7 @@ namespace Buhta
         }
 
         private Bitmap image;          
-        [EditorAttribute(typeof(System.Drawing.Design.ImageEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[EditorAttribute(typeof(System.Drawing.Design.ImageEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [DisplayName("Иконка"), Description("Иконка"), Category(Image_category)]
         public Bitmap Image
         {
@@ -53,11 +52,11 @@ namespace Buhta
             }
             set
             {
-                if (value.Width != 32 && value.Height != 32)
-                    image = Images.ResizeBitmap(value, 32);
-                else
-                    image = value;
-                firePropertyChanged("Image");
+                ////if (value.Width != 32 && value.Height != 32)
+                ////    image = Images.ResizeBitmap(value, 32);
+                ////else
+                ////    image = value;
+                ////firePropertyChanged("Image");
             }
         }
 
@@ -115,26 +114,26 @@ namespace Buhta
         {
         }
 
-        public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = (info.Node as SchemaMenuBaseItem).Name;
-            else
-                if (info.Column.FieldName == "Description")
-                    info.CellData = (info.Node as SchemaMenuBaseItem).Description;
-                else
-                    info.CellData = null;
-        }
+        ////public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = (info.Node as SchemaMenuBaseItem).Name;
+        ////    else
+        ////        if (info.Column.FieldName == "Description")
+        ////            info.CellData = (info.Node as SchemaMenuBaseItem).Description;
+        ////        else
+        ////            info.CellData = null;
+        ////}
 
-        public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = null;
-        }
+        ////public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = null;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,12 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
     [JsonObject(IsReference = true)]
-    public class SchemaFormControl : TreeList.IVirtualTreeListData, INotifyPropertyChanged
+    public class SchemaFormControl : INotifyPropertyChanged
     {
 
         private SchemaFormControl parentControl;
@@ -80,23 +78,23 @@ namespace Buhta
                 parentForm.firePropertyChanged("RootControl");
         }
 
-        public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = (info.Node as SchemaFormControl).GetDisplayHtml();
-            else
-                info.CellData = null;
-        }
+        ////public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = (info.Node as SchemaFormControl).GetDisplayHtml();
+        ////    else
+        ////        info.CellData = null;
+        ////}
 
-        public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            info.Children = Controls;
-        }
+        ////public void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    info.Children = Controls;
+        ////}
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public virtual string GetDisplayName()
         {
@@ -126,10 +124,10 @@ namespace Buhta
             return "&nbsp;<span style='color:red'>" + WebUtility.HtmlEncode(attrName) + @"</span><span style='color:blue'>=""" + WebUtility.HtmlEncode(attrValue) + @"""</span>";
         }
 
-        public virtual void Render(Control parentControl)
-        {
-            throw new Exception("Abstract method");
-        }
+        ////public virtual void Render(Control parentControl)
+        ////{
+        ////    throw new Exception("Abstract method");
+        ////}
 
         public virtual void InitializeAfterCreateInDesigner()
         {

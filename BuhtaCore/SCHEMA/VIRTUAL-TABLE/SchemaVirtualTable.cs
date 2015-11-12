@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +6,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -46,7 +44,7 @@ namespace Buhta
 
     }
 
-    public class SchemaVirtualTable : TreeList.IVirtualTreeListData, ISchemaTreeListNode, IViewColumn
+    public class SchemaVirtualTable : ISchemaTreeListNode, IViewColumn
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
@@ -133,23 +131,23 @@ namespace Buhta
         public static void LoadVirtualTables()
         {
 
-            VirtualTables = new Dictionary<Guid, SchemaVirtualTable>();
-            foreach (Lazy<SchemaVirtualTable> vTable in App.Mef.SchemaVirtualTables)
-            {
-                if (VirtualTables.ContainsKey(vTable.Value.ID))
-                {
-                    throw new Exception("Ошибка загрузки витруальных таблиц  '" + vTable.Value.GetType().FullName + "'.\n" +
-                                        "Роль '" + VirtualTables[vTable.Value.ID].GetType().FullName +
-                                        " имеет такой-же ID: " + VirtualTables[vTable.Value.ID].ID.AsSQL());
-                }
-                VirtualTables.Add(vTable.Value.ID, vTable.Value);
-            }
+            ////VirtualTables = new Dictionary<Guid, SchemaVirtualTable>();
+            ////foreach (Lazy<SchemaVirtualTable> vTable in App.Mef.SchemaVirtualTables)
+            ////{
+            ////    if (VirtualTables.ContainsKey(vTable.Value.ID))
+            ////    {
+            ////        throw new Exception("Ошибка загрузки витруальных таблиц  '" + vTable.Value.GetType().FullName + "'.\n" +
+            ////                            "Роль '" + VirtualTables[vTable.Value.ID].GetType().FullName +
+            ////                            " имеет такой-же ID: " + VirtualTables[vTable.Value.ID].ID.AsSQL());
+            ////    }
+            ////    VirtualTables.Add(vTable.Value.ID, vTable.Value);
+            ////}
 
-            // инициализация
-            foreach (var vTable in VirtualTables.Values)
-            {
-                vTable.Initialize();
-            }
+            ////// инициализация
+            ////foreach (var vTable in VirtualTables.Values)
+            ////{
+            ////    vTable.Initialize();
+            ////}
 
         }
 
@@ -185,35 +183,35 @@ namespace Buhta
         //}
 
 
-        public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = Name;
-            else
-                if (info.Column.FieldName == "Description")
-                    info.CellData = Description;
-                else
-                    if (info.Column.FieldName == "Position")
-                        info.CellData = Position;
-                    else
-                        info.CellData = "";
-        }
+        ////public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = Name;
+        ////    else
+        ////        if (info.Column.FieldName == "Description")
+        ////            info.CellData = Description;
+        ////        else
+        ////            if (info.Column.FieldName == "Position")
+        ////                info.CellData = Position;
+        ////            else
+        ////                info.CellData = "";
+        ////}
 
-        public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            //var list = new List<SchemaBaseRole>();
-            //foreach (var role in Roles)
-            //{
-            //    if (role.Value.GetType().BaseType.Equals(this.GetType()))
-            //    {
-            //        list.Add(role.Value);
-            //    }
-            //}
-            //if (list.Count > 0)
-            //    info.Children = list;
-            //else
-            info.Children = null;
-        }
+        ////public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    //var list = new List<SchemaBaseRole>();
+        ////    //foreach (var role in Roles)
+        ////    //{
+        ////    //    if (role.Value.GetType().BaseType.Equals(this.GetType()))
+        ////    //    {
+        ////    //        list.Add(role.Value);
+        ////    //    }
+        ////    //}
+        ////    //if (list.Count > 0)
+        ////    //    info.Children = list;
+        ////    //else
+        ////    info.Children = null;
+        ////}
 
         Guid? parentObjectID;
         public Guid? ParentObjectID
@@ -236,10 +234,10 @@ namespace Buhta
             set { parentObjectID = value; }
         }
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
 
         public string GetDisplayName()

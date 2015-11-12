@@ -1,6 +1,4 @@
 ﻿using BLToolkit.Aspects;
-using DevExpress.XtraPivotGrid;
-using DevExpress.XtraTreeList;
 using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using System;
@@ -62,7 +60,7 @@ namespace Buhta
 
         public override BaseEdit_Page GetEditForm_page()
         {
-            return new SchemaReportDesigner_page() { EditedRecord = this };
+            return new BaseEdit_Page("SchemaReportDesigner_page() { EditedRecord = this }");
         }
 
 

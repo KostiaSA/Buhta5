@@ -6,7 +6,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -35,21 +34,21 @@ namespace Buhta
             //sb.Append(GetDisplayHtmlAttr("FlowDirection", FlowDirection.ToString()));
         }
 
-        public override void Render(Control parentControl)
-        {
-            //NativeFlowLayout = new FlowLayoutPanel();
-            //NativeFlowLayout.AutoSize = true;
-            //NativeFlowLayout.Parent = parentControl;
-            //NativeFlowLayout.FlowDirection = flowDirection;
-            //NativeFlowLayout.WrapContents = wrapContents;
-            //parentControl.Controls.Add(NativeFlowLayout);
+        ////public override void Render(Control parentControl)
+        ////{
+        ////    //NativeFlowLayout = new FlowLayoutPanel();
+        ////    //NativeFlowLayout.AutoSize = true;
+        ////    //NativeFlowLayout.Parent = parentControl;
+        ////    //NativeFlowLayout.FlowDirection = flowDirection;
+        ////    //NativeFlowLayout.WrapContents = wrapContents;
+        ////    //parentControl.Controls.Add(NativeFlowLayout);
 
-            //foreach (SchemaFormControl schemaControl in Controls)
-            //{
-            //    schemaControl.Render((Control)NativeFlowLayout);
-            //}
+        ////    //foreach (SchemaFormControl schemaControl in Controls)
+        ////    //{
+        ////    //    schemaControl.Render((Control)NativeFlowLayout);
+        ////    //}
 
-        }
+        ////}
 
         public override bool IsContainer()
         {

@@ -1,15 +1,13 @@
-﻿using DevExpress.XtraTreeList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
 
-    public class SchemaBaseRole : TreeList.IVirtualTreeListData, ISchemaTreeListNode
+    public class SchemaBaseRole :  ISchemaTreeListNode
     {
         public Guid ID { get; set; }
         public string Name { get;  set; }
@@ -22,23 +20,23 @@ namespace Buhta
         public static void LoadRoles()
         {
 
-            Roles = new Dictionary<Guid, SchemaBaseRole>();
-            foreach (Lazy<SchemaBaseRole> role in App.Mef.SchemaRoles)
-            {
-                if (Roles.ContainsKey(role.Value.ID))
-                {
-                    throw new Exception("Ошибка загрузка роли '" + role.Value.GetType().FullName + "'.\n" +
-                                        "Роль '" + Roles[role.Value.ID].GetType().FullName +
-                                        " имеет такой-же ID: " + Roles[role.Value.ID].ID.AsSQL());
-                }
-                Roles.Add(role.Value.ID, role.Value);
-            }
+            ////Roles = new Dictionary<Guid, SchemaBaseRole>();
+            ////foreach (Lazy<SchemaBaseRole> role in App.Mef.SchemaRoles)
+            ////{
+            ////    if (Roles.ContainsKey(role.Value.ID))
+            ////    {
+            ////        throw new Exception("Ошибка загрузка роли '" + role.Value.GetType().FullName + "'.\n" +
+            ////                            "Роль '" + Roles[role.Value.ID].GetType().FullName +
+            ////                            " имеет такой-же ID: " + Roles[role.Value.ID].ID.AsSQL());
+            ////    }
+            ////    Roles.Add(role.Value.ID, role.Value);
+            ////}
 
-            // инициализация
-            foreach (var role in Roles.Values)
-            {
-                role.Initialize();
-            }
+            ////// инициализация
+            ////foreach (var role in Roles.Values)
+            ////{
+            ////    role.Initialize();
+            ////}
 
         }
 
@@ -74,35 +72,35 @@ namespace Buhta
         }
 
 
-        public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
-        {
-            if (info.Column.FieldName == "Name")
-                info.CellData = Name;
-            else
-                if (info.Column.FieldName == "Description")
-                    info.CellData = Description;
-                else
-                    if (info.Column.FieldName == "Position")
-                        info.CellData = Position;
-                    else
-                        info.CellData = "";
-        }
+        ////public virtual void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
+        ////{
+        ////    if (info.Column.FieldName == "Name")
+        ////        info.CellData = Name;
+        ////    else
+        ////        if (info.Column.FieldName == "Description")
+        ////            info.CellData = Description;
+        ////        else
+        ////            if (info.Column.FieldName == "Position")
+        ////                info.CellData = Position;
+        ////            else
+        ////                info.CellData = "";
+        ////}
 
-        public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            var list = new List<SchemaBaseRole>();
-            foreach (var role in Roles)
-            {
-                if (role.Value.GetType().BaseType.Equals(this.GetType()))
-                {
-                    list.Add(role.Value);
-                }
-            }
-            if (list.Count > 0)
-                info.Children = list;
-            else
-                info.Children = null;
-        }
+        ////public virtual void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    var list = new List<SchemaBaseRole>();
+        ////    foreach (var role in Roles)
+        ////    {
+        ////        if (role.Value.GetType().BaseType.Equals(this.GetType()))
+        ////        {
+        ////            list.Add(role.Value);
+        ////        }
+        ////    }
+        ////    if (list.Count > 0)
+        ////        info.Children = list;
+        ////    else
+        ////        info.Children = null;
+        ////}
 
         Guid? parentObjectID;
         public Guid? ParentObjectID
@@ -125,9 +123,9 @@ namespace Buhta
             set { }
         }
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
     }
 }

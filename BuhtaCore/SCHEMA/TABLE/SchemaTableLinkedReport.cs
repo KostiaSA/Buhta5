@@ -1,10 +1,8 @@
-﻿using DevExpress.XtraTreeList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +13,7 @@ namespace Buhta
     {
         private Guid? reportID;
         [DisplayName(" Шаблон"), Description(""), Category("")]
-        [Editor(typeof(SchemaReportSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        ////[Editor(typeof(SchemaReportSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(SchemaReportSelectorTypeConverter))]
         public Guid? ReportID
         {
@@ -81,10 +79,10 @@ namespace Buhta
         }
 
 
-        public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
-        {
-            throw new NotImplementedException();
-        }
+        ////public void VirtualTreeSetCellValue(VirtualTreeSetCellValueInfo info)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
         public class SchemaReportSelectorTypeConverter : TypeConverter
         {
@@ -106,37 +104,37 @@ namespace Buhta
             }
         }
 
-        public class SchemaReportSelectorEditor : ObjectSelectorEditor
-        {
-            public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
-            {
-                return UITypeEditorEditStyle.Modal;
-            }
+        ////public class SchemaReportSelectorEditor : ObjectSelectorEditor
+        ////{
+        ////    public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+        ////    {
+        ////        return UITypeEditorEditStyle.Modal;
+        ////    }
 
-            void dialog_OnFilterSchemaObject(Object schemaObject, out bool visible)
-            {
-                visible = schemaObject is SchemaReport;
-            }
+        ////    void dialog_OnFilterSchemaObject(Object schemaObject, out bool visible)
+        ////    {
+        ////        visible = schemaObject is SchemaReport;
+        ////    }
 
-            public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-            {
-                if (context != null && context.Instance != null && provider != null)
-                {
-                    //SchemaQueryJoinColumn editedColumn = (SchemaQueryJoinColumn)context.Instance;
+        ////    public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        ////    {
+        ////        if (context != null && context.Instance != null && provider != null)
+        ////        {
+        ////            //SchemaQueryJoinColumn editedColumn = (SchemaQueryJoinColumn)context.Instance;
 
-                    var dialog = new SchemaObjectSelect_dialog<ISchemaTreeListNode>();
-                    dialog.IsIncludeRoleTables = true;
-                    dialog.OnFilterSchemaObject += dialog_OnFilterSchemaObject;
-                    dialog.LoadData();
-                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        return (dialog.SelectedObject as ISchemaTreeListNode).ID;
-                    }
+        ////            var dialog = new SchemaObjectSelect_dialog<ISchemaTreeListNode>();
+        ////            dialog.IsIncludeRoleTables = true;
+        ////            dialog.OnFilterSchemaObject += dialog_OnFilterSchemaObject;
+        ////            dialog.LoadData();
+        ////            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        ////            {
+        ////                return (dialog.SelectedObject as ISchemaTreeListNode).ID;
+        ////            }
 
-                }
-                return value;
-            }
-        }
+        ////        }
+        ////        return value;
+        ////    }
+        ////}
 
     }
 }

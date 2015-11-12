@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraTreeList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -74,35 +73,35 @@ namespace Buhta
 
         }
 
-        public override void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
-        {
-            var list = new List<SchemaBaseRole>();
+        ////public override void VirtualTreeGetChildNodes(VirtualTreeGetChildNodesInfo info)
+        ////{
+        ////    var list = new List<SchemaBaseRole>();
 
-            // колонки таблицы
-            foreach (var role in Roles)
-            {
-                if (role.Value is Колонка_ColumnRole)
-                {
-                    if ((role.Value as Колонка_ColumnRole).TableRoleType == this.GetType())
-                    {
-                        list.Add(role.Value);
-                    }
-                }
-            }
+        ////    // колонки таблицы
+        ////    foreach (var role in Roles)
+        ////    {
+        ////        if (role.Value is Колонка_ColumnRole)
+        ////        {
+        ////            if ((role.Value as Колонка_ColumnRole).TableRoleType == this.GetType())
+        ////            {
+        ////                list.Add(role.Value);
+        ////            }
+        ////        }
+        ////    }
 
-            // таблицы-наследники
-            foreach (var role in Roles)
-            {
-                if (role.Value.GetType().BaseType.Equals(this.GetType()))
-                {
-                    list.Add(role.Value);
-                }
-            }
-            if (list.Count > 0)
-                info.Children = list;
-            else
-                info.Children = null;
-        }
+        ////    // таблицы-наследники
+        ////    foreach (var role in Roles)
+        ////    {
+        ////        if (role.Value.GetType().BaseType.Equals(this.GetType()))
+        ////        {
+        ////            list.Add(role.Value);
+        ////        }
+        ////    }
+        ////    if (list.Count > 0)
+        ////        info.Children = list;
+        ////    else
+        ////        info.Children = null;
+        ////}
 
         public override string DisplayName { get { return GetDisplayName(); } }
 

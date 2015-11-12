@@ -5,11 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Buhta
 {
@@ -26,7 +24,7 @@ namespace Buhta
             set { name = value; firePropertyChanged("Name"); }
         }
 
-        [Editor(typeof(TableColumnRolesSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+////        [Editor(typeof(TableColumnRolesSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(TableColumnRolesSelectorTypeConverter))]
         [DisplayName(" Роль"), Description("Роли"), Category("  Колонка")]
         public ObservableCollection<Guid> ColumnRoles { get; private set; }
@@ -397,71 +395,71 @@ namespace Buhta
         }
     }
 
-    public class TableColumnRolesSelectorEditor : ObjectSelectorEditor
-    {
-        public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
-        {
-            return UITypeEditorEditStyle.Modal;
-        }
+    ////public class TableColumnRolesSelectorEditor : ObjectSelectorEditor
+    ////{
+    ////    public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+    ////    {
+    ////        return UITypeEditorEditStyle.Modal;
+    ////    }
 
-        void dialog_OnFilterSchemaObject(SchemaBaseRole schemaObject, out bool visible)
-        {
-            visible = schemaObject is Колонка_ColumnRole;
-        }
+    ////    void dialog_OnFilterSchemaObject(SchemaBaseRole schemaObject, out bool visible)
+    ////    {
+    ////        visible = schemaObject is Колонка_ColumnRole;
+    ////    }
 
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-        {
+    ////    public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+    ////    {
 
-            if (context != null
-                && context.Instance != null
-                && provider != null)
-            {
-                var editedRoles = value as ObservableCollection<Guid>;
-                SchemaTableColumn editedColumn = (SchemaTableColumn)context.Instance;
+    ////        if (context != null
+    ////            && context.Instance != null
+    ////            && provider != null)
+    ////        {
+    ////            var editedRoles = value as ObservableCollection<Guid>;
+    ////            SchemaTableColumn editedColumn = (SchemaTableColumn)context.Instance;
 
 
-                var dialog = new SchemaTableColumnRoleSelect_dialog();
-                dialog.MultiSelect = true;
-                dialog.AllowedTableRoles = editedColumn.Table.TableRoles;
-                dialog.OnFilterSchemaRole += dialog_OnFilterSchemaObject;
-                foreach (var role in editedRoles)
-                    dialog.SelectedTableColumnRoles.Add(role);
-                dialog.LoadData();
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    editedRoles.Clear();
-                    foreach (var role in dialog.SelectedTableColumnRoles)
-                        editedRoles.Add(role);
-                }
-            }
+    ////            var dialog = new SchemaTableColumnRoleSelect_dialog();
+    ////            dialog.MultiSelect = true;
+    ////            dialog.AllowedTableRoles = editedColumn.Table.TableRoles;
+    ////            dialog.OnFilterSchemaRole += dialog_OnFilterSchemaObject;
+    ////            foreach (var role in editedRoles)
+    ////                dialog.SelectedTableColumnRoles.Add(role);
+    ////            dialog.LoadData();
+    ////            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+    ////            {
+    ////                editedRoles.Clear();
+    ////                foreach (var role in dialog.SelectedTableColumnRoles)
+    ////                    editedRoles.Add(role);
+    ////            }
+    ////        }
 
-            return value;
-        }
-        //protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
-        //  ITypeDescriptorContext theCtx, IServiceProvider theProvider)
-        //{
-        //    base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
+    ////        return value;
+    ////    }
+    ////    //protected override void FillTreeWithData(System.ComponentModel.Design.ObjectSelectorEditor.Selector theSel,
+    ////    //  ITypeDescriptorContext theCtx, IServiceProvider theProvider)
+    ////    //{
+    ////    //    base.FillTreeWithData(theSel, theCtx, theProvider);  //clear the selection
 
-        //    //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
+    ////    //    //    jsqlTableColumn aCtl = (jsqlTableColumn)theCtx.Instance;
 
-        //    //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
-        //    //{
-        //    //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
-        //    //theSel.Nodes.Add(aNd);
-        //    //}
+    ////    //    //foreach (Type tableType in mixUtil.GetAllSubclassTypes(typeof(mixTable)))
+    ////    //    //{
+    ////    //    //SelectorNode aNd = new SelectorNode(tableType.FullName, tableType);
+    ////    //    //theSel.Nodes.Add(aNd);
+    ////    //    //}
 
-        //    foreach (SchemaObject_cache table in App.Schema.Objects_cache.Values)
-        //    {
-        //        if (table.RootClass == typeof(SchemaTable).Name)
-        //        {
-        //            SelectorNode aNd = new SelectorNode(table.Name, table.ID);
-        //            theSel.Nodes.Add(aNd);
-        //        }
-        //    }
+    ////    //    foreach (SchemaObject_cache table in App.Schema.Objects_cache.Values)
+    ////    //    {
+    ////    //        if (table.RootClass == typeof(SchemaTable).Name)
+    ////    //        {
+    ////    //            SelectorNode aNd = new SelectorNode(table.Name, table.ID);
+    ////    //            theSel.Nodes.Add(aNd);
+    ////    //        }
+    ////    //    }
 
-        //}
+    ////    //}
 
-    }
+    ////}
 
 
 
