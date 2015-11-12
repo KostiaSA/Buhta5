@@ -133,7 +133,7 @@ namespace Buhta
                 if (bindingId == null)
                 {
                     bindingId = Guid.NewGuid().ToString();
-                    App.BindingModelList.Add(bindingId, this);
+                    BindingHub.BindingModelList.Add(bindingId, this);
                 }
                 return bindingId;
             }

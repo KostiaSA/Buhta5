@@ -12,13 +12,14 @@ namespace Buhta
 
     public class BindingHub : Hub
     {
+        public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
 
         public void SendBindedValueChanged(string modelBindingID, string propertyName, string newValue)
         {
 
             try
             {
-                BaseModel obj = App.BindingModelList[modelBindingID];
+                BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
@@ -37,7 +38,7 @@ namespace Buhta
         {
             try
             {
-                BaseModel obj = App.BindingModelList[modelBindingID];
+                BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
@@ -54,7 +55,7 @@ namespace Buhta
         {
             try
             {
-                BaseModel obj = App.BindingModelList[modelBindingID];
+                BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
@@ -70,7 +71,7 @@ namespace Buhta
         {
             try
             {
-                BaseModel obj = App.BindingModelList[modelBindingID];
+                BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
             }

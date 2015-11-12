@@ -28,15 +28,15 @@ namespace Buhta
                 value.Remove(value.Length - count, count);
         }
 
-        public static void SaveToFile(this string value, string fileName)
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
-            using (StreamWriter outfile = new StreamWriter(fileName, false, System.Text.Encoding.UTF8))
-            {
-                outfile.Write(value);
-                outfile.Close();
-            }
-        }
+        //public static void SaveToFile(this string value, string fileName)
+        //{
+        //    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+        //    using (StreamWriter outfile = new StreamWriter(fileName, false, System.Text.Encoding.UTF8))
+        //    {
+        //        outfile.Write(value);
+        //        outfile.Close();
+        //    }
+        //}
 
     }
 

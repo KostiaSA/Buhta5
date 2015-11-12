@@ -137,8 +137,9 @@ namespace Buhta
                 TypeNameHandling = TypeNameHandling.Objects,
                 NullValueHandling = NullValueHandling.Ignore
             };
-            
-            T obj = JsonConvert.DeserializeObject<T>(obj_cache.JSON, jsonSettings);
+
+            //obj_cache.JSON.ToString().SaveToFile(@"c:\$\q.txt");
+            T obj = JsonConvert.DeserializeObject<T>(obj_cache.JSON.Replace(@", Buhta""", @", BuhtaCore"""), jsonSettings);
             obj.EndInit();
             return obj;
             //return SchemaObjectsCollection.FindOneByIdAs<T>(ID);

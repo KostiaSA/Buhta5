@@ -40,6 +40,9 @@ namespace Buhta.Controllers
 
         public ActionResult EditTable()
         {
+            OrgTable=App.Schema.GetObjectByName<SchemaTable>("Организация");
+
+
             if (OrgTable == null)
             {
                 OrgTable = new SchemaTable();

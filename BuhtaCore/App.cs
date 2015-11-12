@@ -24,11 +24,11 @@ namespace Buhta
 
         public static Random Random;
 
-        public static Dictionary<Guid, Type> RegisteredScripts = new Dictionary<Guid, Type>();
+        ////public static Dictionary<Guid, Type> RegisteredScripts = new Dictionary<Guid, Type>();
 
         ////public static Font DefaultFont = new Font("Tahoma", 9f);
 
-        public const string RegistryPath = @"SOFTWARE\BuhtaNew";
+        ////public const string RegistryPath = @"SOFTWARE\BuhtaNew";
 
         //static App()
         //{
@@ -110,7 +110,7 @@ namespace Buhta
             ////mefContainer.ComposeParts(Mef);
 
 
-            Schema = new Schema("ps-web", null, "KutinSchema", "sa1", "sonyk");    // работа
+            Schema = new Schema("ps-web", null, "BuhtaSchema", "sa1", "sonyk");    // работа
             //Schema = new Schema(@"black\black2012", null, "KutinSchema", "sa1", "sonyk");    // работа
 
             var sqlDatabases = Schema.GetObjects<SchemaDatabase>();

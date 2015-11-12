@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿
+using Microsoft.Owin;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Buhta
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            App.Start();
         }
     }
 
