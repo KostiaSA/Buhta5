@@ -157,6 +157,13 @@
     <Compile Include="Areas\BuhtaCore\App.cs" />
     <Compile Include="Areas\BuhtaCore\BuhtaCoreAreaRegistration.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\BindingHub.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xFormButtonsRowEnd.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xFormButtonsRowBegin.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xFormCancelButton.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xFormSaveButton.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xPageTitle.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xFormEnd.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xFormBegin.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xControl.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\CONTROLS\xGrid.cs" />
@@ -176,6 +183,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\buhta-core.css" />
     <Content Include="Content\JQWidgets\images\backgroundTop.png" />
     <Content Include="Content\JQWidgets\images\backImage.png" />
     <Content Include="Content\JQWidgets\images\bg_black.png" />
@@ -593,7 +601,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Home\EditTable.cshtml" />
-    <Content Include="Views\Shared\TableColumnEditorWindow.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

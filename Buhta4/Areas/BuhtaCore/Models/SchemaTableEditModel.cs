@@ -14,7 +14,8 @@ namespace Buhta
             var model = new SchemaTableColumnEditModel();
             model.Column = Table.Columns[0];
 
-            var xx = R.RenderViewToString(Controller, @"TableColumnEditorWindow", model); //-это работает
+            var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
+            ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
         }
 
         public void Test1ButtonClick(dynamic args)

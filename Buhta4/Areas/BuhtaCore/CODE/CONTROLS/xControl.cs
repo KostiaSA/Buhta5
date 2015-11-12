@@ -10,14 +10,17 @@ namespace Buhta
     public delegate void xControlOnChangeEventHandler<SenderT, NewValueT>(SenderT sender, NewValueT newValue);
     public delegate string xControlOnClickEventHandler<SenderT>(SenderT sender);
 
+    public enum TagInTable { None, AsRow, AsDetail }
+
     public class xControlSettings
     {
+        public TagInTable InTable = TagInTable.None;
+
         //public bool? Visible = true;
 
 
         //public void BindProp(string modelProp, string controlProp);
         //public void BindFunc(string modelFunc, string controlFunc);
-
     }
 
     public class xControl<T> where T : xControlSettings, new()
@@ -57,10 +60,11 @@ namespace Buhta
             throw new Exception("метод '" + nameof(GetJqxName) + "' не реализован для " + GetType().Name);
         }
 
-        public void EmitBeginScript(StringBuilder script)
+        public void EmitBeginScript(StringBuilder script, bool skipJqxInit = false)
         {
             Script.AppendLine("var tag =$('#" + UniqueId + "');");
-            Script.AppendLine("tag." + GetJqxName() + "({});");
+            if (!skipJqxInit)
+                Script.AppendLine("tag." + GetJqxName() + "({});");
         }
 
         public void EmitProperty(StringBuilder script, string jqxPropertyName, object value)
@@ -127,7 +131,7 @@ namespace Buhta
                 script.AppendLine("    tag." + GetJqxName() + "({" + jqxPropertyName + ":newValue});");
                 script.AppendLine("});");
 
-                script.AppendLine("tag.on('"+jqxEventName+"', function () {");
+                script.AppendLine("tag.on('" + jqxEventName + "', function () {");
                 script.AppendLine("    bindingHub.server.sendBindedValueChanged('{{Model.BindingId}}', '{{settings.BindValueTo}}',tag." + GetJqxName() + "('" + jqxPropertyName + "'));");
                 script.AppendLine("}); ");
 

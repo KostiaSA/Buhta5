@@ -9,7 +9,9 @@ namespace Buhta
     {
         public SchemaTableColumn Column { get; set; }
 
-        public void SaveButtonClick(dynamic args)
+        public override string PageTitle { get { return "Колонка: "+Column.Name; } }
+
+        public override void SaveButtonClick(dynamic args)
         {
 
             //Table.Name = "Жопа";

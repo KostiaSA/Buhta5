@@ -1,0 +1,24 @@
+﻿.x-form-td {
+    padding: 3px;
+}
+
+.x-form-buttons-row {
+    padding-top: 10px;
+    float:right;
+}
+
+.x-page-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #428bca;
+    padding-top: 5px;
+    padding-left: 3px;
+    padding-bottom: 5px;
+}
+
+input[type=text].jqx-input, input[type=password].jqx-input {
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: rgba(255, 247, 0, 0.02);
+}
+

@@ -17,6 +17,8 @@ namespace Buhta
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
 
+        public virtual string PageTitle { get { return "PageTitle"; } }
+
         public void Update()
         {
             var toSend = new Dictionary<string, object>();
@@ -257,30 +259,23 @@ namespace Buhta
             }
         }
 
-        public virtual string RenderView(ViewContext viewContext)
+        public void ShowWindow(string viewName, object model)
         {
-            var response = viewContext.HttpContext.Response;
-            response.Flush();
-            var oldFilter = response.Filter;
-            Stream filter = null;
-            try
-            {
-                filter = new MemoryStream();
-                response.Filter = filter;
-                viewContext.View.Render(viewContext, viewContext.HttpContext.Response.Output);
-                response.Flush();
-                filter.Position = 0;
-                var reader = new StreamReader(filter, response.ContentEncoding);
-                return reader.ReadToEnd();
-            }
-            finally
-            {
-                if (filter != null)
-                {
-                    filter.Dispose();
-                }
-                response.Filter = oldFilter;
-            }
+            var windowHtml = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
+            Hub.Clients.Group(BindingId).receiveShowWindow(windowHtml);
+
+        }
+
+        public virtual void SaveButtonClick(dynamic args)
+        {
+
+
+        }
+
+        public virtual void CancelButtonClick(dynamic args)
+        {
+
+
         }
 
     }
