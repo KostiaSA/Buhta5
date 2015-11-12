@@ -1,0 +1,39 @@
+﻿@model Buhta.SchemaTableColumnEditModel
+
+@Html.xPageTitle(s =>
+{
+    s.Text_Bind = nameof(Model.PageTitle);
+})
+
+@Html.xFormBegin()
+@Html.xInput(s =>
+{
+    s.InTable = TagInTable.AsRow;
+    s.Text_Bind = nameof(Model.Column) + "." + nameof(Model.Column.Name);
+    s.Label = "Имя колонки";
+    s.Height = 20;
+    s.Width = 300;
+
+})
+
+@Html.xInput(s =>
+{
+    s.InTable = TagInTable.AsRow;
+    s.Text_Bind = nameof(Model.Column) + "." + nameof(Model.Column.Description);
+    s.Label = "Описание";
+    s.Height = 20;
+    s.Width = 500;
+
+})
+
+@Html.xFormButtonsRowBegin()
+
+@Html.xFormSaveButton()
+@Html.xFormCancelButton()
+
+@Html.xFormButtonsRowEnd()
+
+@Html.xFormEnd()
+
+
+
