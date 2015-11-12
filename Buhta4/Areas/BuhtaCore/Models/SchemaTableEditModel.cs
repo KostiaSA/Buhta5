@@ -9,6 +9,11 @@ namespace Buhta
     {
         public SchemaTable Table { get { return EditedObject; } }
 
+        public void CloseColumnEditor(dynamic args)
+        {
+            Table.Name="закрыто";
+        }
+
         public void EditFirstColumnButtonClick(dynamic args)
         {
             var model = new SchemaTableColumnEditModel();
@@ -18,6 +23,7 @@ namespace Buhta
 
 
             var win = CreateWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model);
+            win.OnClose_Bind = nameof(CloseColumnEditor);
             win.Show();
             //ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
         }
