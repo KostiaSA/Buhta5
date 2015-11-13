@@ -44,7 +44,7 @@ namespace Buhta
         {
             //EmitBeginScript(Script);
 
-            Html.Append("<table class='x-form' id='" + UniqueId + "'>");
+            Html.Append("<table class='x-form' id='" + UniqueId + "' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + ">");
 
             return base.GetHtml();
         }

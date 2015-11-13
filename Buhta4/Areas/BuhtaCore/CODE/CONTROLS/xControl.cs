@@ -15,6 +15,24 @@ namespace Buhta
     public class xControlSettings
     {
         public TagInTable InTable = TagInTable.None;
+        public string ClassAttr;
+        public string StyleAttr;
+
+        public string GetClassAttr()
+        {
+            if (ClassAttr != null)
+                return " class='" + ClassAttr + "' ";
+            else
+                return "";
+        }
+
+        public string GetStyleAttr()
+        {
+            if (StyleAttr != null)
+                return " style='" + StyleAttr + "' ";
+            else
+                return "";
+        }
 
         //public bool? Visible = true;
 
@@ -64,7 +82,7 @@ namespace Buhta
         {
             Script.AppendLine("var tag =$('#" + UniqueId + "');");
             if (!skipJqxInit)
-                Script.AppendLine("tag." + GetJqxName() + "({});");
+                Script.AppendLine("tag." + GetJqxName() + "({theme:'bootstrap'});");
         }
 
         public void EmitProperty(StringBuilder script, string jqxPropertyName, object value)

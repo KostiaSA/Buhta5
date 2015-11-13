@@ -93,7 +93,7 @@ namespace Buhta
 
             EmitEvent_Bind(Script, Settings.OnClick_Bind, "click");
 
-            Html.Append("<input type='button'  id='" + UniqueId + "'/>");
+            Html.Append("<input type='button'  id='" + UniqueId + "' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + "/>");
 
             return base.GetHtml();
         }

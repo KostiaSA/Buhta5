@@ -91,13 +91,13 @@ namespace Buhta
                 labelHtml = "<div>"+ Settings.Label + "</div>";
 
             if (Settings.InTable == TagInTable.None)
-                Html.Append(labelHtml+"<input type='text'  id='" + UniqueId + "'/>");
+                Html.Append(labelHtml+"<input type='text'  id='" + UniqueId + "' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + "/>");
             else
             if (Settings.InTable == TagInTable.AsDetail)
-                Html.Append("<td class='x-form-td'>" + labelHtml+ "</td><td class='x-form-td'><input type='text'  id='" + UniqueId + "'/></td>");
+                Html.Append("<td class='x-form-td'>" + labelHtml+ "</td><td class='x-form-td'><input type='text'  id='" + UniqueId + "' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + "/></td>");
             else
             if (Settings.InTable == TagInTable.AsRow)
-                Html.Append("<tr class='x-form-tr'><td class='x-form-td'>" + labelHtml+ "</td><td class='x-form-td'><input type ='text' id='" + UniqueId + "'/></td></tr>");
+                Html.Append("<tr class='x-form-tr'><td class='x-form-td'>" + labelHtml+ "</td><td class='x-form-td'><input type ='text' id='" + UniqueId + "' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + "/></td></tr>");
             else
                 throw new Exception(nameof(xInput)+": неизвестный "+ nameof(Settings) +"."+ nameof(Settings.InTable));
             return base.GetHtml();

@@ -45,7 +45,7 @@ namespace Buhta
         {
             //EmitBeginScript(Script);
 
-            Html.Append("<tr><td colspan='10'><div class='x-form-buttons-row'>");
+            Html.Append("<tr><td colspan='10'><div class='x-form-buttons-row' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + ">");
             return base.GetHtml();
         }
 

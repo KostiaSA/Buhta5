@@ -181,7 +181,7 @@ namespace Buhta
             //Script.AppendLine("tag." + GetJqxName() + "('updatebounddata');");
 
 
-            Html.Append("<div id='" + UniqueId + "'/>");
+            Html.Append("<div id='" + UniqueId + "' " + Settings.GetClassAttr() + Settings.GetStyleAttr() + "/>");
 
             return base.GetHtml();
         }

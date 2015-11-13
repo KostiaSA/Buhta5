@@ -36,6 +36,7 @@ namespace Buhta.Controllers
         }
 
 
+
         SchemaTable OrgTable;
 
         public ActionResult EditTable()
