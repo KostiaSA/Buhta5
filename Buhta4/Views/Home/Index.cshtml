@@ -2,7 +2,6 @@
     ViewBag.Title = "Home Page";
 }
 
-
 <div class="navbar navbar-inverse1 .navbar-static-top navbar-fixed-top1">
     <div class="container">
         <div class="navbar-header">
@@ -20,11 +19,27 @@
                 <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
                 <li>@Html.ActionLink("EditTable", "EditTable", "Home")</li>
                 <li><a href="@Url.Action("EditTable", "Home")" target="_blank">Таблица</a></li>
+                <li><a href="#" id="111">OpenWin</a></li>
+                <script>
+                    $(document).ready(function () {
+                        $("#111").on('click',function () {
+                            //alert('cli');
+                            var newWin = window.open(
+                                "",
+                               //"http://javascript.ru",
+                               "111blank"//,
+                               //"top=300,left=500,width=220,height=530,resizable=no,scrollbars=yes,status=no,location=no,menubar=no,directories=no"
+                            )
+                            newWin.document.hub = bindingHub;
+                            newWin.document.write("<p>This is 'MsgWindow'. I am 200px wide and 100px tall!</p><script>alert('w')<"+"/script>");
+                            newWin.focus()
+                        });
+                    });
+                </script>
             </ul>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
