@@ -30,8 +30,12 @@
                                "111blank"//,
                                //"top=300,left=500,width=220,height=530,resizable=no,scrollbars=yes,status=no,location=no,menubar=no,directories=no"
                             )
-                            newWin.document.hub = bindingHub;
-                            newWin.document.write("<p>This is 'MsgWindow'. I am 200px wide and 100px tall!</p><script>alert('w')<"+"/script>");
+                            newWin.oldHub = "11";
+                            //newWin.location.href = "Home/EditTable";
+                            //newWin.document.bindingHub = bindingHub;
+                            //newWin.bindingHub = bindingHub;
+                            //window.onload(function () { newWin.bindingHub = bindingHub; });
+                            //newWin.document. write("<p>This is 'MsgWindow'. I am 200px wide and 100px tall!</p><script>alert('w')<"+"/script>");
                             newWin.focus()
                         });
                     });
@@ -40,6 +44,16 @@
         </div>
     </div>
 </div>
+
+@Html.xButton(s =>
+   {
+       //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+       s.Text_Bind = "Column.Name";
+       s.ClassAttr = "pull-right";
+       s.StyleAttr = "margin-left:10px";
+   })
+
+
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>

@@ -26,13 +26,7 @@
     @RenderSection("scripts", required: false)
 </head>
 <body>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
-    </div>
+    @RenderBody()
     <div id="popups"></div>
 </body>
 </html>

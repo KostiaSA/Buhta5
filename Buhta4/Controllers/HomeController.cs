@@ -10,7 +10,9 @@ namespace Buhta.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new SchemaTableColumnEditModel();
+            model.Column = new SchemaTableColumn() { Name = "это жопа1" };
+            return View(model);
         }
 
         public ActionResult About()
@@ -41,7 +43,7 @@ namespace Buhta.Controllers
 
         public ActionResult EditTable()
         {
-            OrgTable=App.Schema.GetObjectByName<SchemaTable>("Организация");
+            OrgTable = App.Schema.GetObjectByName<SchemaTable>("Организация");
 
 
             if (OrgTable == null)

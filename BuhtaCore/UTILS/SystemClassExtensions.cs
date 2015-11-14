@@ -134,6 +134,23 @@ namespace Buhta
             return msg + "\n\n" + info.ToString();
         }
     }
+
+
+
+
+
+    public static class EnumExtention
+    {
+        public static string ToNameString(this Enum value)
+        {
+            return Enum.GetName(value.GetType(), value);
+        }
+    }
+
+
+
+
+
     public static class StringExtention
     {
         public static string Repeat(this char chatToRepeat, int repeat)
