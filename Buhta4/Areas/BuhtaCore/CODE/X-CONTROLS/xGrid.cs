@@ -22,6 +22,7 @@ namespace Buhta
 
     }
 
+
     public class xGridSettings : xControlSettings
     {
         public bool? Disabled;
@@ -32,6 +33,18 @@ namespace Buhta
 
         public int? Height;
         public string Height_Bind;
+
+        public bool? AutoHeight;
+        public string AutoHeight_Bind;
+
+        public bool? Pageable;
+        public string Pageable_Bind;
+
+        public int? PageSize;
+        public string PageSize_Bind;
+
+        public string KeyDataField;
+        public string ParentDataField;
 
         public string DataSource_Bind;
 
@@ -45,35 +58,35 @@ namespace Buhta
             columns.Add(col);
         }
 
-        public void EmitDataSource_Bind(StringBuilder script, BaseModel model)
-        {
-            if (DataSource_Bind != null)
-            {
-                if (!model.BindedProps.ContainsKey(DataSource_Bind))
-                {
-                    model.BindedProps.Add(DataSource_Bind, model.GetPropertyValue(DataSource_Bind));
-                }
-                //script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[DataSource_Bind] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
-                //script.AppendLine("    tag.jqxGrid(newValue);");
-                script.AppendLine("  source.localdata=newDataArray;");
-                script.AppendLine("  tag.jqxGrid('updatebounddata');");
-                script.AppendLine("});");
+        //public void EmitDataSource_Bind(StringBuilder script, BaseModel model)
+        //{
+        //    if (DataSource_Bind != null)
+        //    {
+        //        if (!model.BindedProps.ContainsKey(DataSource_Bind))
+        //        {
+        //            model.BindedProps.Add(DataSource_Bind, model.GetPropertyValue(DataSource_Bind));
+        //        }
+        //        //script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[DataSource_Bind] + ");");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
+        //        //script.AppendLine("    tag.jqxGrid(newValue);");
+        //        script.AppendLine("  source.localdata=newDataArray;");
+        //        script.AppendLine("  tag.jqxGrid('updatebounddata');");
+        //        script.AppendLine("});");
 
 
-                var fieldNames = "";
-                foreach (var col in Columns)
-                    fieldNames += col.Field_Bind + ",";
-                fieldNames = fieldNames.WithOutLastChar();
+        //        var fieldNames = "";
+        //        foreach (var col in Columns)
+        //            fieldNames += col.Field_Bind + ",";
+        //        fieldNames = fieldNames.WithOutLastChar();
 
-                script.AppendLine("$.connection.hub.start().done(function() {");
-                script.AppendLine("  $.connection.bindingHub.server.sendGridDataSourceRequest(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ","+ fieldNames.AsJavaScript() + ");");
-                script.AppendLine("});");
+        //        script.AppendLine("$.connection.hub.start().done(function() {");
+        //        script.AppendLine("  $.connection.bindingHub.server.sendGridDataSourceRequest(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + "," + fieldNames.AsJavaScript() + ");");
+        //        script.AppendLine("});");
 
 
-            }
+        //    }
 
-        }
+        //}
 
 
     }
@@ -82,7 +95,10 @@ namespace Buhta
     {
         public override string GetJqxName()
         {
-            return "jqxGrid";
+            if (isTreeListMode())
+                return "jqxTreeGrid";
+            else
+                return "jqxTree";
         }
 
         public xGrid(object model, xGridSettings settings) : base(model, settings) { }
@@ -100,6 +116,45 @@ namespace Buhta
         //    Settings = new xGridSettings();
         //    settings(Settings);
         //}
+
+        private bool isTreeListMode()
+        {
+            return Settings.ParentDataField != null;
+        }
+
+        public void EmitDataSource_Bind(StringBuilder script, BaseModel model)
+        {
+            if (Settings.DataSource_Bind != null)
+            {
+                if (!model.BindedProps.ContainsKey(Settings.DataSource_Bind))
+                {
+                    model.BindedProps.Add(Settings.DataSource_Bind, model.GetPropertyValue(Settings.DataSource_Bind));
+                }
+                //script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[DataSource_Bind] + ");");
+                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + model.BindingId + "', " + Settings.DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
+                //script.AppendLine("    tag.jqxGrid(newValue);");
+                script.AppendLine("  source.localdata=newDataArray;");
+                if (!isTreeListMode())
+                    script.AppendLine("  tag." + GetJqxName() + "('updatebounddata');");
+                else
+                    script.AppendLine("  tag." + GetJqxName() + "('updateBoundData');");
+                script.AppendLine("});");
+
+
+                var fieldNames = "";
+                foreach (var col in Settings.Columns)
+                    fieldNames += col.Field_Bind + ",";
+                fieldNames = fieldNames.WithOutLastChar();
+
+                script.AppendLine("$.connection.hub.start().done(function() {");
+                script.AppendLine("  $.connection.bindingHub.server.sendGridDataSourceRequest(window.name,'" + model.BindingId + "', " + Settings.DataSource_Bind.AsJavaScript() + "," + fieldNames.AsJavaScript() + ");");
+                script.AppendLine("});");
+
+
+            }
+
+        }
+
 
         public override string GetHtml()
         {
@@ -145,7 +200,14 @@ namespace Buhta
             EmitProperty(Script, "disabled", Settings.Disabled);
             EmitProperty_Bind(Script, Settings.Disabled_Bind, "disabled");
 
+            EmitProperty(Script, "autoheight", Settings.AutoHeight);
+            EmitProperty_Bind(Script, Settings.AutoHeight_Bind, "autoheight");
 
+            EmitProperty(Script, "pageable", Settings.Pageable);
+            EmitProperty_Bind(Script, Settings.Pageable_Bind, "pageable");
+
+            EmitProperty(Script, "pagesize", Settings.PageSize);
+            EmitProperty_Bind(Script, Settings.PageSize_Bind, "pagesize");
 
             Script.AppendLine("var columns=[];");
             Script.AppendLine("var col;");
@@ -156,6 +218,14 @@ namespace Buhta
                     Script.AppendLine("col.text=" + col.Caption.AsJavaScript() + ";");
                 if (col.Field_Bind != null)
                     Script.AppendLine("col.datafield=" + col.Field_Bind.AsJavaScript() + ";");
+
+                if (col.Width != null)
+                    Script.AppendLine("col.width=" + col.Width + ";");
+
+                if (col.Hidden != null)
+                    Script.AppendLine("col.hidden=" + col.Hidden.AsJavaScript() + ";");
+
+
                 Script.AppendLine("columns.push(col);");
             }
 
@@ -166,14 +236,28 @@ namespace Buhta
                 col.EmitDataField(Script, index++);
             }
 
-            Script.AppendLine("var source={localdata:[], datatype:'array', datafields:fields};");
+            string keyDataFieldStr = "";
+            if (Settings.KeyDataField != null)
+            {
+                keyDataFieldStr = ",id:'" + Settings.KeyDataField + "'";
+            }
+
+            string hierarchyStr = "";
+            if (Settings.ParentDataField != null)
+            {
+                if (Settings.KeyDataField == null)
+                    throw new Exception(nameof(xGrid) + ": не заполнен " + nameof(Settings.KeyDataField));
+                hierarchyStr = ",hierarchy:{keyDataField:{name:'" + Settings.KeyDataField + "'},parentDataField:{name:'" + Settings.ParentDataField + "'}},";
+            }
+
+            Script.AppendLine("var source={localdata:[], datatype:'array'" + keyDataFieldStr + ", datafields:fields" + hierarchyStr + "};");
 
             Script.AppendLine("var dataAdapter=new $.jqx.dataAdapter(source);");
             Script.AppendLine("tag." + GetJqxName() + "({columns:columns, source:dataAdapter});");
 
 
 
-            Settings.EmitDataSource_Bind(Script, Model);
+            EmitDataSource_Bind(Script, Model);
 
             //            Script.AppendLine("tag." + GetJqxName() + "('refreshdata');");
             //            Script.AppendLine("tag." + GetJqxName() + "('refresh');");

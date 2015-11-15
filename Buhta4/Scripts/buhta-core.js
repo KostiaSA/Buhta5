@@ -16,6 +16,7 @@ if (window.opener && window.opener.bindingHub) {
 }
 else {
     window.name = "parent";
+    signalr.wins[window.name]=window;
     bindingHub = $.connection.bindingHub;
 
 

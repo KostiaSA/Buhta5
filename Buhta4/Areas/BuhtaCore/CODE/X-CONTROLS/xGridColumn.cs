@@ -15,6 +15,9 @@ namespace Buhta
         public int? Width;
         public string Width_Bind;
 
+        public bool? Hidden;
+        public string Hidden_Bind;
+
         public string Caption;
         public string Caption_Bind;
 

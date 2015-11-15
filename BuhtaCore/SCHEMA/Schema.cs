@@ -68,7 +68,7 @@ namespace Buhta
             {
                 if (objects_cache == null || objects_cache.Count == 0)
                 {
-                    using (var db = GetDbManager())
+                    using (var db = GetMetadataDbManager())
                     {
                         objects_cache = db.SetCommand("SELECT * FROM SchemaObject").ExecuteDictionary<Guid, SchemaObject_cache>("ID");
                         foreach (var cache in objects_cache.Values)
@@ -119,7 +119,7 @@ namespace Buhta
 
             if (!Objects_cache.Keys.Contains(ID))
             {
-                using (var db = GetDbManager())
+                using (var db = GetMetadataDbManager())
                 {
                     var obj_cache_to_load = db.SetCommand("SELECT * FROM SchemaObject WHERE ID=" + ID.AsSQL()).ExecuteObject<SchemaObject_cache>();
                     if (obj_cache_to_load == null)
@@ -192,7 +192,7 @@ namespace Buhta
             }
         }
 
-        public DbManager GetDbManager()
+        public DbManager GetMetadataDbManager()
         {
             SqlDataProvider dataProvider = new SqlDataProvider();
             var db = new DbManager(dataProvider, ConnectionString);
@@ -221,7 +221,7 @@ WHERE ID=" + objectToDelete.ID.AsSQL());
 
             sql.AppendLine(@"COMMIT");
 
-            using (var db = GetDbManager())
+            using (var db = GetMetadataDbManager())
             {
                 db.SetCommand(sql.ToString()).ExecuteNonQuery();
             }
@@ -294,7 +294,7 @@ WHERE ID=" + objectToSave.ID.AsSQL());
 
             sql.AppendLine(@"COMMIT");
 
-            using (var db = GetDbManager())
+            using (var db = GetMetadataDbManager())
             {
                 db.SetCommand(sql.ToString()).ExecuteNonQuery();
             }

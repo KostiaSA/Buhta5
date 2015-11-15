@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -60,6 +61,36 @@ namespace Buhta
             return list;
         }
 
+        public List<object[]> DataViewToJSArray(DataView dataView, string _fieldNames)
+        {
+            var list = new List<object[]>();
+            var fieldNames = _fieldNames.Split(',');
+
+            foreach (DataRowView rowView in dataView)
+            {
+                DataRow row = rowView.Row;
+                // Do something //
+                var row_array = new object[fieldNames.Length];
+                for (int i = 0; i < fieldNames.Length; i++)
+                {
+                    row_array[i] = row[fieldNames[i]];
+                }
+                list.Add(row_array);
+            }
+
+            //foreach (var row in source)
+            //{
+            //    var row_array = new object[fieldNames.Length];
+            //    for (int i = 0; i < fieldNames.Length; i++)
+            //    {
+            //        row_array[i] = row.EvalPropertyValue(fieldNames[i]);
+            //    }
+            //    list.Add(row_array);
+            //}
+
+            return list;
+        }
+
         // используется при изменении "collection"
         public void UpdateCollection(string propName)
         {
@@ -84,10 +115,16 @@ namespace Buhta
         {
 
             object newValue = GetPropertyValue(propName);
-            if (!(newValue is IEnumerable<object>))
-                throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable");
+            List<object[]> toSend;
 
-            var toSend = EnumerableToJSArray((IEnumerable<object>)newValue, fieldNames);
+
+            if (newValue is IEnumerable<object>)
+                toSend = EnumerableToJSArray((IEnumerable<object>)newValue, fieldNames);
+            else
+            if (newValue is DataView)
+                toSend = DataViewToJSArray((DataView)newValue, fieldNames);
+            else
+                throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
 
             Hub.Clients.Group(BindingId).receiveBindedValueChanged("",BindingId, propName, toSend);
 

@@ -47,6 +47,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BLToolkit.4, Version=4.3.2.0, Culture=neutral, PublicKeyToken=b1d3f6ab3aadaca3, processorArchitecture=MSIL">
+      <HintPath>..\packages\BLToolkit.4.3.2\lib\net40\BLToolkit.4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -179,6 +183,9 @@
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableEditModel.cs" />
+    <Compile Include="Areas\BuhtaSchemaDesigner\BuhtaSchemaDesignerAreaRegistration.cs" />
+    <Compile Include="Areas\BuhtaSchemaDesigner\Controllers\BuhtaSchemaDesignerController.cs" />
+    <Compile Include="Areas\BuhtaSchemaDesigner\Models\BuhtaSchemaDesignerModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -500,6 +507,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\web.config" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

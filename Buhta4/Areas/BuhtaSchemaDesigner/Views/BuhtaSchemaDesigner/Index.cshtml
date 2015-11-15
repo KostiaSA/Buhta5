@@ -1,0 +1,76 @@
+﻿@model BuhtaSchemaDesignerModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container body-content">
+    <h3>
+        <img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />
+        Дизайнер схемы
+    </h3>
+
+
+    <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Схема </h4>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div style="padding: 5px; display: inline-block">всего колонок: 8</div>
+
+            @Html.xButton(s =>
+               {
+                   //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                   s.Text = "Test1";
+                   s.ClassAttr = "pull-right";
+                   s.StyleAttr = "margin-left:10px";
+               })
+
+            <button class="btn btn-default btn-sm pull-right">Удалить</button>
+            <button class="btn btn-default btn-sm pull-right">Изменить</button>
+            <button class="btn btn-default btn-sm pull-right">Добавить</button>
+        </div>
+
+        <div class="panel-body">
+            @Html.xGrid(grid =>
+       {
+           grid.Width = 700;
+           //grid.AutoHeight = true;
+           grid.Pageable = true;
+           grid.PageSize = 100;
+
+           grid.DataSource_Bind = nameof(Model.SchemaObjectList);
+           grid.KeyDataField = "ID";
+           grid.ParentDataField = "ParentObjectID";
+
+           grid.AddColumn(c =>
+           {
+               c.Caption = "ID";
+               c.Field_Bind = "ID";
+               c.Hidden = true;
+           });
+
+           grid.AddColumn(c =>
+           {
+               c.Caption = "Name";
+               c.Field_Bind = "Name";
+               c.Width = 400;
+           });
+
+           grid.AddColumn(c =>
+           {
+               c.Caption = "RootType";
+               c.Field_Bind = "RootType";
+               //c.DataType = GridColumnDataType.Number;
+           });
+
+           grid.AddColumn(c =>
+           {
+               c.Caption = "ParentObjectID";
+               c.Field_Bind = "ParentObjectID";
+           });
+       })
+        </div>
+    </div>
+
+</div>
+
