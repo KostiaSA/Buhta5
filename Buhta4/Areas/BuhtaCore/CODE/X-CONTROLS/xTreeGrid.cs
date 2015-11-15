@@ -9,21 +9,21 @@ namespace Buhta
 {
     public static partial class HtmlHelperExtensions
     {
-        public static MvcHtmlString xGrid(this HtmlHelper helper, xGridSettings settings)
+        public static MvcHtmlString xTreeGrid(this HtmlHelper helper, xTreeGridSettings settings)
         {
-            return new MvcHtmlString(new xGrid(helper.ViewData.Model, settings).GetHtml());
+            return new MvcHtmlString(new xTreeGrid(helper.ViewData.Model, settings).GetHtml());
         }
 
-        public static MvcHtmlString xGrid(this HtmlHelper helper, Action<xGridSettings> settings)
+        public static MvcHtmlString xTreeGrid(this HtmlHelper helper, Action<xTreeGridSettings> settings)
         {
 
-            return new MvcHtmlString(new xGrid(helper.ViewData.Model, settings).GetHtml());
+            return new MvcHtmlString(new xTreeGrid(helper.ViewData.Model, settings).GetHtml());
         }
 
     }
 
 
-    public class xGridSettings : xControlSettings
+    public class xTreeGridSettings : xControlSettings
     {
         public bool? Disabled;
         public string Disabled_Bind;
@@ -44,15 +44,16 @@ namespace Buhta
         public string PageSize_Bind;
 
         public string KeyDataField;
+        public string ParentDataField;
 
         public string DataSource_Bind;
 
-        List<xGridColumnSettings> columns = new List<xGridColumnSettings>();
-        public List<xGridColumnSettings> Columns { get { return columns; } }
+        List<xTreeGridColumnSettings> columns = new List<xTreeGridColumnSettings>();
+        public List<xTreeGridColumnSettings> Columns { get { return columns; } }
 
-        public void AddColumn(Action<xGridColumnSettings> settings)
+        public void AddColumn(Action<xTreeGridColumnSettings> settings)
         {
-            var col = new xGridColumnSettings();
+            var col = new xTreeGridColumnSettings();
             settings(col);
             columns.Add(col);
         }
@@ -67,9 +68,9 @@ namespace Buhta
         //        }
         //        //script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[DataSource_Bind] + ");");
         //        script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
-        //        //script.AppendLine("    tag.jqxGrid(newValue);");
+        //        //script.AppendLine("    tag.jqxTreeGrid(newValue);");
         //        script.AppendLine("  source.localdata=newDataArray;");
-        //        script.AppendLine("  tag.jqxGrid('updatebounddata');");
+        //        script.AppendLine("  tag.jqxTreeGrid('updatebounddata');");
         //        script.AppendLine("});");
 
 
@@ -90,26 +91,26 @@ namespace Buhta
 
     }
 
-    public class xGrid : xControl<xGridSettings>
+    public class xTreeGrid : xControl<xTreeGridSettings>
     {
         public override string GetJqxName()
         {
-            return "jqxGrid";
+            return "jqxTreeGrid";
         }
 
-        public xGrid(object model, xGridSettings settings) : base(model, settings) { }
-        public xGrid(object model, Action<xGridSettings> settings) : base(model, settings) { }
+        public xTreeGrid(object model, xTreeGridSettings settings) : base(model, settings) { }
+        public xTreeGrid(object model, Action<xTreeGridSettings> settings) : base(model, settings) { }
 
 
 
-        //public xGrid(xGridSettings settings)
+        //public xTreeGrid(xTreeGridSettings settings)
         //{
         //    Settings = settings;
         //}
 
-        //public xGrid(Action<xGridSettings> settings)
+        //public xTreeGrid(Action<xTreeGridSettings> settings)
         //{
-        //    Settings = new xGridSettings();
+        //    Settings = new xTreeGridSettings();
         //    settings(Settings);
         //}
 
@@ -123,9 +124,9 @@ namespace Buhta
                 }
                 //script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[DataSource_Bind] + ");");
                 script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + model.BindingId + "', " + Settings.DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
-                //script.AppendLine("    tag.jqxGrid(newValue);");
+                //script.AppendLine("    tag.jqxTreeGrid(newValue);");
                 script.AppendLine("  source.localdata=newDataArray;");
-                script.AppendLine("  tag." + GetJqxName() + "('updatebounddata');");
+                script.AppendLine("  tag." + GetJqxName() + "('updateBoundData');");
                 script.AppendLine("});");
 
 
@@ -164,7 +165,7 @@ namespace Buhta
             //            };
             //            var dataAdapter = new $.jqx.dataAdapter(source);
 
-            //            $('#" + UniqueId + @"').jqxGrid(
+            //            $('#" + UniqueId + @"').jqxTreeGrid(
             //            {
             //                width: 850,
             //                columns: [
@@ -230,10 +231,20 @@ namespace Buhta
                 keyDataFieldStr = ",id:'" + Settings.KeyDataField + "'";
             }
 
-            Script.AppendLine("var source={localdata:[], datatype:'array'" + keyDataFieldStr + ", datafields:fields};");
+            string hierarchyStr = "";
+            if (Settings.ParentDataField != null)
+            {
+                if (Settings.KeyDataField == null)
+                    throw new Exception(nameof(xTreeGrid) + ": не заполнен " + nameof(Settings.KeyDataField));
+                hierarchyStr = ",hierarchy:{keyDataField:{name:'" + Settings.KeyDataField + "'},parentDataField:{name:'" + Settings.ParentDataField + "'}},";
+            }
+
+            Script.AppendLine("var source={localdata:[], datatype:'array'" + keyDataFieldStr + ", datafields:fields" + hierarchyStr + "};");
 
             Script.AppendLine("var dataAdapter=new $.jqx.dataAdapter(source);");
             Script.AppendLine("tag." + GetJqxName() + "({columns:columns, source:dataAdapter});");
+
+
 
             EmitDataSource_Bind(Script, Model);
 

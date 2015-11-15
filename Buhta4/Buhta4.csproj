@@ -169,6 +169,8 @@
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowBegin.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormCancelButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormSaveButton.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xTreeGridColumn.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xTreeGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xPageTitle.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormEnd.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormBegin.cs" />
