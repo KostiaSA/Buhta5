@@ -28,6 +28,7 @@ SELECT [ID]
       ,[UpdateUser]
       ,[LockedByUser]
       ,[LockDateTime]
+      ,'Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__TreeGridIcon__]
   FROM [SchemaObject]
 ");
 

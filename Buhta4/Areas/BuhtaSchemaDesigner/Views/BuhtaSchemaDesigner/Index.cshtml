@@ -34,18 +34,26 @@
             @Html.xTreeGrid(grid =>
        {
            grid.Width = 700;
-           //grid.AutoHeight = true;
+           grid.Icons = true;
+           grid.ExpandedAll = true;
            grid.Pageable = true;
            grid.PageSize = 100;
 
            grid.DataSource_Bind = nameof(Model.SchemaObjectList);
            grid.KeyDataField = "ID";
            grid.ParentDataField = "ParentObjectID";
-
+           
            grid.AddColumn(c =>
            {
                c.Caption = "ID";
                c.Field_Bind = "ID";
+               c.Hidden = true;
+           });
+
+           grid.AddColumn(c =>
+           {
+               c.Caption = "__TreeGridIcon__";
+               c.Field_Bind = "__TreeGridIcon__";
                c.Hidden = true;
            });
 
@@ -67,6 +75,7 @@
            {
                c.Caption = "ParentObjectID";
                c.Field_Bind = "ParentObjectID";
+               c.Hidden = true;
            });
        })
         </div>

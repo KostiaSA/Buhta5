@@ -46,6 +46,9 @@ namespace Buhta
         public string KeyDataField;
         public string ParentDataField;
 
+        public bool? Icons;
+        public bool? ExpandedAll;
+
         public string DataSource_Bind;
 
         List<xTreeGridColumnSettings> columns = new List<xTreeGridColumnSettings>();
@@ -127,6 +130,9 @@ namespace Buhta
                 //script.AppendLine("    tag.jqxTreeGrid(newValue);");
                 script.AppendLine("  source.localdata=newDataArray;");
                 script.AppendLine("  tag." + GetJqxName() + "('updateBoundData');");
+                if (Settings.ExpandedAll==true)
+                    script.AppendLine("  if (!tag.__ExpandedAll__) { tag." + GetJqxName() + "('expandAll'); tag.__ExpandedAll__=true;};"); -не работает
+
                 script.AppendLine("});");
 
 
@@ -198,6 +204,8 @@ namespace Buhta
             EmitProperty(Script, "pagesize", Settings.PageSize);
             EmitProperty_Bind(Script, Settings.PageSize_Bind, "pagesize");
 
+            EmitProperty(Script, "icons", Settings.Icons);
+
             Script.AppendLine("var columns=[];");
             Script.AppendLine("var col;");
             foreach (var col in Settings.Columns)
@@ -241,7 +249,17 @@ namespace Buhta
 
             Script.AppendLine("var source={localdata:[], datatype:'array'" + keyDataFieldStr + ", datafields:fields" + hierarchyStr + "};");
 
-            Script.AppendLine("var dataAdapter=new $.jqx.dataAdapter(source);");
+            Script.AppendLine(
+@"var dataAdapter=new $.jqx.dataAdapter(source,
+ {
+    beforeLoadComplete: function (records) {
+        for (var i = 0; i < records.length; i++) {
+            //var imgUrl = '../../images/' + records[i].FirstName.toLowerCase() + '.png';
+            records[i].icon = records[i]['__TreeGridIcon__'];
+        }
+        return records;
+    }
+});");
             Script.AppendLine("tag." + GetJqxName() + "({columns:columns, source:dataAdapter});");
 
 

@@ -22,3 +22,14 @@ input[type=text].jqx-input, input[type=password].jqx-input {
     background-color: rgba(255, 247, 0, 0.02);
 }
 
+/*изначально размер иконки был 14, исправляется на 16*/ 
+.jqx-tree-grid-icon-size {
+    width: 16px;
+    height: 16px;
+}
+
+/*изначально размер иконки был 14, исправляется на 16*/ 
+.jqx-tree-grid-indent {
+    width: 16px;
+    height: 16px;
+}
