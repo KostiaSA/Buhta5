@@ -29,7 +29,12 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(chromeWindowId, "свойство '" + propertyName + "':\n" +  e.GetFullMessage());
+                var obj = BindingModelList[modelBindingID];
+                if (obj == null)
+                    Clients.Caller.receiveServerError(chromeWindowId, "не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                else
+                    Clients.Caller.receiveServerError(chromeWindowId, "модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
+
             }
 
         }
@@ -47,7 +52,11 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(chromeWindowId, "вызов '" + funcName + "':\n" +  e.GetFullMessage());
+                var obj = BindingModelList[modelBindingID];
+                if (obj == null)
+                    Clients.Caller.receiveServerError(chromeWindowId, "не найден " + nameof(modelBindingID) + " = " + modelBindingID + " для метода '" + funcName + "'");
+                else
+                    Clients.Caller.receiveServerError(chromeWindowId, "вызов '" + obj.GetType().FullName + "', метод '" + funcName + "':\n" + e.GetFullMessage());
             }
         }
 
@@ -63,7 +72,11 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError("свойство '" + propName + "':\n" + e.GetFullMessage());
+                var obj = BindingModelList[modelBindingID];
+                if (obj == null)
+                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SendGridDataSourceRequest)+": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                else
+                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SendGridDataSourceRequest) + " в '" + obj.GetType().FullName + "'\n" + e.GetFullMessage());
             }
         }
 
@@ -77,7 +90,12 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(chromeWindowId, "свойство '" + propertyName + "':\n" + e.GetFullMessage());
+                var obj = BindingModelList[modelBindingID];
+                if (obj == null)
+                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SubscribeBindedValueChanged) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                else
+                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SubscribeBindedValueChanged) + " в '" + obj.GetType().FullName + "', свойство '" + propertyName + "'\n" + e.GetFullMessage());
+                //Clients.Caller.receiveServerError(chromeWindowId, "свойство '" + propertyName + "':\n" + e.GetFullMessage());
             }
 
         }

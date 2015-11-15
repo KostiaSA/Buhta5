@@ -40,7 +40,6 @@ namespace Buhta
 
 
             UpdateCollection(nameof(Table) + "." + nameof(Table.Columns));
-
             //var arr = new List<string[]>();
             //arr.Add(new string[] { "бухта"," воронеж"});
             //arr.Add(new string[] { "бухта-сбп", "питер" });
