@@ -11,7 +11,7 @@ namespace Buhta
 
         public override string PageTitle { get { return "Колонка: "+Column.Name; } }
 
-        public override void SaveButtonClick(dynamic args)
+        public override void SaveButtonClick(string chromeWindowId, dynamic args)
         {
 
             //Table.Name = "Жопа";

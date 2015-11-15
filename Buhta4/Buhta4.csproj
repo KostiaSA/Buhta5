@@ -155,6 +155,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\BuhtaCore\BuhtaCoreAreaRegistration.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\BaseAction.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsControl.cs" />

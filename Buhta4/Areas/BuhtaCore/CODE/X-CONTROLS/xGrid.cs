@@ -54,7 +54,7 @@ namespace Buhta
                     model.BindedProps.Add(DataSource_Bind, model.GetPropertyValue(DataSource_Bind));
                 }
                 //script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[DataSource_Bind] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
+                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ",function(newDataArray){");
                 //script.AppendLine("    tag.jqxGrid(newValue);");
                 script.AppendLine("  source.localdata=newDataArray;");
                 script.AppendLine("  tag.jqxGrid('updatebounddata');");
@@ -67,7 +67,7 @@ namespace Buhta
                 fieldNames = fieldNames.WithOutLastChar();
 
                 script.AppendLine("$.connection.hub.start().done(function() {");
-                script.AppendLine("  $.connection.bindingHub.server.sendGridDataSourceRequest('" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ","+ fieldNames.AsJavaScript() + ");");
+                script.AppendLine("  $.connection.bindingHub.server.sendGridDataSourceRequest(window.name,'" + model.BindingId + "', " + DataSource_Bind.AsJavaScript() + ","+ fieldNames.AsJavaScript() + ");");
                 script.AppendLine("});");
 
 

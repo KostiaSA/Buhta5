@@ -15,7 +15,7 @@ namespace Buhta
 
         public bool SaveButtonDisabled { get { return NeedSave; } }
 
-        public void SaveButtonClick(dynamic args)
+        public void SaveButtonClick(string chromeWindowId, dynamic args)
         {
             //EditedObject.Save;
         }

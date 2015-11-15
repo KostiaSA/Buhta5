@@ -9,12 +9,12 @@ namespace Buhta
     {
         public SchemaTable Table { get { return EditedObject; } }
 
-        public void CloseColumnEditor(dynamic args)
+        public void CloseColumnEditor(string chromeWindowId, dynamic args)
         {
             Table.Name="закрыто";
         }
 
-        public void EditFirstColumnButtonClick(dynamic args)
+        public void EditFirstColumnButtonClick(string chromeWindowId, dynamic args)
         {
             var model = new SchemaTableColumnEditModel();
             model.Column = Table.Columns[0];
@@ -22,13 +22,13 @@ namespace Buhta
             //var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
 
 
-            var win = CreateWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model);
+            var win = CreateWindow(chromeWindowId, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model);
             win.OnClose_Bind = nameof(CloseColumnEditor);
             win.Show();
             //ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
         }
 
-        public void Test1ButtonClick(dynamic args)
+        public void Test1ButtonClick(string chromeWindowId, dynamic args)
         {
             Table.Name = "Жопа";
 

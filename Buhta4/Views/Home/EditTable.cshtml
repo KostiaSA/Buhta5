@@ -38,12 +38,12 @@
                 <button type="submit" class="btn btn-success">Сохранить</button>
 
                 @Html.bsButton(s =>
-           {
-               s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-               s.Text = "Test-BS";
-               s.ButtonStyle = bsButtonStyle.Danger;
-               s.ClickAction = new CloseWindowAction();
-           })
+                   {
+                       s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                       s.Text = "Test-BS";
+                       s.ButtonStyle = bsButtonStyle.Danger;
+                       s.ClickAction = new CloseWindowAction();
+                   })
 
 
                 <div href=# class="btn btn-default" id="aaa">Закрыть</div>

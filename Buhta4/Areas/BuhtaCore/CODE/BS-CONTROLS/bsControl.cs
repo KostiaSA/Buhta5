@@ -97,7 +97,7 @@ namespace Buhta
             {
                 Script.AppendLine("tag.on('" + jqxEventName + "',function(event){");
                 Script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
-                Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
+                Script.AppendLine(" bindingHub.server.sendEvent(window.name,'" + Model.BindingId + "','" + modelMethodName + "', args );");
                 Script.AppendLine("});");
 
             }
@@ -152,7 +152,7 @@ namespace Buhta
                     Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
                 }
                 script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
                 script.AppendLine("    tag." + jqxMethodName + "(newValue);");
                 script.AppendLine("});");
             }

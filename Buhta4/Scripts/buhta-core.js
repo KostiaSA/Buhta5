@@ -6,11 +6,13 @@
 //}
 
 var bindingHub;
-var signalr = {};
+var signalr = { wins:[]};
 
 if (window.opener && window.opener.bindingHub) {
     bindingHub = window.opener.bindingHub;
     signalr = window.opener.signalr;
+    window.name = "win" + Math.random().toString().replace(".", "");
+    signalr.wins[window.name] = window;
 }
 else {
     window.name = "parent";
@@ -19,16 +21,16 @@ else {
 
     signalr.bindedValueChangedListeners = [];
 
-    signalr.subscribeModelPropertyChanged = function (modelBindingId, propertyName, callBack) {
+    signalr.subscribeModelPropertyChanged = function (chromeWindowId, modelBindingId, propertyName, callBack) {
         $.connection.hub.start().done(function () {
-            $.connection.bindingHub.server.subscribeBindedValueChanged(modelBindingId, propertyName);
+            $.connection.bindingHub.server.subscribeBindedValueChanged(chromeWindowId, modelBindingId, propertyName);
             //alert("hub.start():" + propertyName);
             //console.log('subscribeBindedValueChanged**', modelBindingId, propertyName);
         });
-        signalr.bindedValueChangedListeners.push({ modelBindingId: modelBindingId, propertyName: propertyName, callBack: callBack });
+        signalr.bindedValueChangedListeners.push({ chromeWindowId:chromeWindowId, modelBindingId: modelBindingId, propertyName: propertyName, callBack: callBack });
     };
 
-    $.connection.bindingHub.client.receiveBindedValueChanged = function (modelBindingId, propertyName, newValue) {
+    $.connection.bindingHub.client.receiveBindedValueChanged = function (chromeWindowId, modelBindingId, propertyName, newValue) {
         //console.log('receiveBindedValueChanged', modelBindingId, propertyName, newValue);
         for (var i = 0; i < signalr.bindedValueChangedListeners.length; i++) {
             var listener = signalr.bindedValueChangedListeners[i];
@@ -39,7 +41,7 @@ else {
         }
     };
 
-    $.connection.bindingHub.client.receiveBindedValuesChanged = function (modelBindingId, values) {
+    $.connection.bindingHub.client.receiveBindedValuesChanged = function (chromeWindowId, modelBindingId, values) {
         //console.log('receiveBindedValueChanged', modelBindingId, propertyName, newValue);
         for (var i = 0; i < signalr.bindedValueChangedListeners.length; i++) {
             var listener = signalr.bindedValueChangedListeners[i];
@@ -52,39 +54,42 @@ else {
         }
     };
 
-    $.connection.bindingHub.client.receiveServerError = function (error) {
-        console.error(error);
-        $("body").html("<p style='color:red;padding-left: 10px;'>" + error.replace(/\n/g, '<br/>') + "</p>").css("color:red");
+    $.connection.bindingHub.client.receiveServerError = function (chromeWindowId, error) {
+        if (chromeWindowId in signalr.wins) {
+            signalr.wins[chromeWindowId].console.error(error);
+            signalr.wins[chromeWindowId].$("body").html("<p style='color:red;padding-left: 10px;'>" + error.replace(/\n/g, '<br/>') + "</p>").css("color:red");
+        }
     };
 
-    $.connection.bindingHub.client.receiveShowWindow = function (windowHtml) {
-        //var win = $("<div>"+windowHtml+"</div>").appendTo("#popups");
-        var win = $("<div><div></div></div>").appendTo("#popups");
+    //$.connection.bindingHub.client.receiveShowWindow = function (windowHtml) {
+    //    //var win = $("<div>"+windowHtml+"</div>").appendTo("#popups");
+    //    var win = $("<div><div></div></div>").appendTo("#popups");
 
-        $(win).jqxWindow({
-            content: windowHtml,
-            isModal: true,
-            showCollapseButton: true, maxHeight: 400, maxWidth: 700, minHeight: 10, minWidth: 400,// height: 300, width: 500,
-            initContent: function () {
-                //$('#tab').jqxTabs({ height: '100%', width: '100%' });
-                $(win).jqxWindow('focus');
-            }
-        });
-    };
+    //    $(win).jqxWindow({
+    //        content: windowHtml,
+    //        isModal: true,
+    //        showCollapseButton: true, maxHeight: 400, maxWidth: 700, minHeight: 10, minWidth: 400,// height: 300, width: 500,
+    //        initContent: function () {
+    //            //$('#tab').jqxTabs({ height: '100%', width: '100%' });
+    //            $(win).jqxWindow('focus');
+    //        }
+    //    });
+    //};
 
-    $.connection.bindingHub.client.receiveScript = function (script) {
-        eval(script);
-    };
+    $.connection.bindingHub.client.receiveScript = function (chromeWindowId, script) {
+        if (chromeWindowId in signalr.wins)
+            signalr.wins[chromeWindowId].eval(script);
+    }
+};
 
-}
 
 //$(window).unl unload(function () {
 $(window).on('beforeunload', function () {
     if (window.opener) {
         window.open('', 'parent').focus();
-        //window.opener.blur();
-        //setTimeout(window.opener.focus, 0);
     }
-    //   window.opener.focus();
-    //alert("unload");
+})
+
+$(window).on('unload', function () {
+    delete signalr.wins[window.name];
 })

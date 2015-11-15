@@ -14,7 +14,7 @@ namespace Buhta
     {
         public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
 
-        public void SendBindedValueChanged(string modelBindingID, string propertyName, string newValue)
+        public void SendBindedValueChanged(string chromeWindowId, string modelBindingID, string propertyName, string newValue)
         {
 
             try
@@ -29,12 +29,12 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(e.GetFullMessage());
+                Clients.Caller.receiveServerError(chromeWindowId, "свойство '" + propertyName + "':\n" +  e.GetFullMessage());
             }
 
         }
 
-        public void SendEvent(string modelBindingID, string funcName, dynamic args)
+        public void SendEvent(string chromeWindowId, string modelBindingID, string funcName, dynamic args)
         {
             try
             {
@@ -42,16 +42,16 @@ namespace Buhta
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
-                obj.InvokeMethod(funcName, args);
+                obj.InvokeMethod(chromeWindowId, funcName, args);
                 obj.Update();
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(e.GetFullMessage());
+                Clients.Caller.receiveServerError(chromeWindowId, "вызов '" + funcName + "':\n" +  e.GetFullMessage());
             }
         }
 
-        public void SendGridDataSourceRequest(string modelBindingID, string propName, string fieldNames)
+        public void SendGridDataSourceRequest(string chromeWindowId, string modelBindingID, string propName, string fieldNames)
         {
             try
             {
@@ -63,11 +63,11 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(e.GetFullMessage());
+                Clients.Caller.receiveServerError("свойство '" + propName + "':\n" + e.GetFullMessage());
             }
         }
 
-        public void SubscribeBindedValueChanged(string modelBindingID, string propertyName)
+        public void SubscribeBindedValueChanged(string chromeWindowId, string modelBindingID, string propertyName)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                Clients.Caller.receiveServerError(e.GetFullMessage());
+                Clients.Caller.receiveServerError(chromeWindowId, "свойство '" + propertyName + "':\n" + e.GetFullMessage());
             }
 
         }
