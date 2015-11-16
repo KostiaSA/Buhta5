@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Buhta
 {
@@ -11,11 +12,14 @@ namespace Buhta
         public bool NeedSave;
         public T EditedObject { get; set; }
 
+        public SchemaObjectEditModel(Controller controller) : base(controller) { }
+
+
         public virtual string EditedObjectName { get { return EditedObject.Name; } }
 
         public bool SaveButtonDisabled { get { return NeedSave; } }
 
-        public void SaveButtonClick(string chromeWindowId, dynamic args)
+        public override void SaveButtonClick(string chromeWindowId, dynamic args)
         {
             //EditedObject.Save;
         }

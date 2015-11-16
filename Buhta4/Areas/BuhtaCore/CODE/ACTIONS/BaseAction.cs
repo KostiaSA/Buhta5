@@ -10,7 +10,13 @@ namespace Buhta
     {
         public virtual void EmitJsCode(StringBuilder script)
         {
+        }
 
+        public virtual string GetJsCode()
+        {
+            StringBuilder script = new StringBuilder();
+            EmitJsCode(script);
+            return script.ToString();
         }
     }
 }

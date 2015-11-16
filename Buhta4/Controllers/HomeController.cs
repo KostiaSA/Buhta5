@@ -10,7 +10,7 @@ namespace Buhta.Controllers
     {
         public ActionResult Index()
         {
-            var model = new SchemaTableColumnEditModel();
+            var model = new SchemaTableColumnEditModel(this);
             model.Column = new SchemaTableColumn() { Name = "это жопа1" };
             return View(model);
         }
@@ -72,8 +72,7 @@ namespace Buhta.Controllers
 
 
             }
-            var model = new SchemaTableEditModel();
-            model.Controller = this;
+            var model = new SchemaTableEditModel(this);
             model.EditedObject = OrgTable;
             return View(model);
         }

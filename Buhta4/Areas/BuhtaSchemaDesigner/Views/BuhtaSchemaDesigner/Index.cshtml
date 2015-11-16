@@ -42,6 +42,7 @@
            grid.DataSource_Bind = nameof(Model.SchemaObjectList);
            grid.KeyDataField = "ID";
            grid.ParentDataField = "ParentObjectID";
+           grid.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick); 
 
            grid.AddColumn(c =>
            {

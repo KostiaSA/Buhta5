@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Buhta
 {
     public class BuhtaSchemaDesignerModel : BaseModel
     {
+        public BuhtaSchemaDesignerModel(Controller controller) : base(controller) { }
+
         public DataView SchemaObjectList
         {
             get
@@ -37,5 +40,24 @@ SELECT [ID]
                 }
             }
         }
+
+        public void OnRowDoubleClick(string chromeWindowId, dynamic args)
+        {
+            var action = new OpenChildWindowAction();
+            action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; // Controller.Url.Action("SchemaTableDesigner", "BuhtaSchemaDesigner", new { ID = args.rowId });
+            ExecuteJavaScript(chromeWindowId, action.GetJsCode());
+            //var xx = 1;
+            //var model = new SchemaTableColumnEditModel();
+            //model.Column = Table.Columns[0];
+
+            ////var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
+
+
+            //var win = CreateWindow(chromeWindowId, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model);
+            //win.OnClose_Bind = nameof(CloseColumnEditor);
+            //win.Show();
+            ////ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
+        }
+
     }
 }

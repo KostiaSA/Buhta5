@@ -1,0 +1,219 @@
+﻿
+@model SchemaTableDesignerModel
+
+@{
+    ViewBag.Title = "EditTable";
+}
+<style>
+    body {
+        position: relative;
+    }
+</style>
+<script> $('body').scrollspy({ target: '#bs-example-navbar-collapse', offset: 0 }) </script>
+<nav class="navbar navbar-default navbar-fixed-top navbar-static-top1">
+    <div class="container1 container-fluid1">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+
+            <form class="navbar-form navbar-left" role="search">
+                <button href=# class="btn btn-default" id="aaaXXX">назад</button>
+                <script>
+                    $("#aaaXXX").on('click', function () {
+                        if (window.opener) window.open('', window.opener.name).focus();
+                    });</script>
+
+            </form>
+
+
+
+            <ul class="nav navbar-nav">
+                <li><a href="#">Таблица</a></li>
+                <li><a href="#columns">Колонки</a></li>
+                <li><a href="#">Индексы</a></li>
+                <li><a href="#links">Уроды</a></li>
+                <li><a href="#">Индексы</a></li>
+                <li><a href="#" id="qq">Отчеты</a></li>
+            </ul>
+            <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
+
+            <form class="navbar-form navbar-right" role="search">
+                <button type="submit" class="btn btn-success">Сохранить</button>
+
+                @Html.bsButton(s =>
+                   {
+                       s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                       s.Text = "Test-BS";
+                       s.ButtonStyle = bsButtonStyle.Danger;
+                       s.ClickAction = new CloseWindowAction();
+                   })
+
+
+                <div href=# class="btn btn-default" id="aaa">Закрыть</div>
+                <script>
+                    $("#aaa").on('click', function () {
+                        if (window.opener)
+                            window.open('', window.opener.name).focus();
+                        window.close();
+                    });</script>
+
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SQL<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container body-content">
+    <h3>
+        <img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />
+        @Model.EditedObjectName <small>(таблица)</small>
+    </h3>
+
+    <h4 style="padding-top: 15px;">Основные свойства <small>(только для тех, кто в танке)</small></h4>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @*<h3 class="panel-title">Свойства</h3>*@
+            таблица подключена к серверу
+        </div>
+        <div class="panel-body">
+            @Html.xFormBegin()
+            @Html.xInput(s =>
+               {
+                   s.InTable = TagInTable.AsRow;
+                   s.Text_Bind = "Table.Name";
+                   s.Label = "Имя таблицы";
+                   s.Height = 20;
+                   s.Width = 400;
+
+               })
+            @Html.xInput(settings =>
+               {
+                   settings.InTable = TagInTable.AsRow;
+                   settings.Text_Bind = "Table.Description";
+                   settings.Label = "Примечание";
+                   settings.Height = 30;
+                   settings.Width = 600;
+               })
+            @Html.xFormEnd()
+        </div>
+    </div>
+
+    <h4 id="links" style="padding-top: 60px; margin-top: -40px;">Связь с уродами</h4>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @*<h3 class="panel-title">Свойства</h3>*@
+            таблица подключена к серверу
+        </div>
+        <div class="panel-body">
+            @Html.xFormBegin()
+            @Html.xInput(s =>
+               {
+                   s.InTable = TagInTable.AsRow;
+                   s.Text_Bind = "Table.Name";
+                   s.Label = "Имя таблицы";
+                   s.Height = 20;
+                   s.Width = 400;
+
+               })
+            @Html.xInput(settings =>
+               {
+                   settings.InTable = TagInTable.AsRow;
+                   settings.Text_Bind = "Table.Description";
+                   settings.Label = "Примечание";
+                   settings.Height = 30;
+                   settings.Width = 600;
+               })
+            @Html.xFormEnd()
+        </div>
+    </div>
+
+    <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Колонки </h4>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div style="padding: 5px; display: inline-block">всего колонок: 8</div>
+
+            @Html.xButton(s =>
+   {
+       s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+       s.Text = "Test1";
+       s.ClassAttr = "pull-right";
+       s.StyleAttr = "margin-left:10px";
+   })
+
+            <button class="btn btn-default btn-sm pull-right">Удалить</button>
+            <button class="btn btn-default btn-sm pull-right">Изменить</button>
+            <button class="btn btn-default btn-sm pull-right">Добавить</button>
+        </div>
+        <div class="panel-body">
+            @Html.xGrid(grid =>
+{
+    grid.Width = 700;
+    grid.Height = 400;
+
+    grid.DataSource_Bind = nameof(Model.Table) + "." + nameof(Model.Table.Columns);
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = "Имя";
+        c.Field_Bind = "Name";
+    });
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = "Название";
+        c.Field_Bind = nameof(SchemaTableColumn.Description);
+    });
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = "Позиция";
+        c.Field_Bind = nameof(SchemaTableColumn.Position);
+        c.DataType = GridColumnDataType.Number;
+    });
+
+})
+        </div>
+    </div>
+
+    <br>
+    @Html.xButton(settings =>
+{
+    settings.Disabled_Bind = nameof(Model.SaveButtonDisabled);
+    settings.Text = "Сохранить";
+})
+    <br>
+
+    @Html.xButton(settings =>
+{
+    settings.OnClick_Bind = nameof(Model.Test1ButtonClick);
+    settings.Text = "Test1";
+})
+    <br>
+    @Html.xButton(settings =>
+{
+    settings.OnClick_Bind = nameof(Model.EditFirstColumnButtonClick);
+    settings.Text = "Редактировать первую колонку";
+})
+    <br>
+    <br>
+
+    <br>
+</div>
+
+@section scripts {
+}
+

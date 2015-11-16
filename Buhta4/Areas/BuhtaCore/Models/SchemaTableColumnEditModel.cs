@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Buhta
 {
@@ -10,6 +11,8 @@ namespace Buhta
         public SchemaTableColumn Column { get; set; }
 
         public override string PageTitle { get { return "Колонка: "+Column.Name; } }
+
+        public SchemaTableColumnEditModel(Controller controller) : base(controller) { }
 
         public override void SaveButtonClick(string chromeWindowId, dynamic args)
         {

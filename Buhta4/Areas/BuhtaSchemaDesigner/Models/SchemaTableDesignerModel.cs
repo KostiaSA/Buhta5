@@ -6,11 +6,11 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class SchemaTableEditModel : SchemaObjectEditModel<SchemaTable>
+    public class SchemaTableDesignerModel : SchemaObjectEditModel<SchemaTable>
     {
         public SchemaTable Table { get { return EditedObject; } }
 
-        public SchemaTableEditModel(Controller controller) : base(controller) { }
+        public SchemaTableDesignerModel(Controller controller) : base(controller) { }
 
         public void CloseColumnEditor(string chromeWindowId, dynamic args)
         {

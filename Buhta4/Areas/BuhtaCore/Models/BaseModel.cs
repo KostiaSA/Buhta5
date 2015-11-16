@@ -12,11 +12,16 @@ namespace Buhta
 {
     public class BaseModel : ObservableObject
     {
-        public Controller Controller;
+        protected Controller Controller;
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
+
+        public BaseModel(Controller controller)
+        {
+            Controller = controller;
+        }
 
         public virtual string PageTitle { get { return "PageTitle"; } }
 
@@ -27,19 +32,27 @@ namespace Buhta
             {
                 var propName = KeyVP.Key;
                 var oldValue = KeyVP.Value;
-                if (!(oldValue is IEnumerable<object>))
-                {
-                    var newValue = GetPropertyValue(propName);
-                    if (oldValue.AsJavaScript() != newValue.AsJavaScript())
-                        toSend.Add(propName, newValue);
-                }
+
+                if (oldValue is IEnumerable<object> ||
+                    oldValue is DataView)
+                    continue;
+
+
+                var newValue = GetPropertyValue(propName);
+                if (oldValue.AsJavaScript() != newValue.AsJavaScript())
+                    toSend.Add(propName, newValue);
             }
 
             foreach (var KeyVP in toSend)
                 BindedProps[KeyVP.Key] = KeyVP.Value;
 
             if (toSend.Keys.Count > 0)
-                Hub.Clients.Group(BindingId).receiveBindedValuesChanged("",BindingId, toSend);
+                Hub.Clients.Group(BindingId).receiveBindedValuesChanged("", BindingId, toSend);
+        }
+
+        public void ExecuteJavaScript(string chromeWindowId, string script)
+        {
+            Hub.Clients.Group(BindingId).receiveScript(chromeWindowId, script);
         }
 
 
@@ -126,7 +139,7 @@ namespace Buhta
             else
                 throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
 
-            Hub.Clients.Group(BindingId).receiveBindedValueChanged("",BindingId, propName, toSend);
+            Hub.Clients.Group(BindingId).receiveBindedValueChanged("", BindingId, propName, toSend);
 
             if (BindedCollections.ContainsKey(propName + "\t" + fieldNames))
                 BindedCollections[propName + "\t" + fieldNames] = newValue;
@@ -297,7 +310,7 @@ namespace Buhta
         }
 
 
-        public xWindow CreateWindow(string chromeWindowId = null, string viewName =null, BaseModel model=null)
+        public xWindow CreateWindow(string chromeWindowId = null, string viewName = null, BaseModel model = null)
         {
             var win = new xWindow();
             win.ChromeWindowId = chromeWindowId;

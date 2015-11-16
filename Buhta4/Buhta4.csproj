@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\BuhtaCore\BuhtaCoreAreaRegistration.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\BaseAction.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\OpenChildWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Areas\BuhtaSchemaDesigner\BuhtaSchemaDesignerAreaRegistration.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\Controllers\BuhtaSchemaDesignerController.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\Models\BuhtaSchemaDesignerModel.cs" />
+    <Compile Include="Areas\BuhtaSchemaDesigner\Models\SchemaTableDesignerModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -195,7 +197,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\BuhtaCore\Content\icon\schema-table.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaAccessRole_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaDatabase_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaDesigner_32.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaExternalDatabase_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaFolderBW_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaFolder_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaMenuItem_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaMenu_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaModule_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaQuery_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaTable_16.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaTable_32.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaUser_16.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -513,6 +527,7 @@
     <Content Include="Areas\BuhtaSchemaDesigner\Views\_ViewStart.cshtml" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -633,6 +648,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\BuhtaCore\Content\icon\" />
     <Folder Include="Areas\BuhtaCore\Controllers\" />
     <Folder Include="Areas\BuhtaCore\Views\Shared\" />
     <Folder Include="Models\" />

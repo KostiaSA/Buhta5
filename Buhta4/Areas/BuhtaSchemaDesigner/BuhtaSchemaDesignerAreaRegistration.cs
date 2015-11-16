@@ -14,10 +14,18 @@ namespace Buhta.Areas.BuhtaSchemaDesigner
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
+            //context.MapRoute(
+            //    "BuhtaSchemaDesigner_default",
+            //    "BuhtaSchemaDesigner/{controller}/{action}/{id}",
+            //    new { action = "Index", id = UrlParameter.Optional }
+            //);
+
             context.MapRoute(
-                "BuhtaSchemaDesigner_default",
-                "BuhtaSchemaDesigner/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "BuhtaSchemaDesigner_default1",
+                "{controller}/{action}/{id}",
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { "Buhta" }
+
             );
         }
     }

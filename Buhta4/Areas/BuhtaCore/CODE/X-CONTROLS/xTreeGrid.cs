@@ -51,6 +51,10 @@ namespace Buhta
 
         public string DataSource_Bind;
 
+        public string OnRowClick_Bind;
+        public string OnRowDoubleClick_Bind;
+        public string OnRowSelect_Bind;
+
         List<xTreeGridColumnSettings> columns = new List<xTreeGridColumnSettings>();
         public List<xTreeGridColumnSettings> Columns { get { return columns; } }
 
@@ -150,6 +154,29 @@ namespace Buhta
 
         }
 
+        public void EmitRowEvent_Bind(StringBuilder script, string modelMethodName, string jqxEventName)
+        {
+        //// // event args.
+        ////    var args = event.args;
+        ////// row data.
+        ////var row = args.row;
+        ////// row key.
+        ////var key = args.key;
+        ////// data field
+        ////var dataField = args.dataField;
+        ////// original double click event.
+        ////var clickEvent = args.originalEvent;
+
+            if (modelMethodName != null)
+            {
+                Script.AppendLine("tag.on('" + jqxEventName + "',function(event){");
+                Script.AppendLine(" var _args={rowId:event.args.row.uid, tagId:event.target.id};");
+                Script.AppendLine(" bindingHub.server.sendEvent(window.name,'" + Model.BindingId + "','" + modelMethodName + "', _args );");
+                Script.AppendLine("});");
+
+            }
+
+        }
 
         public override string GetHtml()
         {
@@ -205,6 +232,11 @@ namespace Buhta
             EmitProperty_Bind(Script, Settings.PageSize_Bind, "pagesize");
 
             EmitProperty(Script, "icons", Settings.Icons);
+
+            EmitRowEvent_Bind(Script, Settings.OnRowClick_Bind, "rowClick");
+            EmitRowEvent_Bind(Script, Settings.OnRowDoubleClick_Bind, "rowDoubleClick");
+            EmitRowEvent_Bind(Script, Settings.OnRowSelect_Bind, "rowSelect");
+
 
             Script.AppendLine("var columns=[];");
             Script.AppendLine("var col;");
