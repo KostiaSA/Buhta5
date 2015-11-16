@@ -19,7 +19,7 @@ namespace Buhta
         ////public static MenuNavigator_page NavigatorPage;
         ////public static XtraTabPage NavigatorTab;
         public static Schema Schema;
-        ////public static Mef Mef;
+        public static Mef Mef;
         public static Guid UserID;
 
         public static Random Random;
@@ -70,10 +70,10 @@ namespace Buhta
         public static void Start()
         {
 
-            ////JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            ////{
-            ////    Converters = new List<JsonConverter> { new JsonImageConverter() }
-            ////};
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter> { new JsonImageConverter() }
+            };
 
             ////Application.EnableVisualStyles();
             ////Application.SetCompatibleTextRenderingDefault(false);
@@ -98,16 +98,16 @@ namespace Buhta
             Random = new Random();
 
             UserID = Guid.Parse("10000001-28E0-4E14-B18C-E8185351E5C7");
-            ////Mef = new Mef();
+            Mef = new Mef();
 
-            ////var mefCatalog = new AggregateCatalog();
-            ////mefCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
+            var mefCatalog = new AggregateCatalog();
+            mefCatalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
 
-            ////mefCatalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory,"company.dll"));
+            ////mefCatalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory, "company.dll"));
             ////mefCatalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory, "nopCommerce.dll"));
 
-            ////CompositionContainer mefContainer = new CompositionContainer(mefCatalog);
-            ////mefContainer.ComposeParts(Mef);
+            CompositionContainer mefContainer = new CompositionContainer(mefCatalog);
+            mefContainer.ComposeParts(Mef);
 
 
             Schema = new Schema("ps-web", null, "BuhtaSchema", "sa1", "sonyk");    // работа

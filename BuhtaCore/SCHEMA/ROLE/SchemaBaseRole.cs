@@ -20,23 +20,23 @@ namespace Buhta
         public static void LoadRoles()
         {
 
-            ////Roles = new Dictionary<Guid, SchemaBaseRole>();
-            ////foreach (Lazy<SchemaBaseRole> role in App.Mef.SchemaRoles)
-            ////{
-            ////    if (Roles.ContainsKey(role.Value.ID))
-            ////    {
-            ////        throw new Exception("Ошибка загрузка роли '" + role.Value.GetType().FullName + "'.\n" +
-            ////                            "Роль '" + Roles[role.Value.ID].GetType().FullName +
-            ////                            " имеет такой-же ID: " + Roles[role.Value.ID].ID.AsSQL());
-            ////    }
-            ////    Roles.Add(role.Value.ID, role.Value);
-            ////}
+            Roles = new Dictionary<Guid, SchemaBaseRole>();
+            foreach (Lazy<SchemaBaseRole> role in App.Mef.SchemaRoles)
+            {
+                if (Roles.ContainsKey(role.Value.ID))
+                {
+                    throw new Exception("Ошибка загрузка роли '" + role.Value.GetType().FullName + "'.\n" +
+                                        "Роль '" + Roles[role.Value.ID].GetType().FullName +
+                                        " имеет такой-же ID: " + Roles[role.Value.ID].ID.AsSQL());
+                }
+                Roles.Add(role.Value.ID, role.Value);
+            }
 
-            ////// инициализация
-            ////foreach (var role in Roles.Values)
-            ////{
-            ////    role.Initialize();
-            ////}
+            // инициализация
+            foreach (var role in Roles.Values)
+            {
+                role.Initialize();
+            }
 
         }
 

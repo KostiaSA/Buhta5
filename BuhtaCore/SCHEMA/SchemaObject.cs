@@ -19,10 +19,10 @@ namespace Buhta
     {
         public BaseEdit_Page(string s) { }
     }
-    public class Bitmap
-    {
-        public Bitmap(string s) { }
-    }
+    //public class Bitmap
+    //{
+    //    public Bitmap(string s) { }
+    //}
 
     public class Color
     {

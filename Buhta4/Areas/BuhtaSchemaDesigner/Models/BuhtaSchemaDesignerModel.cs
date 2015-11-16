@@ -43,20 +43,17 @@ SELECT [ID]
 
         public void OnRowDoubleClick(string chromeWindowId, dynamic args)
         {
+            openSchemaObjectDesigner(chromeWindowId, args.rowId.ToString());
+            //var action = new OpenChildWindowAction();
+            //action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; 
+            //ExecuteJavaScript(chromeWindowId, action.GetJsCode());
+        }
+
+        private void openSchemaObjectDesigner(string chromeWindowId, string schemaObjectID)
+        {
             var action = new OpenChildWindowAction();
-            action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; // Controller.Url.Action("SchemaTableDesigner", "BuhtaSchemaDesigner", new { ID = args.rowId });
+            action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + schemaObjectID; 
             ExecuteJavaScript(chromeWindowId, action.GetJsCode());
-            //var xx = 1;
-            //var model = new SchemaTableColumnEditModel();
-            //model.Column = Table.Columns[0];
-
-            ////var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
-
-
-            //var win = CreateWindow(chromeWindowId, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model);
-            //win.OnClose_Bind = nameof(CloseColumnEditor);
-            //win.Show();
-            ////ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
         }
 
     }

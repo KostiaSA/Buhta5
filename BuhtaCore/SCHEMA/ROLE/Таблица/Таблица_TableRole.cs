@@ -46,7 +46,7 @@ namespace Buhta
                     if ((role.Value as Колонка_ColumnRole).TableRoleType == this.GetType())
                     {
                         var column = (Колонка_ColumnRole)Activator.CreateInstance(role.Value.GetType());
-                        column.Table = this;
+                        //column.Table = this;
                         column.Initialize();
                         Columns.Add(column);
                     }
