@@ -130,8 +130,8 @@ namespace Buhta
                 //script.AppendLine("    tag.jqxTreeGrid(newValue);");
                 script.AppendLine("  source.localdata=newDataArray;");
                 script.AppendLine("  tag." + GetJqxName() + "('updateBoundData');");
-                if (Settings.ExpandedAll==true)
-                    script.AppendLine("  if (!tag.__ExpandedAll__) { tag." + GetJqxName() + "('expandAll'); tag.__ExpandedAll__=true;};"); -не работает
+                if (Settings.ExpandedAll == true)
+                    script.AppendLine("  if (!tag.__ExpandedAll__) { tag." + GetJqxName() + "('expandAll'); tag.__ExpandedAll__=true;};"); // TODO expandAll не работает
 
                 script.AppendLine("});");
 
@@ -221,6 +221,30 @@ namespace Buhta
 
                 if (col.Hidden != null)
                     Script.AppendLine("col.hidden=" + col.Hidden.AsJavaScript() + ";");
+
+                // пример rowData
+                //ID:                "868b94e8-aacb-4576-8037-315d87e1a485"
+                //Name:              "Компания"
+                //ParentObjectID:    null
+                //RootType:          "Модуль"
+                //__TreeGridIcon__:  "Areas/BuhtaSchemaDesigner/Content/icon/SchemaModule_16.png"
+                //_visible:          true
+                //expanded:          true
+                //icon:              "Areas/BuhtaSchemaDesigner/Content/icon/SchemaModule_16.png"
+                //level:             0
+                //parent:            null
+                //records:           Array[1]
+                //uid:              "868b94e8-aacb-4576-8037-315d87e1a485"
+                //__proto__:         Object
+
+                if (col.CellTemplate != null)
+                {
+                    Script.AppendLine(@"col.cellsRenderer=function (row, dataField, cellValue, rowData, cellText){");
+                    if (col.CellTemplateJS != null)
+                        Script.AppendLine(col.CellTemplateJS);
+                    Script.AppendLine(@"  return Mustache.render(""" + col.CellTemplate + @""", rowData );");
+                    Script.AppendLine(@"};");
+                }
 
 
                 Script.AppendLine("columns.push(col);");

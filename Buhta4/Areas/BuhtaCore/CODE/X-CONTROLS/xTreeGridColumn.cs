@@ -22,6 +22,9 @@ namespace Buhta
 
         public string Field_Bind;
 
+        public string CellTemplate;
+        public string CellTemplateJS;
+
         public void EmitDataField(StringBuilder script,int colIndex)
         {
             script.Append("fields.push({");

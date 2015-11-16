@@ -42,7 +42,7 @@
            grid.DataSource_Bind = nameof(Model.SchemaObjectList);
            grid.KeyDataField = "ID";
            grid.ParentDataField = "ParentObjectID";
-           
+
            grid.AddColumn(c =>
            {
                c.Caption = "ID";
@@ -62,6 +62,17 @@
                c.Caption = "Name";
                c.Field_Bind = "Name";
                c.Width = 400;
+
+               c.CellTemplateJS = @"
+if (rowData.records) {
+  rowData._ee=' ('+rowData.records.length.toString()+')'
+  rowData._fontWeight='bold'
+}
+else
+  rowData._fontWeight='normal'
+";
+
+               c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
            });
 
            grid.AddColumn(c =>
