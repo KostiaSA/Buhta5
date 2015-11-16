@@ -1,0 +1,87 @@
+﻿@model RolesTreeGridModel
+
+@{
+//ViewBag.Title = "Index";
+}
+
+<div class="container body-content">
+    <h3>
+        @*<img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />*@
+        Роли
+    </h3>
+
+
+    @*<h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Схема </h4>*@
+
+
+
+    @Html.xTreeGrid(grid =>
+{
+    grid.Width = 800;
+    //grid.Icons = true;
+    grid.ExpandedAll = true;
+    grid.Pageable = true;
+    grid.PageSize = 100;
+
+    grid.DataSource_Bind = nameof(Model.RolesList);
+    grid.KeyDataField = "ID";
+    grid.ParentDataField = "ParentObjectID";
+    //grid.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = nameof( SchemaBaseRole.ID);
+        c.Field_Bind = nameof(SchemaBaseRole.ID);
+        c.Hidden = true;
+    });
+
+    //grid.AddColumn(c =>
+    //{
+    //    c.Caption = "__TreeGridIcon__";
+    //    c.Field_Bind = "__TreeGridIcon__";
+    //    c.Hidden = true;
+    //});
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = "Роль";
+        c.Field_Bind = nameof(SchemaBaseRole.Name);  // TODO биндование нескольких колонок к одному полю не работает
+        c.Width = 300;
+
+        //               c.CellTemplateJS = @"
+        //if (rowData.records) {
+        //  rowData._ee=' ('+rowData.records.length.toString()+')'
+        //  rowData._fontWeight='bold'
+        //}
+        //else
+        //  rowData._fontWeight='normal'
+        //";
+
+        //               c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
+    });
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = "Описание";
+        c.Field_Bind = nameof(SchemaBaseRole.Description);
+        c.Width = 500;
+    });
+
+    //grid.AddColumn(c =>
+    //{
+    //    c.Caption = "RootType";
+    //    c.Field_Bind = "RootType";
+    //    //c.DataType = GridColumnDataType.Number;
+    //});
+
+    grid.AddColumn(c =>
+    {
+        c.Caption = "ParentObjectID";
+        c.Field_Bind = "ParentObjectID";
+        c.Hidden = true;
+    });
+})
+</div>
+
+
+

@@ -189,6 +189,7 @@
     <Compile Include="Areas\BuhtaSchemaDesigner\BuhtaSchemaDesignerAreaRegistration.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\Controllers\BuhtaSchemaDesignerController.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\Models\BuhtaSchemaDesignerModel.cs" />
+    <Compile Include="Areas\BuhtaSchemaDesigner\Models\RolesTreeGridModel.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\Models\SchemaTableDesignerModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -528,6 +529,7 @@
     <Content Include="Areas\BuhtaSchemaDesigner\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\RolesTreeGrid.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
