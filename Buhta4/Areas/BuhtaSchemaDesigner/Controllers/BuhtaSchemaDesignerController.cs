@@ -32,7 +32,7 @@ namespace Buhta
         public ActionResult RolesTreeGrid()
         {
             var model = new RolesTreeGridModel(this);
-            model.RootRoleType = typeof(Колонка_ColumnRole);
+            model.RootRoleType = typeof(Таблица_TableRole);
             return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\RolesTreeGrid.cshtml", model);
         }
     }

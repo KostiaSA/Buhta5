@@ -4,7 +4,81 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container body-content">
+
+<nav class=" navbar navbar-default navbar-fixed-top navbar-static-top1">
+    <div class="container container-fluid1">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+
+            <form class="navbar-form navbar-left" role="search">
+                <div href=# class="btn btn-default" id="aaaXXX">назад</div>
+                <script>
+                    $("#aaaXXX").on('click', function () {
+                        if (window.opener) window.open('', window.opener.name).focus();
+                    });</script>
+
+            </form>
+
+
+
+            <ul class="nav navbar-nav">
+                <li><a href="#">Таблица</a></li>
+                <li><a href="#columns">Колонки</a></li>
+                <li><a href="#">Индексы</a></li>
+                <li><a href="#links">Уроды</a></li>
+                <li><a href="#">Индексы</a></li>
+                <li><a href="#" id="qq">Отчеты</a></li>
+            </ul>
+            <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
+            <form class="navbar-form navbar-right" role="search">
+
+                @Html.bsButton(s =>
+               {
+                   //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                   s.Text = "Добавить";
+                   s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
+                   s.ButtonStyle = bsButtonStyle.Default;
+               })
+
+                @Html.bsButton(s =>
+               {
+                   //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                   s.Text = "Изменить";
+                   s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-update.png";
+                   s.ButtonStyle = bsButtonStyle.Default;
+               })
+
+                @Html.bsButton(s =>
+               {
+                   //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                   s.Text = "Удалить";
+                   s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-delete.png";
+
+                   s.ButtonStyle = bsButtonStyle.Default;
+               })
+
+
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SQL<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="container">
     <h3>
         <img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />
         Дизайнер схемы
@@ -13,7 +87,7 @@
 
     <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Схема </h4>
 
-    <div class="panel panel-default">
+    @*<div class="panel panel-default">
         <div class="panel-heading">
             <div style="padding: 5px; display: inline-block">всего колонок: 8</div>
 
@@ -30,10 +104,10 @@
             <button class="btn btn-default btn-sm pull-right">Добавить</button>
         </div>
 
-        <div class="panel-body">
-            @Html.xTreeGrid(grid =>
+        <div class="panel-body">*@
+    @Html.xTreeGrid(grid =>
        {
-           grid.Width = 700;
+           grid.Width = "100%";
            grid.Icons = true;
            grid.ExpandedAll = true;
            grid.Pageable = true;
@@ -42,7 +116,7 @@
            grid.DataSource_Bind = nameof(Model.SchemaObjectList);
            grid.KeyDataField = "ID";
            grid.ParentDataField = "ParentObjectID";
-           grid.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick); 
+           grid.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
 
            grid.AddColumn(c =>
            {
@@ -90,8 +164,8 @@ else
                c.Hidden = true;
            });
        })
-        </div>
-    </div>
-
 </div>
+@*</div>
+
+    </div>*@
 

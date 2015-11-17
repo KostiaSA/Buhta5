@@ -92,11 +92,11 @@ namespace Buhta
         }
 
 
-        public void EmitProperty_Px(StringBuilder script, string jqxPropertyName, int? value)
-        {
-            if (value != null)
-                Script.AppendLine("tag." + GetJqxName() + "({" + jqxPropertyName + ":'" + value + "px'});");
-        }
+        //public void EmitProperty_Px(StringBuilder script, string jqxPropertyName, int? value)
+        //{
+        //    if (value != null)
+        //        Script.AppendLine("tag." + GetJqxName() + "({" + jqxPropertyName + ":'" + value + "px'});");
+        //}
 
         public void EmitProperty_M(StringBuilder script, string jqxMethodName, object value)
         {

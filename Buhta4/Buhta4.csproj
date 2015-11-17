@@ -198,6 +198,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-delete.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-insert.png" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-update.png" />
     <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaAccessRole_16.png" />
     <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaDatabase_16.png" />
     <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaDesigner_32.png" />

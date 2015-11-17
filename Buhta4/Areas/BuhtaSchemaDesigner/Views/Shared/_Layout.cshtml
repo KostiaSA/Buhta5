@@ -9,6 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <link href="~/Content/panel.css" rel="stylesheet" />
     <link href="~/Content/JQWidgets/jqx.base.css" rel="stylesheet" />
     <link href="~/Content/JQWidgets/jqx.bootstrap.css" rel="stylesheet" />
     <link href="~/Content/buhta-core.css" rel="stylesheet" />
@@ -18,6 +19,10 @@
     <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/mustache.js"></script>
     <script src="~/Scripts/buhta-core.js"></script>
+
+    <script  src="~/Content/vendors/Buttons-master/js/vendor/scrollto.js"></script>
+    <script  src="~/Content/vendors/Buttons-master/js/main.js"></script>
+    <script  src="~/Content/vendors/Buttons-master/js/buttons.js"></script>
     <script>
         window.onbeforeunload = function (e) {
             $.connection.hub.stop();

@@ -33,11 +33,13 @@ namespace Buhta
         public string Text = "";
         public string Text_Bind;
 
+        public string Image;
+
         public string OnClick_Bind;
 
         public BaseAction ClickAction;
 
-        public bsButtonStyle ButtonStyle=bsButtonStyle.Default;
+        public bsButtonStyle ButtonStyle = bsButtonStyle.Default;
     }
 
     public class bsButton : bsControl<bsButtonSettings>
@@ -61,7 +63,7 @@ namespace Buhta
 
             EmitEvent_Bind(Script, Settings.OnClick_Bind, "click");
 
-            if (Settings.ClickAction!=null)
+            if (Settings.ClickAction != null)
             {
                 Script.AppendLine("tag.on('click',function(event){");
                 Settings.ClickAction.EmitJsCode(Script);
@@ -70,7 +72,7 @@ namespace Buhta
             }
 
             Class.Append("btn ");
-            Class.Append("btn-"+Settings.ButtonStyle.ToNameString().ToLower()+" ");
+            Class.Append("btn-" + Settings.ButtonStyle.ToNameString().ToLower() + " ");
 
             if (Settings.ClassAttr != null)
                 Class.Append(Settings.ClassAttr);
@@ -78,7 +80,11 @@ namespace Buhta
             if (Settings.StyleAttr != null)
                 Style.Append(Settings.StyleAttr);
 
-            Html.Append("<div id='" + UniqueId + "' " + GetClassAttr() + GetStyleAttr() + ">" + Settings.Text + "</div>");
+            var imageHtml = "";
+            if (Settings.Image != null)
+                imageHtml = "<img src=" + Settings.Image.AsJavaScriptString() + " width='15' height='14' style='margin-right: 5px; margin-left:-3px;'/>";
+
+            Html.Append("<div id='" + UniqueId + "' " + GetClassAttr() + GetStyleAttr() + ">" + imageHtml + Settings.Text + "</div>");
 
             return base.GetHtml();
         }

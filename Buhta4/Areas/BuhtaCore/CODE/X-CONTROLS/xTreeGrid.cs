@@ -28,7 +28,7 @@ namespace Buhta
         public bool? Disabled;
         public string Disabled_Bind;
 
-        public int? Width;
+        public string Width;
         public string Width_Bind;
 
         public int? Height;
@@ -213,10 +213,10 @@ namespace Buhta
             //");
             EmitBeginScript(Script);
 
-            EmitProperty_Px(Script, "width", Settings.Width);
+            EmitProperty(Script, "width", Settings.Width);
             EmitProperty_Bind(Script, Settings.Width_Bind, "width");
 
-            EmitProperty_Px(Script, "height", Settings.Height);
+            EmitProperty(Script, "height", Settings.Height);
             EmitProperty_Bind(Script, Settings.Height_Bind, "height");
 
             EmitProperty(Script, "disabled", Settings.Disabled);
