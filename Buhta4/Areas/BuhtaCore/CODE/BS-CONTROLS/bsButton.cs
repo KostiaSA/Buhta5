@@ -24,6 +24,7 @@ namespace Buhta
     }
 
     public enum bsButtonStyle { Default, Primary, Success, Info, Warning, Danger, Link }
+    public enum bsButtonSize { Default, Large, Small, ExtraSmall }
 
     public class bsButtonSettings : bsControlSettings
     {
@@ -40,6 +41,7 @@ namespace Buhta
         public BaseAction ClickAction;
 
         public bsButtonStyle ButtonStyle = bsButtonStyle.Default;
+        public bsButtonSize Size = bsButtonSize.Default;
     }
 
     public class bsButton : bsControl<bsButtonSettings>
@@ -74,15 +76,40 @@ namespace Buhta
             Class.Append("btn ");
             Class.Append("btn-" + Settings.ButtonStyle.ToNameString().ToLower() + " ");
 
+
+            if (Settings.Size == bsButtonSize.Large)
+                Class.Append("btn-lg ");
+            else
+            if (Settings.Size == bsButtonSize.Small)
+                Class.Append("btn-sm ");
+            else
+            if (Settings.Size == bsButtonSize.ExtraSmall)
+                Class.Append("btn-xs ");
+
+            var imageHtml = "";
+            if (Settings.Image != null)
+            {
+                imageHtml = "<img src=" + Settings.Image.AsJavaScriptString(); // + " width='15' height='14' style='margin-right: 5px; margin-left:-3px;'/>";
+
+                if (Settings.Size == bsButtonSize.Large)
+                    imageHtml += " width='20' height='20' style='margin-right: 8px; margin-left:-3px;margin-top:-2px'/>";
+                else
+                if (Settings.Size == bsButtonSize.Small)
+                    imageHtml += " width='13' height='13' style='margin-right: 5px; margin-left:-3px;'/>";
+                else
+                if (Settings.Size == bsButtonSize.ExtraSmall)
+                    imageHtml += " width='12' height='12' style='margin-right: 4px; margin-left:0px;margin-top:-2px'/>";
+                else
+                    imageHtml += " width='15' height='15' style='margin-right: 6px; margin-left:-3px;margin-top:-1px'/>";
+            }
+
+
             if (Settings.ClassAttr != null)
                 Class.Append(Settings.ClassAttr);
 
             if (Settings.StyleAttr != null)
                 Style.Append(Settings.StyleAttr);
 
-            var imageHtml = "";
-            if (Settings.Image != null)
-                imageHtml = "<img src=" + Settings.Image.AsJavaScriptString() + " width='15' height='14' style='margin-right: 5px; margin-left:-3px;'/>";
 
             Html.Append("<div id='" + UniqueId + "' " + GetClassAttr() + GetStyleAttr() + ">" + imageHtml + Settings.Text + "</div>");
 
