@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,7 +16,7 @@ namespace Buhta
 
         public void CloseColumnEditor(string chromeWindowId, dynamic args)
         {
-            Table.Name="закрыто";
+            Table.Name = "закрыто";
         }
 
         public void EditFirstColumnButtonClick(string chromeWindowId, dynamic args)
@@ -33,22 +35,26 @@ namespace Buhta
 
         public void Test1ButtonClick(string chromeWindowId, dynamic args)
         {
-            Table.Name = "Жопа";
+            Task.Factory.StartNew(() =>
+            {
+                for (int i = 1; i < 1000000; i++)
+                {
+                    Table.Name = "Жопа-" + i;
+                    Update();
+                    Thread.Sleep(10);
+                }
+            });
 
-            SchemaTableColumn col;
+            Table.Name = "Жопа99";
 
-            col = new SchemaTableColumn(); col.Table = Table; Table.Columns.Add(col);
-            col.Name = "новая колонка";
-            col.Description = "давай!";
+            //SchemaTableColumn col;
+
+            //col = new SchemaTableColumn(); col.Table = Table; Table.Columns.Add(col);
+            //col.Name = "новая колонка";
+            //col.Description = "давай!";
 
 
-            UpdateCollection(nameof(Table) + "." + nameof(Table.Columns));
-            //var arr = new List<string[]>();
-            //arr.Add(new string[] { "бухта"," воронеж"});
-            //arr.Add(new string[] { "бухта-сбп", "питер" });
-            //arr.Add(new string[] { "дом", "москва","париж" });
-
-            //Hub.Clients.Group(BindingId).receiveBindedValuesChanged(BindingId, arr);
+            //UpdateCollection(nameof(Table) + "." + nameof(Table.Columns));
 
         }
     }

@@ -28,7 +28,7 @@ namespace Buhta
         public void Update()
         {
             var toSend = new Dictionary<string, object>();
-            foreach (var KeyVP in BindedProps)
+            foreach (var KeyVP in BindedProps.ToList())
             {
                 var propName = KeyVP.Key;
                 var oldValue = KeyVP.Value;
