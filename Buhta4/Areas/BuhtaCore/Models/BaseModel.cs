@@ -272,7 +272,19 @@ namespace Buhta
                 }
                 else
                 {
-                    _prop.SetValue(obj, value, null);
+                    if (_prop.PropertyType == typeof(Boolean))
+                        _prop.SetValue(obj, Boolean.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(int))
+                        _prop.SetValue(obj, int.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(Decimal))
+                        _prop.SetValue(obj, Decimal.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(DateTime))
+                        _prop.SetValue(obj, DateTime.Parse(value.ToString()), null);
+                    else
+                        _prop.SetValue(obj, value, null);
                 }
 
             }

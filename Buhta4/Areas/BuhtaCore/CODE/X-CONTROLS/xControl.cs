@@ -145,12 +145,12 @@ namespace Buhta
         //            Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
         //        }
         //        script.AppendLine("tag." + GetJqxName() + "({" + jqxPropertyName + ":" + Model.BindedProps[modelPropertyName] + "});");
-        //        script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
         //        script.AppendLine("    tag." + GetJqxName() + "({" + jqxPropertyName + ":newValue});");
         //        script.AppendLine("});");
 
         //        script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-        //        script.AppendLine("    bindingHub.server.sendBindedValueChanged('{{Model.BindingId}}', '{{settings.BindValueTo}}',tag." + GetJqxName() + "('" + jqxPropertyName + "'));");
+        //        script.AppendLine("    bindingHub.server.sendBindedValueChanged(window.name,'{{Model.BindingId}}', '{{settings.BindValueTo}}',tag." + GetJqxName() + "('" + jqxPropertyName + "'));");
         //        script.AppendLine("}); ");
 
         //    }

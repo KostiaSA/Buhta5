@@ -73,18 +73,18 @@ namespace Buhta
 
             }
 
-            Class.Append("btn ");
-            Class.Append("btn-" + Settings.ButtonStyle.ToNameString().ToLower() + " ");
+            AddClass("btn");
+            AddClass("btn-" + Settings.ButtonStyle.ToNameString().ToLower());
 
 
             if (Settings.Size == bsButtonSize.Large)
-                Class.Append("btn-lg ");
+                AddClass("btn-lg");
             else
             if (Settings.Size == bsButtonSize.Small)
-                Class.Append("btn-sm ");
+                AddClass("btn-sm");
             else
             if (Settings.Size == bsButtonSize.ExtraSmall)
-                Class.Append("btn-xs ");
+                AddClass("btn-xs");
 
             var imageHtml = "";
             if (Settings.Image != null)
@@ -104,14 +104,14 @@ namespace Buhta
             }
 
 
-            if (Settings.ClassAttr != null)
-                Class.Append(Settings.ClassAttr);
+            //if (Settings.ClassAttr != null)
+            //    Class.Append(Settings.ClassAttr);
 
-            if (Settings.StyleAttr != null)
-                Style.Append(Settings.StyleAttr);
+            //if (Settings.StyleAttr != null)
+            //    Style.Append(Settings.StyleAttr);
 
 
-            Html.Append("<div id='" + UniqueId + "' " + GetClassAttr() + GetStyleAttr() + ">" + imageHtml + Settings.Text + "</div>");
+            Html.Append("<div id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Settings.Text + "</div>");
 
             return base.GetHtml();
         }
