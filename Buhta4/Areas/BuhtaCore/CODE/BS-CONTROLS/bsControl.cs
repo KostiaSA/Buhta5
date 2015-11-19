@@ -325,21 +325,19 @@ namespace Buhta
 
         }
 
-        public void EmitProperty_Bind2Way_Checked(StringBuilder script, string modelPropertyName, string jqxEventName)
+        public void EmitProperty_Bind2Way_Checked(StringBuilder script, BaseBinder binder, string jqxEventName)
         {
-            if (modelPropertyName != null)
+            if (binder != null)
             {
-                if (!Model.BindedProps.ContainsKey(modelPropertyName))
-                {
-                    Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
-                }
-                script.AppendLine("tag.prop('checked'," + Model.BindedProps[modelPropertyName] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
-                script.AppendLine("    tag.prop('checked',newValue);");
+                Model.BindedBinders.Add(binder);
+                binder.LastSendedText = Model.GetPropertyDisplayText(binder);
+                script.AppendLine("tag.prop('checked'," + binder.LastSendedText + ");");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
+                script.AppendLine("    tag.prop('checked',newValue==='true');");
                 script.AppendLine("});");
 
                 script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + modelPropertyName + "',tag.prop('checked')); ");
+                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
                 script.AppendLine("}); ");
 
             }

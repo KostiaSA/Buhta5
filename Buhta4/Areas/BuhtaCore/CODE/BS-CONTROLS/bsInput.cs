@@ -29,18 +29,23 @@ namespace Buhta
 
     public class bsInputSettings : bsControlSettings
     {
+        public Type ValueType = typeof(String);
+
         public bsInputType Type = bsInputType.Text;
 
         public bool? Disabled;
         public string Disabled_Bind;
 
-        public string Text = "";
-        public string Text_Bind;
+        public string Value = "";
+        public string Value_Bind;
+        public BaseBinder Value_Binder;
 
         public string Label;
         public string PlaceHolder;
 
         public string Image;
+
+        public BaseBinder Lookup;
 
 
         public bsInputSize Size = bsInputSize.Default;
@@ -53,6 +58,33 @@ namespace Buhta
         public bsInput(object model, Action<bsInputSettings> settings) : base(model, settings) { }
 
 
+        string GetDisplayText(object value)
+        {
+            if (Settings.Lookup != null)
+                return Settings.Lookup.GetDisplayText(value);
+            else
+                return value.ToString();
+        }
+
+        object ParseDisplayText(string text)
+        {
+            if (Settings.Lookup != null)
+                return Settings.Lookup.ParseDisplayText(text);
+            else
+            {
+                if (Settings.ValueType == typeof(String))
+                    return text;
+                else
+                if (Settings.ValueType == typeof(int))
+                    return int.Parse(text);
+                else
+                if (Settings.ValueType == typeof(Decimal))
+                    return Decimal.Parse(text);
+                else
+                    return nameof(ParseDisplayText) + ": неизвестный тип '" + Settings.ValueType.FullName + "'";
+            }
+        }
+
         public override string GetHtml()
         {
             EmitBeginScript(Script);
@@ -63,7 +95,6 @@ namespace Buhta
 
 
             //EmitProperty_M(Script, "val", Settings.Text);
-
 
 
             if (Settings.Size == bsInputSize.Large)
@@ -84,7 +115,7 @@ namespace Buhta
             if (Settings.Type == bsInputType.Text)
             {
 
-                EmitProperty_Bind2Way_M(Script, Settings.Text_Bind, "val", "change");
+                EmitProperty_Bind2Way_M(Script, Settings.Value_Bind, "val", "change");
                 AddClass("form-control");
 
                 if (Settings.Label != null)
@@ -95,7 +126,7 @@ namespace Buhta
                     Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
                 }
 
-                Html.Append("<input id='" + UniqueId + "' type='" + Settings.Type.ToString().ToLower() + "' " + GetAttrs() + ">" + Settings.Text + "</input>");
+                Html.Append("<input id='" + UniqueId + "' type='" + Settings.Type.ToString().ToLower() + "' " + GetAttrs() + ">" + GetDisplayText(Settings.Value) + "</input>");
 
                 if (Settings.Label != null)
                 {
@@ -105,7 +136,7 @@ namespace Buhta
             else
             if (Settings.Type == bsInputType.Checkbox)
             {
-                EmitProperty_Bind2Way_Checked(Script, Settings.Text_Bind, "change");
+                EmitProperty_Bind2Way_Checked(Script, Settings.Value_Binder, "change");
 
                 Html.Append("<div class='col-sm-offset-3 col-sm-9'>"); // beg col-sm-offset-3 col-sm-9
                 Html.Append("<div class='checkbox'>");

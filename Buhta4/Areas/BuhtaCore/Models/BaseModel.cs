@@ -16,6 +16,7 @@ namespace Buhta
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
+        public List<BaseBinder> BindedBinders = new List<BaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
 
         public BaseModel(Controller controller)
@@ -25,8 +26,31 @@ namespace Buhta
 
         public virtual string PageTitle { get { return "PageTitle"; } }
 
+        public void UpdateNew()
+        {
+            var toSend = new Dictionary<string, string>();
+
+            foreach (var binder in BindedBinders.ToList())
+            {
+                if (!toSend.ContainsKey(binder.PropertyName))
+                {
+                    var newText = GetPropertyDisplayText(binder);
+                    if (binder.LastSendedText != newText)
+                    {
+                        toSend.Add(binder.PropertyName, newText);
+                        binder.LastSendedText = newText;
+                    }
+                }
+            }
+
+            if (toSend.Keys.Count > 0)
+                Hub.Clients.Group(BindingId).receiveBindedValuesChanged(BindingId, toSend);
+        }
+
         public void Update()
         {
+            UpdateNew();
+
             var toSend = new Dictionary<string, object>();
             foreach (var KeyVP in BindedProps.ToList())
             {
@@ -228,31 +252,36 @@ namespace Buhta
             return null;
         }
 
-        public ObservableObject GetPropertyObject(string propName)
+        public string GetPropertyDisplayText(BaseBinder binder)
         {
-            var names = propName.Split('.');
-            if (names.Length == 1)
-                return this;
-            object obj = this;
-            for (int i = 0; i < names.Length; i++)
-            {
-                Type _type = obj.GetType();
-                PropertyInfo _prop = _type.GetProperty(names[i]);
-                if (_prop == null)
-                    throw new Exception("model." + nameof(GetPropertyObject) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
-                obj = _prop.GetValue(obj);
-                if (obj == null)
-                    return null;
-                if (i == names.Length - 2)
-                {
-                    if (obj is ObservableObject)
-                        return obj as ObservableObject;
-                    else
-                        throw new Exception("model." + nameof(GetPropertyObject) + ": объект должен быть типа " + nameof(ObservableObject) + " в '" + propName + "'");
-                }
-            }
-            return null;
+            return binder.GetDisplayText(GetPropertyValue(binder.PropertyName));
         }
+
+        //public ObservableObject GetPropertyObject(string propName)
+        //{
+        //    var names = propName.Split('.');
+        //    if (names.Length == 1)
+        //        return this;
+        //    object obj = this;
+        //    for (int i = 0; i < names.Length; i++)
+        //    {
+        //        Type _type = obj.GetType();
+        //        PropertyInfo _prop = _type.GetProperty(names[i]);
+        //        if (_prop == null)
+        //            throw new Exception("model." + nameof(GetPropertyObject) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
+        //        obj = _prop.GetValue(obj);
+        //        if (obj == null)
+        //            return null;
+        //        if (i == names.Length - 2)
+        //        {
+        //            if (obj is ObservableObject)
+        //                return obj as ObservableObject;
+        //            else
+        //                throw new Exception("model." + nameof(GetPropertyObject) + ": объект должен быть типа " + nameof(ObservableObject) + " в '" + propName + "'");
+        //        }
+        //    }
+        //    return null;
+        //}
 
         public void SetPropertyValue(string propName, object value)
         {

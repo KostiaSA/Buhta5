@@ -161,6 +161,10 @@
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsInput.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsControl.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsButton.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BooleanBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\IntBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\StringBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\BindingHub.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowEnd.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowBegin.cs" />
