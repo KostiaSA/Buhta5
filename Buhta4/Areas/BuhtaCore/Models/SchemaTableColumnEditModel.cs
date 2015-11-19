@@ -14,7 +14,7 @@ namespace Buhta
 
         public SchemaTableColumnEditModel(Controller controller) : base(controller) { }
 
-        public override void SaveButtonClick(string chromeWindowId, dynamic args)
+        public override void SaveButtonClick(dynamic args)
         {
 
             //Table.Name = "Жопа";

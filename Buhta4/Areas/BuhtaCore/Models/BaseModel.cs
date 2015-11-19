@@ -47,12 +47,12 @@ namespace Buhta
                 BindedProps[KeyVP.Key] = KeyVP.Value;
 
             if (toSend.Keys.Count > 0)
-                Hub.Clients.Group(BindingId).receiveBindedValuesChanged("", BindingId, toSend);
+                Hub.Clients.Group(BindingId).receiveBindedValuesChanged( BindingId, toSend);
         }
 
-        public void ExecuteJavaScript(string chromeWindowId, string script)
+        public void ExecuteJavaScript(string script)
         {
-            Hub.Clients.Group(BindingId).receiveScript(chromeWindowId, script);
+            Hub.Clients.Group(BindingId).receiveScript(script);
         }
 
 
@@ -139,7 +139,7 @@ namespace Buhta
             else
                 throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
 
-            Hub.Clients.Group(BindingId).receiveBindedValueChanged("", BindingId, propName, toSend);
+            Hub.Clients.Group(BindingId).receiveBindedValueChanged(BindingId, propName, toSend);
 
             if (BindedCollections.ContainsKey(propName + "\t" + fieldNames))
                 BindedCollections[propName + "\t" + fieldNames] = newValue;
@@ -290,7 +290,7 @@ namespace Buhta
             }
         }
 
-        public void InvokeMethod(string chromeWindowId, string propName, dynamic args)
+        public void InvokeMethod(string propName, dynamic args)
         {
             var names = propName.Split('.');
             object obj = this;
@@ -313,7 +313,7 @@ namespace Buhta
                     if (_method == null)
                         throw new Exception("model." + nameof(InvokeMethod) + ": не найден метод '" + names[i] + "' в '" + propName + "'");
 
-                    _method.Invoke(obj, new dynamic[] { chromeWindowId, args });
+                    _method.Invoke(obj, new dynamic[] { args });
                     return;
 
                 }
@@ -322,10 +322,9 @@ namespace Buhta
         }
 
 
-        public xWindow CreateWindow(string chromeWindowId = null, string viewName = null, BaseModel model = null)
+        public xWindow CreateWindow( string viewName = null, BaseModel model = null)
         {
             var win = new xWindow();
-            win.ChromeWindowId = chromeWindowId;
             win.ParentModel = this;
             win.Controller = Controller;
             win.ViewName = viewName;
@@ -340,13 +339,13 @@ namespace Buhta
 
         //}
 
-        public virtual void SaveButtonClick(string chromeWindowId, dynamic args)
+        public virtual void SaveButtonClick(dynamic args)
         {
 
 
         }
 
-        public virtual void CancelButtonClick(string chromeWindowId, dynamic args)
+        public virtual void CancelButtonClick( dynamic args)
         {
 
 

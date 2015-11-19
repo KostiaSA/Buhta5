@@ -23,7 +23,7 @@ namespace Buhta
             }
         }
 
-        public void _______ButtonClick(string chromeWindowId, dynamic args)
+        public void _______ButtonClick(dynamic args)
         {
 
         }

@@ -111,7 +111,7 @@ namespace Buhta
             {
                 Script.AppendLine("tag.on('" + jqxEventName + "',function(event){");
                 Script.AppendLine(" var args={tagId:event.target.id};");
-                Script.AppendLine(" bindingHub.server.sendEvent(window.name,'" + Model.BindingId + "','" + modelMethodName + "', args );");
+                Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
                 Script.AppendLine("});");
 
             }
@@ -128,7 +128,7 @@ namespace Buhta
                     Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
                 }
                 script.AppendLine("tag." + GetJqxName() + "({" + jqxPropertyName + ":" + Model.BindedProps[modelPropertyName] + "});");
-                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
                 script.AppendLine("    tag." + GetJqxName() + "({" + jqxPropertyName + ":newValue});");
                 script.AppendLine("});");
             }
@@ -145,12 +145,12 @@ namespace Buhta
         //            Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
         //        }
         //        script.AppendLine("tag." + GetJqxName() + "({" + jqxPropertyName + ":" + Model.BindedProps[modelPropertyName] + "});");
-        //        script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
         //        script.AppendLine("    tag." + GetJqxName() + "({" + jqxPropertyName + ":newValue});");
         //        script.AppendLine("});");
 
         //        script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-        //        script.AppendLine("    bindingHub.server.sendBindedValueChanged(window.name,'{{Model.BindingId}}', '{{settings.BindValueTo}}',tag." + GetJqxName() + "('" + jqxPropertyName + "'));");
+        //        script.AppendLine("    bindingHub.server.sendBindedValueChanged('{{Model.BindingId}}', '{{settings.BindValueTo}}',tag." + GetJqxName() + "('" + jqxPropertyName + "'));");
         //        script.AppendLine("}); ");
 
         //    }
@@ -166,7 +166,7 @@ namespace Buhta
                     Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
                 }
                 script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
                 script.AppendLine("    tag." + jqxMethodName + "(newValue);");
                 script.AppendLine("});");
             }
@@ -182,12 +182,12 @@ namespace Buhta
                     Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
                 }
                 script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
                 script.AppendLine("    tag." + jqxMethodName + "(newValue);");
                 script.AppendLine("});");
 
                 script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-                script.AppendLine("    bindingHub.server.sendBindedValueChanged(window.name,'" + Model.BindingId + "', '" + modelPropertyName + "',tag." + jqxMethodName + "()); ");
+                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + modelPropertyName + "',tag." + jqxMethodName + "()); ");
                 script.AppendLine("}); ");
 
             }

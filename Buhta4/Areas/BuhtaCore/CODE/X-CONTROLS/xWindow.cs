@@ -9,7 +9,6 @@ namespace Buhta
 {
     public class xWindow
     {
-        public string ChromeWindowId;
         public Controller Controller;
         public BaseModel ParentModel;
         public string ViewName;
@@ -39,12 +38,12 @@ namespace Buhta
             {
                 script.AppendLine("tag.on('close',function(event){");
                 script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
-                script.AppendLine(" bindingHub.server.sendEvent(window.name,'" + ParentModel.BindingId + "','" + OnClose_Bind + "', args );");
+                script.AppendLine(" bindingHub.server.sendEvent('" + ParentModel.BindingId + "','" + OnClose_Bind + "', args );");
                 script.AppendLine("});");
 
             }
 
-            ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript(ChromeWindowId, script.ToString());
+            ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript( script.ToString());
             //ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveShowWindow(windowHtml);
 
         }

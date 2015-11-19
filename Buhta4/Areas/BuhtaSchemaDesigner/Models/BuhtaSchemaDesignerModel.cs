@@ -41,19 +41,19 @@ SELECT [ID]
             }
         }
 
-        public void OnRowDoubleClick(string chromeWindowId, dynamic args)
+        public void OnRowDoubleClick(dynamic args)
         {
-            openSchemaObjectDesigner(chromeWindowId, args.rowId.ToString());
+            openSchemaObjectDesigner(args.rowId.ToString());
             //var action = new OpenChildWindowAction();
             //action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; 
             //ExecuteJavaScript(chromeWindowId, action.GetJsCode());
         }
 
-        private void openSchemaObjectDesigner(string chromeWindowId, string schemaObjectID)
+        private void openSchemaObjectDesigner(string schemaObjectID)
         {
             var action = new OpenChildWindowAction();
             action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + schemaObjectID; 
-            ExecuteJavaScript(chromeWindowId, action.GetJsCode());
+            ExecuteJavaScript(action.GetJsCode());
         }
 
     }

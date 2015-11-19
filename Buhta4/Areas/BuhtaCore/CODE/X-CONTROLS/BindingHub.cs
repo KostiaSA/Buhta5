@@ -14,7 +14,7 @@ namespace Buhta
     {
         public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
 
-        public void SendBindedValueChanged(string chromeWindowId, string modelBindingID, string propertyName, string newValue)
+        public void SendBindedValueChanged(string modelBindingID, string propertyName, string newValue)
         {
 
             try
@@ -31,15 +31,15 @@ namespace Buhta
             {
                 var obj = BindingModelList[modelBindingID];
                 if (obj == null)
-                    Clients.Caller.receiveServerError(chromeWindowId, "не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                    Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID);
                 else
-                    Clients.Caller.receiveServerError(chromeWindowId, "модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
+                    Clients.Caller.receiveServerError("модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
 
             }
 
         }
 
-        public void SendEvent(string chromeWindowId, string modelBindingID, string funcName, dynamic args)
+        public void SendEvent(string modelBindingID, string funcName, dynamic args)
         {
             try
             {
@@ -47,20 +47,20 @@ namespace Buhta
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
-                obj.InvokeMethod(chromeWindowId, funcName, args);
+                obj.InvokeMethod(funcName, args);
                 obj.Update();
             }
             catch (Exception e)
             {
                 var obj = BindingModelList[modelBindingID];
                 if (obj == null)
-                    Clients.Caller.receiveServerError(chromeWindowId, "не найден " + nameof(modelBindingID) + " = " + modelBindingID + " для метода '" + funcName + "'");
+                    Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID + " для метода '" + funcName + "'");
                 else
-                    Clients.Caller.receiveServerError(chromeWindowId, "вызов '" + obj.GetType().FullName + "', метод '" + funcName + "':\n" + e.GetFullMessage());
+                    Clients.Caller.receiveServerError("вызов '" + obj.GetType().FullName + "', метод '" + funcName + "':\n" + e.GetFullMessage());
             }
         }
 
-        public void SendGridDataSourceRequest(string chromeWindowId, string modelBindingID, string propName, string fieldNames)
+        public void SendGridDataSourceRequest(string modelBindingID, string propName, string fieldNames)
         {
             try
             {
@@ -74,13 +74,13 @@ namespace Buhta
             {
                 var obj = BindingModelList[modelBindingID];
                 if (obj == null)
-                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SendGridDataSourceRequest)+": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                    Clients.Caller.receiveServerError(nameof(SendGridDataSourceRequest) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
                 else
-                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SendGridDataSourceRequest) + " в '" + obj.GetType().FullName + "'\n" + e.GetFullMessage());
+                    Clients.Caller.receiveServerError(nameof(SendGridDataSourceRequest) + " в '" + obj.GetType().FullName + "'\n" + e.GetFullMessage());
             }
         }
 
-        public void SubscribeBindedValueChanged(string chromeWindowId, string modelBindingID, string propertyName)
+        public void SubscribeBindedValueChanged(string modelBindingID, string propertyName)
         {
             try
             {
@@ -92,10 +92,10 @@ namespace Buhta
             {
                 var obj = BindingModelList[modelBindingID];
                 if (obj == null)
-                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SubscribeBindedValueChanged) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                    Clients.Caller.receiveServerError(nameof(SubscribeBindedValueChanged) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
                 else
-                    Clients.Caller.receiveServerError(chromeWindowId, nameof(SubscribeBindedValueChanged) + " в '" + obj.GetType().FullName + "', свойство '" + propertyName + "'\n" + e.GetFullMessage());
-                //Clients.Caller.receiveServerError(chromeWindowId, "свойство '" + propertyName + "':\n" + e.GetFullMessage());
+                    Clients.Caller.receiveServerError(nameof(SubscribeBindedValueChanged) + " в '" + obj.GetType().FullName + "', свойство '" + propertyName + "'\n" + e.GetFullMessage());
+                //Clients.Caller.receiveServerError( "свойство '" + propertyName + "':\n" + e.GetFullMessage());
             }
 
         }
