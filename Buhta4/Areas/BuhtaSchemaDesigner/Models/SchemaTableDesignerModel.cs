@@ -41,7 +41,7 @@ namespace Buhta
                 {
                     Table.Name = "Жопа-" + i;
                     Update();
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                 }
             });
 
