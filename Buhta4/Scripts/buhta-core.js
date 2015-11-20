@@ -66,3 +66,34 @@ bindingHub.client.receiveScript = function (script) {
 //    }
 //})
 
+function convertFlatDataToFancyTree(childList) {
+    var parent,
+        nodeMap = {};
+    $.each(childList, function (i, c) {
+        nodeMap[c.id] = c;
+    });
+    childList = $.map(childList, function (c) {
+        c.key = c.id;
+        delete c.id;
+        //c.selected = (c.status === "completed");
+        if (c.parent) {
+            parent = nodeMap[c.parent];
+            if (parent.children) {
+                parent.children.push(c);
+            } else {
+                parent.children = [c];
+            }
+            return null; 
+        }
+        return c;
+    });
+    $.each(childList, function (i, c) {
+        if (c.children && c.children.length > 1) {
+            c.children.sort(function (a, b) {
+                return ((a.position < b.position) ? -1 : ((a.position > b.position) ? 1 : 0));
+            });
+        }
+    });
+    return childList;
+}
+

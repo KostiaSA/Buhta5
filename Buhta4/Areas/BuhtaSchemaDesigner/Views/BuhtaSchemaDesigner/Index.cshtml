@@ -83,7 +83,7 @@
 
 <div class="container">
     <h3>
-        <img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />
+        @*<img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />*@
         Дизайнер схемы
     </h3>
 
@@ -171,4 +171,20 @@ else
 @*</div>
 
     </div>*@
+
+@Html.bsTree(s =>
+{
+    s.Size = bsTreeSize.Default;
+
+    s.DataSourceBinder = new bsTreeDataSourceToDataViewBinder()
+    {
+        PropertyName = nameof(Model.SchemaObjectList),
+        DisplayFieldName = "Name",
+        KeyFieldName = "ID",
+        ParentFieldName = "ParentObjectID"
+
+    };
+
+})
+
 

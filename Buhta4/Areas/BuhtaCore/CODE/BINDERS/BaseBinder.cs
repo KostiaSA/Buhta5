@@ -18,12 +18,12 @@ namespace Buhta
 
         public virtual string GetDisplayText(object value)
         {
-            return "?";
+            throw new Exception("метод " + nameof(GetDisplayText) + " не рализован");
         }
 
         public virtual object ParseDisplayText(string text)
         {
-            return "?";
+            throw new Exception("метод "+nameof(ParseDisplayText)+" не рализован");
         }
 
 

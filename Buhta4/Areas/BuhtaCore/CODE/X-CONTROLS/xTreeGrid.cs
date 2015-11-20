@@ -134,8 +134,8 @@ namespace Buhta
                 //script.AppendLine("    tag.jqxTreeGrid(newValue);");
                 script.AppendLine("  source.localdata=newDataArray;");
                 script.AppendLine("  tag." + GetJqxName() + "('updateBoundData');");
-                if (Settings.ExpandedAll == true)
-                    script.AppendLine("  if (!tag.__ExpandedAll__) { tag." + GetJqxName() + "('expandAll'); tag.__ExpandedAll__=true;};"); // TODO expandAll не работает
+                //if (Settings.ExpandedAll == true)
+                //    script.AppendLine("  if (!tag.__ExpandedAll__) { tag." + GetJqxName() + "('expandAll'); tag.__ExpandedAll__=true;};"); // TODO expandAll не работает
 
                 script.AppendLine("});");
 
