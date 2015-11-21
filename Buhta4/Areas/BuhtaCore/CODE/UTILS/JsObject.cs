@@ -7,7 +7,7 @@ using System.Web.Helpers;
 
 namespace Buhta
 {
-    public class JsObject
+    public class JsObject:JsBaseObject
     {
         Dictionary<string, object> props = new Dictionary<string, object>();
         Dictionary<string, string> rawProps = new Dictionary<string, string>();  // свойство в уже готовом формате json
@@ -22,7 +22,7 @@ namespace Buhta
             rawProps.Add(propertyName, value);
         }
 
-        public string ToJson()
+        public override string ToJson()
         {
             var sb = new StringBuilder();
             sb.Append("{");
@@ -30,8 +30,8 @@ namespace Buhta
             foreach (var keyVP in props)
             {
                 sb.Append(keyVP.Key.AsJavaScript() + ":");
-                if (keyVP.Value is JsObject)
-                    sb.Append(((JsObject)keyVP.Value).ToJson() + ",");
+                if (keyVP.Value is JsBaseObject)
+                    sb.Append(((JsBaseObject)keyVP.Value).ToJson() + ",");
                 else
                     sb.Append(Json.Encode(keyVP.Value) + ",");
             }

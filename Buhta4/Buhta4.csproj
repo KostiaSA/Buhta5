@@ -169,6 +169,8 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\IntBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\StringBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTreeColumn.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\UTILS\JsArray.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\UTILS\JsBaseObject.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\JsObject.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\BindingHub.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowEnd.cs" />
@@ -553,6 +555,7 @@
     <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\RolesTreeGrid.cshtml" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\ui.fancytree.less" />
     <Content Include="Content\vendors\fancytree-master\src\skin-win8\ui.fancytree.less" />
+    <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

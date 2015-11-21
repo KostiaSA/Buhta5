@@ -31,7 +31,7 @@ namespace Buhta
                 throw new Exception(nameof(bsTreeDataSourceToDataViewBinder) + ": свойство '" + PropertyName + "' должно быть типа '" + nameof(DataView) + "'");
             DataView dataView = (DataView)_view;
 
-            var ret = new List<Dictionary<string, string>>();
+            var ret = new jsArray();
 
             var displayFieldName = DisplayFieldName;
             if (displayFieldName == null && dataView.Table.Columns.Contains("__title__"))
@@ -56,16 +56,16 @@ namespace Buhta
             foreach (DataRowView rowView in dataView)
             {
                 DataRow row = rowView.Row;
-                var treeNode = new Dictionary<string, string>();
+                var treeNode = new JsObject();
 
-                treeNode.Add("title", row[displayFieldName].ToString());
-                treeNode.Add("id", row[keyFieldName].ToString());
-                treeNode.Add("parent", row[parentFieldName].ToString());
-                treeNode.Add("icon", row[iconFieldName].ToString());
+                treeNode.AddProperty("title", row[displayFieldName].ToString());
+                treeNode.AddProperty("id", row[keyFieldName].ToString());
+                treeNode.AddProperty("parent", row[parentFieldName].ToString());
+                treeNode.AddProperty("icon", row[iconFieldName].ToString());
 
-                ret.Add(treeNode);
+                ret.AddObject(treeNode);
             }
-            return "convertFlatDataToFancyTree(" + Json.Encode(ret) + ")";
+            return "convertFlatDataToFancyTree(" + ret.ToJson() + ")";
 
         }
 

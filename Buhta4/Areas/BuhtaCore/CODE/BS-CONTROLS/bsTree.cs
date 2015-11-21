@@ -56,12 +56,12 @@ namespace Buhta
     }
 
 
-    class treeNode
-    {
-        public string title;
-        public bool expanded;
-        public string key;
-    }
+    //class treeNode
+    //{
+    //    public string title;
+    //    public bool expanded;
+    //    public string key;
+    //}
 
     public class bsTree : bsControl<bsTreeSettings>
     {
@@ -70,18 +70,18 @@ namespace Buhta
         public bsTree(object model, Action<bsTreeSettings> settings) : base(model, settings) { }
 
 
-        private List<treeNode> GetTreeSourceFromListOfStrings(List<string> list)
-        {
-            var ret = new List<treeNode>();
-            foreach (var str in list)
-            {
-                var node = new treeNode();
-                node.title = str;
-                ret.Add(node);
-            }
-            return ret;
+        //private List<treeNode> GetTreeSourceFromListOfStrings(List<string> list)
+        //{
+        //    var ret = new List<treeNode>();
+        //    foreach (var str in list)
+        //    {
+        //        var node = new treeNode();
+        //        node.title = str;
+        //        ret.Add(node);
+        //    }
+        //    return ret;
 
-        }
+        //}
 
         public override string GetHtml()
         {
