@@ -138,7 +138,7 @@ namespace Buhta
                 NullValueHandling = NullValueHandling.Ignore
             };
 
-            obj_cache.JSON.ToString().SaveToFile(@"c:\$\q.txt");
+            //obj_cache.JSON.ToString().SaveToFile(@"c:\$\q.txt");
             T obj = JsonConvert.DeserializeObject<T>(obj_cache.JSON.Replace(@", Buhta""", @", BuhtaCore"""), jsonSettings);
             obj.EndInit();
             return obj;
