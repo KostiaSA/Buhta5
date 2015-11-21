@@ -42,6 +42,17 @@ namespace Buhta
         public bsTreeSize Size = bsTreeSize.Default;
 
         public BaseBsTreeDataSourceBinder DataSourceBinder;
+
+        List<bsTreeColumnSettings> columns = new List<bsTreeColumnSettings>();
+        public List<bsTreeColumnSettings> Columns { get { return columns; } }
+
+        public void AddColumn(Action<bsTreeColumnSettings> settings)
+        {
+            var col = new bsTreeColumnSettings();
+            settings(col);
+            columns.Add(col);
+        }
+
     }
 
 
@@ -81,13 +92,13 @@ namespace Buhta
 
             //Script.AppendLine("var tag =$('#" + UniqueId + "');");
 
-            //Dictionary<string, object> init = new Dictionary<string, object>();
-            //init.Add("source", Settings.DataSourceBinder.GetJsonDataTreeSource(Model));
+            JsObject init = new JsObject();
+            init.AddRawProperty("source", Settings.DataSourceBinder.GetJsonDataTreeSource(Model));
 
             //var xx = Json.Encode(init);
             //Debug.Write(xx);
 
-            Script.AppendLine("tag.fancytree({source:" + Settings.DataSourceBinder.GetJsonDataTreeSource(Model) + "});");
+            Script.AppendLine("tag.fancytree(" + init.ToJson() + ");");
 
             //EmitProperty(Script, "disabled", Settings.Disabled);
             //EmitProperty_Bind(Script, Settings.Disabled_Bind, "disabled");

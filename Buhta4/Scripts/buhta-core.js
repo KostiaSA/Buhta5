@@ -75,7 +75,6 @@ function convertFlatDataToFancyTree(childList) {
     childList = $.map(childList, function (c) {
         c.key = c.id;
         delete c.id;
-        //c.selected = (c.status === "completed");
         if (c.parent) {
             parent = nodeMap[c.parent];
             if (parent.children) {
