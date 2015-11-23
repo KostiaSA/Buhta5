@@ -200,7 +200,8 @@ namespace Buhta
 
 
             if (Script.Length > 0)
-                return wrapperBeg.ToString() + "<script>\n$(document).ready(function(){\nvar tag =$('#" + UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
+                //                return wrapperBeg.ToString() + "<script>\n$(document).ready( function(){\n $.connection.hub.start().done(function () { var tag =$('#" + UniqueId + "');\n" + Script + "})});\n</script>" + Html + wrapperEnd.ToString();
+                return wrapperBeg.ToString() + "<script>\n  docReady(function () { var tag =$('#" + UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
             else
                 return wrapperBeg.ToString() + Html.ToString() + wrapperEnd.ToString();
         }
@@ -512,7 +513,7 @@ namespace Buhta
 
 
             if (Script.Length > 0)
-                return wrapperBeg.ToString() + "<script>\n$(document).ready(function(){\nvar tag =$('#" + Settings.UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
+                return wrapperBeg.ToString() + "<script>\n  docReady((function(){\nvar tag =$('#" + Settings.UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
             else
                 return wrapperBeg.ToString() + Html.ToString() + wrapperEnd.ToString();
         }

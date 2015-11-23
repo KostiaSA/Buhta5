@@ -132,7 +132,7 @@
 
     });
 
-    tree.DataSourceBinder = new bsTreeDataSourceToDataViewBinder()
+    tree.DataSourceBinder = new bsTreeDataSourceToSqlDataViewBinder()
     {
         PropertyName = nameof(Model.SchemaObjectList),
         DisplayFieldName = "Name",
@@ -140,6 +140,8 @@
         ParentFieldName = "ParentObjectID"
 
     };
+
+    tree.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
 
 })
 </div>

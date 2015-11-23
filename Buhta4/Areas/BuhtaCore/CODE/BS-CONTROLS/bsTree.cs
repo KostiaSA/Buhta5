@@ -11,17 +11,17 @@ namespace Buhta
 {
     public static partial class HtmlHelperExtensions
     {
-        public static MvcHtmlString bsTree(this HtmlHelper helper, bsTree settings)
-        {
-            (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString("");// new bsTree(helper.ViewData.Model, settings).GetHtml());
-        }
+        //public static MvcHtmlString bsTree(this HtmlHelper helper, bsTree settings)
+        //{
+        //    (helper.ViewData.Model as BaseModel).Helper = helper;
+        //    return new MvcHtmlString("");// new bsTree(helper.ViewData.Model, settings).GetHtml());
+        //}
 
-        public static MvcHtmlString bsTree(this HtmlHelper helper, Action<bsTree> settings)
-        {
-            (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString("");// new bsTree(helper.ViewData.Model, settings).GetHtml());
-        }
+        //public static MvcHtmlString bsTree(this HtmlHelper helper, Action<bsTree> settings)
+        //{
+        //    (helper.ViewData.Model as BaseModel).Helper = helper;
+        //    return new MvcHtmlString("");// new bsTree(helper.ViewData.Model, settings).GetHtml());
+        //}
 
         public static MvcHtmlString bsTree1(this HtmlHelper helper, Action<bsTree> settings)
         {
@@ -46,9 +46,13 @@ namespace Buhta
         public string Text = "";
         public string Text_Bind;
 
-        public string OnClick_Bind;
+        //public string OnClick_Bind;
 
         public BaseAction ClickAction;
+
+        public string OnRowClick_Bind;
+        public string OnRowDoubleClick_Bind;
+        public string OnRowSelect_Bind;
 
         public bsTreeSize Size = bsTreeSize.Default;
 
@@ -64,16 +68,20 @@ namespace Buhta
             columns.Add(col);
         }
 
+        public void EmitRowEvent_BindFunction(string modelMethodName)
+        {
+            Script.AppendLine("var " + modelMethodName + "=function(event, data) {");
+            Script.AppendLine("  if (!data.node.children) {");
+            Script.AppendLine("    var _args={rowId:data.node.key, tagId:event.target.id};");
+            Script.AppendLine("    bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', _args );");
+            Script.AppendLine("  }");
+            Script.AppendLine("}");
+        }
+
         public override string GetHtml()
         {
 
             AddClass("table");
-            //var list = new List<string>();
-            //list.Add("жопа-1");
-            //list.Add("жопа-2");
-            //list.Add("жопа-3");
-
-            //Script.AppendLine("var tag =$('#" + UniqueId + "');");
 
             JsObject init = new JsObject();
             DataSourceBinder.Tree = this;
@@ -87,6 +95,13 @@ namespace Buhta
             table.AddProperty("indentation", 20);
             table.AddProperty("nodeColumnIdx", 0);
             init.AddProperty("table", table);
+
+            if (OnRowDoubleClick_Bind != null)
+            {
+                EmitRowEvent_BindFunction(OnRowDoubleClick_Bind);
+                init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
+            }
+
 
             //var sb = new StringBuilder(); // renderColumns
             Script.AppendLine("var renderColumns=function(event, data) {");
@@ -131,7 +146,7 @@ namespace Buhta
             //EmitProperty_M(Script, "val", Settings.Text);
             EmitProperty_Bind_M(Script, Text_Bind, "val");
 
-            EmitEvent_Bind(Script, OnClick_Bind, "click");
+            //EmitEvent_Bind(Script, OnClick_Bind, "click");
 
             if (ClickAction != null)
             {
@@ -140,18 +155,6 @@ namespace Buhta
                 Script.AppendLine("});");
 
             }
-
-            //AddClass("btn");
-
-            //if (Settings.Size == bsTreeSize.Large)
-            //    AddClass("btn-lg");
-            //else
-            //if (Settings.Size == bsTreeSize.Small)
-            //    AddClass("btn-sm");
-            //else
-            //if (Settings.Size == bsTreeSize.ExtraSmall)
-            //    AddClass("btn-xs");
-
 
             Html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
             //Html.Append("<colgroup>");
@@ -180,91 +183,4 @@ namespace Buhta
 
     }
 
-
-    //class treeNode
-    //{
-    //    public string title;
-    //    public bool expanded;
-    //    public string key;
-    //}
-
-    //public class bsTree : bsControl<bsTreeSettings>
-    //{
-
-    //    public bsTree(object model, bsTreeSettings settings) : base(model, settings) { }
-    //    public bsTree(object model, Action<bsTreeSettings> settings) : base(model, settings) { }
-
-
-    //    //private List<treeNode> GetTreeSourceFromListOfStrings(List<string> list)
-    //    //{
-    //    //    var ret = new List<treeNode>();
-    //    //    foreach (var str in list)
-    //    //    {
-    //    //        var node = new treeNode();
-    //    //        node.title = str;
-    //    //        ret.Add(node);
-    //    //    }
-    //    //    return ret;
-
-    //    //}
-
-    //    public override string GetHtml()
-    //    {
-    //        //var list = new List<string>();
-    //        //list.Add("жопа-1");
-    //        //list.Add("жопа-2");
-    //        //list.Add("жопа-3");
-
-    //        //Script.AppendLine("var tag =$('#" + UniqueId + "');");
-
-    //        JsObject init = new JsObject();
-    //        init.AddRawProperty("source", Settings.DataSourceBinder.GetJsonDataTreeSource(Model));
-
-    //        //var xx = Json.Encode(init);
-    //        //Debug.Write(xx);
-
-    //        Script.AppendLine("tag.fancytree(" + init.ToJson() + ");");
-
-    //        //EmitProperty(Script, "disabled", Settings.Disabled);
-    //        //EmitProperty_Bind(Script, Settings.Disabled_Bind, "disabled");
-
-
-    //        //EmitProperty_M(Script, "val", Settings.Text);
-    //        EmitProperty_Bind_M(Script, Settings.Text_Bind, "val");
-
-    //        EmitEvent_Bind(Script, Settings.OnClick_Bind, "click");
-
-    //        if (Settings.ClickAction != null)
-    //        {
-    //            Script.AppendLine("tag.on('click',function(event){");
-    //            Settings.ClickAction.EmitJsCode(Script);
-    //            Script.AppendLine("});");
-
-    //        }
-
-    //        //AddClass("btn");
-
-    //        //if (Settings.Size == bsTreeSize.Large)
-    //        //    AddClass("btn-lg");
-    //        //else
-    //        //if (Settings.Size == bsTreeSize.Small)
-    //        //    AddClass("btn-sm");
-    //        //else
-    //        //if (Settings.Size == bsTreeSize.ExtraSmall)
-    //        //    AddClass("btn-xs");
-
-
-    //        Html.Append("<table id='" + Settings.UniqueId + "' " + Settings.GetAttrs() + ">");
-    //        Html.Append("<colgroup>");
-    //        foreach (var col in Settings.Columns)
-    //            col.EmitColgroupCol(Html, Script);
-    //        Html.Append("</colgroup>");
-
-
-    //        Html.Append("</table>");
-
-    //        return base.GetHtml();
-    //    }
-
-    //}
 }
