@@ -9,6 +9,8 @@ namespace Buhta
 {
     public class BuhtaSchemaDesignerModel : BaseModel
     {
+        public string ActiveRowId;
+
         public BuhtaSchemaDesignerModel(Controller controller) : base(controller) { }
 
         public DataView SchemaObjectList
@@ -48,6 +50,30 @@ SELECT [ID]
             //var action = new OpenChildWindowAction();
             //action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; 
             //ExecuteJavaScript(chromeWindowId, action.GetJsCode());
+        }
+
+        public void OnRowSelect(dynamic args)
+        {
+            var xx = 100;
+            //openSchemaObjectDesigner(args.rowId.ToString());
+            //var action = new OpenChildWindowAction();
+            //action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; 
+            //ExecuteJavaScript(chromeWindowId, action.GetJsCode());
+        }
+
+        public void OnRowActivate(dynamic args)
+        {
+            ActiveRowId = args.rowId;
+            //openSchemaObjectDesigner(args.rowId.ToString());
+            //var action = new OpenChildWindowAction();
+            //action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; 
+            //ExecuteJavaScript(chromeWindowId, action.GetJsCode());
+        }
+
+        public void OnChangeButtonClick(dynamic args)
+        {
+            if (ActiveRowId != null)
+                openSchemaObjectDesigner(ActiveRowId);
         }
 
         private void openSchemaObjectDesigner(string schemaObjectID)

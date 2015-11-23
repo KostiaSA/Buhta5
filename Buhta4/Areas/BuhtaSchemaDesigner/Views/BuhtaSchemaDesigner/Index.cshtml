@@ -42,7 +42,7 @@
 
                 @Html.bsButton(s =>
                {
-                   //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+                   s.OnClick_Bind = nameof(Model.OnChangeButtonClick);
                    s.Text = "Изменить";
                    s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-update.png";
                    s.ButtonStyle = bsButtonStyle.Default;
@@ -142,6 +142,8 @@
     };
 
     tree.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
+    tree.OnRowSelect_Bind = nameof(Model.OnRowSelect);
+    tree.OnRowActivate_Bind = nameof(Model.OnRowActivate);
 
 })
 </div>

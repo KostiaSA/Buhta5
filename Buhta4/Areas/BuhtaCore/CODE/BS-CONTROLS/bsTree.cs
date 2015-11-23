@@ -53,6 +53,7 @@ namespace Buhta
         public string OnRowClick_Bind;
         public string OnRowDoubleClick_Bind;
         public string OnRowSelect_Bind;
+        public string OnRowActivate_Bind;
 
         public bsTreeSize Size = bsTreeSize.Default;
 
@@ -68,13 +69,15 @@ namespace Buhta
             columns.Add(col);
         }
 
-        public void EmitRowEvent_BindFunction(string modelMethodName)
+        public void EmitRowEvent_BindFunction(string modelMethodName, bool isIgnoreForFolder = false)
         {
             Script.AppendLine("var " + modelMethodName + "=function(event, data) {");
-            Script.AppendLine("  if (!data.node.children) {");
+            if (isIgnoreForFolder)
+                Script.AppendLine("  if (!data.node.children) {");
             Script.AppendLine("    var _args={rowId:data.node.key, tagId:event.target.id};");
             Script.AppendLine("    bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', _args );");
-            Script.AppendLine("  }");
+            if (isIgnoreForFolder)
+                Script.AppendLine("  }");
             Script.AppendLine("}");
         }
 
@@ -98,8 +101,20 @@ namespace Buhta
 
             if (OnRowDoubleClick_Bind != null)
             {
-                EmitRowEvent_BindFunction(OnRowDoubleClick_Bind);
+                EmitRowEvent_BindFunction(OnRowDoubleClick_Bind, true);
                 init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
+            }
+
+            if (OnRowSelect_Bind != null)
+            {
+                EmitRowEvent_BindFunction(OnRowSelect_Bind);
+                init.AddRawProperty("select", OnRowSelect_Bind);
+            }
+
+            if (OnRowActivate_Bind != null)
+            {
+                EmitRowEvent_BindFunction(OnRowActivate_Bind);
+                init.AddRawProperty("activate", OnRowActivate_Bind);
             }
 
 
