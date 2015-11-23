@@ -129,7 +129,14 @@ namespace Buhta
             //    AddClass("btn-xs");
 
 
-            Html.Append("<div id='" + UniqueId + "' " + GetAttrs() + "></div>");
+            Html.Append("<table id='" + Settings.UniqueId + "' " + Settings.GetAttrs() + ">");
+            Html.Append("<colgroup>");
+            foreach (var col in Settings.Columns)
+                col.EmitColgroupCol(Html, Script);
+            Html.Append("</colgroup>");
+
+
+            Html.Append("</table>");
 
             return base.GetHtml();
         }

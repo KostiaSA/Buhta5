@@ -176,6 +176,19 @@ else
 {
     s.Size = bsTreeSize.Default;
 
+    s.AddColumn(c=> {
+        c.Caption = "Объект конфигурации";
+        c.AddAttr("color","red");
+        c.AddClass("cls12");
+    });
+
+    s.AddColumn(c =>
+    {
+        c.Caption = "Тип";
+        c.AddAttr("color", "blue");
+        c.AddClass("type-1");
+    });
+
     s.DataSourceBinder = new bsTreeDataSourceToDataViewBinder()
     {
         PropertyName = nameof(Model.SchemaObjectList),

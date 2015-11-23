@@ -98,16 +98,16 @@ namespace Buhta
 
 
             if (Settings.Size == bsInputSize.Large)
-                AddClass("input-lg");
+                Settings.AddClass("input-lg");
             else
             if (Settings.Size == bsInputSize.Small)
-                AddClass("input-sm");
+                Settings.AddClass("input-sm");
             else
             if (Settings.Size == bsInputSize.ExtraSmall)
-                AddClass("input-xs");
+                Settings.AddClass("input-xs");
 
             if (Settings.PlaceHolder != null)
-                AddAttr("placeholder", Settings.PlaceHolder);
+                Settings.AddAttr("placeholder", Settings.PlaceHolder);
 
 
             Html.Append("<div class='form-group'>"); // begin form-group
@@ -116,7 +116,7 @@ namespace Buhta
             {
 
                 EmitProperty_Bind2Way_M(Script, Settings.Value_Bind, "val", "change");
-                AddClass("form-control");
+                Settings.AddClass("form-control");
 
                 if (Settings.Label != null)
                 {
@@ -126,7 +126,7 @@ namespace Buhta
                     Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
                 }
 
-                Html.Append("<input id='" + UniqueId + "' type='" + Settings.Type.ToString().ToLower() + "' " + GetAttrs() + ">" + GetDisplayText(Settings.Value) + "</input>");
+                Html.Append("<input id='" + Settings.UniqueId + "' type='" + Settings.Type.ToString().ToLower() + "' " + Settings.GetAttrs() + ">" + GetDisplayText(Settings.Value) + "</input>");
 
                 if (Settings.Label != null)
                 {
@@ -142,7 +142,7 @@ namespace Buhta
                 Html.Append("<div class='checkbox'>");
                 Html.Append("<label>");
 
-                Html.Append("<input id='" + UniqueId + "' type='" + Settings.Type.ToString().ToLower() + "' " + GetAttrs() + "></input>");
+                Html.Append("<input id='" + Settings.UniqueId + "' type='" + Settings.Type.ToString().ToLower() + "' " + Settings.GetAttrs() + "></input>");
                 Html.Append(Settings.Label != null ? Settings.Label.ToString() : "");
 
                 Html.Append("</label>");

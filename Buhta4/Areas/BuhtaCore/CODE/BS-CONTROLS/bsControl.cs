@@ -12,9 +12,22 @@ namespace Buhta
 
     public class bsControlSettings
     {
-        public List<string> classes = new List<string>();
-        public Dictionary<string, string> styles = new Dictionary<string, string>();
-        public Dictionary<string, string> attrs = new Dictionary<string, string>();
+        List<string> classes = new List<string>();
+        Dictionary<string, string> styles = new Dictionary<string, string>();
+        Dictionary<string, string> attrs = new Dictionary<string, string>();
+
+        string uniqueId;
+        public string UniqueId
+        {
+            get
+            {
+                if (uniqueId == null)
+                {
+                    uniqueId = Guid.NewGuid().ToString().Substring(1, 6);
+                }
+                return uniqueId;
+            }
+        }
 
         public TagInTable InTable = TagInTable.None;
         //public string ClassAttr;
@@ -46,6 +59,49 @@ namespace Buhta
                 attrs[attrName] = attrValue; //throw new Exception("Аттрибут '" + attrName + "' уже был добавлен");
             else
                 attrs.Add(attrName, attrValue);
+        }
+
+        public string GetAttrs()
+        {
+            var sb = new StringBuilder();
+            if (classes.Count > 0 || classes.Count > 0)
+            {
+                sb.Append(@"class=""");
+                foreach (var cls in classes)
+                {
+                    if (!classes.Contains(cls))
+                        sb.Append(cls + " ");
+                }
+                foreach (var cls in classes)
+                    sb.Append(cls + " ");
+                sb.RemoveLastChar();
+                sb.Append(@""" ");
+            }
+            if (styles.Keys.Count > 0 || styles.Keys.Count > 0)
+            {
+                sb.Append(@"style=""");
+                foreach (var stl in styles)
+                {
+                    if (!styles.ContainsKey(stl.Key))
+                        sb.Append(stl.Key + ":" + stl.Value + ";");
+                }
+                foreach (var stl in styles)
+                    sb.Append(stl.Key + ":" + stl.Value + ";");
+                sb.Append(@""" ");
+            }
+
+            foreach (var attr in attrs)
+            {
+                if (!attrs.ContainsKey(attr.Key))
+                    sb.Append(attr.Key + "=" + attr.Value.AsJavaScript() + ";");
+            }
+
+            foreach (var attr in attrs)
+            {
+                sb.Append(attr.Key + "=" + attr.Value.AsJavaScript() + ";");
+            }
+
+            return sb.ToString();
         }
 
     }
@@ -99,36 +155,36 @@ namespace Buhta
         protected StringBuilder Script = new StringBuilder();
         protected StringBuilder Html = new StringBuilder();
 
-        private List<string> classes = new List<string>();
-        private Dictionary<string, string> styles = new Dictionary<string, string>();
-        private Dictionary<string, string> attrs = new Dictionary<string, string>();
+        //private List<string> classes = new List<string>();
+        //private Dictionary<string, string> styles = new Dictionary<string, string>();
+        //private Dictionary<string, string> attrs = new Dictionary<string, string>();
 
-        protected void AddClass(string className)
-        {
-            if (!classes.Contains(className))
-                classes.Add(className);
-        }
+        //protected void AddClass(string className)
+        //{
+        //    if (!classes.Contains(className))
+        //        classes.Add(className);
+        //}
 
-        protected void AddStyle(string styleName, string styleValue)
-        {
-            styleName = styleName.ToLower();
-            if (styles.ContainsKey(styleName))
-                throw new Exception("Стиль '" + styleName + "' уже был добавлен");
-            styles.Add(styleName, styleValue);
-        }
+        //protected void AddStyle(string styleName, string styleValue)
+        //{
+        //    styleName = styleName.ToLower();
+        //    if (styles.ContainsKey(styleName))
+        //        throw new Exception("Стиль '" + styleName + "' уже был добавлен");
+        //    styles.Add(styleName, styleValue);
+        //}
 
-        protected void AddAttr(string attrName, string attrValue)
-        {
-            attrName = attrName.ToLower();
-            if (attrName == "class")
-                throw new Exception("Аттрибут 'class' надо добавлять методом  '" + nameof(AddClass) + "'");
-            if (attrName == "style")
-                throw new Exception("Аттрибут 'style' надо добавлять методом '" + nameof(AddStyle) + "'");
-            if (attrs.ContainsKey(attrName))
-                attrs[attrName] = attrValue; //throw new Exception("Аттрибут '" + attrName + "' уже был добавлен");
-            else
-                attrs.Add(attrName, attrValue);
-        }
+        //protected void AddAttr(string attrName, string attrValue)
+        //{
+        //    attrName = attrName.ToLower();
+        //    if (attrName == "class")
+        //        throw new Exception("Аттрибут 'class' надо добавлять методом  '" + nameof(AddClass) + "'");
+        //    if (attrName == "style")
+        //        throw new Exception("Аттрибут 'style' надо добавлять методом '" + nameof(AddStyle) + "'");
+        //    if (attrs.ContainsKey(attrName))
+        //        attrs[attrName] = attrValue; //throw new Exception("Аттрибут '" + attrName + "' уже был добавлен");
+        //    else
+        //        attrs.Add(attrName, attrValue);
+        //}
 
         public bsControl(object model, T settings)
         {
@@ -159,48 +215,48 @@ namespace Buhta
         //        return "";
         //}
 
-        public string GetAttrs()
-        {
-            var sb = new StringBuilder();
-            if (classes.Count > 0 || Settings.classes.Count > 0)
-            {
-                sb.Append(@"class=""");
-                foreach (var cls in classes)
-                {
-                    if (!Settings.classes.Contains(cls))
-                        sb.Append(cls + " ");
-                }
-                foreach (var cls in Settings.classes)
-                    sb.Append(cls + " ");
-                sb.RemoveLastChar();
-                sb.Append(@""" ");
-            }
-            if (styles.Keys.Count>0 || Settings.styles.Keys.Count > 0)
-            {
-                sb.Append(@"style=""");
-                foreach (var stl in styles)
-                {
-                    if (!Settings.styles.ContainsKey(stl.Key))
-                        sb.Append(stl.Key + ":" + stl.Value + ";");
-                }
-                foreach (var stl in Settings.styles)
-                    sb.Append(stl.Key + ":" + stl.Value + ";");
-                sb.Append(@""" ");
-            }
+        //public string GetAttrs()
+        //{
+        //    var sb = new StringBuilder();
+        //    if (classes.Count > 0 || Settings.classes.Count > 0)
+        //    {
+        //        sb.Append(@"class=""");
+        //        foreach (var cls in classes)
+        //        {
+        //            if (!Settings.classes.Contains(cls))
+        //                sb.Append(cls + " ");
+        //        }
+        //        foreach (var cls in Settings.classes)
+        //            sb.Append(cls + " ");
+        //        sb.RemoveLastChar();
+        //        sb.Append(@""" ");
+        //    }
+        //    if (styles.Keys.Count>0 || Settings.styles.Keys.Count > 0)
+        //    {
+        //        sb.Append(@"style=""");
+        //        foreach (var stl in styles)
+        //        {
+        //            if (!Settings.styles.ContainsKey(stl.Key))
+        //                sb.Append(stl.Key + ":" + stl.Value + ";");
+        //        }
+        //        foreach (var stl in Settings.styles)
+        //            sb.Append(stl.Key + ":" + stl.Value + ";");
+        //        sb.Append(@""" ");
+        //    }
 
-            foreach (var attr in attrs)
-            {
-                if (!Settings.attrs.ContainsKey(attr.Key))
-                    sb.Append(attr.Key + "=" + attr.Value.AsJavaScript() + ";");
-            }
+        //    foreach (var attr in attrs)
+        //    {
+        //        if (!Settings.attrs.ContainsKey(attr.Key))
+        //            sb.Append(attr.Key + "=" + attr.Value.AsJavaScript() + ";");
+        //    }
 
-            foreach (var attr in Settings.attrs)
-            {
-                sb.Append(attr.Key + "=" + attr.Value.AsJavaScript() + ";");
-            }
+        //    foreach (var attr in Settings.attrs)
+        //    {
+        //        sb.Append(attr.Key + "=" + attr.Value.AsJavaScript() + ";");
+        //    }
 
-            return sb.ToString();
-        }
+        //    return sb.ToString();
+        //}
 
 
 
@@ -354,23 +410,23 @@ namespace Buhta
 
 
             if (Script.Length > 0)
-                return wrapperBeg.ToString() + "<script>\n$(document).ready(function(){\nvar tag =$('#" + UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
+                return wrapperBeg.ToString() + "<script>\n$(document).ready(function(){\nvar tag =$('#" + Settings.UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
             else
                 return wrapperBeg.ToString() + Html.ToString() + wrapperEnd.ToString();
         }
 
-        string uniqueId;
-        public string UniqueId
-        {
-            get
-            {
-                if (uniqueId == null)
-                {
-                    uniqueId = Guid.NewGuid().ToString().Substring(1, 6);
-                }
-                return uniqueId;
-            }
-        }
+        //string uniqueId;
+        //public string UniqueId
+        //{
+        //    get
+        //    {
+        //        if (uniqueId == null)
+        //        {
+        //            uniqueId = Guid.NewGuid().ToString().Substring(1, 6);
+        //        }
+        //        return uniqueId;
+        //    }
+        //}
 
     }
 }
