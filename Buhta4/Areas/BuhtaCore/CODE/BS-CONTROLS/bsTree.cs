@@ -94,11 +94,10 @@ namespace Buhta
             Script.AppendLine("  var row = node.data.row;");
             Script.AppendLine("  row.node = node;");
             Script.AppendLine("  var td = $(node.tr).find('>td');");
-            for (int i = 0; i < Columns.Count; i++)
+            int i = -1;
+            foreach (var col in Columns.Where(c => c.Hidden != true))
             {
-                var col = Columns[i];
-                //Script.AppendLine("  td.eq(" + i + ").text(row['" + col.Field_Bind + "']);");
-
+                i++;
                 if (col.CellTemplate != null)
                 {
                     Script.AppendLine(@"  var f" + i + "=function(row){");
@@ -109,14 +108,14 @@ namespace Buhta
                     if (i != 0)
                         Script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");
                     else
-                        Script.AppendLine("  td.find('.fancytree-title').html(f" + i + "(row));");
+                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row));");
                 }
                 else
                 {
                     if (i != 0)
                         Script.AppendLine("  td.eq(" + i + ").text(row['" + col.Field_Bind + "']);");
                     else
-                        Script.AppendLine("  td.find('.fancytree-title').text(row['" + col.Field_Bind + "']);");
+                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').text(row['" + col.Field_Bind + "']);");
                 }
 
             }
@@ -162,14 +161,14 @@ namespace Buhta
 
             Html.Append("<thead>");
             Html.Append("<tr>");
-            foreach (var col in Columns)
+            foreach (var col in Columns.Where(c => c.Hidden != true))
                 Html.Append("<th>" + col.Caption + "</th>");
             Html.Append("</tr>");
             Html.Append("</thead>");
 
             Html.Append("<tbody>");
             Html.Append("<tr>");
-            foreach (var col in Columns)
+            foreach (var col in Columns.Where(c => c.Hidden != true))
                 Html.Append("<td></td>");
             Html.Append("</tr>");
             Html.Append("</tbody>");

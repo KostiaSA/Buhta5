@@ -110,10 +110,25 @@
 
     tree.AddColumn(c =>
     {
+        c.Hidden = true;
+        c.Field_Bind = "RootClass";
+
+    });
+
+    tree.AddColumn(c =>
+    {
         c.Caption = "Тип";
         c.Field_Bind = "RootType";
         c.AddStyle("color", "blue");
         c.AddClass("type-1");
+
+    });
+
+    tree.AddColumn(c =>
+    {
+        c.Caption = "ID";
+        c.Field_Bind = "ID";
+        c.CellTemplate = "<small style='opacity:0.3'>{{ID}}, {{RootClass}}</small>";
 
     });
 

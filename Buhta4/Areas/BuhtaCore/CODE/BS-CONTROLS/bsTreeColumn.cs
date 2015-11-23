@@ -17,14 +17,15 @@ namespace Buhta
         public string Width_Bind;
 
         public bool? Hidden;
-        public string Hidden_Bind;
 
         public string Caption;
         public string Caption_Bind;
 
         public string Field_Bind;
 
+        // пример "<small style='opacity:0.3'>{{ID}}</small>"
         public string CellTemplate;
+
         public string CellTemplateJS;
 
         //public void EmitDataField(StringBuilder script,int colIndex)
