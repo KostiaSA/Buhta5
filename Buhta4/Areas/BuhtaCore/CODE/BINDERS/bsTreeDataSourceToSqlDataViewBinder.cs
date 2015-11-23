@@ -7,7 +7,7 @@ using System.Web.Helpers;
 
 namespace Buhta
 {
-    public class bsTreeDataSourceToDataViewBinder : BaseBsTreeDataSourceBinder
+    public class bsTreeDataSourceToSqlDataViewBinder : BaseBsTreeDataSourceBinder
     {
 
         public string KeyFieldName;
@@ -15,8 +15,8 @@ namespace Buhta
         public string DisplayFieldName;
         public string IconFieldName;
 
-        public bsTreeDataSourceToDataViewBinder() : base("") { }
-        public bsTreeDataSourceToDataViewBinder(string propertyName) : base(propertyName) { }
+        public bsTreeDataSourceToSqlDataViewBinder() : base("") { }
+        public bsTreeDataSourceToSqlDataViewBinder(string propertyName) : base(propertyName) { }
         //public bsTreeDataSourceToDataViewBinder(string propertyName, string keyFieldName, string parentFieldName, string displayFieldName) : base(propertyName)
         //{
         //    KeyFieldName = keyFieldName;
@@ -28,7 +28,7 @@ namespace Buhta
         {
             var _view = model.GetPropertyValue(PropertyName);
             if (!(_view is DataView))
-                throw new Exception(nameof(bsTreeDataSourceToDataViewBinder) + ": свойство '" + PropertyName + "' должно быть типа '" + nameof(DataView) + "'");
+                throw new Exception(nameof(bsTreeDataSourceToSqlDataViewBinder) + ": свойство '" + PropertyName + "' должно быть типа '" + nameof(DataView) + "'");
             DataView dataView = (DataView)_view;
 
             var ret = new jsArray();
@@ -62,6 +62,13 @@ namespace Buhta
                 treeNode.AddProperty("id", row[keyFieldName].ToString());
                 treeNode.AddProperty("parent", row[parentFieldName].ToString());
                 treeNode.AddProperty("icon", row[iconFieldName].ToString());
+
+                var jsRow = new JsObject();
+                foreach (var col in Tree.Columns)
+                {
+                    jsRow.AddRawProperty(col.Field_Bind, row[col.Field_Bind].AsJavaScript());
+                }
+                treeNode.AddProperty("row", jsRow);
 
                 ret.AddObject(treeNode);
             }

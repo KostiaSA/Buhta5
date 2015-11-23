@@ -7,44 +7,53 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class bsTreeColumnSettings : xControlSettings
+    public class bsTreeColumnSettings : bsControlSettings
     {
-        public GridColumnDataType DataType=GridColumnDataType.String;
+        public bsTreeColumnSettings(BaseModel model) : base(model) { }
+
+        public GridColumnDataType DataType = GridColumnDataType.String;
 
         public int? Width;
         public string Width_Bind;
 
         public bool? Hidden;
-        public string Hidden_Bind;
 
         public string Caption;
         public string Caption_Bind;
 
         public string Field_Bind;
 
+        // пример "<small style='opacity:0.3'>{{ID}}</small>"
         public string CellTemplate;
+
         public string CellTemplateJS;
 
-        public void EmitDataField(StringBuilder script,int colIndex)
+        //public void EmitDataField(StringBuilder script,int colIndex)
+        //{
+        //    script.Append("fields.push({");
+        //    script.Append("name:"+Field_Bind.AsJavaScript()+",");
+        //    script.Append("type:" +  Enum.GetName(typeof(GridColumnDataType),DataType).ToLower().AsJavaScript() + ",");
+        //    script.Append("map:'"+colIndex+"'");
+        //    script.AppendLine("});");
+        //}
+
+        public void EmitColgroupCol(StringBuilder html, StringBuilder script)
         {
-            script.Append("fields.push({");
-            script.Append("name:"+Field_Bind.AsJavaScript()+",");
-            script.Append("type:" +  Enum.GetName(typeof(GridColumnDataType),DataType).ToLower().AsJavaScript() + ",");
-            script.Append("map:'"+colIndex+"'");
-            script.AppendLine("});");
+            html.Append("<col id='" + UniqueId + "' " + GetAttrs() + ">");
+            html.Append("</col>");
         }
     }
 
-    public class bsTreeColumn 
+    public class bsTreeColumn
     {
 
         public bsTreeColumnSettings Settings;
 
-        public bsTree Grid { get; private set; }
+        public bsTree Tree { get; private set; }
 
         public bsTreeColumn()
         {
-            Settings = new bsTreeColumnSettings();
+            //Settings = new bsTreeColumnSettings();
         }
 
         public string GetHtml()

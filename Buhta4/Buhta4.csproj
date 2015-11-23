@@ -158,7 +158,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToDataViewBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBsTreeDataSourceBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsInput.cs" />

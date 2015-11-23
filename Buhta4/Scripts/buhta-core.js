@@ -10,12 +10,24 @@ else {
 var bindingHub;
 var signalr = {};
 bindingHub = $.connection.bindingHub;
+$.connection.hub.start().done();
+
+var _docReady = [];
+var docReady = function (callback) { _docReady.push(callback); };
+
+$(document).ready(function () {
+    $.connection.hub.start().done(function () {
+        for (i = 0; i < _docReady.length; i++) {
+            _docReady[i]();
+        }
+    })
+});
 
 
 signalr.bindedValueChangedListeners = [];
 
 signalr.subscribeModelPropertyChanged = function (modelBindingId, propertyName, callBack) {
-    $.connection.hub.start().done(function () {
+    docReady(function () {
         bindingHub.server.subscribeBindedValueChanged( modelBindingId, propertyName);
         //alert("hub.start():" + propertyName);
         //console.log('subscribeBindedValueChanged**', modelBindingId, propertyName);
