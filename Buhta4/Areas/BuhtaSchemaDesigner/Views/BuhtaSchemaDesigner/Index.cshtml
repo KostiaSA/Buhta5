@@ -80,116 +80,44 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-
 <div class="container">
     <h3>
         @*<img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />*@
         Дизайнер схемы
     </h3>
 
+    @Html.bsTree1(tree =>
+{
+    tree.Size = bsTreeSize.Default;
 
-    <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Схема </h4>
-
-    @*<div class="panel panel-default">
-        <div class="panel-heading">
-            <div style="padding: 5px; display: inline-block">всего колонок: 8</div>
-
-            @Html.xButton(s =>
-               {
-                   //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-                   s.Text = "Test1";
-                   s.ClassAttr = "pull-right";
-                   s.StyleAttr = "margin-left:10px";
-               })
-
-            <button class="btn btn-default btn-sm pull-right">Удалить</button>
-            <button class="btn btn-default btn-sm pull-right">Изменить</button>
-            <button class="btn btn-default btn-sm pull-right">Добавить</button>
-        </div>
-
-        <div class="panel-body">*@
-    @Html.xTreeGrid(grid =>
-       {
-           grid.Width = "100%";
-           grid.Icons = true;
-           grid.ExpandedAll = true;
-           grid.Pageable = true;
-           grid.PageSize = 100;
-
-           grid.DataSource_Bind = nameof(Model.SchemaObjectList);
-           grid.KeyDataField = "ID";
-           grid.ParentDataField = "ParentObjectID";
-           grid.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
-
-           grid.AddColumn(c =>
-           {
-               c.Caption = "ID";
-               c.Field_Bind = "ID";
-               c.Hidden = true;
-           });
-
-           grid.AddColumn(c =>
-           {
-               c.Caption = "__TreeGridIcon__";
-               c.Field_Bind = "__TreeGridIcon__";
-               c.Hidden = true;
-           });
-
-           grid.AddColumn(c =>
-           {
-               c.Caption = "Name";
-               c.Field_Bind = "Name";
-               c.Width = 400;
-
-               c.CellTemplateJS = @"
-if (rowData.records) {
-  rowData._ee=' ('+rowData.records.length.toString()+')'
-  rowData._fontWeight='bold'
-}
-else
-  rowData._fontWeight='normal'
+    tree.AddColumn(c =>
+    {
+        c.Caption = "Объект конфигурации";
+        c.Field_Bind = "Name";
+        c.AddStyle("color", "red");
+        c.AddClass("cls12");
+        c.CellTemplateJS = @"
+ if (row.node.children) {
+   row._ee=' ('+row.node.children.length.toString()+')'
+   row._fontWeight='bold'
+ }
+ else
+   row._fontWeight='normal';
 ";
 
-               c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
-           });
-
-           grid.AddColumn(c =>
-           {
-               c.Caption = "RootType";
-               c.Field_Bind = "RootType";
-               //c.DataType = GridColumnDataType.Number;
-           });
-
-           grid.AddColumn(c =>
-           {
-               c.Caption = "ParentObjectID";
-               c.Field_Bind = "ParentObjectID";
-               c.Hidden = true;
-           });
-       })
-</div>
-@*</div>
-
-    </div>*@
-
-@Html.bsTree(s =>
-{
-    s.Size = bsTreeSize.Default;
-
-    s.AddColumn(c=> {
-        c.Caption = "Объект конфигурации";
-        c.AddAttr("color","red");
-        c.AddClass("cls12");
+        c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
     });
 
-    s.AddColumn(c =>
+    tree.AddColumn(c =>
     {
         c.Caption = "Тип";
-        c.AddAttr("color", "blue");
+        c.Field_Bind = "RootType";
+        c.AddStyle("color", "blue");
         c.AddClass("type-1");
+
     });
 
-    s.DataSourceBinder = new bsTreeDataSourceToDataViewBinder()
+    tree.DataSourceBinder = new bsTreeDataSourceToDataViewBinder()
     {
         PropertyName = nameof(Model.SchemaObjectList),
         DisplayFieldName = "Name",
@@ -199,5 +127,6 @@ else
     };
 
 })
+</div>
 
 

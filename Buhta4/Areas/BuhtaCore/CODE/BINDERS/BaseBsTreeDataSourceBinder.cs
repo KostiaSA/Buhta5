@@ -7,6 +7,7 @@ namespace Buhta
 {
     public abstract class BaseBsTreeDataSourceBinder:BaseBinder
     {
+        public bsTree Tree;
 
         public BaseBsTreeDataSourceBinder(string propertyName) : base(propertyName) { }
 

@@ -9,6 +9,8 @@ namespace Buhta
 {
     public class bsTreeColumnSettings : bsControlSettings
     {
+        public bsTreeColumnSettings(BaseModel model) : base(model) { }
+
         public GridColumnDataType DataType = GridColumnDataType.String;
 
         public int? Width;
@@ -46,11 +48,11 @@ namespace Buhta
 
         public bsTreeColumnSettings Settings;
 
-        public bsTree Grid { get; private set; }
+        public bsTree Tree { get; private set; }
 
         public bsTreeColumn()
         {
-            Settings = new bsTreeColumnSettings();
+            //Settings = new bsTreeColumnSettings();
         }
 
         public string GetHtml()

@@ -63,6 +63,13 @@ namespace Buhta
                 treeNode.AddProperty("parent", row[parentFieldName].ToString());
                 treeNode.AddProperty("icon", row[iconFieldName].ToString());
 
+                var jsRow = new JsObject();
+                foreach (var col in Tree.Columns)
+                {
+                    jsRow.AddRawProperty(col.Field_Bind, row[col.Field_Bind].AsJavaScript());
+                }
+                treeNode.AddProperty("row", jsRow);
+
                 ret.AddObject(treeNode);
             }
             return "convertFlatDataToFancyTree(" + ret.ToJson() + ")";

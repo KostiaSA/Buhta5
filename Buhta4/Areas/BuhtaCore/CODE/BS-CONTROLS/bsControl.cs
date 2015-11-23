@@ -12,6 +12,17 @@ namespace Buhta
 
     public class bsControlSettings
     {
+        protected StringBuilder Script = new StringBuilder();
+        protected StringBuilder Html = new StringBuilder();
+
+        BaseModel model;
+        public bsControlSettings(BaseModel _model)
+        {
+            model = _model;
+        }
+
+        public BaseModel Model { get { return model; } }
+
         List<string> classes = new List<string>();
         Dictionary<string, string> styles = new Dictionary<string, string>();
         Dictionary<string, string> attrs = new Dictionary<string, string>();
@@ -103,6 +114,97 @@ namespace Buhta
 
             return sb.ToString();
         }
+
+        public void EmitProperty_M(StringBuilder script, string jqxMethodName, object value)
+        {
+            if (value != null)
+                Script.AppendLine("tag." + jqxMethodName + "(" + value.AsJavaScript() + ");");
+        }
+
+
+        public void EmitEvent_Bind(StringBuilder script, string modelMethodName, string jqxEventName)
+        {
+            if (modelMethodName != null)
+            {
+                Script.AppendLine("tag.on('" + jqxEventName + "',function(event){");
+                Script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
+                Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
+                Script.AppendLine("});");
+
+            }
+
+        }
+        public void EmitProperty_Bind_M(StringBuilder script, string modelPropertyName, string jqxMethodName)
+        {
+            if (modelPropertyName != null)
+            {
+                if (!Model.BindedProps.ContainsKey(modelPropertyName))
+                {
+                    Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
+                }
+                script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+                script.AppendLine("    tag." + jqxMethodName + "(newValue);");
+                script.AppendLine("});");
+            }
+
+        }
+
+        public void EmitProperty_Bind2Way_M(StringBuilder script, string modelPropertyName, string jqxMethodName, string jqxEventName)
+        {
+            if (modelPropertyName != null)
+            {
+                if (!Model.BindedProps.ContainsKey(modelPropertyName))
+                {
+                    Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
+                }
+                script.AppendLine("tag." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+                script.AppendLine("    tag." + jqxMethodName + "(newValue);");
+                script.AppendLine("});");
+
+                script.AppendLine("tag.on('" + jqxEventName + "', function () {");
+                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + modelPropertyName + "',tag." + jqxMethodName + "()); ");
+                script.AppendLine("}); ");
+
+            }
+
+        }
+
+        public void EmitProperty_Bind2Way_Checked(StringBuilder script, BaseBinder binder, string jqxEventName)
+        {
+            if (binder != null)
+            {
+                Model.BindedBinders.Add(binder);
+                binder.LastSendedText = Model.GetPropertyDisplayText(binder);
+                script.AppendLine("tag.prop('checked'," + binder.LastSendedText + ");");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
+                script.AppendLine("    tag.prop('checked',newValue==='true');");
+                script.AppendLine("});");
+
+                script.AppendLine("tag.on('" + jqxEventName + "', function () {");
+                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
+                script.AppendLine("}); ");
+
+            }
+
+        }
+
+        public virtual string GetHtml()
+        {
+            var wrapperBeg = new StringBuilder();
+            var wrapperEnd = new StringBuilder();
+
+            foreach (var w in Wrappers)
+                w.EmitHtml(wrapperBeg, wrapperEnd);
+
+
+            if (Script.Length > 0)
+                return wrapperBeg.ToString() + "<script>\n$(document).ready(function(){\nvar tag =$('#" + UniqueId + "');\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
+            else
+                return wrapperBeg.ToString() + Html.ToString() + wrapperEnd.ToString();
+        }
+
 
     }
 
