@@ -193,6 +193,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xWindow.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableEditModel.cs" />
@@ -556,6 +557,7 @@
     <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\RolesTreeGrid.cshtml" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\ui.fancytree.less" />
     <Content Include="Content\vendors\fancytree-master\src\skin-win8\ui.fancytree.less" />
+    <Content Include="Areas\BuhtaCore\Views\SelectSchemaRolesDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />
