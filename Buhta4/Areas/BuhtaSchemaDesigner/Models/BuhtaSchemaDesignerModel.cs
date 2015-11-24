@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Collections.ObjectModel;
 
 namespace Buhta
 {
@@ -11,7 +12,20 @@ namespace Buhta
     {
         public string ActiveRowId;
 
-        public BuhtaSchemaDesignerModel(Controller controller) : base(controller) { }
+        public string TestProp1 { get; set; }
+
+        public ObservableCollection<string> SelectedRows { get; set; }
+
+
+        public BuhtaSchemaDesignerModel(Controller controller) : base(controller) {
+            SelectedRows = new ObservableCollection<string>();
+            SelectedRows.CollectionChanged += SelectedRows_CollectionChanged;
+        }
+
+        private void SelectedRows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            TestProp1 = "выбрано "+SelectedRows.Count;
+        }
 
         public DataView SchemaObjectList
         {
@@ -37,6 +51,7 @@ SELECT [ID]
       ,'Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
   FROM [SchemaObject]
 ");
+                    SelectedRows.Add("84ff8c4c-2c17-4af8-a2a1-02c958bd75bf");
 
                     var objs = db.ExecuteDataTable();
                     return objs.AsDataView();

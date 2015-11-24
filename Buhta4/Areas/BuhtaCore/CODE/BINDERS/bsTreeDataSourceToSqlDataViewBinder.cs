@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -24,7 +25,7 @@ namespace Buhta
         //    DisplayFieldName = displayFieldName;
         //}
 
-        public override string GetJsonDataTreeSource(BaseModel model)
+        public override string GetJsonDataTreeSource(BaseModel model, ObservableCollection<string> selectedRows)
         {
             var _view = model.GetPropertyValue(PropertyName);
             if (!(_view is DataView))
@@ -62,6 +63,12 @@ namespace Buhta
                 treeNode.AddProperty("id", row[keyFieldName].ToString());
                 treeNode.AddProperty("parent", row[parentFieldName].ToString());
                 treeNode.AddProperty("icon", row[iconFieldName].ToString());
+
+                if (selectedRows != null && selectedRows.Contains(row[keyFieldName].ToString()))
+                {
+                    treeNode.AddProperty("selected", true);
+                  //  treeNode.AddProperty("expanded", true);
+                }
 
                 var jsRow = new JsObject();
                 foreach (var col in Tree.Columns)

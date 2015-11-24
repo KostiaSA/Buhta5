@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace Buhta
 {
@@ -25,6 +26,34 @@ namespace Buhta
 
                 obj.SetPropertyValue(propertyName, newValue);
                 obj.FireOnChangeByBrowser(obj, propertyName, newValue);
+                obj.Update();
+            }
+            catch (Exception e)
+            {
+                var obj = BindingModelList[modelBindingID];
+                if (obj == null)
+                    Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                else
+                    Clients.Caller.receiveServerError("модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
+
+            }
+
+        }
+
+        public void SendSelectedRowsChanged(string modelBindingID, string propertyName, string rowID, bool isSelected)
+        {
+            try
+            {
+                BaseModel obj = BindingModelList[modelBindingID];
+                obj.Hub = this;
+                Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
+
+                var selectedList = obj.GetPropertyValue<ObservableCollection<string>>(propertyName);
+                if (isSelected && !selectedList.Contains(rowID))
+                    selectedList.Add(rowID);
+                if (!isSelected && selectedList.Contains(rowID))
+                    selectedList.Remove(rowID);
+                obj.FireOnChangeByBrowser(obj, propertyName, rowID);
                 obj.Update();
             }
             catch (Exception e)

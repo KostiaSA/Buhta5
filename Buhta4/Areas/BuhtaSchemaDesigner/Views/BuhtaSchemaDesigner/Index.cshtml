@@ -86,6 +86,11 @@
         Дизайнер схемы
     </h3>
 
+    @Html.bsInput(inp =>
+        {
+            inp.Value_Bind = nameof(Model.TestProp1);
+        })
+
     @Html.bsTree1(tree =>
 {
     tree.Size = bsTreeSize.Default;
@@ -141,8 +146,10 @@
 
     };
 
+    tree.SelectedRows_Bind = nameof(Model.SelectedRows);
+
     tree.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
-    tree.OnRowSelect_Bind = nameof(Model.OnRowSelect);
+    //tree.OnRowSelect_Bind = nameof(Model.OnRowSelect);
     tree.OnRowActivate_Bind = nameof(Model.OnRowActivate);
 
 })

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Collections.ObjectModel;
 
 namespace Buhta
 {
@@ -52,8 +53,10 @@ namespace Buhta
 
         public string OnRowClick_Bind;
         public string OnRowDoubleClick_Bind;
-        public string OnRowSelect_Bind;
+     //   public string OnRowSelect_Bind;
         public string OnRowActivate_Bind;
+
+        public string SelectedRows_Bind;
 
         public bsTreeSize Size = bsTreeSize.Default;
 
@@ -88,7 +91,6 @@ namespace Buhta
 
             JsObject init = new JsObject();
             DataSourceBinder.Tree = this;
-            init.AddRawProperty("source", DataSourceBinder.GetJsonDataTreeSource(Model));
 
             jsArray extensions = new jsArray();
             extensions.AddObject("table");
@@ -99,17 +101,32 @@ namespace Buhta
             table.AddProperty("nodeColumnIdx", 0);
             init.AddProperty("table", table);
 
+
+            ObservableCollection<string> selectedRows = null;
+            if (SelectedRows_Bind != null)
+            {
+                selectedRows = Model.GetPropertyValue<ObservableCollection<string>>(SelectedRows_Bind);
+                init.AddProperty("checkbox", true);
+
+                Script.AppendLine("var "+SelectedRows_Bind+"=function(event, data) {");
+                Script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
+                Script.AppendLine("}");
+
+                init.AddRawProperty("select", SelectedRows_Bind);
+
+            }
+
             if (OnRowDoubleClick_Bind != null)
             {
                 EmitRowEvent_BindFunction(OnRowDoubleClick_Bind, true);
                 init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
             }
 
-            if (OnRowSelect_Bind != null)
-            {
-                EmitRowEvent_BindFunction(OnRowSelect_Bind);
-                init.AddRawProperty("select", OnRowSelect_Bind);
-            }
+            //if (OnRowSelect_Bind != null)
+            //{
+            //    EmitRowEvent_BindFunction(OnRowSelect_Bind);
+            //    init.AddRawProperty("select", OnRowSelect_Bind);
+            //}
 
             if (OnRowActivate_Bind != null)
             {
@@ -151,6 +168,8 @@ namespace Buhta
             }
             Script.AppendLine("}");
             init.AddRawProperty("renderColumns", "renderColumns");
+
+            init.AddRawProperty("source", DataSourceBinder.GetJsonDataTreeSource(Model, selectedRows));
 
             Script.AppendLine("tag.fancytree(" + init.ToJson() + ");");
 

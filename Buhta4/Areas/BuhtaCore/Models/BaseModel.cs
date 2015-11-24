@@ -71,7 +71,7 @@ namespace Buhta
                 BindedProps[KeyVP.Key] = KeyVP.Value;
 
             if (toSend.Keys.Count > 0)
-                Hub.Clients.Group(BindingId).receiveBindedValuesChanged( BindingId, toSend);
+                Hub.Clients.Group(BindingId).receiveBindedValuesChanged(BindingId, toSend);
         }
 
         public void ExecuteJavaScript(string script)
@@ -252,6 +252,16 @@ namespace Buhta
             return null;
         }
 
+        public T GetPropertyValue<T>(string propName) where T : class
+        {
+            var obj = GetPropertyValue(propName);
+            if (obj == null)
+                return null;
+            if (obj is T)
+                return (T)obj;
+            throw new Exception("У модели '" + this.GetType().FullName + "' свойство '" + propName + "' должно быть типа ''" + typeof(T).FullName + "'");
+        }
+
         public string GetPropertyDisplayText(BaseBinder binder)
         {
             return binder.GetDisplayText(GetPropertyValue(binder.PropertyName));
@@ -351,7 +361,7 @@ namespace Buhta
         }
 
 
-        public xWindow CreateWindow( string viewName = null, BaseModel model = null)
+        public xWindow CreateWindow(string viewName = null, BaseModel model = null)
         {
             var win = new xWindow();
             win.ParentModel = this;
@@ -374,7 +384,7 @@ namespace Buhta
 
         }
 
-        public virtual void CancelButtonClick( dynamic args)
+        public virtual void CancelButtonClick(dynamic args)
         {
 
 
