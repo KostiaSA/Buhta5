@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
@@ -11,7 +12,7 @@ namespace Buhta
 
         public BaseBsTreeDataSourceBinder(string propertyName) : base(propertyName) { }
 
-        public abstract string GetJsonDataTreeSource(BaseModel model);
+        public abstract string GetJsonDataTreeSource(BaseModel model, ObservableCollection<string> selectedRows);
 
             //public virtual string GetDisplayText(object value)
             //{

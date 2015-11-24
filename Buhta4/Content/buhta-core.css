@@ -22,6 +22,15 @@ input[type=text].jqx-input, input[type=password].jqx-input {
     background-color: rgba(255, 247, 0, 0.02);
 }
 
+
+.bs-input .btn-default{
+    background-color: #F5F5F5;
+}
+
+.bs-input .btn-default:hover{
+    background-color: #F0F0F0;
+}
+
 /*изначально размер иконки был 14, исправляется на 16*/ 
 .jqx-tree-grid-icon-size {
     width: 16px;

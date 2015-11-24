@@ -33,7 +33,7 @@ namespace Buhta
 
     public enum bsInputSize { Default, Large, Small, ExtraSmall }
 
-    public enum bsInputType { Text, Checkbox, Radio }
+    public enum bsInputType { Text, Checkbox, Radio, List }
 
     public class bsInput : bsControlSettings
     {
@@ -150,7 +150,48 @@ namespace Buhta
                 Html.Append("</div>");
                 Html.Append("</div>");  // end col-sm-offset-3 col-sm-9
             }
+            else
+            if (Type == bsInputType.List)
+            {
 
+                if (Value_Binder != null)
+                {
+                    Model.BindedBinders.Add(Value_Binder);
+                    Value_Binder.LastSendedText = Model.GetPropertyDisplayText(Value_Binder);
+                    Script.AppendLine("tag.val(" + Value_Binder.LastSendedText.AsJavaScript() + ");");
+                    Script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + Value_Binder.PropertyName + "',function(newValue){");
+                    Script.AppendLine("    tag.val(newValue);");
+                    Script.AppendLine("});");
+
+                    //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
+                    //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
+                    //script.AppendLine("}); ");
+
+                }
+
+                AddClass("form-control");
+
+                if (Label != null)
+                {
+                    //Html.Append("<div class='col-sm-3'>"); // begin col-sm-3
+                    Html.Append("<label class='col-sm-3 control-label' >" + Label + "</label>");
+                    //Html.Append("</div>");  // end col-sm-3
+                    Html.Append("<div class='col-sm-8'>");  // begin col-sm-9
+                }
+
+
+                Html.Append("<div class='input-group bs-input'>");
+                Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value) + "</input>");
+                Html.Append("<span class='input-group-btn'>");
+                Html.Append("<div class='btn btn-default' type='button'>Выбрать</div>");
+                Html.Append("</span>");
+                Html.Append("</div>");
+
+                if (Label != null)
+                {
+                    Html.Append("</div>");  // end col-sm-9
+                }
+            }
 
             Html.Append("</div>"); // end form-group
 

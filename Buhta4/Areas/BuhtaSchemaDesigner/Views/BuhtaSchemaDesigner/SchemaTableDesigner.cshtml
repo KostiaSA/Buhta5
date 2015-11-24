@@ -39,12 +39,12 @@
                 <button type="submit" class="btn btn-success">Сохранить</button>
 
                 @Html.bsButton(s =>
-                   {
-                       s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-                       s.Text = "Test-BS";
-                       s.ButtonStyle = bsButtonStyle.Danger;
-                      // s.ClickAction = new CloseWindowAction();
-                   })
+           {
+               s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+               s.Text = "Test-BS";
+               s.ButtonStyle = bsButtonStyle.Danger;
+               // s.ClickAction = new CloseWindowAction();
+           })
 
 
                 <div href=# class="btn btn-default" id="aaa">Закрыть</div>
@@ -104,6 +104,16 @@
                    s.Label = "Описание";
                })
 
+                    @Html.bsInput(input =>
+               {
+                   input.Type = bsInputType.List;
+                   input.Value_Binder = new bsInputRolesListBinder(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles))
+                   {
+                   };
+                   input.Label = "Роли";
+               })
+
+
                     @Html.bsInput(s =>
                {
                    s.Type = bsInputType.Checkbox;
@@ -114,7 +124,7 @@
                     @Html.bsInput(s =>
                {
                    s.Type = bsInputType.Checkbox;
-                   s.Value_Binder =new BooleanBinder(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
+                   s.Value_Binder = new BooleanBinder(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
                    s.Label = "Редактируется пользователем (с сохранением истории)";
                })
 
