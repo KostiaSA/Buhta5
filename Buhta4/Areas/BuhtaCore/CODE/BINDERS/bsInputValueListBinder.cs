@@ -14,14 +14,14 @@ namespace Buhta
         //    BaseBinder.DefaultBinders.Add(typeof(Boolean), new BooleanBinder());
         //}
 
-        public override string GetDisplayText(object value)
-        {
-            return value.ToString().ToLower();
-        }
+        //public override string GetDisplayText(object value)
+        //{
+        //    return value.ToString().ToLower();
+        //}
 
-        public override object ParseDisplayText(string text)
-        {
-            return Boolean.Parse(text);
-        }
+        //public override object ParseDisplayText(string text)
+        //{
+        //    return Boolean.Parse(text);
+        //}
     }
 }

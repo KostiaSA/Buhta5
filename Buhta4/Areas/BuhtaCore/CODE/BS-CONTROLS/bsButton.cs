@@ -32,18 +32,37 @@ namespace Buhta
 
     }
 
+    public delegate string get_string();
+
     public enum bsButtonStyle { Default, Primary, Success, Info, Warning, Danger, Link }
     public enum bsButtonSize { Default, Large, Small, ExtraSmall }
 
     public class bsButton : bsControlSettings
     {
-        public bsButton(BaseModel model) : base(model) { }
+        public bsButton(BaseModel model) : base(model)
+        {
+            New_Text_Binder = new NewBaseBinder<string>()
+            {
+                Control = this,
+                Model = Model,
+                jQueryMethodName = "text"
+
+            };
+
+        }
 
         public bool? Disabled;
         public string Disabled_Bind;
 
         public string Text = "";
         public string Text_Bind;
+
+        //        public get_string Text_Get;
+
+        public NewBaseBinder<string> New_Text_Binder;
+
+        //public NewBinderGetMethod<string> New_Text_BindGet;
+        //public string New_Text_BindToProperty;
 
         public string Image;
 
@@ -56,15 +75,27 @@ namespace Buhta
 
         public override string GetHtml()
         {
-            //EmitBeginScript(Script);
 
+            //if (New_Text_Binder != null || New_Text_BindToProperty != null || New_Text_BindGet != null)
+            //{
+            //    if (New_Text_Binder == null)
+            //    {
+            //        New_Text_Binder = new NewBaseBinder<string>()
+            //        {
+            //            PropertyName = New_Text_BindToProperty,
+            //            GetMethod = New_Text_BindGet
 
-            //EmitProperty(Script, "disabled", Settings.Disabled);
-            //EmitProperty_Bind(Script, Settings.Disabled_Bind, "disabled");
+            //        };
+            //    }
+            //    New_Text_Binder.Model = Model;
+            //    New_Text_Binder.jQueryMethodName = "text";
+            //}
 
+            New_Text_Binder.EmitBindingScript_M(Script);
 
-            //EmitProperty_M(Script, "val", Settings.Text);
             EmitProperty_Bind_M(Script, Text_Bind, "val");
+
+            //EmitProperty_StringBinder(Script, new StringBinder(Text_Get), "text");
 
             EmitEvent_Bind(Script, OnClick_Bind, "click");
 
@@ -113,5 +144,5 @@ namespace Buhta
         }
     }
 
-    
+
 }

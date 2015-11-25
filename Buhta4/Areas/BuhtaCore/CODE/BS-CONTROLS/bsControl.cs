@@ -175,7 +175,7 @@ namespace Buhta
         {
             if (binder != null)
             {
-                Model.BindedBinders.Add(binder);
+                Model.RegisterBinder(binder);
                 binder.LastSendedText = Model.GetPropertyDisplayText(binder);
                 script.AppendLine("tag.prop('checked'," + binder.LastSendedText + ");");
                 script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
@@ -185,6 +185,25 @@ namespace Buhta
                 script.AppendLine("tag.on('" + jqxEventName + "', function () {");
                 script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
                 script.AppendLine("}); ");
+
+            }
+
+        }
+
+        public void EmitProperty_StringBinder(StringBuilder script, StringBinder binder, string jqxMethodName)
+        {
+            if (binder != null)
+            {
+                Model.RegisterBinder(binder); 
+                binder.LastSendedText = binder.GetDisplayText();// Model.GetPropertyDisplayText(binder);
+                script.AppendLine("tag." + jqxMethodName + "(" + binder.LastSendedText.AsJavaScript() + ");");
+                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
+                script.AppendLine("    tag." + jqxMethodName + "(newValue);");
+                script.AppendLine("});");
+
+                //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
+                //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
+                //script.AppendLine("}); ");
 
             }
 
@@ -488,7 +507,7 @@ namespace Buhta
         {
             if (binder != null)
             {
-                Model.BindedBinders.Add(binder);
+                Model.RegisterBinder(binder);
                 binder.LastSendedText = Model.GetPropertyDisplayText(binder);
                 script.AppendLine("tag.prop('checked'," + binder.LastSendedText + ");");
                 script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
@@ -502,6 +521,7 @@ namespace Buhta
             }
 
         }
+
 
         public virtual string GetHtml()
         {

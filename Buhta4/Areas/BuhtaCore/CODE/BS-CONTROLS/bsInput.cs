@@ -62,9 +62,9 @@ namespace Buhta
 
         string GetDisplayText(object value)
         {
-            if (Lookup != null)
-                return Lookup.GetDisplayText(value);
-            else
+            //if (Lookup != null)
+            //    return Lookup.GetDisplayText(value);
+            //else
                 return value.ToString();
         }
 
@@ -156,12 +156,18 @@ namespace Buhta
 
                 if (Value_Binder != null)
                 {
-                    Model.BindedBinders.Add(Value_Binder);
+                    Model.RegisterBinder(Value_Binder);
                     Value_Binder.LastSendedText = Model.GetPropertyDisplayText(Value_Binder);
                     Script.AppendLine("tag.val(" + Value_Binder.LastSendedText.AsJavaScript() + ");");
                     Script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + Value_Binder.PropertyName + "',function(newValue){");
                     Script.AppendLine("    tag.val(newValue);");
                     Script.AppendLine("});");
+
+                    //Script.AppendLine("var tagSelectBtn=$('#" + UniqueId + "-select-btn');");
+                    //Script.AppendLine("tag.on('" + jqxEventName + "',function(event){");
+                    //Script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
+                    //Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
+                    //Script.AppendLine("});");
 
                     //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
                     //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
@@ -183,7 +189,7 @@ namespace Buhta
                 Html.Append("<div class='input-group bs-input'>");
                 Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value) + "</input>");
                 Html.Append("<span class='input-group-btn'>");
-                Html.Append("<div class='btn btn-default' type='button'>Выбрать</div>");
+                Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
                 Html.Append("</span>");
                 Html.Append("</div>");
 
