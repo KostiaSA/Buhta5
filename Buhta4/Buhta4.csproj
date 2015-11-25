@@ -158,6 +158,8 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\NewStringBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\NewBaseBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputRolesListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputValueListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBsInputBinder.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\IntBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\StringBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTreeColumn.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsModal.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\JsArray.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\JsBaseObject.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\JsObject.cs" />

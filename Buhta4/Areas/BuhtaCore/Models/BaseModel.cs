@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -16,8 +18,20 @@ namespace Buhta
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
-        public List<BaseBinder> BindedBinders = new List<BaseBinder>();
+        List<BaseBinder> BindedBinders = new List<BaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
+        Dictionary<string, object> NewBindedBinders = new Dictionary<string, object>();
+
+        public void RegisterBinder(BaseBinder binder)
+        {
+            binder.Model = this;
+            BindedBinders.Add(binder);
+        }
+
+        public void NewRegisterBinder(string binderID, object binder)
+        {
+            NewBindedBinders.Add(binderID, binder);
+        }
 
         public BaseModel(Controller controller)
         {
@@ -25,6 +39,27 @@ namespace Buhta
         }
 
         public virtual string PageTitle { get { return "PageTitle"; } }
+
+        public void UpdateNewNew()
+        {
+            var toSend = new StringBuilder();
+
+            foreach (dynamic binder in NewBindedBinders.Values.ToList())
+            {
+                var newText = binder.GetJs();
+                if (binder.LastSendedText != newText)
+                {
+                    toSend.AppendLine(newText);
+                    binder.LastSendedText = newText;
+                }
+            }
+
+            if (toSend.Length > 0)
+            {
+                Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
+                //Debug.Print(toSend.ToString());
+            }
+        }
 
         public void UpdateNew()
         {
@@ -34,7 +69,8 @@ namespace Buhta
             {
                 if (!toSend.ContainsKey(binder.PropertyName))
                 {
-                    var newText = GetPropertyDisplayText(binder);
+                    // var newText = GetPropertyDisplayText(binder);
+                    var newText = binder.GetDisplayText();
                     if (binder.LastSendedText != newText)
                     {
                         toSend.Add(binder.PropertyName, newText);
@@ -49,6 +85,7 @@ namespace Buhta
 
         public void Update()
         {
+            UpdateNewNew();
             UpdateNew();
 
             var toSend = new Dictionary<string, object>();
@@ -264,7 +301,7 @@ namespace Buhta
 
         public string GetPropertyDisplayText(BaseBinder binder)
         {
-            return binder.GetDisplayText(GetPropertyValue(binder.PropertyName));
+            return "binder.GetDisplayText(GetPropertyValue(binder.PropertyName))";
         }
 
         //public ObservableObject GetPropertyObject(string propName)
@@ -369,6 +406,16 @@ namespace Buhta
             win.ViewName = viewName;
             win.ViewModel = model;
             return win;
+        }
+
+        public bsModal CreateModal(string viewName = null, BaseModel model = null)
+        {
+            var modal = new bsModal();
+            modal.ParentModel = this;
+            modal.Controller = Controller;
+            modal.ViewName = viewName;
+            modal.ViewModel = model;
+            return modal;
         }
 
         //public void ShowWindow(string viewName, object model)

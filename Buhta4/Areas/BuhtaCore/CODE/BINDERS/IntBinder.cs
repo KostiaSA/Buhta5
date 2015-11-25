@@ -14,9 +14,9 @@ namespace Buhta
         //    BaseBinder.DefaultBinders.Add(typeof(int), new IntBinder());
         //}
 
-        public override string GetDisplayText(object value)
+        public override string GetDisplayText()
         {
-            return value.ToString();
+            return "value.ToString()";
         }
 
         public override object ParseDisplayText(string text)
