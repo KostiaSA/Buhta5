@@ -1,34 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Buhta
 {
-    public class BaseBinder
+    public delegate T BinderGetMethod<T>();
+    public delegate void BinderSetMethod(string value);
+    public delegate void BinderEventMethod(dynamic args);
+
+    public abstract class BaseBinder
     {
-        public BaseModel Model;
+        public abstract void EmitBindingScript(StringBuilder script);
 
-        public static Dictionary<Type, BaseBinder> DefaultBinders = new Dictionary<Type, BaseBinder>();
+        string uniqueId;
+        public string UniqueId
+        {
+            get
+            {
+                if (uniqueId == null)
+                {
+                    uniqueId = "binder:" + Guid.NewGuid().ToString().Substring(0, 8);
+                }
+                return uniqueId;
+            }
+        }
 
-        public string PropertyName;
+        public bsControl Control;
+
+        public abstract BinderEventMethod ModelEventMethod { get; set; }
+        public abstract BinderSetMethod ModelSetMethod { get; set; }
+
+        public bool IsEventBinding;
+        public abstract string GetJsForSettingProperty();
+
         public string LastSendedText;
 
-        public BaseBinder(string propertyName)
-        {
-            PropertyName = propertyName;
-        }
-
-        public virtual string GetDisplayText()
-        {
-            throw new Exception("метод " + nameof(GetDisplayText) + " не реализован");
-        }
-
-        public virtual object ParseDisplayText(string text)
-        {
-            throw new Exception("метод "+nameof(ParseDisplayText)+" не реализован");
-        }
-
-
     }
+
 }

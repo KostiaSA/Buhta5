@@ -37,32 +37,73 @@ namespace Buhta
     public enum bsButtonStyle { Default, Primary, Success, Info, Warning, Danger, Link }
     public enum bsButtonSize { Default, Large, Small, ExtraSmall }
 
-    public class bsButton : bsControlSettings
+    public class bsButton : bsControl
     {
-        public bsButton(BaseModel model) : base(model)
-        {
-            New_Text_Binder = new NewBaseBinder<string>()
-            {
-                Control = this,
-                Model = Model,
-                jQueryMethodName = "text"
-
-            };
-
-        }
+        public bsButton(BaseModel model) : base(model) { }
 
         public bool? Disabled;
         public string Disabled_Bind;
 
         public string Text = "";
-        public string Text_Bind;
 
-        //        public get_string Text_Get;
+        public void Bind_Text(string modelPropertyName)
+        {
+            AddBinder(new CommonBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "text"
+            });
+        }
 
-        public NewBaseBinder<string> New_Text_Binder;
+        public void Bind_Text(BinderGetMethod<string> getValueMethod)
+        {
+            AddBinder(new CommonBinder<string>()
+            {
+                ModelGetMethod = getValueMethod,
+                jsSetMethodName = "text"
+            });
+        }
 
-        //public NewBinderGetMethod<string> New_Text_BindGet;
-        //public string New_Text_BindToProperty;
+        public void Bind_Disabled(string modelPropertyName)
+        {
+            AddBinder(new CommonBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "prop",
+                jsSetPropertyName="disabled"
+            });
+        }
+
+        public void Bind_Disabled(BinderGetMethod<Boolean> getValueMethod)
+        {
+            AddBinder(new CommonBinder<Boolean>()
+            {
+                ModelGetMethod = getValueMethod,
+                jsSetMethodName = "prop",
+                jsSetPropertyName = "disabled"
+            });
+        }
+
+        public void Bind_OnClick(string modelEventMethodName)
+        {
+            AddBinder(new CommonBinder<string>()
+            {
+                IsEventBinding=true,
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "click"
+            });
+        }
+
+        public void Bind_OnClick(BinderEventMethod eventMethod)
+        {
+            AddBinder(new CommonBinder<string>()
+            {
+                IsEventBinding = true,
+                ModelEventMethod = eventMethod,
+                jsEventName = "click"
+            });
+        }
+
 
         public string Image;
 
@@ -75,29 +116,9 @@ namespace Buhta
 
         public override string GetHtml()
         {
+            //EmitBinders(Script);
 
-            //if (New_Text_Binder != null || New_Text_BindToProperty != null || New_Text_BindGet != null)
-            //{
-            //    if (New_Text_Binder == null)
-            //    {
-            //        New_Text_Binder = new NewBaseBinder<string>()
-            //        {
-            //            PropertyName = New_Text_BindToProperty,
-            //            GetMethod = New_Text_BindGet
-
-            //        };
-            //    }
-            //    New_Text_Binder.Model = Model;
-            //    New_Text_Binder.jQueryMethodName = "text";
-            //}
-
-            New_Text_Binder.EmitBindingScript_M(Script);
-
-            EmitProperty_Bind_M(Script, Text_Bind, "val");
-
-            //EmitProperty_StringBinder(Script, new StringBinder(Text_Get), "text");
-
-            EmitEvent_Bind(Script, OnClick_Bind, "click");
+            //EmitEvent_Bind(Script, OnClick_Bind, "click");
 
             if (ClickAction != null)
             {
@@ -138,7 +159,7 @@ namespace Buhta
             }
 
 
-            Html.Append("<div id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text + "</div>");
+            Html.Append("<button type='button' id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text + "</button>");
 
             return base.GetHtml();
         }

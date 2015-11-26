@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsInputValueListBinder : BaseBsInputBinder
+    public class bsInputValueListBinder //: BaseBsInputBinder
     {
-        public bsInputValueListBinder(string propertyName) : base(propertyName) { }
+        //public bsInputValueListBinder(string propertyName) : base(propertyName) { }
 
         //static BooleanBinder()
         //{
