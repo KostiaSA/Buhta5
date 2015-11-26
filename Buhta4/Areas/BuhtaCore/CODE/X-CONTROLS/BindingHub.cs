@@ -24,9 +24,17 @@ namespace Buhta
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
-                obj.SetPropertyValue(propertyName, newValue);
-                obj.FireOnChangeByBrowser(obj, propertyName, newValue);
-                obj.Update();
+                if (propertyName.StartsWith("binder:"))
+                {
+                    obj.BinderSetValue(propertyName, newValue);
+                    obj.Update();
+                }
+                else
+                {
+                    obj.SetPropertyValue(propertyName, newValue);
+                    obj.FireOnChangeByBrowser(obj, propertyName, newValue);
+                    obj.Update();
+                }
             }
             catch (Exception e)
             {

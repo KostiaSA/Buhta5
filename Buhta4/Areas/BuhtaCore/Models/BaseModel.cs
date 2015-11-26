@@ -33,6 +33,11 @@ namespace Buhta
             NewBindedBinders.Add(binderID, binder);
         }
 
+        public void BinderSetValue(string binderId, string value)
+        {
+            (NewBindedBinders[binderId] as dynamic).ModelSetMethod(value);
+        }
+
         public BaseModel(Controller controller)
         {
             Controller = controller;

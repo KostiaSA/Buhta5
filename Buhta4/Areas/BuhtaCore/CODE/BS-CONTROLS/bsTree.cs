@@ -171,7 +171,7 @@ namespace Buhta
 
             init.AddRawProperty("source", DataSourceBinder.GetJsonDataTreeSource(Model, selectedRows));
 
-            Script.AppendLine("tag.fancytree(" + init.ToJson() + ");");
+            Script.AppendLine("$('#" + UniqueId + "').fancytree(" + init.ToJson() + ");");
 
             //EmitProperty(Script, "disabled", Settings.Disabled);
             //EmitProperty_Bind(Script, Settings.Disabled_Bind, "disabled");
@@ -184,7 +184,7 @@ namespace Buhta
 
             if (ClickAction != null)
             {
-                Script.AppendLine("tag.on('click',function(event){");
+                Script.AppendLine("$('#" + UniqueId + "').on('click',function(event){");
                 ClickAction.EmitJsCode(Script);
                 Script.AppendLine("});");
 

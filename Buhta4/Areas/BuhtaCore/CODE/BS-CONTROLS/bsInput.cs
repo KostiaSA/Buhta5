@@ -47,8 +47,86 @@ namespace Buhta
         public string Disabled_Bind;
 
         public string Value = "";
-        public string Value_Bind;
-        public BaseBinder Value_Binder;
+
+        public void Bind_Value<T>(NewBinderGetMethod<T> getValueMethod)
+        {
+            Bind_Value<T>(getValueMethod, null);
+        }
+
+        public void Bind_Value<T>(NewBinderGetMethod<T> getValueMethod, NewBinderSetMethod setValueMethod)
+        {
+            if (Type == bsInputType.Text)
+            {
+                var binder = new NewBaseBinder<T>();
+
+                binder.ModelGetMethod = getValueMethod;
+                binder.jsSetMethodName = "val";
+
+                if (setValueMethod != null)
+                {
+                    binder.Is2WayBinding = true;
+                    binder.jQueryOnChangeEventName = "change";
+                    binder.jQueryGetMethodName = "val";
+                    binder.ModelSetMethod = setValueMethod;
+                }
+
+                AddBinder(binder);
+
+            }
+            else
+            if (Type == bsInputType.Checkbox)
+            {
+                AddBinder(new NewBaseBinder<T>()
+                {
+                    ModelGetMethod = getValueMethod,
+                    jsSetMethodName = "prop",
+                    jsSetPropertyName = "checked",
+                    Is2WayBinding = true,
+                    jQueryOnChangeEventName = "change",
+                    jQueryGetMethodName = "prop",
+                    jQueryGetPropertyName = "checked"
+
+                });
+            }
+            else
+                throw new Exception(nameof(bsInput) + "." + nameof(Bind_Value) + ": неизвестный тип '" + typeof(Type).FullName + "'");
+        }
+
+        public void Bind_Value(string modelPropertyName)
+        {
+            if (Type == bsInputType.Text)
+            {
+                AddBinder(new NewBaseBinder<string>()
+                {
+                    ModelPropertyName = modelPropertyName,
+                    jsSetMethodName = "val",
+                    Is2WayBinding = true,
+                    jQueryOnChangeEventName = "change",
+                    jQueryGetMethodName = "val"
+                });
+            }
+            else
+            if (Type == bsInputType.Checkbox)
+            {
+                AddBinder(new NewBaseBinder<Boolean>()
+                {
+                    ModelPropertyName = modelPropertyName,
+                    jsSetMethodName = "prop",
+                    jsSetPropertyName = "checked",
+                    Is2WayBinding = true,
+                    jQueryOnChangeEventName = "change",
+                    jQueryGetMethodName = "prop",
+                    jQueryGetPropertyName = "checked"
+
+                });
+            }
+            else
+                throw new Exception(nameof(bsInput) + "." + nameof(Bind_Value) + ": неизвестный тип '" + typeof(Type).FullName + "'");
+        }
+
+
+        //        public string Value_Bind;
+        //        public BaseBinder Value_Binder;
 
         public string Label;
         public string PlaceHolder;
@@ -65,7 +143,7 @@ namespace Buhta
             //if (Lookup != null)
             //    return Lookup.GetDisplayText(value);
             //else
-                return value.ToString();
+            return value.ToString();
         }
 
         object ParseDisplayText(string text)
@@ -97,6 +175,8 @@ namespace Buhta
 
             //EmitProperty_M(Script, "val", Text);
 
+            EmitBinders(Script);
+
 
             if (Size == bsInputSize.Large)
                 AddClass("input-lg");
@@ -116,18 +196,16 @@ namespace Buhta
             if (Type == bsInputType.Text)
             {
 
-                EmitProperty_Bind2Way_M(Script, Value_Bind, "val", "change");
+                // EmitProperty_Bind2Way_M(Script, Value_Bind, "val", "change");
                 AddClass("form-control");
 
                 if (Label != null)
                 {
-                    //Html.Append("<div class='col-sm-3'>"); // begin col-sm-3
                     Html.Append("<label class='col-sm-3 control-label' >" + Label + "</label>");
-                    //Html.Append("</div>");  // end col-sm-3
                     Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
                 }
 
-                Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + ">" + GetDisplayText(Value) + "</input>");
+                Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + ">" + /*GetDisplayText(Value) +*/ "</input>");
 
                 if (Label != null)
                 {
@@ -137,7 +215,7 @@ namespace Buhta
             else
             if (Type == bsInputType.Checkbox)
             {
-                EmitProperty_Bind2Way_Checked(Script, Value_Binder, "change");
+                //EmitProperty_Bind2Way_Checked(Script, Value_Binder, "change");
 
                 Html.Append("<div class='col-sm-offset-3 col-sm-9'>"); // beg col-sm-offset-3 col-sm-9
                 Html.Append("<div class='checkbox'>");
@@ -154,26 +232,17 @@ namespace Buhta
             if (Type == bsInputType.List)
             {
 
-                if (Value_Binder != null)
-                {
-                    Model.RegisterBinder(Value_Binder);
-                    Value_Binder.LastSendedText = Model.GetPropertyDisplayText(Value_Binder);
-                    Script.AppendLine("tag.val(" + Value_Binder.LastSendedText.AsJavaScript() + ");");
-                    Script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + Value_Binder.PropertyName + "',function(newValue){");
-                    Script.AppendLine("    tag.val(newValue);");
-                    Script.AppendLine("});");
+                //if (Value_Binder != null)
+                //{
+                //    Model.RegisterBinder(Value_Binder);
+                //    Value_Binder.LastSendedText = Model.GetPropertyDisplayText(Value_Binder);
+                //    Script.AppendLine("tag.val(" + Value_Binder.LastSendedText.AsJavaScript() + ");");
+                //    Script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + Value_Binder.PropertyName + "',function(newValue){");
+                //    Script.AppendLine("    tag.val(newValue);");
+                //    Script.AppendLine("});");
 
-                    //Script.AppendLine("var tagSelectBtn=$('#" + UniqueId + "-select-btn');");
-                    //Script.AppendLine("tag.on('" + jqxEventName + "',function(event){");
-                    //Script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
-                    //Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
-                    //Script.AppendLine("});");
 
-                    //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-                    //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
-                    //script.AppendLine("}); ");
-
-                }
+                //}
 
                 AddClass("form-control");
 

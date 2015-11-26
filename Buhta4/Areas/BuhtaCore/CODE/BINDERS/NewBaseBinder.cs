@@ -7,18 +7,26 @@ using System.Web;
 
 namespace Buhta
 {
+
     public delegate T NewBinderGetMethod<T>();
+    public delegate void NewBinderSetMethod(string value);
 
     public class NewBaseBinder<T>
     {
-        public BaseModel Model;
-
         //public string TagUniqueId;
-        public string jQueryMethodName;
-        public string jQueryPropertyName;
-        public string PropertyName;
+        public string jsSetMethodName;
+        public string jsSetPropertyName;
+        public bool jsSetIsValueAsObject;
+        public string ModelPropertyName;
         public string LastSendedText;
-        public NewBinderGetMethod<T> GetMethod;
+        public NewBinderGetMethod<T> ModelGetMethod;
+
+
+        public bool Is2WayBinding;
+        public string jQueryOnChangeEventName;
+        public string jQueryGetPropertyName;
+        public string jQueryGetMethodName;
+        public NewBinderSetMethod ModelSetMethod;
 
         public bsControlSettings Control;
         public NewBaseBinder()
@@ -28,48 +36,53 @@ namespace Buhta
 
         public NewBaseBinder(string propertyName)
         {
-            PropertyName = propertyName;
+            ModelPropertyName = propertyName;
         }
 
         public NewBaseBinder(NewBinderGetMethod<T> getMethod)
         {
-            GetMethod = getMethod;
+            ModelGetMethod = getMethod;
         }
 
         public virtual bool IsBindingExists()
         {
-            return PropertyName != null || GetMethod != null;
+            return ModelPropertyName != null || ModelGetMethod != null;
         }
 
 
-        //public virtual string GetDisplayText()
-        //{
-        //    throw new Exception("метод " + nameof(GetDisplayText) + " не реализован");
-        //}
-
-        //public virtual object ParseDisplayText(string text)
-        //{
-        //    throw new Exception("метод "+nameof(ParseDisplayText)+" не реализован");
-        //}
-
         public virtual string GetJs()
         {
-            string value = "";
-            if (GetMethod != null)
-                value = GetMethod().AsJavaScript();
-            else
-            if (PropertyName != null)
-                value = Model.GetPropertyValue(PropertyName).ToString();
+            if (ModelGetMethod == null && ModelPropertyName == null)
+                throw new Exception(nameof(NewBaseBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
 
-            if (jQueryMethodName == null)
-                throw new Exception(nameof(NewBaseBinder<T>) + "." + nameof(GetJs) + ": не заполнен '" + nameof(jQueryMethodName) + "'");
+            string value = "";
+            if (ModelGetMethod != null)
+                value = ModelGetMethod().AsJavaScript();
+            else
+            if (ModelPropertyName != null)
+            {
+                var value_obj = Control.Model.GetPropertyValue(ModelPropertyName);
+                if (value_obj == null)
+                    value = "null";
+                else
+                    value = value_obj.AsJavaScript();
+
+            }
+
+            if (jsSetMethodName == null)
+                throw new Exception(nameof(NewBaseBinder<T>) + "." + nameof(GetJs) + ": не заполнен '" + nameof(jsSetMethodName) + "'");
 
             //Debug.Print("$('#" + TagUniqueId + "')." + jQueryMethodName + "(" + value + ");");
 
-            if (jQueryPropertyName != null)
-                return "$('#" + Control.UniqueId + "')." + jQueryMethodName + "({'" + jQueryPropertyName + "':" + value + "});";
+            if (jsSetPropertyName != null)
+            {
+                if (jsSetIsValueAsObject)
+                    return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "({'" + jsSetPropertyName + "':" + value + "});";
+                else
+                    return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "('" + jsSetPropertyName + "'," + value + ");";
+            }
             else
-                return "$('#" + Control.UniqueId + "')." + jQueryMethodName + "(" + value + ");";
+                return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "(" + value + ");";
 
         }
 
@@ -77,16 +90,33 @@ namespace Buhta
         {
             if (IsBindingExists())
             {
-                Model.NewRegisterBinder(UniqueId, this);
+                Control.Model.NewRegisterBinder(UniqueId, this);
                 LastSendedText = GetJs();
                 script.AppendLine(LastSendedText);
                 //script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + UniqueId + "',function(newValue){");
                 //script.AppendLine("    tag." + jqxMethodName + "(newValue);");
                 //script.AppendLine("});");
 
-                //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-                //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
-                //script.AppendLine("}); ");
+                if (Is2WayBinding)
+                {
+                    script.AppendLine("$('#" + Control.UniqueId + "').on('" + jQueryOnChangeEventName + "', function () {");
+                    //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Control.Model.BindingId + "', '" + PropertyName + "',tag.prop('checked')); ");
+                    var propName = ModelPropertyName;
+                    if (ModelSetMethod != null)
+                        propName = UniqueId;
+                    if (propName == null)
+                        throw new Exception(nameof(NewBaseBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
+                    if (jQueryGetPropertyName != null)
+                    {
+                        //if (jQuerySetIsValueAsObject)
+                        //  return "$('#" + Control.UniqueId + "')." + jQuerySetMethodName + "({'" + jQuerySetPropertyName + "':" + value + "});";
+                        //else
+                        script.AppendLine("  bindingHub.server.sendBindedValueChanged('" + Control.Model.BindingId + "', '" + propName + "',$('#" + Control.UniqueId + "')." + jQueryGetMethodName + "('" + jQueryGetPropertyName + "'));");
+                    }
+                    else
+                        script.AppendLine("  bindingHub.server.sendBindedValueChanged('" + Control.Model.BindingId + "', '" + propName + "',$('#" + Control.UniqueId + "')." + jQueryGetMethodName + "());");
+                    script.AppendLine("}); ");
+                }
 
             }
 
@@ -99,7 +129,7 @@ namespace Buhta
             {
                 if (uniqueId == null)
                 {
-                    uniqueId = "Binder:" + Guid.NewGuid().ToString().Substring(1, 8);
+                    uniqueId = "binder:" + Guid.NewGuid().ToString().Substring(0, 8);
                 }
                 return uniqueId;
             }

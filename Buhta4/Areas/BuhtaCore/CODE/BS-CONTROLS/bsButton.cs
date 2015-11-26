@@ -39,30 +39,31 @@ namespace Buhta
 
     public class bsButton : bsControlSettings
     {
-        public bsButton(BaseModel model) : base(model)
-        {
-            New_Text_Binder = new NewBaseBinder<string>()
-            {
-                Control = this,
-                Model = Model,
-                jQueryMethodName = "text"
-
-            };
-
-        }
+        public bsButton(BaseModel model) : base(model) { }
 
         public bool? Disabled;
         public string Disabled_Bind;
 
         public string Text = "";
-        public string Text_Bind;
 
-        //        public get_string Text_Get;
+        public void Bind_Text(string modelPropertyName)
+        {
+            AddBinder(new NewBaseBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "text"
+            });
+        }
 
-        public NewBaseBinder<string> New_Text_Binder;
+        public void Bind_Text(NewBinderGetMethod<string> getValueMethod)
+        {
+            AddBinder(new NewBaseBinder<string>()
+            {
+                ModelGetMethod = getValueMethod,
+                jsSetMethodName = "text"
+            });
+        }
 
-        //public NewBinderGetMethod<string> New_Text_BindGet;
-        //public string New_Text_BindToProperty;
 
         public string Image;
 
@@ -75,27 +76,7 @@ namespace Buhta
 
         public override string GetHtml()
         {
-
-            //if (New_Text_Binder != null || New_Text_BindToProperty != null || New_Text_BindGet != null)
-            //{
-            //    if (New_Text_Binder == null)
-            //    {
-            //        New_Text_Binder = new NewBaseBinder<string>()
-            //        {
-            //            PropertyName = New_Text_BindToProperty,
-            //            GetMethod = New_Text_BindGet
-
-            //        };
-            //    }
-            //    New_Text_Binder.Model = Model;
-            //    New_Text_Binder.jQueryMethodName = "text";
-            //}
-
-            New_Text_Binder.EmitBindingScript_M(Script);
-
-            EmitProperty_Bind_M(Script, Text_Bind, "val");
-
-            //EmitProperty_StringBinder(Script, new StringBinder(Text_Get), "text");
+            EmitBinders(Script);
 
             EmitEvent_Bind(Script, OnClick_Bind, "click");
 
