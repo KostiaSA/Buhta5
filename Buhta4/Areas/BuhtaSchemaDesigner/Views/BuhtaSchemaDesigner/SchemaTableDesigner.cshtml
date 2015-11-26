@@ -100,7 +100,7 @@
 
                     @Html.bsInput(s =>
                {
-                   s.Bind_Value_To_String(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
+                   s.Bind_Value_To_String(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; Model.Table.TableRoles.Add(Guid.NewGuid()); });
                    s.Label = "Test1";
                })
 
@@ -114,9 +114,7 @@
                     @Html.bsInput(input =>
                {
                    input.Type = bsInputType.List;
-                   //input.Bind_Value(new bsInputRolesListBinder(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles)))
-                   //{
-                   //};
+                   input.Bind_Value_To_RolesList(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles));
                    input.Label = "Роли";
                })
 

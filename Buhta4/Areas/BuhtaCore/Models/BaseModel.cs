@@ -20,7 +20,7 @@ namespace Buhta
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
         List<OldBaseBinder> OldBindedBinders = new List<OldBaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
-        Dictionary<string, CoreBinder> BindedBinders = new Dictionary<string, CoreBinder>();
+        Dictionary<string, BaseBinder> BindedBinders = new Dictionary<string, BaseBinder>();
 
         public void OldRegisterBinder(OldBaseBinder binder)
         {
@@ -28,7 +28,7 @@ namespace Buhta
             OldBindedBinders.Add(binder);
         }
 
-        public void RegisterBinder(CoreBinder binder)
+        public void RegisterBinder(BaseBinder binder)
         {
             BindedBinders.Add(binder.UniqueId, binder);
         }

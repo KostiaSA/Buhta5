@@ -23,13 +23,11 @@ namespace Buhta
 
         public BaseModel Model { get { return model; } }
 
-        protected List<CoreBinder> Binders = new List<CoreBinder>();
-        protected void AddBinder(CoreBinder binder)
+        protected List<BaseBinder> Binders = new List<BaseBinder>();
+        protected void AddBinder(BaseBinder binder)
         {
-
             binder.Control = this;
             Binders.Add(binder);
-
         }
 
         protected void EmitBinders(StringBuilder script)
@@ -206,24 +204,24 @@ namespace Buhta
 
         }
 
-        public void EmitProperty_StringBinder(StringBuilder script, StringBinder binder, string jqxMethodName)
-        {
-            if (binder != null)
-            {
-                Model.OldRegisterBinder(binder); 
-                binder.LastSendedText = binder.GetDisplayText();// Model.GetPropertyDisplayText(binder);
-                script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + binder.LastSendedText.AsJavaScript() + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
-                script.AppendLine("    $('#" + UniqueId + "')." + jqxMethodName + "(newValue);");
-                script.AppendLine("});");
+        //public void EmitProperty_StringBinder(StringBuilder script, StringBinder binder, string jqxMethodName)
+        //{
+        //    if (binder != null)
+        //    {
+        //        Model.OldRegisterBinder(binder); 
+        //        binder.LastSendedText = binder.GetDisplayText();// Model.GetPropertyDisplayText(binder);
+        //        script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + binder.LastSendedText.AsJavaScript() + ");");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
+        //        script.AppendLine("    $('#" + UniqueId + "')." + jqxMethodName + "(newValue);");
+        //        script.AppendLine("});");
 
-                //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
-                //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
-                //script.AppendLine("}); ");
+        //        //script.AppendLine("tag.on('" + jqxEventName + "', function () {");
+        //        //script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',tag.prop('checked')); ");
+        //        //script.AppendLine("}); ");
 
-            }
+        //    }
 
-        }
+        //}
 
         public virtual string GetHtml()
         {

@@ -48,7 +48,7 @@ namespace Buhta
 
         public void Bind_Text(string modelPropertyName)
         {
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new CommonBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "text"
@@ -57,7 +57,7 @@ namespace Buhta
 
         public void Bind_Text(BinderGetMethod<string> getValueMethod)
         {
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new CommonBinder<string>()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "text"
@@ -66,7 +66,7 @@ namespace Buhta
 
         public void Bind_Disabled(string modelPropertyName)
         {
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new CommonBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "prop",
@@ -76,7 +76,7 @@ namespace Buhta
 
         public void Bind_Disabled(BinderGetMethod<Boolean> getValueMethod)
         {
-            AddBinder(new BaseBinder<Boolean>()
+            AddBinder(new CommonBinder<Boolean>()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "prop",
@@ -86,7 +86,7 @@ namespace Buhta
 
         public void Bind_OnClick(string modelEventMethodName)
         {
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new CommonBinder<string>()
             {
                 IsEventBinding=true,
                 ModelEventMethodName = modelEventMethodName,
@@ -96,7 +96,7 @@ namespace Buhta
 
         public void Bind_OnClick(BinderEventMethod eventMethod)
         {
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new CommonBinder<string>()
             {
                 IsEventBinding = true,
                 ModelEventMethod = eventMethod,

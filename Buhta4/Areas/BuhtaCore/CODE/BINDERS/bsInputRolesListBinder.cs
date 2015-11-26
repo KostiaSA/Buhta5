@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsInputRolesListBinder : BaseBsInputBinder
+    public class bsInputRolesListBinder// : BaseBsInputBinder
     {
-        public bsInputRolesListBinder(string propertyName) : base(propertyName) { }
+        //public bsInputRolesListBinder(string propertyName) : base(propertyName) { }
 
         //static BooleanBinder()
         //{
@@ -42,9 +42,9 @@ namespace Buhta
 
         //}
 
-        public override object ParseDisplayText(string text)
-        {
-            return Boolean.Parse(text);
-        }
+        //public override object ParseDisplayText(string text)
+        //{
+        //    return Boolean.Parse(text);
+        //}
     }
 }

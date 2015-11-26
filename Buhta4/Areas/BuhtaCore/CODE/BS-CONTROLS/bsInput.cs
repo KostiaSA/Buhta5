@@ -53,7 +53,7 @@ namespace Buhta
         {
             Type = bsInputType.Checkbox;
 
-            AddBinder(new BaseBinder<Boolean>()
+            AddBinder(new CommonBinder<Boolean>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "prop",
@@ -74,7 +74,7 @@ namespace Buhta
         {
             Type = bsInputType.Checkbox;
 
-            var binder = new BaseBinder<Boolean>();
+            var binder = new CommonBinder<Boolean>();
 
             AddBinder(binder);
 
@@ -100,7 +100,7 @@ namespace Buhta
         {
             Type = bsInputType.Text;
 
-            var binder = new BaseBinder<string>();
+            var binder = new CommonBinder<string>();
 
             binder.ModelGetMethod = getValueMethod;
             binder.jsSetMethodName = "val";
@@ -121,7 +121,7 @@ namespace Buhta
         {
             Type = bsInputType.Text;
 
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new CommonBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "val",
@@ -135,13 +135,13 @@ namespace Buhta
         {
             Type = bsInputType.List;
 
-            AddBinder(new BaseBinder<string>()
+            AddBinder(new bsInputToTableRolesBinder()
             {
                 ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "val",
-                Is2WayBinding = true,
-                jsOnChangeEventName = "change",
-                jsGetMethodName = "val"
+                //jsSetMethodName = "val",
+                //Is2WayBinding = true,
+                //jsOnChangeEventName = "change",
+                //jsGetMethodName = "val"
             });
         }
 
@@ -290,5 +290,7 @@ namespace Buhta
             return base.GetHtml();
         }
     }
+
+    
 
 }
