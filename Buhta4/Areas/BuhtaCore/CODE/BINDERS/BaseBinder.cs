@@ -8,18 +8,46 @@ using System.Web;
 namespace Buhta
 {
 
+    public abstract class CoreBinder
+    {
+        public abstract void EmitBindingScript(StringBuilder script);
+
+        string uniqueId;
+        public string UniqueId
+        {
+            get
+            {
+                if (uniqueId == null)
+                {
+                    uniqueId = "binder:" + Guid.NewGuid().ToString().Substring(0, 8);
+                }
+                return uniqueId;
+            }
+        }
+
+        public bsControl Control;
+
+        public abstract BinderEventMethod ModelEventMethod { get; set; }
+        public abstract BinderSetMethod ModelSetMethod { get; set; }
+
+        public bool IsEventBinding;
+        public abstract string GetJsForSettingProperty();
+
+        public string LastSendedText;
+
+    }
+
     public delegate T BinderGetMethod<T>();
     public delegate void BinderSetMethod(string value);
     public delegate void BinderEventMethod(dynamic args);
 
-    public class BaseBinder<T>
+    public class BaseBinder<T>:CoreBinder
     {
         //public string TagUniqueId;
         public string jsSetMethodName;
         public string jsSetPropertyName;
         public bool jsSetIsValueAsObject;
         public string ModelPropertyName;
-        public string LastSendedText;
         public BinderGetMethod<T> ModelGetMethod;
 
 
@@ -27,14 +55,12 @@ namespace Buhta
         public string jsOnChangeEventName;
         public string jsGetPropertyName;
         public string jsGetMethodName;
-        public BinderSetMethod ModelSetMethod;
+        public override BinderSetMethod ModelSetMethod { get; set; }
 
-        public bool IsEventBinding;
         public string jsEventName;
-        public BinderEventMethod ModelEventMethod;
+        public override BinderEventMethod ModelEventMethod { get; set; }
         public string ModelEventMethodName;
 
-        public bsControl Control;
         public BaseBinder()
         {
             //control = _control;
@@ -56,7 +82,7 @@ namespace Buhta
         //}
 
 
-        public virtual string GetJs()
+        public override string GetJsForSettingProperty()
         {
             if (ModelGetMethod == null && ModelPropertyName == null)
                 throw new Exception(nameof(BaseBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
@@ -76,7 +102,7 @@ namespace Buhta
             }
 
             if (jsSetMethodName == null)
-                throw new Exception(nameof(BaseBinder<T>) + "." + nameof(GetJs) + ": не заполнен '" + nameof(jsSetMethodName) + "'");
+                throw new Exception(nameof(BaseBinder<T>) + "." + nameof(GetJsForSettingProperty) + ": не заполнен '" + nameof(jsSetMethodName) + "'");
 
             //Debug.Print("$('#" + TagUniqueId + "')." + jQueryMethodName + "(" + value + ");");
 
@@ -92,9 +118,9 @@ namespace Buhta
 
         }
 
-        public void EmitBindingScript_M(StringBuilder script)
+        public override void EmitBindingScript(StringBuilder script)
         {
-            Control.Model.RegisterBinder(UniqueId, this);
+            Control.Model.RegisterBinder(this);
 
             if (IsEventBinding)
             {
@@ -115,7 +141,7 @@ namespace Buhta
             }
 
 
-            LastSendedText = GetJs();
+            LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
             if (Is2WayBinding)
@@ -139,18 +165,6 @@ namespace Buhta
 
         }
 
-        string uniqueId;
-        public string UniqueId
-        {
-            get
-            {
-                if (uniqueId == null)
-                {
-                    uniqueId = "binder:" + Guid.NewGuid().ToString().Substring(0, 8);
-                }
-                return uniqueId;
-            }
-        }
 
     }
 }

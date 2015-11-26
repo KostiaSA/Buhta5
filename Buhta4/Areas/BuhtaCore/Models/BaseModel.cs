@@ -20,7 +20,7 @@ namespace Buhta
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
         List<OldBaseBinder> OldBindedBinders = new List<OldBaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
-        Dictionary<string, object> BindedBinders = new Dictionary<string, object>();
+        Dictionary<string, CoreBinder> BindedBinders = new Dictionary<string, CoreBinder>();
 
         public void OldRegisterBinder(OldBaseBinder binder)
         {
@@ -28,19 +28,19 @@ namespace Buhta
             OldBindedBinders.Add(binder);
         }
 
-        public void RegisterBinder(string binderID, object binder)
+        public void RegisterBinder(CoreBinder binder)
         {
-            BindedBinders.Add(binderID, binder);
+            BindedBinders.Add(binder.UniqueId, binder);
         }
 
         public void BinderCallEvent(string binderId, dynamic args)
         {
-            (BindedBinders[binderId] as dynamic).ModelEventMethod(args);
+            BindedBinders[binderId].ModelEventMethod(args);
         }
 
         public void BinderSetValue(string binderId, string value)
         {
-            (BindedBinders[binderId] as dynamic).ModelSetMethod(value);
+            BindedBinders[binderId].ModelSetMethod(value);
         }
 
         public BaseModel(Controller controller)
@@ -54,10 +54,10 @@ namespace Buhta
         {
             var toSend = new StringBuilder();
 
-            foreach (dynamic binder in BindedBinders.Values.ToList())
+            foreach (var binder in BindedBinders.Values.ToList())
             {
                 if (binder.IsEventBinding) continue;
-                var newText = binder.GetJs();
+                var newText = binder.GetJsForSettingProperty();
                 if (binder.LastSendedText != newText)
                 {
                     toSend.AppendLine(newText);

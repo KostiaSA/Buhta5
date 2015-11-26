@@ -23,8 +23,8 @@ namespace Buhta
 
         public BaseModel Model { get { return model; } }
 
-        protected List<dynamic> Binders = new List<dynamic>();
-        protected void AddBinder(dynamic binder)
+        protected List<CoreBinder> Binders = new List<CoreBinder>();
+        protected void AddBinder(CoreBinder binder)
         {
 
             binder.Control = this;
@@ -34,8 +34,8 @@ namespace Buhta
 
         protected void EmitBinders(StringBuilder script)
         {
-            foreach (dynamic binder in Binders)
-                binder.EmitBindingScript_M(script);
+            foreach (var binder in Binders)
+                binder.EmitBindingScript(script);
         }
 
 

@@ -131,6 +131,20 @@ namespace Buhta
             });
         }
 
+        public void Bind_Value_To_RolesList(string modelPropertyName)
+        {
+            Type = bsInputType.List;
+
+            AddBinder(new BaseBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "val",
+                Is2WayBinding = true,
+                jsOnChangeEventName = "change",
+                jsGetMethodName = "val"
+            });
+        }
+
 
         public string Label;
         public string PlaceHolder;
