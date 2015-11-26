@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class BooleanBinder : BaseBinder
+    public class BooleanBinder : OldBaseBinder
     {
         public BooleanBinder(string propertyName) : base(propertyName) { }
 

@@ -10,13 +10,13 @@ namespace Buhta
     public delegate void bsControlOnChangeEventHandler<SenderT, NewValueT>(SenderT sender, NewValueT newValue);
     public delegate string bsControlOnClickEventHandler<SenderT>(SenderT sender);
 
-    public class bsControlSettings
+    public class bsControl
     {
         protected StringBuilder Script = new StringBuilder();
         protected StringBuilder Html = new StringBuilder();
 
         BaseModel model;
-        public bsControlSettings(BaseModel _model)
+        public bsControl(BaseModel _model)
         {
             model = _model;
         }
@@ -187,11 +187,11 @@ namespace Buhta
 
         }
 
-        public void EmitProperty_Bind2Way_Checked(StringBuilder script, BaseBinder binder, string jqxEventName)
+        public void EmitProperty_Bind2Way_Checked(StringBuilder script, OldBaseBinder binder, string jqxEventName)
         {
             if (binder != null)
             {
-                Model.RegisterBinder(binder);
+                Model.OldRegisterBinder(binder);
                 binder.LastSendedText = Model.GetPropertyDisplayText(binder);
                 script.AppendLine("$('#" + UniqueId + "').prop('checked'," + binder.LastSendedText + ");");
                 script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
@@ -210,7 +210,7 @@ namespace Buhta
         {
             if (binder != null)
             {
-                Model.RegisterBinder(binder); 
+                Model.OldRegisterBinder(binder); 
                 binder.LastSendedText = binder.GetDisplayText();// Model.GetPropertyDisplayText(binder);
                 script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + binder.LastSendedText.AsJavaScript() + ");");
                 script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
@@ -227,6 +227,7 @@ namespace Buhta
 
         public virtual string GetHtml()
         {
+            EmitBinders(Script);
             var wrapperBeg = new StringBuilder();
             var wrapperEnd = new StringBuilder();
 

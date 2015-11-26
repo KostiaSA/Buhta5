@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public abstract class BaseBsTreeDataSourceBinder:BaseBinder
+    public abstract class BaseBsTreeDataSourceBinder:OldBaseBinder
     {
         public bsTree Tree;
 

@@ -70,7 +70,10 @@
            b.Bind_Text(() => Model.Column.Name + "+++" + Guid.NewGuid());
            //b.New_Text_BindGet= () => Model.Column.Name + "***" + Guid.NewGuid();
            //b.Text_Get = () => Model.Column.Name + "***" + Guid.NewGuid();
-           b.OnClick_Bind = "SaveButtonClick";
+           //b.OnClick_Bind = "SaveButtonClick";
+           //b.Bind_OnClick("SaveButtonClick");
+           b.Bind_OnClick((args)=>{ Model.Column.Name = "пиздец"; });
+           b.Bind_Disabled(()=> Model.Column.Name == "пиздец");
 
        })
 

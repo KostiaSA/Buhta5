@@ -37,7 +37,7 @@ namespace Buhta
 
     public enum bsTreeSize { Default, Large, Small, ExtraSmall }
 
-    public class bsTree : bsControlSettings
+    public class bsTree : bsControl
     {
         public bsTree(BaseModel model) : base(model) { }
 

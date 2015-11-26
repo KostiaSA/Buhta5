@@ -18,24 +18,29 @@ namespace Buhta
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
-        List<BaseBinder> BindedBinders = new List<BaseBinder>();
+        List<OldBaseBinder> OldBindedBinders = new List<OldBaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
-        Dictionary<string, object> NewBindedBinders = new Dictionary<string, object>();
+        Dictionary<string, object> BindedBinders = new Dictionary<string, object>();
 
-        public void RegisterBinder(BaseBinder binder)
+        public void OldRegisterBinder(OldBaseBinder binder)
         {
             binder.Model = this;
-            BindedBinders.Add(binder);
+            OldBindedBinders.Add(binder);
         }
 
-        public void NewRegisterBinder(string binderID, object binder)
+        public void RegisterBinder(string binderID, object binder)
         {
-            NewBindedBinders.Add(binderID, binder);
+            BindedBinders.Add(binderID, binder);
+        }
+
+        public void BinderCallEvent(string binderId, dynamic args)
+        {
+            (BindedBinders[binderId] as dynamic).ModelEventMethod(args);
         }
 
         public void BinderSetValue(string binderId, string value)
         {
-            (NewBindedBinders[binderId] as dynamic).ModelSetMethod(value);
+            (BindedBinders[binderId] as dynamic).ModelSetMethod(value);
         }
 
         public BaseModel(Controller controller)
@@ -49,8 +54,9 @@ namespace Buhta
         {
             var toSend = new StringBuilder();
 
-            foreach (dynamic binder in NewBindedBinders.Values.ToList())
+            foreach (dynamic binder in BindedBinders.Values.ToList())
             {
+                if (binder.IsEventBinding) continue;
                 var newText = binder.GetJs();
                 if (binder.LastSendedText != newText)
                 {
@@ -70,7 +76,7 @@ namespace Buhta
         {
             var toSend = new Dictionary<string, string>();
 
-            foreach (var binder in BindedBinders.ToList())
+            foreach (var binder in OldBindedBinders.ToList())
             {
                 if (!toSend.ContainsKey(binder.PropertyName))
                 {
@@ -304,7 +310,7 @@ namespace Buhta
             throw new Exception("У модели '" + this.GetType().FullName + "' свойство '" + propName + "' должно быть типа ''" + typeof(T).FullName + "'");
         }
 
-        public string GetPropertyDisplayText(BaseBinder binder)
+        public string GetPropertyDisplayText(OldBaseBinder binder)
         {
             return "binder.GetDisplayText(GetPropertyValue(binder.PropertyName))";
         }

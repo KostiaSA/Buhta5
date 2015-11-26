@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class BaseBsInputBinder : BaseBinder
+    public class BaseBsInputBinder : OldBaseBinder
     {
         public BaseBsInputBinder(string propertyName) : base(propertyName) { }
 

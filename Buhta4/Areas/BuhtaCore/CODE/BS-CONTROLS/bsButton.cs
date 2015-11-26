@@ -37,7 +37,7 @@ namespace Buhta
     public enum bsButtonStyle { Default, Primary, Success, Info, Warning, Danger, Link }
     public enum bsButtonSize { Default, Large, Small, ExtraSmall }
 
-    public class bsButton : bsControlSettings
+    public class bsButton : bsControl
     {
         public bsButton(BaseModel model) : base(model) { }
 
@@ -48,19 +48,59 @@ namespace Buhta
 
         public void Bind_Text(string modelPropertyName)
         {
-            AddBinder(new NewBaseBinder<string>()
+            AddBinder(new BaseBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "text"
             });
         }
 
-        public void Bind_Text(NewBinderGetMethod<string> getValueMethod)
+        public void Bind_Text(BinderGetMethod<string> getValueMethod)
         {
-            AddBinder(new NewBaseBinder<string>()
+            AddBinder(new BaseBinder<string>()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "text"
+            });
+        }
+
+        public void Bind_Disabled(string modelPropertyName)
+        {
+            AddBinder(new BaseBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "prop",
+                jsSetPropertyName="disabled"
+            });
+        }
+
+        public void Bind_Disabled(BinderGetMethod<Boolean> getValueMethod)
+        {
+            AddBinder(new BaseBinder<Boolean>()
+            {
+                ModelGetMethod = getValueMethod,
+                jsSetMethodName = "prop",
+                jsSetPropertyName = "disabled"
+            });
+        }
+
+        public void Bind_OnClick(string modelEventMethodName)
+        {
+            AddBinder(new BaseBinder<string>()
+            {
+                IsEventBinding=true,
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "click"
+            });
+        }
+
+        public void Bind_OnClick(BinderEventMethod eventMethod)
+        {
+            AddBinder(new BaseBinder<string>()
+            {
+                IsEventBinding = true,
+                ModelEventMethod = eventMethod,
+                jsEventName = "click"
             });
         }
 
@@ -76,9 +116,9 @@ namespace Buhta
 
         public override string GetHtml()
         {
-            EmitBinders(Script);
+            //EmitBinders(Script);
 
-            EmitEvent_Bind(Script, OnClick_Bind, "click");
+            //EmitEvent_Bind(Script, OnClick_Bind, "click");
 
             if (ClickAction != null)
             {
@@ -119,7 +159,7 @@ namespace Buhta
             }
 
 
-            Html.Append("<div id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text + "</div>");
+            Html.Append("<button type='button' id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text + "</button>");
 
             return base.GetHtml();
         }

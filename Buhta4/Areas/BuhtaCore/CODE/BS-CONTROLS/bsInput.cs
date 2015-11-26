@@ -35,7 +35,7 @@ namespace Buhta
 
     public enum bsInputType { Text, Checkbox, Radio, List }
 
-    public class bsInput : bsControlSettings
+    public class bsInput : bsControl
     {
         public bsInput(BaseModel model) : base(model) { }
 
@@ -48,92 +48,96 @@ namespace Buhta
 
         public string Value = "";
 
-        public void Bind_Value<T>(NewBinderGetMethod<T> getValueMethod)
+
+        public void Bind_Value_To_Boolean(string modelPropertyName)
         {
-            Bind_Value<T>(getValueMethod, null);
+            Type = bsInputType.Checkbox;
+
+            AddBinder(new BaseBinder<Boolean>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "prop",
+                jsSetPropertyName = "checked",
+                Is2WayBinding = true,
+                jsOnChangeEventName = "change",
+                jsGetMethodName = "prop",
+                jsGetPropertyName = "checked"
+            });
         }
 
-        public void Bind_Value<T>(NewBinderGetMethod<T> getValueMethod, NewBinderSetMethod setValueMethod)
+        public void Bind_Value_To_Boolean(BinderGetMethod<Boolean> getValueMethod)
         {
-            if (Type == bsInputType.Text)
-            {
-                var binder = new NewBaseBinder<T>();
-
-                binder.ModelGetMethod = getValueMethod;
-                binder.jsSetMethodName = "val";
-
-                if (setValueMethod != null)
-                {
-                    binder.Is2WayBinding = true;
-                    binder.jQueryOnChangeEventName = "change";
-                    binder.jQueryGetMethodName = "val";
-                    binder.ModelSetMethod = setValueMethod;
-                }
-
-                AddBinder(binder);
-
-            }
-            else
-            if (Type == bsInputType.Checkbox)
-            {
-                AddBinder(new NewBaseBinder<T>()
-                {
-                    ModelGetMethod = getValueMethod,
-                    jsSetMethodName = "prop",
-                    jsSetPropertyName = "checked",
-                    Is2WayBinding = true,
-                    jQueryOnChangeEventName = "change",
-                    jQueryGetMethodName = "prop",
-                    jQueryGetPropertyName = "checked"
-
-                });
-            }
-            else
-                throw new Exception(nameof(bsInput) + "." + nameof(Bind_Value) + ": неизвестный тип '" + typeof(Type).FullName + "'");
+            Bind_Value_To_Boolean(getValueMethod, null);
         }
 
-        public void Bind_Value(string modelPropertyName)
+        public void Bind_Value_To_Boolean(BinderGetMethod<Boolean> getValueMethod, BinderSetMethod setValueMethod)
         {
-            if (Type == bsInputType.Text)
-            {
-                AddBinder(new NewBaseBinder<string>()
-                {
-                    ModelPropertyName = modelPropertyName,
-                    jsSetMethodName = "val",
-                    Is2WayBinding = true,
-                    jQueryOnChangeEventName = "change",
-                    jQueryGetMethodName = "val"
-                });
-            }
-            else
-            if (Type == bsInputType.Checkbox)
-            {
-                AddBinder(new NewBaseBinder<Boolean>()
-                {
-                    ModelPropertyName = modelPropertyName,
-                    jsSetMethodName = "prop",
-                    jsSetPropertyName = "checked",
-                    Is2WayBinding = true,
-                    jQueryOnChangeEventName = "change",
-                    jQueryGetMethodName = "prop",
-                    jQueryGetPropertyName = "checked"
+            Type = bsInputType.Checkbox;
 
-                });
+            var binder = new BaseBinder<Boolean>();
+
+            AddBinder(binder);
+
+            binder.ModelGetMethod = getValueMethod;
+            binder.jsSetMethodName = "prop";
+            binder.jsSetPropertyName = "checked";
+            if (setValueMethod != null)
+            {
+                binder.Is2WayBinding = true;
+                binder.jsOnChangeEventName = "change";
+                binder.jsGetMethodName = "prop";
+                binder.jsGetPropertyName = "checked";
             }
-            else
-                throw new Exception(nameof(bsInput) + "." + nameof(Bind_Value) + ": неизвестный тип '" + typeof(Type).FullName + "'");
         }
 
 
-        //        public string Value_Bind;
-        //        public BaseBinder Value_Binder;
+        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod)
+        {
+            Bind_Value_To_String(getValueMethod, null);
+        }
+
+        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod, BinderSetMethod setValueMethod)
+        {
+            Type = bsInputType.Text;
+
+            var binder = new BaseBinder<string>();
+
+            binder.ModelGetMethod = getValueMethod;
+            binder.jsSetMethodName = "val";
+
+            if (setValueMethod != null)
+            {
+                binder.Is2WayBinding = true;
+                binder.jsOnChangeEventName = "change";
+                binder.jsGetMethodName = "val";
+                binder.ModelSetMethod = setValueMethod;
+            }
+
+            AddBinder(binder);
+        }
+
+
+        public void Bind_Value_To_String(string modelPropertyName)
+        {
+            Type = bsInputType.Text;
+
+            AddBinder(new BaseBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "val",
+                Is2WayBinding = true,
+                jsOnChangeEventName = "change",
+                jsGetMethodName = "val"
+            });
+        }
+
 
         public string Label;
         public string PlaceHolder;
 
         public string Image;
 
-        public BaseBinder Lookup;
+        public OldBaseBinder Lookup;
 
 
         public bsInputSize Size = bsInputSize.Default;
@@ -175,7 +179,7 @@ namespace Buhta
 
             //EmitProperty_M(Script, "val", Text);
 
-            EmitBinders(Script);
+            //EmitBinders(Script);
 
 
             if (Size == bsInputSize.Large)
@@ -215,7 +219,6 @@ namespace Buhta
             else
             if (Type == bsInputType.Checkbox)
             {
-                //EmitProperty_Bind2Way_Checked(Script, Value_Binder, "change");
 
                 Html.Append("<div class='col-sm-offset-3 col-sm-9'>"); // beg col-sm-offset-3 col-sm-9
                 Html.Append("<div class='checkbox'>");

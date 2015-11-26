@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class bsTreeColumnSettings : bsControlSettings
+    public class bsTreeColumnSettings : bsControl
     {
         public bsTreeColumnSettings(BaseModel model) : base(model) { }
 

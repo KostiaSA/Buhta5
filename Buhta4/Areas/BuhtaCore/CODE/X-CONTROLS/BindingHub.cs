@@ -84,8 +84,16 @@ namespace Buhta
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
-                obj.InvokeMethod(funcName, args);
-                obj.Update();
+                if (funcName.StartsWith("binder:"))
+                {
+                    obj.BinderCallEvent(funcName, args);
+                    obj.Update();
+                }
+                else
+                {
+                    obj.InvokeMethod(funcName, args);
+                    obj.Update();
+                }
             }
             catch (Exception e)
             {

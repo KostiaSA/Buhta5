@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class StringBinder : BaseBinder
+    public class StringBinder : OldBaseBinder
     {
         public get_string GetMethod;
         public StringBinder(string propertyName) : base(propertyName) { }
