@@ -213,6 +213,9 @@
     <Compile Include="SCHEMA\VIRTUAL-TABLE\SchemaVirtualTableColumn.cs" />
     <Compile Include="SQL.cs" />
     <Compile Include="TestClass1.cs" />
+    <Compile Include="UTILS\JsArray.cs" />
+    <Compile Include="UTILS\JsBaseObject.cs" />
+    <Compile Include="UTILS\JsObject.cs" />
     <Compile Include="UTILS\SystemClassExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

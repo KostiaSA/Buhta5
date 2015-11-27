@@ -21,10 +21,18 @@ namespace Buhta
             var windowHtml = R.RenderViewToString(Controller, ViewName, ViewModel);
 
             var init = new JsObject();
-            init.AddProperty("show",true);
+            init.AddProperty("show", true);
+            init.AddProperty("backdrop", "static");
+            //init.AddProperty("modalOverflow", true);
+            init.AddRawProperty("maxHeight", "function(){return $(window).height()-200;}");
 
             var script = new StringBuilder();
-            script.Append("var tag = $("+ windowHtml.AsJavaScript() + ").appendTo('#popups').modal("+init.AsJavaScript()+");");
+            //            script.Append("var tag = $("+ windowHtml.AsJavaScript() + ").appendTo('#popups').modal("+init.AsJavaScript()+");");
+
+            script.Append("docReady = function(callback) { callback() };");
+            script.Append("var modal = $(" + windowHtml.AsJavaScript() + ");");
+            script.Append("$('body').append(modal);");
+            script.Append("modal.modal(" + init.AsJavaScript() + ");");
 
             //if (OnClose_Bind != null)
             //{

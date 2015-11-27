@@ -5,14 +5,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
+
     @Styles.Render("~/Content/css")
+
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Content/vendors/bootstrap-modal-master/js/bootstrap-modal.js"></script>
+    <script src="~/Content/vendors/bootstrap-modal-master/js/bootstrap-modalmanager.js"></script>
+
     <link href="~/Content/panel.css" rel="stylesheet" />
     <link href="~/Content/JQWidgets/jqx.base.css" rel="stylesheet" />
     <link href="~/Content/JQWidgets/jqx.bootstrap.css" rel="stylesheet" />
     <link href="~/Content/buhta-core.css" rel="stylesheet" />
+
+    <link href="~/Content/vendors/bootstrap-modal-master/css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+    <link href="~/Content/vendors/bootstrap-modal-master/css/bootstrap-modal.css" rel="stylesheet" />
 
 
     <script src="~/Scripts/JQWidgets/jqxcore.js"></script>
@@ -39,7 +48,7 @@
 
 
     @*<link href="~/Content/vendors/fancytree-master/src/skin-xp/ui.fancytree.css" rel="stylesheet" />
-    <link href="~/Content/vendors/fancytree-master/src/skin-bootstrap/ui.fancytree.css" rel="stylesheet" />*@
+        <link href="~/Content/vendors/fancytree-master/src/skin-bootstrap/ui.fancytree.css" rel="stylesheet" />*@
     <link href="~/Content/vendors/fancytree-master/src/skin-win8/ui.fancytree.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-ui.min.js"></script>
     <script src="~/Content/vendors/fancytree-master/src/jquery.fancytree.js"></script>
@@ -52,7 +61,9 @@
     @RenderSection("scripts", required: false)
 </head>
 <body>
-    @RenderBody()
-    <div id="popups"></div>
+    <div class="page-container">
+        @RenderBody()
+        @*<div id="popups"></div>*@
+    </div>
 </body>
 </html>

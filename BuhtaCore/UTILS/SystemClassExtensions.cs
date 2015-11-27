@@ -736,6 +736,8 @@ namespace Buhta
                 return ((Double)value).AsJavaScript();
             if (value is bool)
                 return ((bool)value) ? "true" : "false";
+            if (value is JsBaseObject)
+                return (value as JsBaseObject).ToJson();
 
             throw new Exception("Object." + nameof(AsJavaScript) + "(): неизвестный класс '" + value.GetType().FullName + "'");
         }

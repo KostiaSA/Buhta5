@@ -131,18 +131,20 @@ namespace Buhta
             });
         }
 
+
+        bsInputToTableRolesBinder listBinder;
         public void Bind_Value_To_RolesList(string modelPropertyName)
         {
             Type = bsInputType.List;
-
-            AddBinder(new bsInputToTableRolesBinder()
+            listBinder = new bsInputToTableRolesBinder()
             {
                 ModelPropertyName = modelPropertyName,
                 //jsSetMethodName = "val",
                 //Is2WayBinding = true,
                 //jsOnChangeEventName = "change",
                 //jsGetMethodName = "val"
-            });
+            };
+            AddBinder(listBinder);
         }
 
 
@@ -275,7 +277,14 @@ namespace Buhta
                 Html.Append("<div class='input-group bs-input'>");
                 Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value) + "</input>");
                 Html.Append("<span class='input-group-btn'>");
-                Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
+                //Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
+
+                var selectButton = new bsButton(Model);
+                selectButton.Text = "Выбрать";
+                selectButton.Bind_OnClick(listBinder.SelectButtonClick);
+                Html.Append(selectButton.GetHtml());
+
+
                 Html.Append("</span>");
                 Html.Append("</div>");
 
@@ -291,6 +300,6 @@ namespace Buhta
         }
     }
 
-    
+
 
 }
