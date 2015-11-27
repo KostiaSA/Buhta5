@@ -7,7 +7,7 @@ using System.Web.Helpers;
 
 namespace Buhta
 {
-    public class JsObject:JsBaseObject
+    public class JsObject : JsBaseObject
     {
         Dictionary<string, object> props = new Dictionary<string, object>();
         Dictionary<string, string> rawProps = new Dictionary<string, string>();  // свойство в уже готовом формате json
@@ -42,7 +42,8 @@ namespace Buhta
                 sb.Append(keyVP.Value + ",");
             }
 
-            sb.RemoveLastChar();
+            if (sb.Length > 1)
+                sb.RemoveLastChar();
             sb.Append("}");
             return sb.ToString();
         }

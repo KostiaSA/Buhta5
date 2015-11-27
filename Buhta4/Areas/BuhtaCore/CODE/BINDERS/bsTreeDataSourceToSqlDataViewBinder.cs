@@ -2,35 +2,45 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Web;
-using System.Web.Helpers;
 
 namespace Buhta
 {
-    public class bsTreeDataSourceToSqlDataViewBinder : BaseBsTreeDataSourceBinder
+    public class bsTreeDataSourceToSqlDataViewBinder : BaseBinder
     {
+        public string DatasourceModelPropertyName;
 
+        public string DisplayFieldName;
         public string KeyFieldName;
         public string ParentFieldName;
-        public string DisplayFieldName;
         public string IconFieldName;
+        public string SelectedRowsModelPropertyName;
 
-        public bsTreeDataSourceToSqlDataViewBinder() : base("") { }
-        public bsTreeDataSourceToSqlDataViewBinder(string propertyName) : base(propertyName) { }
-        //public bsTreeDataSourceToDataViewBinder(string propertyName, string keyFieldName, string parentFieldName, string displayFieldName) : base(propertyName)
-        //{
-        //    KeyFieldName = keyFieldName;
-        //    ParentFieldName = parentFieldName;
-        //    DisplayFieldName = displayFieldName;
-        //}
+        public bsNewTree Tree;
 
-        public override string GetJsonDataTreeSource(BaseModel model, ObservableCollection<string> selectedRows)
+
+        public override BinderEventMethod ModelEventMethod { get; set; }
+        public override BinderSetMethod ModelSetMethod { get; set; }
+
+
+        ObservableCollection<string> selectedRows;
+        public override string GetJsForSettingProperty()
         {
-            var _view = model.GetPropertyValue(PropertyName);
+            var _view = Control.Model.GetPropertyValue(DatasourceModelPropertyName);
             if (!(_view is DataView))
-                throw new Exception(nameof(bsTreeDataSourceToSqlDataViewBinder) + ": свойство '" + PropertyName + "' должно быть типа '" + nameof(DataView) + "'");
+                throw new Exception(nameof(old_bsTreeDataSourceToSqlDataViewBinder) + ": свойство '" + DatasourceModelPropertyName + "' должно быть типа '" + nameof(DataView) + "'");
             DataView dataView = (DataView)_view;
+
+            if (SelectedRowsModelPropertyName != null)
+            {
+                var _selectedRows = Control.Model.GetPropertyValue(SelectedRowsModelPropertyName);
+                if (!(_selectedRows is ObservableCollection<string>))
+                    throw new Exception(nameof(bsTreeDataSourceToSqlDataViewBinder) + ": свойство '" + SelectedRowsModelPropertyName + "' должно быть типа '" + nameof(ObservableCollection<string>) + "'");
+                selectedRows = (ObservableCollection<string>)_selectedRows;
+            }
 
             var ret = new jsArray();
 
@@ -67,7 +77,7 @@ namespace Buhta
                 if (selectedRows != null && selectedRows.Contains(row[keyFieldName].ToString()))
                 {
                     treeNode.AddProperty("selected", true);
-                  //  treeNode.AddProperty("expanded", true);
+                    //  treeNode.AddProperty("expanded", true);
                 }
 
                 var jsRow = new JsObject();
@@ -79,20 +89,42 @@ namespace Buhta
 
                 ret.AddObject(treeNode);
             }
-            return "convertFlatDataToFancyTree(" + ret.ToJson() + ")";
+   
+            return "$('#" + Control.UniqueId + "').fancytree('option','source',convertFlatDataToFancyTree(" + ret.ToJson() + "));";
 
+
+            //var value = Control.Model.GetPropertyValue(ModelPropertyName);
+            //if (value is IEnumerable<Guid>)
+            //{
+            //    var list = new List<Таблица_TableRole>();
+            //    string errorStr = ""; ;
+            //    foreach (var roleID in (value as IEnumerable<Guid>))
+            //    {
+            //        if (SchemaBaseRole.Roles.ContainsKey(roleID) && SchemaBaseRole.Roles[roleID] is Таблица_TableRole)
+            //            list.Add(SchemaBaseRole.Roles[roleID] as Таблица_TableRole);
+            //        else
+            //            errorStr += ", ?ошибка";
+            //    }
+            //    var sb = new StringBuilder();
+            //    foreach (var tableRole in from role in list orderby role.Position, role.Name select role)
+            //    {
+            //        sb.Append(tableRole.Name + ", ");
+            //    }
+            //    sb.RemoveLastChar(2);
+            //    sb.Append(errorStr);
+            //    return "$('#" + Control.UniqueId + "').val(" + sb.ToString().AsJavaScript() + ");";
+            //}
+            //else
+            //    throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'IEnumerable<Guid>'");
         }
 
-        //public virtual string GetDisplayText(object value)
-        //{
-        //    throw new Exception("метод " + nameof(GetDisplayText) + " не рализован");
-        //}
-
-        //public virtual object ParseDisplayText(string text)
-        //{
-        //    throw new Exception("метод "+nameof(ParseDisplayText)+" не рализован");
-        //}
-
+        public override void EmitBindingScript(StringBuilder script)
+        {
+            Control.Model.RegisterBinder(this);
+            LastSendedText = GetJsForSettingProperty();
+            script.AppendLine(LastSendedText);
+        }
 
     }
+
 }

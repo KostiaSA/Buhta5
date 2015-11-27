@@ -158,13 +158,14 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSchemaRolesBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputToTableRolesBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\CommonBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputRolesListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputValueListBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\old_bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBsTreeDataSourceBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsNewTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />

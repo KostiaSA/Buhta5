@@ -52,10 +52,10 @@ namespace Buhta
         public List<bsTreeColumnSettings> Columns { get { return columns; } }
 
 
-        bsTreeDataSourceBinder dataSourceBinder;
+        bsTreeDataSourceToSqlDataViewBinder dataSourceBinderToSqlDataView;
         public void Bind_DataSource_To_SqlDataView(string datasourceModelPropertyName, string displayFieldName, string keyFieldName, string parentFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName=null)
         {
-            dataSourceBinder = new bsTreeDataSourceBinder()
+            dataSourceBinderToSqlDataView = new bsTreeDataSourceToSqlDataViewBinder()
             {
                 Tree = this,
                 DatasourceModelPropertyName = datasourceModelPropertyName,
@@ -66,7 +66,19 @@ namespace Buhta
                 SelectedRowsModelPropertyName = selectedRowsModelPropertyName
 
             };
-            AddBinder(dataSourceBinder);
+            AddBinder(dataSourceBinderToSqlDataView);
+        }
+
+        bsTreeDataSourceToSchemaRolesBinder dataSourceBinderToSchemaRoles;
+        public void Bind_DataSource_To_ToSchemaRoles(string selectedRowsModelPropertyName = null)
+        {
+            dataSourceBinderToSchemaRoles = new bsTreeDataSourceToSchemaRolesBinder()
+            {
+                Tree = this,
+                SelectedRowsModelPropertyName = selectedRowsModelPropertyName
+
+            };
+            AddBinder(dataSourceBinderToSchemaRoles);
         }
 
 

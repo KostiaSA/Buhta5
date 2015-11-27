@@ -15,6 +15,8 @@ namespace Buhta
             public object value;
         }
 
+        public int Length { get { return props.Count; } }
+
         List<obj> props = new List<obj>();
 
         public void AddObject(object value)

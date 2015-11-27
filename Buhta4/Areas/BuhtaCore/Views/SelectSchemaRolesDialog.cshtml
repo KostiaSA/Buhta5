@@ -1,6 +1,6 @@
 ﻿@model SelectSchemaRolesDialogModel
 
-<div class="modal" data-width="760" tabindex="-1" role="dialog">
+<div class="modal" data-width="1000" tabindex="-1" role="dialog">
     @*<div class="modal-dialog">
         <div class="modal-content">*@
     <div class="modal-header">
@@ -15,47 +15,39 @@
 
        tree.AddColumn(c =>
        {
-           c.Caption = "Объект конфигурации";
-           c.Field_Bind = "Name";
+           c.Caption = "Роль";
+           c.Field_Bind = nameof(SchemaBaseRole.Name);
            c.AddStyle("color", "red");
            c.AddClass("cls12");
-           c.CellTemplateJS = @"
- if (row.node.children) {
-   row._ee=' ('+row.node.children.length.toString()+')'
-   row._fontWeight='bold'
- }
- else
-   row._fontWeight='normal';
-";
+           //           c.CellTemplateJS = @"
+           // if (row.node.children) {
+           //   row._ee=' ('+row.node.children.length.toString()+')'
+           //   row._fontWeight='bold'
+           // }
+           // else
+           //   row._fontWeight='normal';
+           //";
 
-           c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
+           //           c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
        });
 
        tree.AddColumn(c =>
        {
-           c.Hidden = true;
-           c.Field_Bind = "RootClass";
+           c.Caption = "Описание";
+           c.Field_Bind = nameof(SchemaBaseRole.Description);
 
        });
 
-       tree.AddColumn(c =>
-       {
-           c.Caption = "Тип";
-           c.Field_Bind = "RootType";
-           c.AddStyle("color", "blue");
-           c.AddClass("type-1");
+       //tree.AddColumn(c =>
+       //{
+       //    c.Caption = "ID";
+       //    c.Field_Bind = "ID";
+       //    c.CellTemplate = "<small style='opacity:0.3'>{{ID}}, {{RootClass}}</small>";
 
-       });
+       //});
 
-       tree.AddColumn(c =>
-       {
-           c.Caption = "ID";
-           c.Field_Bind = "ID";
-           c.CellTemplate = "<small style='opacity:0.3'>{{ID}}, {{RootClass}}</small>";
-
-       });
-
-       tree.Bind_DataSource_To_SqlDataView(nameof(Model.SchemaObjectList), "Name", "ID", "ParentObjectID", null, nameof(Model.SelectedRows));
+       //tree.Bind_DataSource_To_SqlDataView(nameof(Model.SchemaObjectList), "Name", "ID", "ParentObjectID", null, nameof(Model.SelectedRows));
+       tree.Bind_DataSource_To_ToSchemaRoles(nameof(Model.SelectedRows));
 
        tree.SelectedRows_Bind = nameof(Model.SelectedRows);
 
