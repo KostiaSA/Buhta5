@@ -13,18 +13,13 @@
        {
            c.Caption = "Роль";
            c.Field_Bind = nameof(SchemaBaseRole.Name);
-           c.AddStyle("color", "red");
-           c.AddClass("cls12");
-           //           c.CellTemplateJS = @"
-           // if (row.node.children) {
-           //   row._ee=' ('+row.node.children.length.toString()+')'
-           //   row._fontWeight='bold'
-           // }
-           // else
-           //   row._fontWeight='normal';
-           //";
-
-           //           c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
+           c.CellTemplateJS = @"
+             if (row.node.isSelected()) 
+               row._fontWeight='bold';
+             else
+              row._fontWeight='normal';
+           ";
+           c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
        });
 
        tree.AddColumn(c =>
@@ -58,8 +53,9 @@
         @Html.bsButton(button =>
    {
        button.Text = "   Ok   ";
+       button.AddStyle("min-width", "70px");
        button.ButtonStyle = bsButtonStyle.Success;
-       button.Bind_Disabled(() => Model.NeedSave);
+       button.Bind_Disabled(() => !Model.NeedSave);
        button.Bind_OnClick(Model.OkButtonClick);
    })
         @Html.bsButton(button =>

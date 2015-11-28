@@ -26,6 +26,7 @@ namespace Buhta
                 {
                     model.SelectedRows.Add(roleID);
                 }
+                model.NeedSave = false;
             }
             else
                 throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'ObservableCollection<Guid>'");
