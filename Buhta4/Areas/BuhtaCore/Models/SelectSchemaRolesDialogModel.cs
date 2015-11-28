@@ -37,7 +37,7 @@ namespace Buhta
 
         public void CancelButtonClick(dynamic args)
         {
-            //EditedObject.Save;
+            Modal.Close();
         }
 
         public void RowSelect(dynamic args)
