@@ -1,5 +1,4 @@
 ﻿@model SelectSchemaRolesDialogModel
-
 <div class="modal" data-width="1000" tabindex="-1" role="dialog">
     @*<div class="modal-dialog">
         <div class="modal-content">*@
@@ -8,11 +7,8 @@
         <h4 class="modal-title">Выберите роли</h4>
     </div>
     <div class="modal-body">
-
         @Html.bsNewTree(tree =>
    {
-       tree.Size = bsNewTreeSize.Default;
-
        tree.AddColumn(c =>
        {
            c.Caption = "Роль";
@@ -58,8 +54,20 @@
    })
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Ok</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        @Html.bsButton(button =>
+   {
+       button.Text = "   Ok   ";
+       button.ButtonStyle = bsButtonStyle.Success;
+       button.Bind_Disabled(() => Model.NeedSave);
+       button.Bind_OnClick(Model.OkButtonClick);
+   })
+        @Html.bsButton(button =>
+   {
+       button.Text = "Отмена";
+       button.ButtonStyle = bsButtonStyle.Default;
+       button.Bind_OnClick(Model.CancelButtonClick);
+   })
+
     </div>
     @*</div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->*@

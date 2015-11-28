@@ -12,9 +12,21 @@ namespace Buhta
 {
     public static partial class HtmlHelperExtensions
     {
-        public static MvcHtmlString bsNewTree(this HtmlHelper helper, Action<bsNewTree> settings)
+        //public static MvcHtmlString bsTree(this HtmlHelper helper, bsTree settings)
+        //{
+        //    (helper.ViewData.Model as BaseModel).Helper = helper;
+        //    return new MvcHtmlString("");// new bsTree(helper.ViewData.Model, settings).GetHtml());
+        //}
+
+        //public static MvcHtmlString bsTree(this HtmlHelper helper, Action<bsTree> settings)
+        //{
+        //    (helper.ViewData.Model as BaseModel).Helper = helper;
+        //    return new MvcHtmlString("");// new bsTree(helper.ViewData.Model, settings).GetHtml());
+        //}
+
+        public static MvcHtmlString bsTree1(this HtmlHelper helper, Action<old_bsTree> settings)
         {
-            var Settings = new bsNewTree(helper.ViewData.Model as BaseModel);
+            var Settings = new old_bsTree(helper.ViewData.Model as BaseModel);
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
@@ -23,11 +35,11 @@ namespace Buhta
 
     }
 
-    public enum bsNewTreeSize { Default, Large, Small, ExtraSmall }
+    public enum old_bsTreeSize { Default, Large, Small, ExtraSmall }
 
-    public class bsNewTree : bsControl
+    public class old_bsTree : bsControl
     {
-        public bsNewTree(BaseModel model) : base(model) { }
+        public old_bsTree(BaseModel model) : base(model) { }
 
         public bool? Disabled;
         public string Disabled_Bind;
@@ -35,52 +47,23 @@ namespace Buhta
         public string Text = "";
         public string Text_Bind;
 
+        //public string OnClick_Bind;
 
         public BaseAction ClickAction;
 
         public string OnRowClick_Bind;
         public string OnRowDoubleClick_Bind;
+     //   public string OnRowSelect_Bind;
         public string OnRowActivate_Bind;
 
         public string SelectedRows_Bind;
 
-        public bsNewTreeSize Size = bsNewTreeSize.Default;
+        public old_bsTreeSize Size = old_bsTreeSize.Default;
 
-        //public BaseBsTreeDataSourceBinder DataSourceBinder;
+        public BaseBsTreeDataSourceBinder DataSourceBinder;
 
         List<bsTreeColumnSettings> columns = new List<bsTreeColumnSettings>();
         public List<bsTreeColumnSettings> Columns { get { return columns; } }
-
-
-        bsTreeDataSourceToSqlDataViewBinder dataSourceBinderToSqlDataView;
-        public void Bind_DataSource_To_SqlDataView(string datasourceModelPropertyName, string displayFieldName, string keyFieldName, string parentFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName=null)
-        {
-            dataSourceBinderToSqlDataView = new bsTreeDataSourceToSqlDataViewBinder()
-            {
-                Tree = this,
-                DatasourceModelPropertyName = datasourceModelPropertyName,
-                DisplayFieldName = displayFieldName,
-                KeyFieldName = keyFieldName,
-                ParentFieldName = parentFieldName,
-                IconFieldName = iconFieldName,
-                SelectedRowsModelPropertyName = selectedRowsModelPropertyName
-
-            };
-            AddBinder(dataSourceBinderToSqlDataView);
-        }
-
-        bsTreeDataSourceToSchemaRolesBinder dataSourceBinderToSchemaRoles;
-        public void Bind_DataSource_To_ToSchemaRoles(string selectedRowsModelPropertyName = null)
-        {
-            dataSourceBinderToSchemaRoles = new bsTreeDataSourceToSchemaRolesBinder()
-            {
-                Tree = this,
-                SelectedRowsModelPropertyName = selectedRowsModelPropertyName
-
-            };
-            AddBinder(dataSourceBinderToSchemaRoles);
-        }
-
 
         public void AddColumn(Action<bsTreeColumnSettings> settings)
         {
@@ -107,7 +90,7 @@ namespace Buhta
             AddClass("table");
 
             JsObject init = new JsObject();
-            //DataSourceBinder.Tree = this;
+            DataSourceBinder.Tree = this;
 
             jsArray extensions = new jsArray();
             extensions.AddObject("table");
@@ -119,19 +102,19 @@ namespace Buhta
             init.AddProperty("table", table);
 
 
-            //ObservableCollection<string> selectedRows = null;
-            //if (SelectedRows_Bind != null)
-            //{
-            //    selectedRows = Model.GetPropertyValue<ObservableCollection<string>>(SelectedRows_Bind);
-            //    init.AddProperty("checkbox", true);
+            ObservableCollection<string> selectedRows = null;
+            if (SelectedRows_Bind != null)
+            {
+                selectedRows = Model.GetPropertyValue<ObservableCollection<string>>(SelectedRows_Bind);
+                init.AddProperty("checkbox", true);
 
-            //    Script.AppendLine("var " + SelectedRows_Bind + "=function(event, data) {");
-            //    Script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
-            //    Script.AppendLine("}");
+                Script.AppendLine("var "+SelectedRows_Bind+"=function(event, data) {");
+                Script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
+                Script.AppendLine("}");
 
-            //    init.AddRawProperty("select", SelectedRows_Bind);
+                init.AddRawProperty("select", SelectedRows_Bind);
 
-            //}
+            }
 
             if (OnRowDoubleClick_Bind != null)
             {
@@ -139,6 +122,11 @@ namespace Buhta
                 init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
             }
 
+            //if (OnRowSelect_Bind != null)
+            //{
+            //    EmitRowEvent_BindFunction(OnRowSelect_Bind);
+            //    init.AddRawProperty("select", OnRowSelect_Bind);
+            //}
 
             if (OnRowActivate_Bind != null)
             {
@@ -147,6 +135,7 @@ namespace Buhta
             }
 
 
+            //var sb = new StringBuilder(); // renderColumns
             Script.AppendLine("var renderColumns=function(event, data) {");
             Script.AppendLine("  var node = data.node;");
             Script.AppendLine("  var row = node.data.row;");
@@ -180,14 +169,18 @@ namespace Buhta
             Script.AppendLine("}");
             init.AddRawProperty("renderColumns", "renderColumns");
 
-            //init.AddRawProperty("source", DataSourceBinder.GetJsonDataTreeSource(Model, selectedRows));
+            init.AddRawProperty("source", DataSourceBinder.GetJsonDataTreeSource(Model, selectedRows));
 
             Script.AppendLine("$('#" + UniqueId + "').fancytree(" + init.ToJson() + ");");
 
+            //EmitProperty(Script, "disabled", Settings.Disabled);
+            //EmitProperty_Bind(Script, Settings.Disabled_Bind, "disabled");
 
 
-            //EmitProperty_Bind_M(Script, Text_Bind, "val");
+            //EmitProperty_M(Script, "val", Settings.Text);
+            EmitProperty_Bind_M(Script, Text_Bind, "val");
 
+            //EmitEvent_Bind(Script, OnClick_Bind, "click");
 
             if (ClickAction != null)
             {

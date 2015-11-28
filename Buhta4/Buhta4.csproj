@@ -162,13 +162,14 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputToTableRolesBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeRowEventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\CommonBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputRolesListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputValueListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\old_bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBsTreeDataSourceBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsNewTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\old_bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsInput.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsControl.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsButton.cs" />

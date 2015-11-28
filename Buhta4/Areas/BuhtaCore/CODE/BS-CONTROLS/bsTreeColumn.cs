@@ -49,7 +49,7 @@ namespace Buhta
 
         public bsTreeColumnSettings Settings;
 
-        public bsTree Tree { get; private set; }
+        public old_bsTree Tree { get; private set; }
 
         public bsTreeColumn()
         {

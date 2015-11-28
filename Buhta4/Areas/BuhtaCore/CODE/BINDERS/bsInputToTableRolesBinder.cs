@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,19 @@ namespace Buhta
         public void SelectButtonClick(dynamic args)
         {
             var model = new SelectSchemaRolesDialogModel(Control.Model.Controller);
-            var modal=Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", model);
+
+            var selectedList = Control.Model.GetPropertyValue(ModelPropertyName);
+            if (selectedList is ObservableCollection<Guid>)
+            {
+                foreach (var roleID in (selectedList as ObservableCollection<Guid>))
+                {
+                    model.SelectedRows.Add(roleID);
+                }
+            }
+            else
+                throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'ObservableCollection<Guid>'");
+
+            var modal =Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", model);
             modal.Show();
         }
 

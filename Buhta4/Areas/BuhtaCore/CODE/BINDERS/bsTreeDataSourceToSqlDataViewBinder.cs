@@ -19,7 +19,7 @@ namespace Buhta
         public string IconFieldName;
         public string SelectedRowsModelPropertyName;
 
-        public bsNewTree Tree;
+        public bsTree Tree;
 
 
         public override BinderEventMethod ModelEventMethod { get; set; }
