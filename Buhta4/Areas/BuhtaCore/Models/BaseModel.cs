@@ -14,7 +14,7 @@ namespace Buhta
 {
     public class BaseModel : ObservableObject
     {
-        protected Controller Controller;
+        public Controller Controller;
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();

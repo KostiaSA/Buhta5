@@ -4,7 +4,7 @@
 
 .x-form-buttons-row {
     padding-top: 10px;
-    float:right;
+    float: right;
 }
 
 .x-page-title {
@@ -22,22 +22,30 @@ input[type=text].jqx-input, input[type=password].jqx-input {
     background-color: rgba(255, 247, 0, 0.02);
 }
 
+/*.modal-open {
+    margin-left:-16px;
+}*/
 
-.bs-input .btn-default{
+.modal-backdrop.in {
+    opacity: .2;
+    background-color:black;
+}
+
+.bs-input .btn-default {
     background-color: #F5F5F5;
 }
 
-.bs-input .btn-default:hover{
-    background-color: #F0F0F0;
-}
+    .bs-input .btn-default:hover {
+        background-color: #F0F0F0;
+    }
 
-/*изначально размер иконки был 14, исправляется на 16*/ 
+/*изначально размер иконки был 14, исправляется на 16*/
 .jqx-tree-grid-icon-size {
     width: 16px;
     height: 16px;
 }
 
-/*изначально размер иконки был 14, исправляется на 16*/ 
+/*изначально размер иконки был 14, исправляется на 16*/
 .jqx-tree-grid-indent {
     width: 16px;
     height: 16px;
@@ -49,5 +57,5 @@ input[type=text].jqx-input, input[type=password].jqx-input {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 4px; 
+    padding: 4px;
 }

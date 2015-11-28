@@ -14,6 +14,13 @@ namespace Buhta
         public override BinderEventMethod ModelEventMethod { get; set; }
         public override BinderSetMethod ModelSetMethod { get; set; }
 
+        public void SelectButtonClick(dynamic args)
+        {
+            var model = new SelectSchemaRolesDialogModel(Control.Model.Controller);
+            var modal=Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", model);
+            modal.Show();
+        }
+
         public override string GetJsForSettingProperty()
         {
             var value = Control.Model.GetPropertyValue(ModelPropertyName);
