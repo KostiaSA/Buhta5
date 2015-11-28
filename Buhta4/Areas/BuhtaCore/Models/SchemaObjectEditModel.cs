@@ -12,7 +12,7 @@ namespace Buhta
         public bool NeedSave;
         public T EditedObject { get; set; }
 
-        public SchemaObjectEditModel(Controller controller) : base(controller) { }
+        public SchemaObjectEditModel(Controller controller, BaseModel parentModel) : base(controller,parentModel) { }
 
 
         public virtual string EditedObjectName { get { return EditedObject.Name; } }

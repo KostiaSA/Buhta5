@@ -10,9 +10,9 @@ namespace Buhta
     {
         public SchemaTableColumn Column { get; set; }
 
-        public override string PageTitle { get { return "Колонка: "+Column.Name; } }
+        public override string PageTitle { get { return "Колонка: " + Column.Name; } }
 
-        public SchemaTableColumnEditModel(Controller controller) : base(controller) { }
+        public SchemaTableColumnEditModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
         public void SaveButtonClick(dynamic args)
         {

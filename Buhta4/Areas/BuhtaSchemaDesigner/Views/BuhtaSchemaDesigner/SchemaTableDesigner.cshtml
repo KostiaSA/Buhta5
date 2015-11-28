@@ -100,7 +100,7 @@
 
                     @Html.bsInput(s =>
                {
-                   s.Bind_Value_To_String(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; Model.Table.TableRoles.Add(Guid.NewGuid()); });
+                   s.Bind_Value_To_String(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
                    s.Label = "Test1";
                })
 

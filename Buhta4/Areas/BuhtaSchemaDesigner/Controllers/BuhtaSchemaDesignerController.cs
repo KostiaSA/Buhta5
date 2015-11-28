@@ -12,7 +12,7 @@ namespace Buhta
         // GET: BuhtaSchemaDesigner/BuhtaSchemaDesigner
         public ActionResult Index()
         {
-            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml", new BuhtaSchemaDesignerModel(this));
+            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml", new BuhtaSchemaDesignerModel(this, null));
         }
 
         //public ActionResult SchemaTableDesigner()
@@ -23,7 +23,7 @@ namespace Buhta
 
         public ActionResult SchemaTableDesigner(string ID)
         {
-            var model = new SchemaTableDesignerModel(this);
+            var model = new SchemaTableDesignerModel(this, null);
             model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
 
             return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml", model);

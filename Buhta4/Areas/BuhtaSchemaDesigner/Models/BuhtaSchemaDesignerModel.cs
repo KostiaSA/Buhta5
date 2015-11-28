@@ -17,7 +17,7 @@ namespace Buhta
         public ObservableCollection<string> SelectedRows { get; set; }
 
 
-        public BuhtaSchemaDesignerModel(Controller controller) : base(controller) {
+        public BuhtaSchemaDesignerModel(Controller controller, BaseModel parentModel) : base(controller,parentModel) {
             SelectedRows = new ObservableCollection<string>();
             SelectedRows.CollectionChanged += SelectedRows_CollectionChanged;
         }

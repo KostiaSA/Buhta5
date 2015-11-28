@@ -10,7 +10,7 @@ namespace Buhta
     {
         public SchemaTable Table { get { return EditedObject; } }
 
-        public SchemaTableEditModel(Controller controller) : base(controller) { }
+        public SchemaTableEditModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
         public void CloseColumnEditor(dynamic args)
         {
@@ -19,7 +19,7 @@ namespace Buhta
 
         public void EditFirstColumnButtonClick(dynamic args)
         {
-            var model = new SchemaTableColumnEditModel(Controller);
+            var model = new SchemaTableColumnEditModel(Controller,this);
             model.Column = Table.Columns[0];
 
             //var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает

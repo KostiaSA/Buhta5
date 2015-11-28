@@ -14,7 +14,9 @@ namespace Buhta
 {
     public class BaseModel : ObservableObject
     {
+        public BaseModel ParentModel;
         public Controller Controller;
+        public bsModal Modal;  // если это модель диалога
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
@@ -43,14 +45,19 @@ namespace Buhta
             BindedBinders[binderId].ModelSetMethod(value);
         }
 
-        public BaseModel(Controller controller)
+        public BaseModel(Controller controller, BaseModel parentModel)
         {
             Controller = controller;
+            ParentModel = parentModel;
         }
 
         public virtual string PageTitle { get { return "PageTitle"; } }
 
         public void UpdateNewNew()
+        {
+        }
+
+        public void Update()
         {
             var toSend = new StringBuilder();
 
@@ -70,56 +77,8 @@ namespace Buhta
                 Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
                 //Debug.Print(toSend.ToString());
             }
-        }
-
-        public void UpdateNew()
-        {
-            var toSend = new Dictionary<string, string>();
-
-            foreach (var binder in OldBindedBinders.ToList())
-            {
-                if (!toSend.ContainsKey(binder.PropertyName))
-                {
-                    // var newText = GetPropertyDisplayText(binder);
-                    var newText = binder.GetDisplayText();
-                    if (binder.LastSendedText != newText)
-                    {
-                        toSend.Add(binder.PropertyName, newText);
-                        binder.LastSendedText = newText;
-                    }
-                }
-            }
-
-            if (toSend.Keys.Count > 0)
-                Hub.Clients.Group(BindingId).receiveBindedValuesChanged(BindingId, toSend);
-        }
-
-        public void Update()
-        {
-            UpdateNewNew();
-            UpdateNew();
-
-            var toSend = new Dictionary<string, object>();
-            foreach (var KeyVP in BindedProps.ToList())
-            {
-                var propName = KeyVP.Key;
-                var oldValue = KeyVP.Value;
-
-                if (oldValue is IEnumerable<object> ||
-                    oldValue is DataView)
-                    continue;
-
-
-                var newValue = GetPropertyValue(propName);
-                if (oldValue.AsJavaScript() != newValue.AsJavaScript())
-                    toSend.Add(propName, newValue);
-            }
-
-            foreach (var KeyVP in toSend)
-                BindedProps[KeyVP.Key] = KeyVP.Value;
-
-            if (toSend.Keys.Count > 0)
-                Hub.Clients.Group(BindingId).receiveBindedValuesChanged(BindingId, toSend);
+            if (ParentModel != null)
+                ParentModel.Update();
         }
 
         public void ExecuteJavaScript(string script)
@@ -426,6 +385,7 @@ namespace Buhta
             modal.Controller = Controller;
             modal.ViewName = viewName;
             modal.ViewModel = model;
+            model.Modal = modal;
             return modal;
         }
 

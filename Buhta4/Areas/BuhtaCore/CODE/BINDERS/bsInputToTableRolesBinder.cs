@@ -17,22 +17,16 @@ namespace Buhta
 
         public void SelectButtonClick(dynamic args)
         {
-            var model = new SelectSchemaRolesDialogModel(Control.Model.Controller);
 
             var selectedList = Control.Model.GetPropertyValue(ModelPropertyName);
             if (selectedList is ObservableCollection<Guid>)
             {
-                foreach (var roleID in (selectedList as ObservableCollection<Guid>))
-                {
-                    model.SelectedRows.Add(roleID);
-                }
-                model.NeedSave = false;
+                var model = new SelectSchemaRolesDialogModel(Control.Model.Controller, Control.Model, selectedList as ObservableCollection<Guid>);
+                var modal = Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", model);
+                modal.Show();
             }
             else
                 throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'ObservableCollection<Guid>'");
-
-            var modal =Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", model);
-            modal.Show();
         }
 
         public override string GetJsForSettingProperty()
@@ -47,7 +41,7 @@ namespace Buhta
                     if (SchemaBaseRole.Roles.ContainsKey(roleID) && SchemaBaseRole.Roles[roleID] is Таблица_TableRole)
                         list.Add(SchemaBaseRole.Roles[roleID] as Таблица_TableRole);
                     else
-                        errorStr += ", ?ошибка";
+                        errorStr += ", ?"+ roleID.ToString().Substring(0,6);
                 }
                 var sb = new StringBuilder();
                 foreach (var tableRole in from role in list orderby role.Position, role.Name select role)

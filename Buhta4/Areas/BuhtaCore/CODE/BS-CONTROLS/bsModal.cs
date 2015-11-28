@@ -16,6 +16,11 @@ namespace Buhta
 
         public string OnClose_Bind;
 
+        public void Close()
+        {
+            ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript("$('#" + UniqueId + "').modal('hide');");
+        }
+
         public void Show()
         {
             var windowHtml = R.RenderViewToString(Controller, ViewName, ViewModel);
@@ -31,6 +36,7 @@ namespace Buhta
 
             script.Append("docReady = function(callback) { callback() };");
             script.Append("var modal = $(" + windowHtml.AsJavaScript() + ");");
+            script.Append("modal.attr('id','" + UniqueId + "');");
             script.Append("$('body').append(modal);");
             script.Append("modal.modal(" + init.AsJavaScript() + ");");
 
@@ -46,6 +52,20 @@ namespace Buhta
             ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript(script.ToString());
 
         }
+
+        string uniqueId;
+        public string UniqueId
+        {
+            get
+            {
+                if (uniqueId == null)
+                {
+                    uniqueId = "modal" + Guid.NewGuid().ToString().Substring(0, 8);
+                }
+                return uniqueId;
+            }
+        }
+
 
     }
 }

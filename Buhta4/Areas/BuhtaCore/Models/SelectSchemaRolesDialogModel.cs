@@ -12,16 +12,27 @@ namespace Buhta
     public class SelectSchemaRolesDialogModel : BaseModel
     {
         public bool NeedSave;
-
-        public SelectSchemaRolesDialogModel(Controller controller) : base(controller)
+        ObservableCollection<Guid> EditedList;
+        public SelectSchemaRolesDialogModel(Controller controller, BaseModel parentModel, ObservableCollection<Guid> editedList) : base(controller, parentModel)
         {
             SelectedRows = new ObservableCollection<Guid>();
             SelectedRows.CollectionChanged += SelectedRows_CollectionChanged;
+
+            EditedList = editedList;
+
+            foreach (var roleID in editedList)
+                SelectedRows.Add(roleID);
+
+            NeedSave = false;
+
         }
 
         public void OkButtonClick(dynamic args)
         {
-            //EditedObject.Save;
+            EditedList.Clear();
+            foreach (var roleID in SelectedRows)
+                EditedList.Add(roleID);
+            Modal.Close();
         }
 
         public void CancelButtonClick(dynamic args)
