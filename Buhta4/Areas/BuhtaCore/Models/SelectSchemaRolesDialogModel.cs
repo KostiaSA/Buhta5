@@ -12,16 +12,12 @@ namespace Buhta
     public class SelectSchemaRolesDialogModel : BaseModel
     {
         public bool NeedSave;
-        //public T EditedObject { get; set; }
 
         public SelectSchemaRolesDialogModel(Controller controller) : base(controller)
         {
             SelectedRows = new ObservableCollection<Guid>();
             SelectedRows.CollectionChanged += SelectedRows_CollectionChanged;
         }
-
-
-        //public bool OkButtonDisabled { get { return !NeedSave; } }
 
         public void OkButtonClick(dynamic args)
         {
@@ -31,6 +27,22 @@ namespace Buhta
         public void CancelButtonClick(dynamic args)
         {
             //EditedObject.Save;
+        }
+
+        public void RowSelect(dynamic args)
+        {
+            Guid id = Guid.Parse(args.rowId.Value);
+
+            if (args.isSelected.Value)
+            {
+                if (!SelectedRows.Contains(id))
+                    SelectedRows.Add(id);
+            }
+            else
+            {
+                if (SelectedRows.Contains(id))
+                    SelectedRows.Remove(id);
+            }
         }
 
         public ObservableCollection<Guid> SelectedRows { get; set; }
@@ -43,36 +55,5 @@ namespace Buhta
         }
 
 
-        //        public DataView SchemaObjectList
-        //        {
-        //            get
-        //            {
-
-        //                using (var db = App.Schema.GetMetadataDbManager())
-        //                {
-        //                    db.SetCommand(
-        //@"
-        //SELECT [ID]
-        //      ,[ParentObjectID]
-        //      ,[Name]
-        //      ,[RootClass]
-        //      ,[RootType]
-        //      ,[CreateDateTime]
-        //      ,[UpdateDateTime]
-        //      ,[CreateUser]
-        //      ,[UpdateUser]
-        //      ,[LockedByUser]
-        //      ,[LockDateTime]
-        //      ,'Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__TreeGridIcon__]
-        //      ,'Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
-        //  FROM [SchemaObject]
-        //");
-        //                    //SelectedRows.Add("84ff8c4c-2c17-4af8-a2a1-02c958bd75bf");
-
-        //                    var objs = db.ExecuteDataTable();
-        //                    return objs.AsDataView();
-        //                }
-        //            }
-        //        }
     }
 }

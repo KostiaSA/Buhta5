@@ -44,8 +44,9 @@
 
        //tree.Bind_DataSource_To_SqlDataView(nameof(Model.SchemaObjectList), "Name", "ID", "ParentObjectID", null, nameof(Model.SelectedRows));
        tree.Bind_DataSource_To_ToSchemaRoles(nameof(Model.SelectedRows));
+       tree.Bind_OnRowSelect(Model.RowSelect);
 
-       tree.SelectedRows_Bind = nameof(Model.SelectedRows);
+       //tree.SelectedRows_Bind = nameof(Model.SelectedRows);
 
        //tree.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
 

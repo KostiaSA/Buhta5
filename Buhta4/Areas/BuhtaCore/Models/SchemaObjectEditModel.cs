@@ -19,7 +19,7 @@ namespace Buhta
 
         public bool SaveButtonDisabled { get { return NeedSave; } }
 
-        public override void SaveButtonClick( dynamic args)
+        public void SaveButtonClick( dynamic args)
         {
             //EditedObject.Save;
         }

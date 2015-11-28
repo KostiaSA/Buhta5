@@ -436,17 +436,17 @@ namespace Buhta
 
         //}
 
-        public virtual void SaveButtonClick(dynamic args)
-        {
+        //public virtual void SaveButtonClick(dynamic args)
+        //{
 
 
-        }
+        //}
 
-        public virtual void CancelButtonClick(dynamic args)
-        {
+        //public virtual void CancelButtonClick(dynamic args)
+        //{
 
 
-        }
+        //}
 
     }
 }

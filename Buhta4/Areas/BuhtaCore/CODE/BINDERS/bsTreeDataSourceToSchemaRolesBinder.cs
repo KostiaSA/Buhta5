@@ -24,6 +24,7 @@ namespace Buhta
         {
             var node = new JsObject();
             node.AddProperty("title", "жопа");
+            node.AddProperty("key", role.ID);
             node.AddProperty("expanded", true);
 
             if (selectedRows!=null && selectedRows.Contains(role.ID))

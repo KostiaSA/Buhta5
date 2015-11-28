@@ -6,27 +6,27 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class RolesTreeGridModel : BaseModel
-    {
+    //public class RolesTreeGridModel : BaseModel
+    //{
 
-        public RolesTreeGridModel(Controller controller) : base(controller) { }
+    //    public RolesTreeGridModel(Controller controller) : base(controller) { }
 
-        public Type RootRoleType;
-        public List<SchemaBaseRole> RolesList
-        {
-            get
-            {
-                if (RootRoleType != null)
-                    return SchemaBaseRole.Roles.Values.Where((role=> role.GetType()==RootRoleType || role.GetType().IsSubclassOf(RootRoleType))).ToList();
-                else
-                    return SchemaBaseRole.Roles.Values.ToList();
-            }
-        }
+    //    public Type RootRoleType;
+    //    public List<SchemaBaseRole> RolesList
+    //    {
+    //        get
+    //        {
+    //            if (RootRoleType != null)
+    //                return SchemaBaseRole.Roles.Values.Where((role=> role.GetType()==RootRoleType || role.GetType().IsSubclassOf(RootRoleType))).ToList();
+    //            else
+    //                return SchemaBaseRole.Roles.Values.ToList();
+    //        }
+    //    }
 
-        public void _______ButtonClick(dynamic args)
-        {
+    //    public void _______ButtonClick(dynamic args)
+    //    {
 
-        }
+    //    }
 
-    }
+    //}
 }

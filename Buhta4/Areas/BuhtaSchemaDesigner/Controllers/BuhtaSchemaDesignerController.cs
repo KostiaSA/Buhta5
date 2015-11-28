@@ -29,11 +29,5 @@ namespace Buhta
             return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml", model);
         }
 
-        public ActionResult RolesTreeGrid()
-        {
-            var model = new RolesTreeGridModel(this);
-            model.RootRoleType = typeof(Таблица_TableRole);
-            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\RolesTreeGrid.cshtml", model);
-        }
     }
 }

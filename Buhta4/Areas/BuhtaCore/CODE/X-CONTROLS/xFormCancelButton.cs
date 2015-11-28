@@ -37,8 +37,8 @@ namespace Buhta
             if (Settings.Text == null)
                 Settings.Text = "Отмена";
 
-            if (Settings.OnClick_Bind == null)
-                Settings.OnClick_Bind = nameof(Model.CancelButtonClick);
+            //if (Settings.OnClick_Bind == null)
+            //    Settings.OnClick_Bind = nameof(Model.CancelButtonClick);
 
             return base.GetHtml();
         }

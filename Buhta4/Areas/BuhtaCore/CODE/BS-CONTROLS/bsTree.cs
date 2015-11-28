@@ -29,22 +29,22 @@ namespace Buhta
     {
         public bsTree(BaseModel model) : base(model) { }
 
-        public bool? Disabled;
-        public string Disabled_Bind;
+        //public bool? Disabled;
+        //public string Disabled_Bind;
 
-        public string Text = "";
-        public string Text_Bind;
+        //public string Text = "";
+        //public string Text_Bind;
 
         public bool IsShowCheckboxes;
         public bool IsShowIcons;
 
         public BaseAction ClickAction;
 
-        public string OnRowClick_Bind;
-        public string OnRowDoubleClick_Bind;
-        public string OnRowActivate_Bind;
+        //public string OnRowClick_Bind;
+        //public string OnRowDoubleClick_Bind;
+        //public string OnRowActivate_Bind;
 
-        public string SelectedRows_Bind;
+        //public string SelectedRows_Bind;
 
         public bsTreeSize Size = bsTreeSize.Default;
 
@@ -93,17 +93,72 @@ namespace Buhta
             columns.Add(col);
         }
 
-        public void EmitRowEvent_BindFunction(string modelMethodName, bool isIgnoreForFolder = false)
+        public void Bind_OnRowClick(string modelEventMethodName)
         {
-            Script.AppendLine("var " + modelMethodName + "=function(event, data) {");
-            if (isIgnoreForFolder)
-                Script.AppendLine("  if (!data.node.children) {");
-            Script.AppendLine("    var _args={rowId:data.node.key, tagId:event.target.id};");
-            Script.AppendLine("    bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', _args );");
-            if (isIgnoreForFolder)
-                Script.AppendLine("  }");
-            Script.AppendLine("}");
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "click"
+            });
         }
+
+        public void Bind_OnRowClick(BinderEventMethod eventMethod)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "click"
+            });
+        }
+
+        public void Bind_OnRowDblClick(string modelEventMethodName)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "dblclick"
+            });
+        }
+
+        public void Bind_OnRowDblClick(BinderEventMethod eventMethod)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "dblclick"
+            });
+        }
+
+        public void Bind_OnRowSelect(string modelEventMethodName)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "select"
+            });
+        }
+
+        public void Bind_OnRowSelect(BinderEventMethod eventMethod)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "select"
+            });
+        }
+
+
+        //public void EmitRowEvent_BindFunction(string modelMethodName, bool isIgnoreForFolder = false)
+        //{
+        //    Script.AppendLine("var " + modelMethodName + "=function(event, data) {");
+        //    if (isIgnoreForFolder)
+        //        Script.AppendLine("  if (!data.node.children) {");
+        //    Script.AppendLine("    var _args={rowId:data.node.key, tagId:event.target.id};");
+        //    Script.AppendLine("    bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', _args );");
+        //    if (isIgnoreForFolder)
+        //        Script.AppendLine("  }");
+        //    Script.AppendLine("}");
+        //}
 
         public override string GetHtml()
         {
@@ -140,18 +195,18 @@ namespace Buhta
 
             //}
 
-            if (OnRowDoubleClick_Bind != null)
-            {
-                EmitRowEvent_BindFunction(OnRowDoubleClick_Bind, true);
-                init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
-            }
+            //if (OnRowDoubleClick_Bind != null)
+            //{
+            //    EmitRowEvent_BindFunction(OnRowDoubleClick_Bind, true);
+            //    init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
+            //}
 
 
-            if (OnRowActivate_Bind != null)
-            {
-                EmitRowEvent_BindFunction(OnRowActivate_Bind);
-                init.AddRawProperty("activate", OnRowActivate_Bind);
-            }
+            //if (OnRowActivate_Bind != null)
+            //{
+            //    EmitRowEvent_BindFunction(OnRowActivate_Bind);
+            //    init.AddRawProperty("activate", OnRowActivate_Bind);
+            //}
 
 
             Script.AppendLine("var renderColumns=function(event, data) {");

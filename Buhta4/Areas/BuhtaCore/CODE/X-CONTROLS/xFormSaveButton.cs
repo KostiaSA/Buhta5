@@ -37,8 +37,8 @@ namespace Buhta
             if (Settings.Text == null)
                 Settings.Text = "Сохранить";
 
-            if (Settings.OnClick_Bind == null)
-                Settings.OnClick_Bind = nameof(Model.SaveButtonClick);
+            //if (Settings.OnClick_Bind == null)
+            //    Settings.OnClick_Bind = nameof(Model.SaveButtonClick);
 
             return base.GetHtml();
         }
