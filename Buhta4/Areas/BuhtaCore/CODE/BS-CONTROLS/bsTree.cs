@@ -12,7 +12,7 @@ namespace Buhta
 {
     public static partial class HtmlHelperExtensions
     {
-        public static MvcHtmlString bsNewTree(this HtmlHelper helper, Action<bsTree> settings)
+        public static MvcHtmlString bsTree(this HtmlHelper helper, Action<bsTree> settings)
         {
             var Settings = new bsTree(helper.ViewData.Model as BaseModel);
             settings(Settings);

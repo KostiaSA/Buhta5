@@ -7,14 +7,14 @@
         <h4 class="modal-title">Выберите роли</h4>
     </div>
     <div class="modal-body">
-        @Html.bsNewTree(tree =>
+        @Html.bsTree(tree =>
    {
        tree.AddColumn(c =>
        {
            c.Caption = "Роль";
            c.Field_Bind = nameof(SchemaBaseRole.Name);
            c.CellTemplateJS = @"
-             if (row.node.isSelected()) 
+             if (row.node.isSelected())
                row._fontWeight='bold';
              else
               row._fontWeight='normal';
@@ -29,25 +29,11 @@
 
        });
 
-       //tree.AddColumn(c =>
-       //{
-       //    c.Caption = "ID";
-       //    c.Field_Bind = "ID";
-       //    c.CellTemplate = "<small style='opacity:0.3'>{{ID}}, {{RootClass}}</small>";
-
-       //});
-
-       //tree.Bind_DataSource_To_SqlDataView(nameof(Model.SchemaObjectList), "Name", "ID", "ParentObjectID", null, nameof(Model.SelectedRows));
        tree.Bind_DataSource_To_ToSchemaRoles(nameof(Model.SelectedRows));
        tree.Bind_OnRowSelect(Model.RowSelect);
 
-       //tree.SelectedRows_Bind = nameof(Model.SelectedRows);
-
-       //tree.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
-
-       //tree.OnRowActivate_Bind = nameof(Model.OnRowActivate);
-
    })
+
     </div>
     <div class="modal-footer">
         @Html.bsButton(button =>

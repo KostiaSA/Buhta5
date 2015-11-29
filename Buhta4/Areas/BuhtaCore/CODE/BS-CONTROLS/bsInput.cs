@@ -53,7 +53,7 @@ namespace Buhta
         {
             Type = bsInputType.Checkbox;
 
-            AddBinder(new CommonBinder<Boolean>()
+            AddBinder(new TwoWayBinder()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "prop",
@@ -65,53 +65,47 @@ namespace Buhta
             });
         }
 
-        public void Bind_Value_To_Boolean(BinderGetMethod<Boolean> getValueMethod)
+        public void Bind_Value_To_Boolean(BinderGetMethod getValueMethod)
         {
             Bind_Value_To_Boolean(getValueMethod, null);
         }
 
-        public void Bind_Value_To_Boolean(BinderGetMethod<Boolean> getValueMethod, BinderSetMethod setValueMethod)
+        public void Bind_Value_To_Boolean(BinderGetMethod getValueMethod, BinderSetMethod setValueMethod)
         {
             Type = bsInputType.Checkbox;
 
-            var binder = new CommonBinder<Boolean>();
+            var binder = new TwoWayBinder();
 
             AddBinder(binder);
 
             binder.ModelGetMethod = getValueMethod;
             binder.jsSetMethodName = "prop";
             binder.jsSetPropertyName = "checked";
-            if (setValueMethod != null)
-            {
-                binder.Is2WayBinding = true;
-                binder.jsOnChangeEventName = "change";
-                binder.jsGetMethodName = "prop";
-                binder.jsGetPropertyName = "checked";
-            }
+            binder.Is2WayBinding = true;
+            binder.jsOnChangeEventName = "change";
+            binder.jsGetMethodName = "prop";
+            binder.jsGetPropertyName = "checked";
         }
 
 
-        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod)
+        public void Bind_Value_To_String(BinderGetMethod getValueMethod)
         {
             Bind_Value_To_String(getValueMethod, null);
         }
 
-        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod, BinderSetMethod setValueMethod)
+        public void Bind_Value_To_String(BinderGetMethod getValueMethod, BinderSetMethod setValueMethod)
         {
             Type = bsInputType.Text;
 
-            var binder = new CommonBinder<string>();
+            var binder = new TwoWayBinder();
 
             binder.ModelGetMethod = getValueMethod;
             binder.jsSetMethodName = "val";
 
-            if (setValueMethod != null)
-            {
-                binder.Is2WayBinding = true;
-                binder.jsOnChangeEventName = "change";
-                binder.jsGetMethodName = "val";
-                binder.ModelSetMethod = setValueMethod;
-            }
+            binder.Is2WayBinding = true;
+            binder.jsOnChangeEventName = "change";
+            binder.jsGetMethodName = "val";
+            binder.ModelSetMethod = setValueMethod;
 
             AddBinder(binder);
         }
@@ -121,7 +115,7 @@ namespace Buhta
         {
             Type = bsInputType.Text;
 
-            AddBinder(new CommonBinder<string>()
+            AddBinder(new TwoWayBinder()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "val",

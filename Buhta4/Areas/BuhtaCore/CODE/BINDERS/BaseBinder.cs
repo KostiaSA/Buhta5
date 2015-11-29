@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public delegate T BinderGetMethod<T>();
+    public delegate object BinderGetMethod();
     public delegate void BinderSetMethod(string value);
     public delegate void BinderEventMethod(dynamic args);
 
@@ -30,13 +30,13 @@ namespace Buhta
 
         public bsControl Control;
 
-        public abstract BinderEventMethod ModelEventMethod { get; set; }
-        public abstract BinderSetMethod ModelSetMethod { get; set; }
+        //public abstract BinderEventMethod ModelEventMethod { get; set; }
+        //public abstract BinderSetMethod ModelSetMethod { get; set; }
 
-        public bool IsEventBinding;
-        public abstract string GetJsForSettingProperty();
+        //public bool IsEventBinding;
+        //public abstract string GetJsForSettingProperty();
 
-        public string LastSendedText;
+        //public string LastSendedText;
 
     }
 

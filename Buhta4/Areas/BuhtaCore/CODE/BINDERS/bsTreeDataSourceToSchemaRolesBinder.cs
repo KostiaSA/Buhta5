@@ -9,15 +9,15 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsTreeDataSourceToSchemaRolesBinder : BaseBinder
+    public class bsTreeDataSourceToSchemaRolesBinder : OneWayBinder
     {
         public string SelectedRowsModelPropertyName;
 
         public bsTree Tree;
 
 
-        public override BinderEventMethod ModelEventMethod { get; set; }
-        public override BinderSetMethod ModelSetMethod { get; set; }
+        //public override BinderEventMethod ModelEventMethod { get; set; }
+        //public override BinderSetMethod ModelSetMethod { get; set; }
 
 
         void AddRoleNode(jsArray nodeList, SchemaBaseRole role)
@@ -73,12 +73,12 @@ namespace Buhta
 
         }
 
-        public override void EmitBindingScript(StringBuilder script)
-        {
-            Control.Model.RegisterBinder(this);
-            LastSendedText = GetJsForSettingProperty();
-            script.AppendLine(LastSendedText);
-        }
+        //public override void EmitBindingScript(StringBuilder script)
+        //{
+        //    Control.Model.RegisterBinder(this);
+        //    LastSendedText = GetJsForSettingProperty();
+        //    script.AppendLine(LastSendedText);
+        //}
 
     }
 

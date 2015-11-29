@@ -48,16 +48,16 @@ namespace Buhta
 
         public void Bind_Text(string modelPropertyName)
         {
-            AddBinder(new CommonBinder<string>()
+            AddBinder(new OneWayBinder()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "text"
             });
         }
 
-        public void Bind_Text(BinderGetMethod<string> getValueMethod)
+        public void Bind_Text(BinderGetMethod getValueMethod)
         {
-            AddBinder(new CommonBinder<string>()
+            AddBinder(new OneWayBinder()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "text"
@@ -66,7 +66,7 @@ namespace Buhta
 
         public void Bind_Disabled(string modelPropertyName)
         {
-            AddBinder(new CommonBinder<string>()
+            AddBinder(new OneWayBinder()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "prop",
@@ -74,9 +74,9 @@ namespace Buhta
             });
         }
 
-        public void Bind_Disabled(BinderGetMethod<Boolean> getValueMethod)
+        public void Bind_Disabled(BinderGetMethod getValueMethod)
         {
-            AddBinder(new CommonBinder<Boolean>()
+            AddBinder(new OneWayBinder()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "prop",
@@ -86,9 +86,8 @@ namespace Buhta
 
         public void Bind_OnClick(string modelEventMethodName)
         {
-            AddBinder(new CommonBinder<string>()
+            AddBinder(new EventBinder()
             {
-                IsEventBinding=true,
                 ModelEventMethodName = modelEventMethodName,
                 jsEventName = "click"
             });
@@ -96,9 +95,8 @@ namespace Buhta
 
         public void Bind_OnClick(BinderEventMethod eventMethod)
         {
-            AddBinder(new CommonBinder<string>()
+            AddBinder(new EventBinder()
             {
-                IsEventBinding = true,
                 ModelEventMethod = eventMethod,
                 jsEventName = "click"
             });

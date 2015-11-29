@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsTreeDataSourceToSqlDataViewBinder : BaseBinder
+    public class bsTreeDataSourceToSqlDataViewBinder : OneWayBinder
     {
         public string DatasourceModelPropertyName;
 
@@ -22,8 +22,8 @@ namespace Buhta
         public bsTree Tree;
 
 
-        public override BinderEventMethod ModelEventMethod { get; set; }
-        public override BinderSetMethod ModelSetMethod { get; set; }
+        //public override BinderEventMethod ModelEventMethod { get; set; }
+        //public override BinderSetMethod ModelSetMethod { get; set; }
 
 
         ObservableCollection<string> selectedRows;
@@ -118,12 +118,12 @@ namespace Buhta
             //    throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'IEnumerable<Guid>'");
         }
 
-        public override void EmitBindingScript(StringBuilder script)
-        {
-            Control.Model.RegisterBinder(this);
-            LastSendedText = GetJsForSettingProperty();
-            script.AppendLine(LastSendedText);
-        }
+        //public override void EmitBindingScript(StringBuilder script)
+        //{
+        //    Control.Model.RegisterBinder(this);
+        //    LastSendedText = GetJsForSettingProperty();
+        //    script.AppendLine(LastSendedText);
+        //}
 
     }
 

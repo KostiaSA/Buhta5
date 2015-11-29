@@ -37,12 +37,12 @@ namespace Buhta
 
         public void BinderCallEvent(string binderId, dynamic args)
         {
-            BindedBinders[binderId].ModelEventMethod(args);
+            (BindedBinders[binderId] as EventBinder).ModelEventMethod(args);
         }
 
         public void BinderSetValue(string binderId, string value)
         {
-            BindedBinders[binderId].ModelSetMethod(value);
+            (BindedBinders[binderId] as TwoWayBinder).ModelSetMethod(value);
         }
 
         public BaseModel(Controller controller, BaseModel parentModel)
@@ -63,12 +63,22 @@ namespace Buhta
 
             foreach (var binder in BindedBinders.Values.ToList())
             {
-                if (binder.IsEventBinding) continue;
-                var newText = binder.GetJsForSettingProperty();
-                if (binder.LastSendedText != newText)
+                //if (binder.IsEventBinding) continue;
+                //var newText = binder.GetJsForSettingProperty();
+                //if (binder.LastSendedText != newText)
+                //{
+                //    toSend.AppendLine(newText);
+                //    binder.LastSendedText = newText;
+                //}
+                if (binder is OneWayBinder)
                 {
-                    toSend.AppendLine(newText);
-                    binder.LastSendedText = newText;
+                    var b = binder as OneWayBinder;
+                    var newText = b.GetJsForSettingProperty();
+                    if (b.LastSendedText != newText)
+                    {
+                        toSend.AppendLine(newText);
+                        b.LastSendedText = newText;
+                    }
                 }
             }
 

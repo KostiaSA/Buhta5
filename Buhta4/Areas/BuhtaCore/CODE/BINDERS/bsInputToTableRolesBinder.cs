@@ -8,12 +8,12 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsInputToTableRolesBinder : BaseBinder
+    public class bsInputToTableRolesBinder : OneWayBinder
     {
-        public string ModelPropertyName;
+        //public string ModelPropertyName;
 
-        public override BinderEventMethod ModelEventMethod { get; set; }
-        public override BinderSetMethod ModelSetMethod { get; set; }
+        //public override BinderEventMethod ModelEventMethod { get; set; }
+        //public override BinderSetMethod ModelSetMethod { get; set; }
 
         public void SelectButtonClick(dynamic args)
         {
