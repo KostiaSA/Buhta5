@@ -111,19 +111,21 @@ namespace Buhta
             });
         }
 
-        public void Bind_OnRowDblClick(string modelEventMethodName)
+        public void Bind_OnRowDblClick(string modelEventMethodName, Boolean isIgnoreForFolder=true)
         {
             AddBinder(new bsTreeRowEventBinder()
             {
+                isIgnoreForFolder = isIgnoreForFolder,
                 ModelEventMethodName = modelEventMethodName,
                 jsEventName = "dblclick"
             });
         }
 
-        public void Bind_OnRowDblClick(BinderEventMethod eventMethod)
+        public void Bind_OnRowDblClick(BinderEventMethod eventMethod, Boolean isIgnoreForFolder = true)
         {
             AddBinder(new bsTreeRowEventBinder()
             {
+                isIgnoreForFolder= isIgnoreForFolder,
                 ModelEventMethod = eventMethod,
                 jsEventName = "dblclick"
             });

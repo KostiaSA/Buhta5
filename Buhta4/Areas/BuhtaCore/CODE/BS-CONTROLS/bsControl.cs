@@ -185,24 +185,24 @@ namespace Buhta
 
         }
 
-        public void EmitProperty_Bind2Way_Checked(StringBuilder script, OldBaseBinder binder, string jqxEventName)
-        {
-            if (binder != null)
-            {
-                Model.OldRegisterBinder(binder);
-                binder.LastSendedText = Model.GetPropertyDisplayText(binder);
-                script.AppendLine("$('#" + UniqueId + "').prop('checked'," + binder.LastSendedText + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
-                script.AppendLine("    $('#" + UniqueId + "').prop('checked',newValue==='true');");
-                script.AppendLine("});");
+        //public void EmitProperty_Bind2Way_Checked(StringBuilder script, OldBaseBinder binder, string jqxEventName)
+        //{
+        //    if (binder != null)
+        //    {
+        //        Model.OldRegisterBinder(binder);
+        //        binder.LastSendedText = Model.GetPropertyDisplayText(binder);
+        //        script.AppendLine("$('#" + UniqueId + "').prop('checked'," + binder.LastSendedText + ");");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',function(newValue){");
+        //        script.AppendLine("    $('#" + UniqueId + "').prop('checked',newValue==='true');");
+        //        script.AppendLine("});");
 
-                script.AppendLine("$('#" + UniqueId + "').on('" + jqxEventName + "', function () {");
-                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',$('#" + UniqueId + "').prop('checked')); ");
-                script.AppendLine("}); ");
+        //        script.AppendLine("$('#" + UniqueId + "').on('" + jqxEventName + "', function () {");
+        //        script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + binder.PropertyName + "',$('#" + UniqueId + "').prop('checked')); ");
+        //        script.AppendLine("}); ");
 
-            }
+        //    }
 
-        }
+        //}
 
         //public void EmitProperty_StringBinder(StringBuilder script, StringBinder binder, string jqxMethodName)
         //{

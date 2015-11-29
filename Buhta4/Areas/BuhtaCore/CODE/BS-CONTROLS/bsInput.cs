@@ -147,7 +147,7 @@ namespace Buhta
 
         public string Image;
 
-        public OldBaseBinder Lookup;
+        //public OldBaseBinder Lookup;
 
 
         public bsInputSize Size = bsInputSize.Default;
@@ -160,24 +160,24 @@ namespace Buhta
             return value.ToString();
         }
 
-        object ParseDisplayText(string text)
-        {
-            if (Lookup != null)
-                return Lookup.ParseDisplayText(text);
-            else
-            {
-                if (ValueType == typeof(String))
-                    return text;
-                else
-                if (ValueType == typeof(int))
-                    return int.Parse(text);
-                else
-                if (ValueType == typeof(Decimal))
-                    return Decimal.Parse(text);
-                else
-                    return nameof(ParseDisplayText) + ": неизвестный тип '" + ValueType.FullName + "'";
-            }
-        }
+        //object ParseDisplayText(string text)
+        //{
+        //    if (Lookup != null)
+        //        return Lookup.ParseDisplayText(text);
+        //    else
+        //    {
+        //        if (ValueType == typeof(String))
+        //            return text;
+        //        else
+        //        if (ValueType == typeof(int))
+        //            return int.Parse(text);
+        //        else
+        //        if (ValueType == typeof(Decimal))
+        //            return Decimal.Parse(text);
+        //        else
+        //            return nameof(ParseDisplayText) + ": неизвестный тип '" + ValueType.FullName + "'";
+        //    }
+        //}
 
         public override string GetHtml()
         {

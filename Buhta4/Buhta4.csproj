@@ -166,16 +166,11 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OneWayBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputRolesListBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputValueListBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\old_bsTreeDataSourceToSqlDataViewBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBsTreeDataSourceBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\old_bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsInput.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsControl.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsButton.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OldBaseBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTreeColumn.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsModal.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\BindingHub.cs" />

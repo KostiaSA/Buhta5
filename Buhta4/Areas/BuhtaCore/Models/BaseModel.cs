@@ -20,15 +20,15 @@ namespace Buhta
         public HtmlHelper Helper;
         public BindingHub Hub;
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
-        List<OldBaseBinder> OldBindedBinders = new List<OldBaseBinder>();
+        //List<OldBaseBinder> OldBindedBinders = new List<OldBaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
         Dictionary<string, BaseBinder> BindedBinders = new Dictionary<string, BaseBinder>();
 
-        public void OldRegisterBinder(OldBaseBinder binder)
-        {
-            binder.Model = this;
-            OldBindedBinders.Add(binder);
-        }
+        //public void OldRegisterBinder(OldBaseBinder binder)
+        //{
+        //    binder.Model = this;
+        //    OldBindedBinders.Add(binder);
+        //}
 
         public void RegisterBinder(BaseBinder binder)
         {
@@ -275,10 +275,10 @@ namespace Buhta
             throw new Exception("У модели '" + this.GetType().FullName + "' свойство '" + propName + "' должно быть типа ''" + typeof(T).FullName + "'");
         }
 
-        public string GetPropertyDisplayText(OldBaseBinder binder)
-        {
-            return "binder.GetDisplayText(GetPropertyValue(binder.PropertyName))";
-        }
+        //public string GetPropertyDisplayText(OldBaseBinder binder)
+        //{
+        //    return "binder.GetDisplayText(GetPropertyValue(binder.PropertyName))";
+        //}
 
         //public ObservableObject GetPropertyObject(string propName)
         //{

@@ -32,7 +32,7 @@ namespace Buhta
         {
             var _view = Control.Model.GetPropertyValue(DatasourceModelPropertyName);
             if (!(_view is DataView))
-                throw new Exception(nameof(old_bsTreeDataSourceToSqlDataViewBinder) + ": свойство '" + DatasourceModelPropertyName + "' должно быть типа '" + nameof(DataView) + "'");
+                throw new Exception(nameof(bsTreeDataSourceToSqlDataViewBinder) + ": свойство '" + DatasourceModelPropertyName + "' должно быть типа '" + nameof(DataView) + "'");
             DataView dataView = (DataView)_view;
 
             if (SelectedRowsModelPropertyName != null)
