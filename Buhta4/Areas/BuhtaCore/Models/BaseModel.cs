@@ -63,21 +63,17 @@ namespace Buhta
 
             foreach (var binder in BindedBinders.Values.ToList())
             {
-                //if (binder.IsEventBinding) continue;
-                //var newText = binder.GetJsForSettingProperty();
-                //if (binder.LastSendedText != newText)
-                //{
-                //    toSend.AppendLine(newText);
-                //    binder.LastSendedText = newText;
-                //}
                 if (binder is OneWayBinder)
                 {
                     var b = binder as OneWayBinder;
-                    var newText = b.GetJsForSettingProperty();
-                    if (b.LastSendedText != newText)
+                    if (!b.IsNotAutoUpdate)
                     {
-                        toSend.AppendLine(newText);
-                        b.LastSendedText = newText;
+                        var newText = b.GetJsForSettingProperty();
+                        if (b.LastSendedText != newText)
+                        {
+                            toSend.AppendLine(newText);
+                            b.LastSendedText = newText;
+                        }
                     }
                 }
             }

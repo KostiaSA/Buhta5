@@ -30,14 +30,6 @@ namespace Buhta
 
         public bsControl Control;
 
-        //public abstract BinderEventMethod ModelEventMethod { get; set; }
-        //public abstract BinderSetMethod ModelSetMethod { get; set; }
-
-        //public bool IsEventBinding;
-        //public abstract string GetJsForSettingProperty();
-
-        //public string LastSendedText;
-
     }
 
 }

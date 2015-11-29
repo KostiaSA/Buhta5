@@ -15,10 +15,10 @@ namespace Buhta
 
         public bsTree Tree;
 
-
-        //public override BinderEventMethod ModelEventMethod { get; set; }
-        //public override BinderSetMethod ModelSetMethod { get; set; }
-
+        public bsTreeDataSourceToSchemaRolesBinder()
+        {
+            IsNotAutoUpdate = true;
+        }
 
         void AddRoleNode(jsArray nodeList, SchemaBaseRole role)
         {
@@ -72,13 +72,6 @@ namespace Buhta
             return "$('#" + Control.UniqueId + "').fancytree('option','source'," + jstree.ToJson() + ");";
 
         }
-
-        //public override void EmitBindingScript(StringBuilder script)
-        //{
-        //    Control.Model.RegisterBinder(this);
-        //    LastSendedText = GetJsForSettingProperty();
-        //    script.AppendLine(LastSendedText);
-        //}
 
     }
 

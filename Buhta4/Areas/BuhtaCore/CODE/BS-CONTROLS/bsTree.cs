@@ -147,6 +147,23 @@ namespace Buhta
             });
         }
 
+        public void Bind_OnRowActivate(BinderEventMethod eventMethod)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "activate"
+            });
+        }
+
+        public void Bind_OnRowDeactivate(BinderEventMethod eventMethod)
+        {
+            AddBinder(new bsTreeRowEventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "deactivate"
+            });
+        }
 
         //public void EmitRowEvent_BindFunction(string modelMethodName, bool isIgnoreForFolder = false)
         //{

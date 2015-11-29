@@ -12,9 +12,8 @@ namespace Buhta
     {
 
         public string jsEventName;
-        public BinderEventMethod ModelEventMethod { get; set; }
         public string ModelEventMethodName;
-
+        public BinderEventMethod ModelEventMethod { get; set; }
 
         public override void EmitBindingScript(StringBuilder script)
         {

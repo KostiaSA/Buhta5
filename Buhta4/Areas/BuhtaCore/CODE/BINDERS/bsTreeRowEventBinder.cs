@@ -10,18 +10,7 @@ namespace Buhta
 
     public class bsTreeRowEventBinder : EventBinder
     {
-        //public string jsEventName;
-        //public override BinderEventMethod ModelEventMethod { get; set; }
-        //public string ModelEventMethodName;
         public bool isIgnoreForFolder;
-
-        //public override BinderSetMethod ModelSetMethod { get; set; }
-        //public override string GetJsForSettingProperty() { return ""; }
-
-        //public bsTreeRowEventBinder()
-        //{
-        //    IsEventBinding = true;
-        //}
 
         public override void EmitBindingScript(StringBuilder script)
         {

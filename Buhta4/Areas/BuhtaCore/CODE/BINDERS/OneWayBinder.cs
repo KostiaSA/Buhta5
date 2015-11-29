@@ -18,6 +18,8 @@ namespace Buhta
 
         public string LastSendedText;
 
+        public bool IsNotAutoUpdate;
+
         public virtual string GetJsForSettingProperty()
         {
             if (ModelGetMethod == null && ModelPropertyName == null)
@@ -57,10 +59,8 @@ namespace Buhta
         public override void EmitBindingScript(StringBuilder script)
         {
             Control.Model.RegisterBinder(this);
-
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
-
 
         }
 

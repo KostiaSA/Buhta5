@@ -91,7 +91,7 @@
     inp.Bind_Value_To_String(nameof(Model.TestProp1));
 })
 
-    @Html.bsTree1(tree =>
+    @Html.bsTree(tree =>
 {
 
     tree.AddColumn(c =>
@@ -135,21 +135,17 @@
         c.CellTemplate = "<small style='opacity:0.3'>{{ID}}, {{RootClass}}</small>";
 
     });
+    tree.Bind_DataSource_To_SqlDataView(
+        datasourceModelPropertyName:nameof(Model.SchemaObjectList),
+        displayFieldName:"Name",
+        keyFieldName: "ID",
+        parentFieldName : "ParentObjectID"
+    );
 
-    tree.DataSourceBinder = new old_bsTreeDataSourceToSqlDataViewBinder()
-    {
-        PropertyName = nameof(Model.SchemaObjectList),
-        DisplayFieldName = "Name",
-        KeyFieldName = "ID",
-        ParentFieldName = "ParentObjectID"
+    //tree.SelectedRows_Bind = nameof(Model.SelectedRows);
 
-    };
-
-    tree.SelectedRows_Bind = nameof(Model.SelectedRows);
-
-    tree.OnRowDoubleClick_Bind = nameof(Model.OnRowDoubleClick);
-    //tree.OnRowSelect_Bind = nameof(Model.OnRowSelect);
-    tree.OnRowActivate_Bind = nameof(Model.OnRowActivate);
+    tree.Bind_OnRowDblClick(Model.OnRowDoubleClick);
+    tree.Bind_OnRowActivate(Model.OnRowActivate);
 
 })
 </div>
