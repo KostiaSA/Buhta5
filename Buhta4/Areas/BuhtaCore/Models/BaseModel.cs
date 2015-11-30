@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -69,8 +70,10 @@ namespace Buhta
                     if (!b.IsNotAutoUpdate)
                     {
                         var newText = b.GetJsForSettingProperty();
+                        //Debug.WriteLine("newText: "+ newText);
                         if (b.LastSendedText != newText)
                         {
+                            //Debug.WriteLine("add ok");
                             toSend.AppendLine(newText);
                             b.LastSendedText = newText;
                         }
@@ -80,6 +83,7 @@ namespace Buhta
 
             if (toSend.Length > 0)
             {
+                Thread.Sleep(1); // не удалять, иначе все глючит !!!
                 Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
                 //Debug.Print(toSend.ToString());
             }
@@ -89,6 +93,7 @@ namespace Buhta
 
         public void ExecuteJavaScript(string script)
         {
+            Thread.Sleep(1); // не удалять, иначе все глючит !!!
             Hub.Clients.Group(BindingId).receiveScript(script);
         }
 
@@ -176,6 +181,7 @@ namespace Buhta
             else
                 throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
 
+            Thread.Sleep(1); // не удалять, иначе все глючит !!!
             Hub.Clients.Group(BindingId).receiveBindedValueChanged(BindingId, propName, toSend);
 
             if (BindedCollections.ContainsKey(propName + "\t" + fieldNames))

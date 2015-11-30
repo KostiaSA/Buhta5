@@ -42,7 +42,7 @@
 
                 @Html.bsButton(s =>
                {
-                   s.OnClick_Bind = nameof(Model.OnChangeButtonClick);
+                   s.Bind_OnClick(Model.OnChangeButtonClick);
                    s.Text = "Изменить";
                    s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-update.png";
                    s.ButtonStyle = bsButtonStyle.Default;

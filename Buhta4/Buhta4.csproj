@@ -16,7 +16,7 @@
     <RootNamespace>Buhta</RootNamespace>
     <AssemblyName>Buhta4</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -160,7 +160,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSchemaRolesBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputToTableRolesBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputToRolesListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeRowEventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
@@ -679,7 +679,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\Home\EditTable.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -74,6 +74,7 @@ namespace Buhta.Controllers
             }
             var model = new SchemaTableEditModel(this, null);
             model.EditedObject = OrgTable;
+            model.InitEditor();
             return View(model);
         }
 

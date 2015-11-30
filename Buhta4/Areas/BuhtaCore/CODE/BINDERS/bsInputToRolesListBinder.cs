@@ -8,21 +8,21 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsInputToTableRolesBinder : OneWayBinder
+    public class bsInputToRolesListBinder : OneWayBinder
     {
-
+        public SchemaBaseRole RootRole;
         public void SelectButtonClick(dynamic args)
         {
 
             var selectedList = Control.Model.GetPropertyValue(ModelPropertyName);
             if (selectedList is ObservableCollection<Guid>)
             {
-                var model = new SelectSchemaRolesDialogModel(Control.Model.Controller, Control.Model, selectedList as ObservableCollection<Guid>);
+                var model = new SelectSchemaRolesDialogModel(Control.Model.Controller, Control.Model, selectedList as ObservableCollection<Guid>, RootRole);
                 var modal = Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", model);
                 modal.Show();
             }
             else
-                throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'ObservableCollection<Guid>'");
+                throw new Exception(nameof(bsInputToRolesListBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'ObservableCollection<Guid>'");
         }
 
         public override string GetJsForSettingProperty()
@@ -49,7 +49,7 @@ namespace Buhta
                 return "$('#" + Control.UniqueId + "').val(" + sb.ToString().AsJavaScript() + ");";
             }
             else
-                throw new Exception(nameof(bsInputToTableRolesBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'IEnumerable<Guid>'");
+                throw new Exception(nameof(bsInputToRolesListBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'IEnumerable<Guid>'");
         }
 
         public override void EmitBindingScript(StringBuilder script)

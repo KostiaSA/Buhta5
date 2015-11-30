@@ -29,7 +29,7 @@
 
        });
 
-       tree.Bind_DataSource_To_ToSchemaRoles(nameof(Model.SelectedRows));
+       tree.Bind_DataSource_To_ToSchemaRoles(nameof(Model.SelectedRows), Model.RootRole);
        tree.Bind_OnRowSelect(Model.RowSelect);
 
    })

@@ -126,13 +126,14 @@ namespace Buhta
         }
 
 
-        bsInputToTableRolesBinder listBinder;
-        public void Bind_Value_To_RolesList(string modelPropertyName)
+        bsInputToRolesListBinder listBinder;
+        public void Bind_Value_To_RolesList(string modelPropertyName, SchemaBaseRole rootRole)
         {
             Type = bsInputType.List;
-            listBinder = new bsInputToTableRolesBinder()
+            listBinder = new bsInputToRolesListBinder()
             {
                 ModelPropertyName = modelPropertyName,
+                RootRole= rootRole
                 //jsSetMethodName = "val",
                 //Is2WayBinding = true,
                 //jsOnChangeEventName = "change",

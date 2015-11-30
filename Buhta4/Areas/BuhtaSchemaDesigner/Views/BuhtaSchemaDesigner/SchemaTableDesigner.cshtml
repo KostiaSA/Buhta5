@@ -36,15 +36,23 @@
             <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
 
             <form class="navbar-form navbar-right" role="search">
-                <button type="submit" class="btn btn-success">Сохранить</button>
-
                 @Html.bsButton(s =>
            {
-               s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-               s.Text = "Test-BS";
-               s.ButtonStyle = bsButtonStyle.Danger;
+               s.Bind_OnClick(Model.SaveButtonClick);
+               s.Bind_Disabled(() => !Model.NeedSave);
+               s.Text = "Сохранить";
+               s.ButtonStyle = bsButtonStyle.Success;
                // s.ClickAction = new CloseWindowAction();
            })
+
+
+                @*@Html.bsButton(s =>
+                    {
+                        s.Bind_OnClick(Model.Test1ButtonClick);
+                        s.Text = "Test-BS";
+                        s.ButtonStyle = bsButtonStyle.Danger;
+                        // s.ClickAction = new CloseWindowAction();
+                    })*@
 
 
                 <div href=# class="btn btn-default" id="aaa">Закрыть</div>
@@ -114,7 +122,7 @@
                     @Html.bsInput(input =>
                {
                    input.Type = bsInputType.List;
-                   input.Bind_Value_To_RolesList(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles));
+                   input.Bind_Value_To_RolesList(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles), new Таблица_TableRole());
                    input.Label = "Роли";
                })
 
@@ -236,9 +244,10 @@
     </div>
 
     <br>
-    @Html.xButton(settings =>
+    @Html.bsButton(settings =>
 {
-    settings.Disabled_Bind = nameof(Model.SaveButtonDisabled);
+    settings.Bind_Disabled(() => !Model.NeedSave);
+    settings.Bind_OnClick(Model.SaveButtonClick);
     settings.Text = "Сохранить";
 })
     <br>

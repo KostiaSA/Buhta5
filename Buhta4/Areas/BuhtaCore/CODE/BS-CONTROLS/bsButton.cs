@@ -105,7 +105,7 @@ namespace Buhta
 
         public string Image;
 
-        public string OnClick_Bind;
+        //public string OnClick_Bind;
 
         public BaseAction ClickAction;
 

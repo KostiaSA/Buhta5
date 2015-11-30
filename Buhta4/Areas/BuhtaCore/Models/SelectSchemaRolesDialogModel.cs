@@ -11,10 +11,12 @@ namespace Buhta
 {
     public class SelectSchemaRolesDialogModel : BaseModel
     {
+        public SchemaBaseRole RootRole;
         public bool NeedSave;
         ObservableCollection<Guid> EditedList;
-        public SelectSchemaRolesDialogModel(Controller controller, BaseModel parentModel, ObservableCollection<Guid> editedList) : base(controller, parentModel)
+        public SelectSchemaRolesDialogModel(Controller controller, BaseModel parentModel, ObservableCollection<Guid> editedList, SchemaBaseRole rootRole) : base(controller, parentModel)
         {
+            RootRole = rootRole;
             SelectedRows = new ObservableCollection<Guid>();
             SelectedRows.CollectionChanged += SelectedRows_CollectionChanged;
 

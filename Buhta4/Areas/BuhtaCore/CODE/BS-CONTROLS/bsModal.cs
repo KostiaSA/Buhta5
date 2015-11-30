@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,6 +19,7 @@ namespace Buhta
 
         public void Close()
         {
+            Thread.Sleep(1); // не удалять, иначе все глючит !!!
             ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript("$('#" + UniqueId + "').modal('hide');");
         }
 
@@ -49,6 +51,7 @@ namespace Buhta
 
             //}
 
+            Thread.Sleep(1); // не удалять, иначе все глючит !!!
             ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript(script.ToString());
 
         }

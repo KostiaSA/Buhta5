@@ -72,11 +72,12 @@ namespace Buhta
         }
 
         bsTreeDataSourceToSchemaRolesBinder dataSourceBinderToSchemaRoles;
-        public void Bind_DataSource_To_ToSchemaRoles(string selectedRowsModelPropertyName = null)
+        public void Bind_DataSource_To_ToSchemaRoles(string selectedRowsModelPropertyName, SchemaBaseRole rootRole)
         {
             dataSourceBinderToSchemaRoles = new bsTreeDataSourceToSchemaRolesBinder()
             {
                 Tree = this,
+                RootRole=rootRole,
                 SelectedRowsModelPropertyName = selectedRowsModelPropertyName
 
             };
@@ -167,18 +168,6 @@ namespace Buhta
             });
         }
 
-        //public void EmitRowEvent_BindFunction(string modelMethodName, bool isIgnoreForFolder = false)
-        //{
-        //    Script.AppendLine("var " + modelMethodName + "=function(event, data) {");
-        //    if (isIgnoreForFolder)
-        //        Script.AppendLine("  if (!data.node.children) {");
-        //    Script.AppendLine("    var _args={rowId:data.node.key, tagId:event.target.id};");
-        //    Script.AppendLine("    bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', _args );");
-        //    if (isIgnoreForFolder)
-        //        Script.AppendLine("  }");
-        //    Script.AppendLine("}");
-        //}
-
         public override string GetHtml()
         {
 
@@ -214,20 +203,6 @@ namespace Buhta
 
             //}
 
-            //if (OnRowDoubleClick_Bind != null)
-            //{
-            //    EmitRowEvent_BindFunction(OnRowDoubleClick_Bind, true);
-            //    init.AddRawProperty("dblclick", OnRowDoubleClick_Bind);
-            //}
-
-
-            //if (OnRowActivate_Bind != null)
-            //{
-            //    EmitRowEvent_BindFunction(OnRowActivate_Bind);
-            //    init.AddRawProperty("activate", OnRowActivate_Bind);
-            //}
-
-
             Script.AppendLine("var renderColumns=function(event, data) {");
             Script.AppendLine("  var node = data.node;");
             Script.AppendLine("  var row = node.data.row;");
@@ -261,14 +236,7 @@ namespace Buhta
             Script.AppendLine("}");
             init.AddRawProperty("renderColumns", "renderColumns");
 
-            //init.AddRawProperty("source", DataSourceBinder.GetJsonDataTreeSource(Model, selectedRows));
-
             Script.AppendLine("$('#" + UniqueId + "').fancytree(" + init.ToJson() + ");");
-
-
-
-            //EmitProperty_Bind_M(Script, Text_Bind, "val");
-
 
             if (ClickAction != null)
             {

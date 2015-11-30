@@ -67,6 +67,7 @@ bindingHub.client.receiveServerError = function (error) {
 
 
 bindingHub.client.receiveScript = function (script) {
+    console.log(script);
     eval(script);
 };
 

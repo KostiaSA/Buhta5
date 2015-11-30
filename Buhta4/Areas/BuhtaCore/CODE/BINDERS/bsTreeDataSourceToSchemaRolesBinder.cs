@@ -12,6 +12,7 @@ namespace Buhta
     public class bsTreeDataSourceToSchemaRolesBinder : OneWayBinder
     {
         public string SelectedRowsModelPropertyName;
+        public SchemaBaseRole RootRole;
 
         public bsTree Tree;
 
@@ -63,11 +64,13 @@ namespace Buhta
                 selectedRows = (ObservableCollection<Guid>)_selectedRows;
             }
 
-            SchemaBaseRole rootRole = new SchemaBaseRole();
-            rootRole.Initialize();
+
+            //RootRole.Initialize();
+            if (RootRole==null)
+                throw new Exception(nameof(bsTreeDataSourceToSchemaRolesBinder) + ": при привязке свойства '" + SelectedRowsModelPropertyName + "' должна быть указана '" + nameof(RootRole) + "'");
 
             var jstree = new jsArray();
-            AddRoleNode(jstree, rootRole);
+            AddRoleNode(jstree, RootRole);
 
             return "$('#" + Control.UniqueId + "').fancytree('option','source'," + jstree.ToJson() + ");";
 
