@@ -690,6 +690,30 @@ namespace Buhta
 
     public static class ObjectExtensions
     {
+
+        public static object GetPropertyValue(this Object obj, string propName)
+        {
+            var names = propName.Split('.');
+            for (int i = 0; i < names.Length; i++)
+            {
+                Type _type = obj.GetType();
+                PropertyInfo _prop = _type.GetProperty(names[i]);
+                if (_prop == null)
+                {
+                    if (names.Length > 0)
+                        throw new Exception("объект '" + obj.GetType().FullName + "'." + nameof(GetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
+                    else
+                        throw new Exception("объект '" + obj.GetType().FullName + "'." + nameof(GetPropertyValue) + ": не найдено свойство '" + propName + "'");
+                }
+                obj = _prop.GetValue(obj);
+                if (obj == null)
+                    return null;
+                if (i == names.Length - 1)
+                    return obj;
+            }
+            return null;
+        }
+
         public static string AsSQL(this Object value)
         {
             if (value == null || value is DBNull)

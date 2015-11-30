@@ -164,7 +164,7 @@
         </div>
     </div>
 
-    <h4 id="links" style="padding-top: 60px; margin-top: -40px;">Связь с уродами</h4>
+    <h4 id="links" style="padding-top: 60px; margin-top: -40px;">Колонки</h4>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -213,22 +213,21 @@
             <button class="btn btn-default btn-sm pull-right">Добавить</button>
         </div>
         <div class="panel-body">
-            @Html.xGrid(grid =>
+            @Html.bsGrid(grid =>
        {
-           grid.Width = 700;
-           grid.Height = 400;
-
-           grid.DataSource_Bind = nameof(Model.Table) + "." + nameof(Model.Table.Columns);
+           grid.AddClass("cell-border");
+           grid.AddClass("compact");
+           grid.Bind_DataSource_To_ObjectsList(nameof(Model.Table) + "." + nameof(Model.Table.Columns),"ID");
 
            grid.AddColumn(c =>
            {
-               c.Caption = "Имя";
-               c.Field_Bind = "Name";
+               c.Caption = "Имя колонки";
+               c.Field_Bind = nameof(SchemaTableColumn.Name);
            });
 
            grid.AddColumn(c =>
            {
-               c.Caption = "Название";
+               c.Caption = "Описание";
                c.Field_Bind = nameof(SchemaTableColumn.Description);
            });
 

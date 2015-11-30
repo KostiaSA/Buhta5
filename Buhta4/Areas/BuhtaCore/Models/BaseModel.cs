@@ -261,7 +261,7 @@ namespace Buhta
                 Type _type = obj.GetType();
                 PropertyInfo _prop = _type.GetProperty(names[i]);
                 if (_prop == null)
-                    throw new Exception("model." + nameof(GetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
+                    throw new Exception("model '" + this.GetType().FullName + "'." + nameof(GetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
                 obj = _prop.GetValue(obj);
                 if (obj == null)
                     return null;
