@@ -214,31 +214,35 @@
                 </div>
                 <div class="panel-body" style="background-color: rgba(214, 214, 214, 0.0)">
                     @Html.bsGrid(grid =>
-                       {
-                           grid.AddClass("cell-border");
-                           grid.AddClass("compact");
-                           grid.Bind_DataSource_To_ObjectsList(nameof(Model.Table) + "." + nameof(Model.Table.Columns), "ID");
+               {
+                   grid.AddClass("cell-border");
+                   grid.AddClass("compact");
+                   grid.Bind_DataSource_To_ObjectsList(nameof(Model.Table) + "." + nameof(Model.Table.Columns), nameof(SchemaTableColumn.Name));
 
-                           grid.AddColumn(c =>
-                           {
-                               c.Caption = "Имя колонки";
-                               c.Field_Bind = nameof(SchemaTableColumn.Name);
-                           });
+                   grid.Bind_OnRowSelect((args) => {
+                       Model.Table.Name= args.rowId;
+                   });
 
-                           grid.AddColumn(c =>
-                           {
-                               c.Caption = "Описание";
-                               c.Field_Bind = nameof(SchemaTableColumn.Description);
-                           });
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Имя колонки";
+                       c.Field_Bind = nameof(SchemaTableColumn.Name);
+                   });
 
-                           grid.AddColumn(c =>
-                           {
-                               c.Caption = "Позиция";
-                               c.Field_Bind = nameof(SchemaTableColumn.Position);
-                               c.DataType = GridColumnDataType.Number;
-                           });
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Описание";
+                       c.Field_Bind = nameof(SchemaTableColumn.Description);
+                   });
 
-                       })
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Позиция";
+                       c.Field_Bind = nameof(SchemaTableColumn.Position);
+                       c.DataType = GridColumnDataType.Number;
+                   });
+
+               })
                     <div class="panel-body">
                         <div class="btn-group">
                             <button class="btn btn-default btn-sm">Отметить</button>

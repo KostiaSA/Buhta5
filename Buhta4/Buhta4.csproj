@@ -164,7 +164,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputToRolesListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\BaseBinder.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridRowEventBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridRowSelectEventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeRowEventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />

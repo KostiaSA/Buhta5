@@ -53,10 +53,27 @@ namespace Buhta
         List<bsGridColumnSettings> columns = new List<bsGridColumnSettings>();
         public List<bsGridColumnSettings> Columns { get { return columns; } }
 
+        public string KeyFieldName;
+
+        public int GetKeyFieldIndex()
+        {
+            if (KeyFieldName == null)
+                throw new Exception(nameof(bsGrid) + ": не указан " + nameof(KeyFieldName));
+            int index = -1;
+            foreach (var col in Columns)
+            {
+                index++;
+                if (col.Field_Bind == KeyFieldName)
+                    return index;
+            }
+            throw new Exception(nameof(bsGrid) + ": нет колонки с " + nameof(bsGridColumnSettings.Field_Bind) + "='" + KeyFieldName + "'");
+
+        }
 
         bsGridDataSourceToSqlDataViewBinder dataSourceBinderToSqlDataView;
         public void Bind_DataSource_To_SqlDataView(string datasourceModelPropertyName, string keyFieldName = null, string parentFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName = null)
         {
+            KeyFieldName = keyFieldName;
             dataSourceBinderToSqlDataView = new bsGridDataSourceToSqlDataViewBinder()
             {
                 Tree = this,
@@ -73,6 +90,7 @@ namespace Buhta
         bsGridDataSourceToObjectsListBinder dataSourceBinderToObjectsList;
         public void Bind_DataSource_To_ObjectsList(string datasourceModelPropertyName, string keyFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName = null)
         {
+            KeyFieldName = keyFieldName;
             dataSourceBinderToObjectsList = new bsGridDataSourceToObjectsListBinder()
             {
                 Tree = this,
@@ -95,7 +113,7 @@ namespace Buhta
 
         public void Bind_OnRowClick(string modelEventMethodName)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
                 ModelEventMethodName = modelEventMethodName,
                 jsEventName = "click"
@@ -104,7 +122,7 @@ namespace Buhta
 
         public void Bind_OnRowClick(BinderEventMethod eventMethod)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
                 ModelEventMethod = eventMethod,
                 jsEventName = "click"
@@ -113,9 +131,9 @@ namespace Buhta
 
         public void Bind_OnRowDblClick(string modelEventMethodName, Boolean isIgnoreForFolder = true)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
-                isIgnoreForFolder = isIgnoreForFolder,
+                //isIgnoreForFolder = isIgnoreForFolder,
                 ModelEventMethodName = modelEventMethodName,
                 jsEventName = "dblclick"
             });
@@ -123,9 +141,9 @@ namespace Buhta
 
         public void Bind_OnRowDblClick(BinderEventMethod eventMethod, Boolean isIgnoreForFolder = true)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
-                isIgnoreForFolder = isIgnoreForFolder,
+                //isIgnoreForFolder = isIgnoreForFolder,
                 ModelEventMethod = eventMethod,
                 jsEventName = "dblclick"
             });
@@ -133,25 +151,25 @@ namespace Buhta
 
         public void Bind_OnRowSelect(string modelEventMethodName)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
-                ModelEventMethodName = modelEventMethodName,
-                jsEventName = "select"
+                ModelEventMethodName = modelEventMethodName
+                //jsEventName = "select"
             });
         }
 
         public void Bind_OnRowSelect(BinderEventMethod eventMethod)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
-                ModelEventMethod = eventMethod,
-                jsEventName = "select"
+                ModelEventMethod = eventMethod
+                //jsEventName = "select"
             });
         }
 
         public void Bind_OnRowActivate(BinderEventMethod eventMethod)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
                 ModelEventMethod = eventMethod,
                 jsEventName = "activate"
@@ -160,7 +178,7 @@ namespace Buhta
 
         public void Bind_OnRowDeactivate(BinderEventMethod eventMethod)
         {
-            AddBinder(new bsGridRowEventBinder()
+            AddBinder(new bsGridRowSelectEventBinder()
             {
                 ModelEventMethod = eventMethod,
                 jsEventName = "deactivate"
