@@ -7,33 +7,33 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class SchemaObjectEditModel<T> : BaseModel where T : SchemaObject
+    public class SchemaObjectEditModel<T> : BaseEditFormModel where T : SchemaObject
     {
-        public bool NeedSave;
-        public T EditedObject { get; set; }
+        //public bool NeedSave;
+        //public T EditedObject { get; set; }
 
         public SchemaObjectEditModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
 
-        public virtual string EditedObjectName { get { return EditedObject.Name; } }
+        //public virtual string EditedObjectName { get { return EditedObject.Name; } }
 
 
-        public void InitEditor()
-        {
-            NeedSave = false;
-            EditedObject.PropertyChanged += EditedObject_PropertyChanged;
-        }
+        //public void InitEditor()
+        //{
+        //    NeedSave = false;
+        //    EditedObject.PropertyChanged += EditedObject_PropertyChanged;
+        //}
 
-        private void EditedObject_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            NeedSave = true;
-        }
+        //private void EditedObject_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    NeedSave = true;
+        //}
 
-        public void SaveButtonClick(dynamic args)
-        {
-            App.Schema.SaveObject(EditedObject);
-            NeedSave = false;
-        }
+        //public void SaveButtonClick(dynamic args)
+        //{
+        //    App.Schema.SaveObject(EditedObject);
+        //    NeedSave = false;
+        //}
 
     }
 }

@@ -25,7 +25,7 @@ namespace Buhta
         {
             var model = new SchemaTableDesignerModel(this, null);
             model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
-            model.InitEditor();
+            model.StartEditing();
 
             return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml", model);
         }

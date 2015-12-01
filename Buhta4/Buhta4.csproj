@@ -169,6 +169,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OneWayBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsEditFormSaveButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsGridColumn.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xWindow.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />

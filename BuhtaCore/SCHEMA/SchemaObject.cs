@@ -11,6 +11,15 @@ using System.Threading.Tasks;
 
 namespace Buhta
 {
+    public interface IBuhtaEditable : INotifyPropertyChanged
+    {
+        bool GetNeedSave();
+        void StartEditing();
+        void SaveChanges();
+        void CancelChanges();
+        string GetEditedObjectName();
+    }
+
     public interface IEditControl
     {
     }
@@ -48,7 +57,7 @@ namespace Buhta
     }
 
     //  [BsonKnownTypes(typeof(SchemaFolder))]
-    public class SchemaObject : ISupportInitialize, INotifyPropertyChanged, ISchemaTreeListNode, ISchemaDesignerElement
+    public class SchemaObject : ISupportInitialize, IBuhtaEditable, INotifyPropertyChanged, ISchemaTreeListNode, ISchemaDesignerElement
     {
         public Guid id;
         public Guid ID
@@ -140,8 +149,25 @@ namespace Buhta
             ID = Guid.NewGuid();
         }
 
+
+        public string GetEditedObjectName()
+        {
+            return Name;
+        }
+
+        public void StartEditing()
+        {
+            needSave=false;
+        }
+
+        bool needSave;
+        public bool GetNeedSave()
+        {
+            return needSave;
+        }
         public virtual void firePropertyChanged(string propertyName)
         {
+            needSave = true;
             //            columnsByName.Clear();
             cached_ParentObject = null;
             if (PropertyChanged != null)
@@ -375,6 +401,18 @@ namespace Buhta
                 return App.Schema.GetObjectName(CreateUserID);
             else
                 return App.Schema.GetObjectName(ChangeUserID);
+        }
+
+        public void SaveChanges()
+        {
+            App.Schema.SaveObject(this);
+            needSave = false;
+
+        }
+
+        public void CancelChanges()
+        {
+            needSave = false;
         }
     }
 

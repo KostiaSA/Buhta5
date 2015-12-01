@@ -71,13 +71,13 @@
 <div class="container body-content">
     <div class="pull-right">
         <button class="btn btn-default ">&lt;&lt;Назад</button>
-        <button class="btn btn-success " style="margin-left:20px">Сохранить</button>
+        @Html.bsEditFormSaveButton((button)=> { button.AddStyle("margin-left", "20px"); })
         <button class="btn btn-default ">Отмена</button>
     </div>
 
     <h3>
         <img src="~/Areas/BuhtaSchemaDesigner/Content/icon/SchemaTable_32.png" />
-        @Model.EditedObjectName <small>(таблица)</small>
+        @Model.GetEditedObjectName() <small>(таблица)</small>
     </h3>
 
 
@@ -253,7 +253,7 @@
             <br>
             @Html.bsButton(settings =>
 {
-    settings.Bind_Disabled(() => !Model.NeedSave);
+    settings.Bind_Disabled(() => !Model.GetNeedSave());
     settings.Bind_OnClick(Model.SaveButtonClick);
     settings.Text = "Сохранить";
 })

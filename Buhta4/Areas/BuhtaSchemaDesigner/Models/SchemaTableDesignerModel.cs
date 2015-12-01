@@ -10,7 +10,7 @@ namespace Buhta
 {
     public class SchemaTableDesignerModel : SchemaObjectEditModel<SchemaTable>
     {
-        public SchemaTable Table { get { return EditedObject; } }
+        public SchemaTable Table { get { return (SchemaTable)EditedObject; } }
 
         public SchemaTableDesignerModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
