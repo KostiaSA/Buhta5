@@ -5,85 +5,93 @@
     ViewBag.Title = "EditTable";
 }
 @*<style>
-    body {
-        position: relative;
-    }
-</style>
-<script> $('body').scrollspy({ target: '#bs-example-navbar-collapse', offset: 0 }) </script>
-<nav class="navbar navbar-default 1navbar-fixed-top navbar-static-top1">
-    <div class="container container-fluid1">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+        body {
+            position: relative;
+        }
+    </style>
+    <script> $('body').scrollspy({ target: '#bs-example-navbar-collapse', offset: 0 }) </script>
+    <nav class="navbar navbar-default 1navbar-fixed-top navbar-static-top1">
+        <div class="container container-fluid1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
 
-            <form class="navbar-form navbar-left">
-                <div href=# class="btn btn-default" id="aaaXXX">назад</div>
-                <script>
-                    $("#aaaXXX").on('click', function () {
-                        if (window.opener) window.open('', window.opener.name).focus();
-                    });</script>
+                <form class="navbar-form navbar-left">
+                    <div href=# class="btn btn-default" id="aaaXXX">назад</div>
+                    <script>
+                        $("#aaaXXX").on('click', function () {
+                            if (window.opener) window.open('', window.opener.name).focus();
+                        });</script>
 
-            </form>
-
-
-
-            @*<ul class="nav navbar-nav">
-                <li><a href="#">Таблица</a></li>
-                <li><a href="#columns">Колонки</a></li>
-                <li><a href="#">Индексы</a></li>
-                <li><a href="#links">Уроды</a></li>
-                <li><a href="#">Индексы</a></li>
-                <li><a href="#" id="qq">Отчеты</a></li>
-            </ul>
-            <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
-
-            <form class="navbar-form navbar-right" role="search">
-                @Html.bsButton(s =>
-           {
-               s.Bind_OnClick(Model.SaveButtonClick);
-               s.Bind_Disabled(() => !Model.NeedSave);
-               s.Text = "Сохранить";
-               s.ButtonStyle = bsButtonStyle.Success;
-               // s.ClickAction = new CloseWindowAction();
-           })
+                </form>
 
 
-                @Html.bsButton(s =>
-                    {
-                        s.Bind_OnClick(Model.Test1ButtonClick);
-                        s.Text = "Test-BS";
-                        s.ButtonStyle = bsButtonStyle.Danger;
-                        // s.ClickAction = new CloseWindowAction();
-                    })
+
+                @*<ul class="nav navbar-nav">
+                    <li><a href="#">Таблица</a></li>
+                    <li><a href="#columns">Колонки</a></li>
+                    <li><a href="#">Индексы</a></li>
+                    <li><a href="#links">Уроды</a></li>
+                    <li><a href="#">Индексы</a></li>
+                    <li><a href="#" id="qq">Отчеты</a></li>
+                </ul>
+                <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
+
+                <form class="navbar-form navbar-right" role="search">
+                    @Html.bsButton(s =>
+               {
+                   s.Bind_OnClick(Model.SaveButtonClick);
+                   s.Bind_Disabled(() => !Model.NeedSave);
+                   s.Text = "Сохранить";
+                   s.ButtonStyle = bsButtonStyle.Success;
+                   // s.ClickAction = new CloseWindowAction();
+               })
 
 
-                <div href=# class="btn btn-default" id="aaa">Закрыть</div>
-                <script>
-                    $("#aaa").on('click', function () {
-                        if (window.opener)
-                            window.open('', window.opener.name).focus();
-                        window.close();
-                    });</script>
+                    @Html.bsButton(s =>
+                        {
+                            s.Bind_OnClick(Model.Test1ButtonClick);
+                            s.Text = "Test-BS";
+                            s.ButtonStyle = bsButtonStyle.Danger;
+                            // s.ClickAction = new CloseWindowAction();
+                        })
 
-            </form>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>*@
+
+                    <div href=# class="btn btn-default" id="aaa">Закрыть</div>
+                    <script>
+                        $("#aaa").on('click', function () {
+                            if (window.opener)
+                                window.open('', window.opener.name).focus();
+                            window.close();
+                        });</script>
+
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>*@
 
 <div class="container body-content">
     <div class="pull-right">
         <button class="btn btn-default ">&lt;&lt;Назад</button>
-        @Html.bsEditFormSaveButton((button)=> { button.AddStyle("margin-left", "20px"); })
-        <button class="btn btn-default ">Отмена</button>
+        @Html.bsEditFormSaveButton((button) => { button.AddStyle("margin-left", "20px"); })
+        @Html.bsEditFormCancelButton((button) => { })
     </div>
 
     <h3>
         <img src="~/Areas/BuhtaSchemaDesigner/Content/icon/SchemaTable_32.png" />
-        @Model.GetEditedObjectName() <small>(таблица)</small>
+        @Html.bsSpan((span) =>
+   {
+       span.Bind_Text(() => Model.GetEditedObjectName());
+   })
+        <small>(таблица)</small>
     </h3>
 
 
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
-        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Колонки</a></li>
+        <li role="presentation">
+            <a href="#columns" aria-controls="messages" role="tab" data-toggle="tab">
+                Колонки <sup>@Html.bsSpan(() => Model.Table.Columns.Count.ToNumberInRoundBrackets())</sup>
+            </a>
+        </li>
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Индексы</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Прочее</a></li>
     </ul>
@@ -197,7 +205,7 @@
             </div>
 
         </div>
-        <div role="tabpanel" class="tab-pane" id="messages">
+        <div role="tabpanel" class="tab-pane" id="columns">
             <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Колонки </h4>
 
             <div class="panel panel-warning">

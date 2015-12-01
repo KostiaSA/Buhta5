@@ -169,6 +169,8 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OneWayBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsSpan.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsEditFormCancelButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsEditFormSaveButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />

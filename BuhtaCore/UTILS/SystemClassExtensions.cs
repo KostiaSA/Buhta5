@@ -147,6 +147,16 @@ namespace Buhta
         }
     }
 
+    public static class IntExtention
+    {
+        public static string ToNumberInRoundBrackets(this int value)
+        {
+            if (value > 0)
+                return "(" + value.ToString() + ")";
+            else
+                return "";
+        }
+    }
 
 
 
