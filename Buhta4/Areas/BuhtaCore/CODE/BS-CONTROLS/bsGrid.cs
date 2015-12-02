@@ -141,11 +141,9 @@ namespace Buhta
 
         public void Bind_OnRowDblClick(BinderEventMethod eventMethod, Boolean isIgnoreForFolder = true)
         {
-            AddBinder(new bsGridRowSelectEventBinder()
+            AddBinder(new bsGridRowDblClickEventBinder()
             {
-                //isIgnoreForFolder = isIgnoreForFolder,
-                ModelEventMethod = eventMethod,
-                jsEventName = "dblclick"
+                ModelEventMethod = eventMethod
             });
         }
 
@@ -163,7 +161,6 @@ namespace Buhta
             AddBinder(new bsGridRowSelectEventBinder()
             {
                 ModelEventMethod = eventMethod
-                //jsEventName = "select"
             });
         }
 

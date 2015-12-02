@@ -6,15 +6,15 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class SchemaTableColumnEditModel : BaseModel
+    public class SchemaTableColumnEditModel : BaseEditFormModel
     {
-        public SchemaTableColumn Column { get; set; }
+        public SchemaTableColumn Column { get { return (SchemaTableColumn)EditedObject; } }
 
         public override string PageTitle { get { return "Колонка: " + Column.Name; } }
 
         public SchemaTableColumnEditModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
-        public void SaveButtonClick(dynamic args)
+        public override void SaveChanges()
         {
 
             //Table.Name = "Жопа";

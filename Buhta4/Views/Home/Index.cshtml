@@ -50,33 +50,10 @@
         </div>
     </div>
 
-    @Html.xButton(s =>
-   {
-       //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-       s.Text_Bind = "Column.Name";
-       s.ClassAttr = "pull-right";
-       s.StyleAttr = "margin-left:10px";
-   })
-
 
     <div class="row">
         <div class="col-md-4">
             <h2>Getting started</h2>
-            @Html.bsButton(b =>
-       {
-           b.ButtonStyle = bsButtonStyle.Info;
-           b.Text = "жопа789";
-           //b.New_Text_Binder._GetMethod = () => Model.Column.Name + "^^^" + Guid.NewGuid();
-           b.Bind_Text(() => Model.Column.Name + "+++" + Guid.NewGuid());
-           //b.New_Text_BindGet= () => Model.Column.Name + "***" + Guid.NewGuid();
-           //b.Text_Get = () => Model.Column.Name + "***" + Guid.NewGuid();
-           //b.OnClick_Bind = "SaveButtonClick";
-           //b.Bind_OnClick("SaveButtonClick");
-           b.Bind_OnClick((args)=>{ Model.Column.Name = "пиздец"; });
-           b.Bind_Disabled(()=> Model.Column.Name == "пиздец");
-
-       })
-
             <p>
                 ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
                 enables a clean separation of concerns and gives you full control over markup

@@ -30,12 +30,12 @@ namespace Buhta
             var value = Control.Model.GetPropertyValue(ModelPropertyName);
             if (value is IEnumerable<Guid>)
             {
-                var list = new List<Таблица_TableRole>();
+                var list = new List<SchemaBaseRole>();
                 string errorStr = ""; ;
                 foreach (var roleID in (value as IEnumerable<Guid>))
                 {
-                    if (SchemaBaseRole.Roles.ContainsKey(roleID) && SchemaBaseRole.Roles[roleID] is Таблица_TableRole)
-                        list.Add(SchemaBaseRole.Roles[roleID] as Таблица_TableRole);
+                    if (SchemaBaseRole.Roles.ContainsKey(roleID))// && SchemaBaseRole.Roles[roleID].GetType is RootRole.GetType())
+                        list.Add(SchemaBaseRole.Roles[roleID] as SchemaBaseRole);
                     else
                         errorStr += ", ?"+ roleID.ToString().Substring(0,6);
                 }

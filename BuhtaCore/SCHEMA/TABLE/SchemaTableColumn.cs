@@ -14,8 +14,11 @@ namespace Buhta
     public enum RegistrColumnRole { Реквизит, Измерение, Ресурс }
 
     [JsonObject(IsReference = true)]
-    public class SchemaTableColumn : ISupportInitialize, INotifyPropertyChanged, IViewColumn, IPermissionSupportObject
+    public class SchemaTableColumn : IBuhtaEditable, ISupportInitialize, INotifyPropertyChanged, IViewColumn, IPermissionSupportObject
     {
+        [JsonIgnore]
+        bool needSave;
+
         private string name;
         [DisplayName("  Имя колонки"), Description("Имя колонки"), Category("  Колонка")]
         public string Name
@@ -150,7 +153,7 @@ namespace Buhta
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             if (table != null)
                 table.firePropertyChanged("Columns");
-
+            needSave = true;
         }
 
 
@@ -370,6 +373,31 @@ namespace Buhta
         public void GetChildPermissionObjects(List<IPermissionSupportObject> list)
         {
 
+        }
+
+        public bool GetNeedSave()
+        {
+            return needSave;
+        }
+
+        public void StartEditing()
+        {
+            needSave = false;
+        }
+
+        public void SaveChanges()
+        {
+            needSave = false;
+        }
+
+        public void CancelChanges()
+        {
+            needSave = false;
+        }
+
+        public string GetEditedObjectName()
+        {
+            return Name;
         }
     }
 

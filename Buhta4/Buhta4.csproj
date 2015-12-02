@@ -159,6 +159,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridDataSourceToObjectsListBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridRowDblClickEventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSchemaRolesBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
@@ -184,14 +185,11 @@
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\BindingHub.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowEnd.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowBegin.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormCancelButton.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormSaveButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xTreeGridColumn.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xTreeGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xPageTitle.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormEnd.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormBegin.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xControl.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xGridColumn.cs" />
@@ -574,6 +572,7 @@
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\ui.fancytree.less" />
     <Content Include="Content\vendors\fancytree-master\src\skin-win8\ui.fancytree.less" />
     <Content Include="Areas\BuhtaCore\Views\SelectSchemaRolesDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

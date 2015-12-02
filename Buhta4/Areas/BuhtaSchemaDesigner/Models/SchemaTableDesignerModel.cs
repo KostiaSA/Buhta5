@@ -19,17 +19,17 @@ namespace Buhta
             Table.Name = "закрыто";
         }
 
-        public void EditFirstColumnButtonClick(dynamic args)
+        public void EditColumnButtonClick(dynamic args)
         {
             var model = new SchemaTableColumnEditModel(Controller, this);
-            model.Column = Table.Columns[0];
+            model.EditedObject = Table.GetColumnByName(args.rowId.Value);
 
             //var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
 
 
-            var win = CreateWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model);
-            win.OnClose_Bind = nameof(CloseColumnEditor);
-            win.Show();
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
+            modal.OnClose_Bind = nameof(CloseColumnEditor);
+            modal.Show();
             //ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
         }
 

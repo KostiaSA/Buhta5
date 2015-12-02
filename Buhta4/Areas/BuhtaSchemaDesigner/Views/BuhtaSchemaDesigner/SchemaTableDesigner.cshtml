@@ -104,7 +104,7 @@
                 <div class="panel-heading">
                     таблица подключена к серверу
                 </div>
-                <div class="panel-body" style="background-color: rgba(214, 214, 214, 0)">
+                <div class="panel-body">
                     <form role="form" class="form-horizontal">
                         <div class="row">
 
@@ -223,6 +223,8 @@
                        Model.Table.Name= args.rowId;
                    });
 
+                   grid.Bind_OnRowDblClick(Model.EditColumnButtonClick);
+
                    grid.AddColumn(c =>
                    {
                        c.Caption = "Имя колонки";
@@ -269,21 +271,6 @@
     settings.Bind_OnClick(Model.SaveButtonClick);
     settings.Text = "Сохранить";
 })
-            <br>
-
-            @Html.xButton(settings =>
-{
-    settings.OnClick_Bind = nameof(Model.Test1ButtonClick);
-    settings.Text = "Test1";
-})
-            <br>
-            @Html.xButton(settings =>
-{
-    settings.OnClick_Bind = nameof(Model.EditFirstColumnButtonClick);
-    settings.Text = "Редактировать первую колонку";
-})
-            <br>
-            <br>
 
             <br>
         </div>
