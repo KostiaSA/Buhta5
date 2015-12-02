@@ -12,6 +12,7 @@ namespace Buhta
     public class BaseEditFormModel : BaseModel
     {
         public IBuhtaEditable EditedObject { get; set; }
+        protected Object SavedEditedObject;
 
         public BaseEditFormModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
@@ -67,7 +68,10 @@ namespace Buhta
         public virtual void StartEditing()
         {
             if (EditedObject != null)
+            {
                 EditedObject.StartEditing();
+                SavedEditedObject = EditedObject.DeepClone();
+            }
         }
 
         public void SaveButtonClick(dynamic args)

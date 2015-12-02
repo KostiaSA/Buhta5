@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Buhta
 {
     [Export(typeof(SqlDataType))]
+    [Serializable]
     public class ForeingKeyDataType : SqlDataType
     {
         public override string Name { get { return "Ссылка"; } }

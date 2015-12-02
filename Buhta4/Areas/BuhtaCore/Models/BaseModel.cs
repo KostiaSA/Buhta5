@@ -58,7 +58,7 @@ namespace Buhta
         {
         }
 
-        public void Update()
+        public void Update(bool includeDatasets=false)
         {
             var toSend = new StringBuilder();
 
@@ -67,7 +67,7 @@ namespace Buhta
                 if (binder is OneWayBinder)
                 {
                     var b = binder as OneWayBinder;
-                    if (!b.IsNotAutoUpdate)
+                    if (!b.IsNotAutoUpdate || includeDatasets)
                     {
                         var newText = b.GetJsForSettingProperty();
                         //Debug.WriteLine("newText: "+ newText);

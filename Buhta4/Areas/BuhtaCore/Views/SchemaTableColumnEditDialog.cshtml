@@ -11,35 +11,38 @@
         <form role="form" class="form-horizontal">
             <div class="row">
 
-                @Html.bsInput(s =>
-               {
-                   s.Bind_Value_To_String(nameof(Model.Column) + "." + nameof(Model.Column.Name));
-                   s.Label = "Имя колонки";
-                   s.AddStyle("max-width", "400px");
-               })
-                @Html.bsInput(s =>
-               {
-                   s.Bind_Value_To_String(nameof(Model.Column) + "." + nameof(Model.Column.Description));
-                   s.Label = "Описание";
-                   //s.AddStyle("max-width", "400px");
-               })
+                @Html.bsInput(tag =>
+           {
+               tag.Bind_Value_To_String(nameof(Model.Column) + "." + nameof(Model.Column.Name));
+               tag.Label = "Имя колонки";
+               tag.AddStyle("max-width", "400px");
+           })
 
-                @Html.bsInput(input =>
-               {
-                   input.Type = bsInputType.List;
-                   input.Bind_Value_To_RolesList(nameof(Model.Column) + "." + nameof(Model.Column.ColumnRoles), new Колонка_ColumnRole());
-                   input.Label = "Роли";
-               })
+                @Html.bsInput(tag =>
+           {
+               tag.Bind_Value_To_String(nameof(Model.Column) + "." + nameof(Model.Column.Description));
+               tag.Label = "Описание";
+               //s.AddStyle("max-width", "400px");
+           })
 
-
-                @Html.bsInput(s =>
-               {
-                   //s.Type = bsInputType.Checkbox;
-                   s.Bind_Value_To_Boolean(nameof(Model.Column) + "." + nameof(Model.Column.IsNotNullable));
-                   s.Label = "Обязательное (NOT NULL)";
-               })
+                @Html.bsInput(tag =>
+           {
+               tag.Type = bsInputType.List;
+               tag.Bind_Value_To_RolesList(nameof(Model.Column) + "." + nameof(Model.Column.ColumnRoles), new Колонка_ColumnRole());
+               tag.Label = "Роли";
+           })
 
 
+
+                @Html.Raw(Model.GetColumnDataTypeInputsHtml())
+
+
+                @Html.bsInput(tag =>
+           {
+               //s.Type = bsInputType.Checkbox;
+               tag.Bind_Value_To_Boolean(nameof(Model.Column) + "." + nameof(Model.Column.IsNotNullable));
+               tag.Label = "Обязательное (NOT NULL)";
+           })
 
 
 

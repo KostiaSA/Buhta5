@@ -12,6 +12,7 @@ namespace Buhta
 {
     [System.ComponentModel.TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
     [Export(typeof(SqlDataType))]
+    [Serializable]
     public class ByteDataType : SqlDataType
     {
         public override string Name { get { return "Byte"; } }

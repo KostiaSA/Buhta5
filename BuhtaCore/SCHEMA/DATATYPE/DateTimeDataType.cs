@@ -12,6 +12,7 @@ namespace Buhta
 {
     [System.ComponentModel.TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
     [Export(typeof(SqlDataType))]
+    [Serializable]
     public class DateTimeDataType : SqlDataType
     {
         public override string Name { get { return "ДатаВремя"; } }

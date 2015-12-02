@@ -136,7 +136,20 @@ namespace Buhta
     }
 
 
-
+    public static class ExtensionMethods
+    {
+        // Deep clone
+        public static object DeepClone(this object a)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, a);
+                stream.Position = 0;
+                return formatter.Deserialize(stream);
+            }
+        }
+    }
 
 
     public static class EnumExtention

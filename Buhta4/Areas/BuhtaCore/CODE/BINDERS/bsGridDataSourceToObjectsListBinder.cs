@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Web;
 
 namespace Buhta
 {
+    [Serializable]
     public class bsGridDataSourceToObjectsListBinder : OneWayBinder
     {
         public string DatasourceModelPropertyName;
@@ -24,37 +27,50 @@ namespace Buhta
             IsNotAutoUpdate = true;
         }
 
+        //ObservableCollection<string> selectedRows;
 
-        ObservableCollection<string> selectedRows;
         public override string GetJsForSettingProperty()
         {
-            var _view = Control.Model.GetPropertyValue(DatasourceModelPropertyName);
+            var _objectList = Control.Model.GetPropertyValue(DatasourceModelPropertyName);
 
-            var view = _view as System.Collections.IEnumerable;
+            var objectList = _objectList as System.Collections.IEnumerable;
 
-            if (view == null)
+            if (objectList == null)
                 throw new Exception(nameof(bsGridDataSourceToObjectsListBinder) + ": свойство '" + DatasourceModelPropertyName + "' должно быть типа '" + nameof(System.Collections.IEnumerable) + "'");
 
-
-            //if (SelectedRowsModelPropertyName != null)
+            //if (_objectList.GetType().IsGenericType && _objectList.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>))
             //{
-            //    var _selectedRows = Control.Model.GetPropertyValue(SelectedRowsModelPropertyName);
-            //    if (!(_selectedRows is ObservableCollection<string>))
-            //        throw new Exception(nameof(bsGridDataSourceToObjectsListBinder) + ": свойство '" + SelectedRowsModelPropertyName + "' должно быть типа '" + nameof(ObservableCollection<string>) + "'");
-            //    selectedRows = (ObservableCollection<string>)_selectedRows;
+            //    ((dynamic)_objectList).CollectionChanged += new NotifyCollectionChangedEventHandler(DataSourceRows_CollectionChanged);
             //}
 
             var ret = new jsArray();
 
 
-            foreach (var row in view)
+            foreach (var obj in objectList)
             {
                 //DataRow row = rowView.Row;
                 var jsrow = new jsArray();
 
+                //if (obj is INotifyPropertyChanged)
+                //{
+                //    (obj as INotifyPropertyChanged).PropertyChanged += BsGridDataSourceToObjectsListBinder_PropertyChanged1;
+
+                //    //(obj as INotifyPropertyChanged).PropertyChanged += (sender, e) => {
+                //    //    var updateData = new jsArray();
+                //    //    foreach (var col in Tree.Columns)
+                //    //    {
+                //    //        updateData.AddObject(obj.GetPropertyValue(col.Field_Bind));
+                //    //    }
+                //    //    var updatejs="alert('" + ret.ToJson() + "');";
+                //    //    Control.Model.ExecuteJavaScript(updatejs);
+                //    //    //var updatejs = "$('#" + Control.UniqueId + "').DataTable().clear().rows.add(" + ret.ToJson() + ").draw();";
+
+                //    //};
+                //}
+
                 foreach (var col in Tree.Columns)
                 {
-                    jsrow.AddObject(row.GetPropertyValue(col.Field_Bind));
+                    jsrow.AddObject(obj.GetPropertyValue(col.Field_Bind));
                 }
 
                 //if (selectedRows != null && selectedRows.Contains(row[keyFieldName].ToString()))
@@ -65,7 +81,7 @@ namespace Buhta
 
                 ret.AddObject(jsrow);
             }
-   
+
             return "$('#" + Control.UniqueId + "').DataTable().clear().rows.add(" + ret.ToJson() + ").draw();";
 
 

@@ -14,6 +14,7 @@ namespace Buhta
     public enum RegistrColumnRole { Реквизит, Измерение, Ресурс }
 
     [JsonObject(IsReference = true)]
+    [Serializable]
     public class SchemaTableColumn : IBuhtaEditable, ISupportInitialize, INotifyPropertyChanged, IViewColumn, IPermissionSupportObject
     {
         [JsonIgnore]
@@ -58,8 +59,6 @@ namespace Buhta
         }
 
 
-
-
         private bool isNotNullable;
         [DisplayName("Обязательное"), Description("Поле может быть заполнено (not null)"), Category("  Колонка")]
         public bool IsNotNullable
@@ -85,22 +84,20 @@ namespace Buhta
         }
 
         private int position;
-        [Browsable(false)]
         public int Position
         {
             get { return position; }
             set { position = value; firePropertyChanged("Position"); }
         }
 
+        [NonSerialized]
         private SchemaTable table;
-        [Browsable(false)]
         public SchemaTable Table
         {
             get { return table; }
             set { table = value; firePropertyChanged("Table"); }
         }
 
-        [Browsable(false)]
         [JsonIgnore]
         public string GetDataTypeDisplay
         {

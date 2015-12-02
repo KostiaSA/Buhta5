@@ -19,18 +19,35 @@ namespace Buhta
             Table.Name = "закрыто";
         }
 
+        public string SelectedColumnName;
+
+        public void ColumnGridRowDblClick(dynamic args)
+        {
+            EditColumn(args.rowId.Value);
+        }
+
         public void EditColumnButtonClick(dynamic args)
         {
+            if (!String.IsNullOrEmpty(SelectedColumnName))
+                EditColumn(SelectedColumnName);
+        }
+
+        void EditColumn(string columnName)
+        {
             var model = new SchemaTableColumnEditModel(Controller, this);
-            model.EditedObject = Table.GetColumnByName(args.rowId.Value);
-
-            //var xx = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
-
-
+            model.EditedObject = Table.GetColumnByName(columnName);
+            model.StartEditing();
             var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
             modal.OnClose_Bind = nameof(CloseColumnEditor);
             modal.Show();
-            //ShowWindow(@"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает
+        }
+
+        public override void StartEditing()
+        {
+            if (EditedObject != null)
+            {
+                EditedObject.StartEditing();
+            }
         }
 
         public void Test1ButtonClick(dynamic args)

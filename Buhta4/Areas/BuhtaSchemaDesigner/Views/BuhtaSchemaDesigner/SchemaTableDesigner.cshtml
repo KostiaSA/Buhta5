@@ -219,16 +219,29 @@
                    grid.AddClass("compact");
                    grid.Bind_DataSource_To_ObjectsList(nameof(Model.Table) + "." + nameof(Model.Table.Columns), nameof(SchemaTableColumn.Name));
 
-                   grid.Bind_OnRowSelect((args) => {
-                       Model.Table.Name= args.rowId;
+                   grid.Bind_OnRowSelect((args) =>
+                   {
+                       Model.SelectedColumnName = args.rowId;
                    });
 
-                   grid.Bind_OnRowDblClick(Model.EditColumnButtonClick);
+                   grid.Bind_OnRowDblClick(Model.ColumnGridRowDblClick);
 
                    grid.AddColumn(c =>
                    {
                        c.Caption = "Имя колонки";
                        c.Field_Bind = nameof(SchemaTableColumn.Name);
+                   });
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Роль";
+                       c.Field_Bind = nameof(SchemaTableColumn.RolesDisplayValue);
+                   });
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Тип данных";
+                       c.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
                    });
 
                    grid.AddColumn(c =>
@@ -255,7 +268,14 @@
                         </div>
                         <div class="btn-group  pull-right">
                             <button class="btn btn-default btn-sm">Добавить колонку</button>
-                            <button class="btn btn-default btn-sm">Изменить</button>
+                            @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           button.Bind_OnClick(Model.EditColumnButtonClick);
+                           button.Text = "Изменить";
+                       })
+
+
                             <button class="btn btn-default btn-sm">Удалить</button>
                         </div>
                     </div>

@@ -12,6 +12,7 @@ namespace Buhta
 {
     [System.ComponentModel.TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
     [Export(typeof(SqlDataType))]
+    [Serializable]
     public class DbKrSaldoDataType : SqlDataType
     {
         public override string Name { get { return "Дб/Кр/Сальдо"; } }

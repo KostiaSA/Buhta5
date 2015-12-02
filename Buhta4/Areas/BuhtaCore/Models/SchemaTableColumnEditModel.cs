@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,19 +17,48 @@ namespace Buhta
 
         public override void SaveChanges()
         {
+            base.SaveChanges();
+            Modal.Close();
+            if (ParentModel != null)
+                ParentModel.Update(true);
+        }
 
-            //Table.Name = "Жопа";
+        public override void CancelChanges()
+        {
+            var table = Column.Table;
+            var colIndex = table.Columns.IndexOf(Column);
+            var restoredColumn = (SchemaTableColumn)SavedEditedObject;
+            restoredColumn.Table = table;
+            table.Columns[colIndex] = restoredColumn;
+            restoredColumn.CancelChanges();
+            Modal.Close();
+        }
 
-            //SchemaTableColumn col;
 
-            //col = new SchemaTableColumn(); col.Table = Table; Table.Columns.Add(col);
-            //col.Name = "новая колонка";
-            //col.Description = "давай!";
+        public string GetColumnDataTypeInputsHtml()
+        {
+            var html = new StringBuilder();
 
+            var dt = new bsInput(this);
+            dt.Label = "Тип данных";
+            dt.AddAttr("disabled", "disabled");
+            dt.AddStyle("max-width", "350px");
+            dt.Type = bsInputType.Text;
+            dt.Bind_Value_To_String(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(Column.DataType.GetNameDisplay));
+            html.Append(dt.GetHtml());
 
-            //UpdateCollection(nameof(Table) + "." + nameof(Table.Columns));
+            if (Column.DataType.GetType() == typeof(StringDataType))
+            {
 
+                var size = new bsInput(this);
+                size.Label = "Максимальная длина";
+                size.AddStyle("max-width", "80px");
+                size.Type = bsInputType.Text;
+                size.Bind_Value_To_String(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(StringDataType.MaxSize));
+                html.Append(size.GetHtml());
+            }
 
+            return html.ToString();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Buhta
 
     [System.ComponentModel.TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
     [JsonObject(IsReference = true)]
+    [Serializable]
     public class SqlDataType : INotifyPropertyChanged
     {
 
@@ -24,11 +25,9 @@ namespace Buhta
             set { column = value; firePropertyChanged("Column"); }
         }
 
-        [Browsable(false)]
         [JsonIgnore]
         public virtual string Name { get { return "SqlDataType"; } }
 
-        [Browsable(false)]
         [JsonIgnore]
         public virtual string GetNameDisplay
         {
