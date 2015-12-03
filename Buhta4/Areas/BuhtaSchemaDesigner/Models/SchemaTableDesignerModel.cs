@@ -20,7 +20,7 @@ namespace Buhta
         {
             Table.Name = "закрыто";
         }
-
+         
         public string SelectedColumnName;
 
         public void SelectedColumnByColumnName(string columnName)
