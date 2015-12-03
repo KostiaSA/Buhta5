@@ -170,6 +170,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OneWayBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsSelect.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsMessageDialogCancelButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsMessageDialogOkButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsSpan.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\MessageDialogModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnAddModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />
@@ -556,6 +558,15 @@
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\ui.fancytree.css" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\vline-rtl.gif" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\vline.gif" />
+    <Content Include="Content\vendors\select2-master\dist\css\select2-bootstrap.css" />
+    <Content Include="Content\vendors\select2-master\dist\css\select2-spinner.gif" />
+    <Content Include="Content\vendors\select2-master\dist\css\select2.css" />
+    <Content Include="Content\vendors\select2-master\dist\css\select2.min.css" />
+    <Content Include="Content\vendors\select2-master\dist\css\select2.png" />
+    <Content Include="Content\vendors\select2-master\dist\js\select2.full.js" />
+    <Content Include="Content\vendors\select2-master\dist\js\select2.full.min.js" />
+    <Content Include="Content\vendors\select2-master\dist\js\select2.js" />
+    <Content Include="Content\vendors\select2-master\dist\js\select2.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -578,6 +589,7 @@
     <Content Include="Areas\BuhtaCore\Views\InfoMessageDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\ConfirmationMessageDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\ErrorMessageDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\SchemaTableColumnAddDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

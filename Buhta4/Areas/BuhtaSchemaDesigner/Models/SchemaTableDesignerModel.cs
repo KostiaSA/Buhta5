@@ -20,7 +20,7 @@ namespace Buhta
         {
             Table.Name = "закрыто";
         }
-         
+
         public string SelectedColumnName;
 
         public void SelectedColumnByColumnName(string columnName)
@@ -40,6 +40,11 @@ namespace Buhta
                 EditColumn(SelectedColumnName);
         }
 
+        public void AddColumnButtonClick(dynamic args)
+        {
+            AddColumn();
+        }
+
         void EditColumn(string columnName)
         {
             var model = new SchemaTableColumnEditModel(Controller, this);
@@ -47,19 +52,16 @@ namespace Buhta
             model.EditedObject = Table.GetColumnByName(columnName);
             model.StartEditing();
             var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
-            //modal.OnClose_Bind = nameof(CloseColumnEditor);
             modal.Show();
         }
 
         void AddColumn()
         {
-            //var model = new SchemaTableColumnEditModel(Controller, this);
-            //model.IsInsertMode = true;
-            //model.EditedObject = Table.GetColumnByName(columnName);
-            //model.StartEditing();
-            //var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
-            //modal.OnClose_Bind = nameof(CloseColumnEditor);
-            //modal.Show();
+            var model = new SchemaTableColumnAddModel(Controller, this,Table);
+            model.IsInsertMode = true;
+            model.StartEditing();
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnAddDialog.cshtml", model);
+            modal.Show();
         }
 
         public override void StartEditing()

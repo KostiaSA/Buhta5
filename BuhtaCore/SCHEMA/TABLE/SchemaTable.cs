@@ -461,6 +461,10 @@ namespace Buhta
                 return Name;
         }
 
+        public int GetMaxColumnPosition()
+        {
+            return Columns.Max((col) => col.Position);
+        }
 
         public List<IViewColumn> GetColumns()
         {

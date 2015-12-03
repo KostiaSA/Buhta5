@@ -271,24 +271,15 @@
                             @Html.bsButton(button =>
                        {
                            button.Size = bsButtonSize.Small;
-                           button.Bind_OnClick((args) =>
-                           {
-                               Model.ShowConfirmationMessageDialog("Подтвердите", "Савченкова Алиса Константиновна, ГБОУ СОШ №457, 9 а класс Савченкова Алиса Константиновна, ГБОУ СОШ №457, 9 а класс?", (a1) =>
-                               {
-                                   Model.ShowInfoMessageDialog("Да", "Все хорошо!");
-                               }, (a2) =>
-                               {
-                                   Model.ShowErrorMessageDialog("Нет", "Все плохо!");
-                               });
-                           });
+                           button.Bind_OnClick(Model.AddColumnButtonClick);
                            button.Text = "Добавить колонку";
                        })
                             @Html.bsButton(button =>
-{
-    button.Size = bsButtonSize.Small;
-    button.Bind_OnClick(Model.EditColumnButtonClick);
-    button.Text = "Изменить";
-})
+                                {
+                                    button.Size = bsButtonSize.Small;
+                                    button.Bind_OnClick(Model.EditColumnButtonClick);
+                                    button.Text = "Изменить";
+                                })
 
 
                             <button class="btn btn-default btn-sm">Удалить</button>
