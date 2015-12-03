@@ -28,14 +28,14 @@ signalr.bindedValueChangedListeners = [];
 
 signalr.subscribeModelPropertyChanged = function (modelBindingId, propertyName, callBack) {
     docReady(function () {
-        bindingHub.server.subscribeBindedValueChanged( modelBindingId, propertyName);
+        bindingHub.server.subscribeBindedValueChanged(modelBindingId, propertyName);
         //alert("hub.start():" + propertyName);
         //console.log('subscribeBindedValueChanged**', modelBindingId, propertyName);
     });
-    signalr.bindedValueChangedListeners.push({  modelBindingId: modelBindingId, propertyName: propertyName, callBack: callBack });
+    signalr.bindedValueChangedListeners.push({ modelBindingId: modelBindingId, propertyName: propertyName, callBack: callBack });
 };
 
-bindingHub.client.receiveBindedValueChanged = function ( modelBindingId, propertyName, newValue) {
+bindingHub.client.receiveBindedValueChanged = function (modelBindingId, propertyName, newValue) {
     //console.log('receiveBindedValueChanged', modelBindingId, propertyName, newValue);
     for (var i = 0; i < signalr.bindedValueChangedListeners.length; i++) {
         var listener = signalr.bindedValueChangedListeners[i];
@@ -46,7 +46,7 @@ bindingHub.client.receiveBindedValueChanged = function ( modelBindingId, propert
     }
 };
 
-bindingHub.client.receiveBindedValuesChanged = function ( modelBindingId, values) {
+bindingHub.client.receiveBindedValuesChanged = function (modelBindingId, values) {
     //console.log('receiveBindedValueChanged', modelBindingId, propertyName, newValue);
     for (var i = 0; i < signalr.bindedValueChangedListeners.length; i++) {
         var listener = signalr.bindedValueChangedListeners[i];
@@ -79,7 +79,13 @@ bindingHub.client.receiveScript = function (script) {
 //    }
 //})
 
-function convertFlatDataToFancyTree(childList) {
+
+var buhta = {};
+
+// -----------  FancyTree  -----------------
+buhta.FancyTree = {};
+
+buhta.FancyTree.convertFlatDataToTree = function (childList) {
     var parent,
         nodeMap = {};
     $.each(childList, function (i, c) {
@@ -95,7 +101,7 @@ function convertFlatDataToFancyTree(childList) {
             } else {
                 parent.children = [c];
             }
-            return null; 
+            return null;
         }
         return c;
     });
@@ -109,3 +115,20 @@ function convertFlatDataToFancyTree(childList) {
     return childList;
 }
 
+
+
+// -----------  DataTables.net  -----------------
+buhta.DataTables = {};
+
+buhta.DataTables.SelectRowById = function (tableId, keyColumnName, id) {
+    var table = $("#" + tableId).DataTable();
+    var colIndex = table.column(keyColumnName + ":name").index()
+
+    table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+        var data = this.data();
+        if (data[colIndex] == id)
+            this.select();
+        else
+            this.deselect();
+    });
+}

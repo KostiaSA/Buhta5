@@ -182,6 +182,14 @@ namespace Buhta
             });
         }
 
+
+        public void SelectRowById(string id)
+        {
+            if (dataSourceBinderToObjectsList != null)
+                dataSourceBinderToObjectsList.SelectRowById(id);
+
+        }
+
         public override string GetHtml()
         {
 
@@ -201,6 +209,7 @@ namespace Buhta
             {
                 var jscol = new JsObject();
                 jscol.AddProperty("title", col.Caption);
+                jscol.AddProperty("name", col.Field_Bind);
                 columns.AddObject(jscol);
             }
             init.AddProperty("columns", columns);

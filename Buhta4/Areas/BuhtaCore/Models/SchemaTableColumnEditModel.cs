@@ -20,7 +20,10 @@ namespace Buhta
             base.SaveChanges();
             Modal.Close();
             if (ParentModel != null)
+            {
                 ParentModel.Update(true);
+                (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
+            }
         }
 
         public override void CancelChanges()
@@ -32,6 +35,11 @@ namespace Buhta
             table.Columns[colIndex] = restoredColumn;
             restoredColumn.CancelChanges();
             Modal.Close();
+            if (ParentModel != null)
+            {
+                ParentModel.Update(true);
+                (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
+            }
         }
 
 

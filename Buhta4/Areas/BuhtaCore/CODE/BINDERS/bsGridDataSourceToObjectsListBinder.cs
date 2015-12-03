@@ -27,6 +27,13 @@ namespace Buhta
             IsNotAutoUpdate = true;
         }
 
+
+        public void SelectRowById(string id)
+        {
+            Tree.Model.ExecuteJavaScript("buhta.DataTables.SelectRowById(" + Tree.UniqueId.AsJavaScript() + ", " + KeyFieldName.AsJavaScript() + ", " + id.AsJavaScript() + ")");
+            //buhta.DataTables.SelectRowById = function(tableId, keyColumnName, id) {            }
+
+        }
         //ObservableCollection<string> selectedRows;
 
         public override string GetJsForSettingProperty()

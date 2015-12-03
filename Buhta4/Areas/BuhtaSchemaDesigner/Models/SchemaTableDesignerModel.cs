@@ -14,12 +14,20 @@ namespace Buhta
 
         public SchemaTableDesignerModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
+        public bsGrid ColumnsGrid;
+
         public void CloseColumnEditor(dynamic args)
         {
             Table.Name = "закрыто";
         }
 
         public string SelectedColumnName;
+
+        public void SelectedColumnByColumnName(string columnName)
+        {
+            SelectedColumnName = columnName;
+            ColumnsGrid.SelectRowById(columnName);
+        }
 
         public void ColumnGridRowDblClick(dynamic args)
         {

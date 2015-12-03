@@ -215,6 +215,7 @@
                 <div class="panel-body" style="background-color: rgba(214, 214, 214, 0.0)">
                     @Html.bsGrid(grid =>
                {
+                   Model.ColumnsGrid = grid;
                    grid.AddClass("cell-border");
                    grid.AddClass("compact");
                    grid.Bind_DataSource_To_ObjectsList(nameof(Model.Table) + "." + nameof(Model.Table.Columns), nameof(SchemaTableColumn.Name));
