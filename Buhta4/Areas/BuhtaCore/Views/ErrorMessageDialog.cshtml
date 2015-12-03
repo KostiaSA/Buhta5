@@ -5,14 +5,14 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">@Model.Title</h4>
     </div>
-    <div class="modal-body" style="color:#418BCA">
+    <div class="modal-body" style="color:#EF6F6C">
         @Model.Message
     </div>
     <div class="modal-footer">
         @Html.bsMessageDialogOkButton(button =>
    {
        button.Text = "Закрыть";
-       button.ButtonStyle = bsButtonStyle.Primary;
+       button.ButtonStyle = bsButtonStyle.Danger;
    })
         @*@Html.bsButton(button =>
    {

@@ -178,7 +178,6 @@
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsGrid.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsGridColumn.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\old_bsTree.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsInput.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsControl.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsButton.cs" />
@@ -577,6 +576,8 @@
     <Content Include="Areas\BuhtaCore\Views\SelectSchemaRolesDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\InfoMessageDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\ConfirmationMessageDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\ErrorMessageDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

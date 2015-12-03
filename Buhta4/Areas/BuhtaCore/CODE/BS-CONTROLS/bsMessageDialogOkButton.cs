@@ -9,7 +9,7 @@ namespace Buhta
 {
     public static partial class HtmlHelperExtensions
     {
-        public static MvcHtmlString bsMessageDialogSaveButton(this HtmlHelper helper, Action<bsButton> settings)
+        public static MvcHtmlString bsMessageDialogOkButton(this HtmlHelper helper, Action<bsButton> settings)
         {
             if (!(helper.ViewData.Model is MessageDialogModel))
                 throw new Exception(nameof(bsEditFormSaveButton)+" может использоваться только с моделью типа '"+nameof(MessageDialogModel) +"'");
@@ -20,6 +20,7 @@ namespace Buhta
             button.ButtonStyle = bsButtonStyle.Success;
             button.Bind_OnClick(model.OkButtonClick);
             button.Text = "Ok";
+            button.AddStyle("min-width", "80px");
 
             settings(button);
 

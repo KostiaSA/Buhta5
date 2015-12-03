@@ -21,6 +21,7 @@ namespace Buhta
             button.Bind_OnClick(model.SaveButtonClick);
             button.Bind_Text(()=>model.GetSaveButtonText());
             button.Bind_Disabled(() => model.GetSaveButtonDisabled());
+            button.AddStyle("min-width", "80px");
 
             settings(button);
 

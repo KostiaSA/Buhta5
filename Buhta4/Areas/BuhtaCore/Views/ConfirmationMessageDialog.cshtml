@@ -9,17 +9,7 @@
         @Model.Message
     </div>
     <div class="modal-footer">
-        @Html.bsMessageDialogOkButton(button =>
-   {
-       button.Text = "Закрыть";
-       button.ButtonStyle = bsButtonStyle.Primary;
-   })
-        @*@Html.bsButton(button =>
-   {
-       button.Text = "Отмена";
-       button.ButtonStyle = bsButtonStyle.Default;
-       button.Bind_OnClick(Model.CancelButtonClick);
-   })*@
-
+        @Html.bsMessageDialogOkButton(button =>   { button.Text = "Ok"; button.ButtonStyle = bsButtonStyle.Primary; })
+        @Html.bsMessageDialogCancelButton(button =>   { button.Text = "Отмена"; })
     </div>
 </div>

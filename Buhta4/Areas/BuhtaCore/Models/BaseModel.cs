@@ -405,10 +405,29 @@ namespace Buhta
             var model = new MessageDialogModel(Controller, this);
             model.Title = title;
             model.Message = message;
-            model.OkEventMethod = closeEventMethod;
+            model.CancelEventMethod = closeEventMethod;
             var modal = CreateModal(@"~\Areas\BuhtaCore\Views\InfoMessageDialog.cshtml", model);
-            //if (closeEventMethod != null)
-            //    modal.Bind_OkClick(closeEventMethod);
+            modal.Show();
+        }
+
+        public void ShowErrorMessageDialog(string title, string message, BinderEventMethod closeEventMethod = null)
+        {
+            var model = new MessageDialogModel(Controller, this);
+            model.Title = title;
+            model.Message = message;
+            model.CancelEventMethod = closeEventMethod;
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\ErrorMessageDialog.cshtml", model);
+            modal.Show();
+        }
+
+        public void ShowConfirmationMessageDialog(string title, string message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        {
+            var model = new MessageDialogModel(Controller, this);
+            model.Title = title;
+            model.Message = message;
+            model.OkEventMethod = okEventMethod;
+            model.CancelEventMethod = cancelEventMethod;
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\ConfirmationMessageDialog.cshtml", model);
             modal.Show();
         }
 
