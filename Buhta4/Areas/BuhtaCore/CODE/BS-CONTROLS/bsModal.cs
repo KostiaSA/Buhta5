@@ -8,19 +8,58 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class bsModal
+    public class bsModal : bsControl
     {
         public Controller Controller;
-        public BaseModel ParentModel;
         public string ViewName;
         public BaseModel ViewModel;
 
-        public string OnClose_Bind;
+        public bsModal(BaseModel model) : base(model) { }
+
+        public void Bind_OkClick(BinderEventMethod eventMethod)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "click"
+            });
+        }
+
+        public void Bind_OkClick(string modelEventMethodName)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "click"
+            });
+        }
+
+        public void Bind_CancelClick(BinderEventMethod eventMethod)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "click"
+            });
+        }
+
+        public void Bind_CancelClick(string modelEventMethodName)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "click"
+            });
+        }
+
+
+        //        public event EventHandler OnClose;
+
 
         public void Close()
         {
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript("$('#" + UniqueId + "').modal('hide');");
+            Model.Hub.Clients.Group(Model.BindingId).receiveScript("$('#" + UniqueId + "').modal('hide');");
         }
 
         public void Show()
@@ -37,9 +76,19 @@ namespace Buhta
             //            script.Append("var tag = $("+ windowHtml.AsJavaScript() + ").appendTo('#popups').modal("+init.AsJavaScript()+");");
 
             script.Append("docReady = function(callback) { callback() };");
+            EmitBinders(script);
             script.Append("var modal = $(" + windowHtml.AsJavaScript() + ");");
             script.Append("modal.attr('id','" + UniqueId + "');");
             script.Append("$('body').append(modal);");
+
+            if (ViewModel is MessageDialogModel)
+            {
+                script.Append("modal.on('hidden.bs.modal', function (e) {");
+                script.Append(" bindingHub.server.sendEvent('" + ViewModel.BindingId + "','" + nameof(MessageDialogModel.ClosedByEsc) + "', {} );");
+                script.Append("}); ");
+
+            }
+
             script.Append("modal.modal(" + init.AsJavaScript() + ");");
 
             //if (OnClose_Bind != null)
@@ -52,23 +101,9 @@ namespace Buhta
             //}
 
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            ParentModel.Hub.Clients.Group(ParentModel.BindingId).receiveScript(script.ToString());
+            Model.Hub.Clients.Group(Model.BindingId).receiveScript(script.ToString());
 
         }
-
-        string uniqueId;
-        public string UniqueId
-        {
-            get
-            {
-                if (uniqueId == null)
-                {
-                    uniqueId = "modal" + Guid.NewGuid().ToString().Substring(0, 8);
-                }
-                return uniqueId;
-            }
-        }
-
 
     }
 }

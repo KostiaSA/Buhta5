@@ -58,7 +58,7 @@ namespace Buhta
         {
         }
 
-        public void Update(bool includeDatasets=false)
+        public void Update(bool includeDatasets = false)
         {
             var toSend = new StringBuilder();
 
@@ -392,13 +392,24 @@ namespace Buhta
 
         public bsModal CreateModal(string viewName = null, BaseModel model = null)
         {
-            var modal = new bsModal();
-            modal.ParentModel = this;
+            var modal = new bsModal(this);
             modal.Controller = Controller;
             modal.ViewName = viewName;
             modal.ViewModel = model;
             model.Modal = modal;
             return modal;
+        }
+
+        public void ShowInfoMessageDialog(string title, string message, BinderEventMethod closeEventMethod = null)
+        {
+            var model = new MessageDialogModel(Controller, this);
+            model.Title = title;
+            model.Message = message;
+            model.OkEventMethod = closeEventMethod;
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\InfoMessageDialog.cshtml", model);
+            //if (closeEventMethod != null)
+            //    modal.Bind_OkClick(closeEventMethod);
+            modal.Show();
         }
 
         //public void ShowWindow(string viewName, object model)

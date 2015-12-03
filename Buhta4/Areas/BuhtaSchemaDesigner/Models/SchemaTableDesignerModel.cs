@@ -43,11 +43,23 @@ namespace Buhta
         void EditColumn(string columnName)
         {
             var model = new SchemaTableColumnEditModel(Controller, this);
+            model.IsInsertMode = false;
             model.EditedObject = Table.GetColumnByName(columnName);
             model.StartEditing();
             var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
-            modal.OnClose_Bind = nameof(CloseColumnEditor);
+            //modal.OnClose_Bind = nameof(CloseColumnEditor);
             modal.Show();
+        }
+
+        void AddColumn()
+        {
+            //var model = new SchemaTableColumnEditModel(Controller, this);
+            //model.IsInsertMode = true;
+            //model.EditedObject = Table.GetColumnByName(columnName);
+            //model.StartEditing();
+            //var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
+            //modal.OnClose_Bind = nameof(CloseColumnEditor);
+            //modal.Show();
         }
 
         public override void StartEditing()

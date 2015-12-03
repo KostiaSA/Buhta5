@@ -170,6 +170,8 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\EventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OneWayBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsMessageDialogCancelButton.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsMessageDialogOkButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsSpan.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsEditFormCancelButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsEditFormSaveButton.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\MessageDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />
@@ -573,6 +576,7 @@
     <Content Include="Content\vendors\fancytree-master\src\skin-win8\ui.fancytree.less" />
     <Content Include="Areas\BuhtaCore\Views\SelectSchemaRolesDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\InfoMessageDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

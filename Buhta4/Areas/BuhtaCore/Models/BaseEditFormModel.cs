@@ -11,6 +11,7 @@ namespace Buhta
 
     public class BaseEditFormModel : BaseModel
     {
+        public bool IsInsertMode;
         public IBuhtaEditable EditedObject { get; set; }
         protected Object SavedEditedObject;
 
