@@ -181,27 +181,6 @@
                     @*<h3 class="panel-title">Свойства</h3>*@
                     таблица подключена к серверу
                 </div>
-                <div class="panel-body">
-                    @Html.xFormBegin()
-                    @Html.xInput(s =>
-               {
-                   s.InTable = TagInTable.AsRow;
-                   s.Text_Bind = "Table.Name";
-                   s.Label = "Имя таблицы";
-                   s.Height = 20;
-                   s.Width = 400;
-
-               })
-                    @Html.xInput(settings =>
-               {
-                   settings.InTable = TagInTable.AsRow;
-                   settings.Text_Bind = "Table.Description";
-                   settings.Label = "Примечание";
-                   settings.Height = 30;
-                   settings.Width = 600;
-               })
-                    @Html.xFormEnd()
-                </div>
             </div>
 
         </div>
@@ -255,7 +234,7 @@
                    {
                        c.Caption = "Позиция";
                        c.Field_Bind = nameof(SchemaTableColumn.Position);
-                       c.DataType = GridColumnDataType.Number;
+                     //  c.DataType = GridColumnDataType.Number;
                    });
 
                })

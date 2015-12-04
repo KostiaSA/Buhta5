@@ -380,16 +380,6 @@ namespace Buhta
         }
 
 
-        public xWindow CreateWindow(string viewName = null, BaseModel model = null)
-        {
-            var win = new xWindow();
-            win.ParentModel = this;
-            win.Controller = Controller;
-            win.ViewName = viewName;
-            win.ViewModel = model;
-            return win;
-        }
-
         public bsModal CreateModal(string viewName = null, BaseModel model = null)
         {
             var modal = new bsModal(this);

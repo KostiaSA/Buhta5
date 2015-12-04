@@ -64,6 +64,23 @@ namespace Buhta
             });
         }
 
+        //bsGridDataSourceToObjectsListBinder dataSourceBinderToObjectsList;
+        //public void Bind_DataSource_To_ObjectsList(string datasourceModelPropertyName, string keyFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName = null)
+        //{
+        //    KeyFieldName = keyFieldName;
+        //    dataSourceBinderToObjectsList = new bsGridDataSourceToObjectsListBinder()
+        //    {
+        //        Tree = this,
+        //        DatasourceModelPropertyName = datasourceModelPropertyName,
+        //        KeyFieldName = keyFieldName,
+        //        IconFieldName = iconFieldName,
+        //        SelectedRowsModelPropertyName = selectedRowsModelPropertyName
+
+        //    };
+        //    AddBinder(dataSourceBinderToObjectsList);
+        //}
+
+
 
         public string Label;
         public string PlaceHolder;
@@ -135,10 +152,26 @@ namespace Buhta
             Html.Append("</div>"); // end form-group
 
 
-            JsObject init = new JsObject();
-            init.AddProperty("theme", "bootstrap");
+            JsObject init = new JsObject(); 
+            init.AddProperty("dropdownParent", "body");
+            init.AddProperty("valueField", "id");
+            init.AddProperty("labelField", "title");
 
-            Script.AppendLine("$('#" + UniqueId + "').select2(" + init.ToJson() + ");");
+            var options = new jsArray();
+
+            var item1 = new JsObject();
+            item1.AddProperty("id",1);
+            item1.AddProperty("title", "Один");
+            options.AddObject(item1);
+
+            var item2 = new JsObject();
+            item2.AddProperty("id", 2);
+            item2.AddProperty("title", "Два");
+            options.AddObject(item2);
+
+            init.AddProperty("options", options);
+
+            Script.AppendLine("$('#" + UniqueId + "').selectize(" + init.ToJson() + ");");
 
             return base.GetHtml();
         }

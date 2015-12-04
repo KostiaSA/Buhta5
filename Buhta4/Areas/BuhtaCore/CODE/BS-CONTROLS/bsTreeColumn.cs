@@ -11,7 +11,7 @@ namespace Buhta
     {
         public bsTreeColumnSettings(BaseModel model) : base(model) { }
 
-        public GridColumnDataType DataType = GridColumnDataType.String;
+        //public GridColumnDataType DataType = GridColumnDataType.String;
 
         public int? Width;
         public string Width_Bind;

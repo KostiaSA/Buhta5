@@ -185,18 +185,6 @@
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTreeColumn.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsModal.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\BindingHub.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowEnd.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormButtonsRowBegin.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xTreeGridColumn.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xTreeGrid.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xPageTitle.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormEnd.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xFormBegin.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xControl.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xGrid.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xGridColumn.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xInput.cs" />
-    <Compile Include="Areas\BuhtaCore\CODE\X-CONTROLS\xWindow.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
@@ -567,6 +555,8 @@
     <Content Include="Content\vendors\select2-master\dist\js\select2.full.min.js" />
     <Content Include="Content\vendors\select2-master\dist\js\select2.js" />
     <Content Include="Content\vendors\select2-master\dist\js\select2.min.js" />
+    <Content Include="Content\vendors\selectize.js-master\dist\css\selectize.bootstrap3.css" />
+    <Content Include="Content\vendors\selectize.js-master\dist\js\standalone\selectize.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

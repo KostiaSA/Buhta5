@@ -46,9 +46,5 @@ namespace Buhta.Controllers
             return View();
         }
 
-        private void X_OnChange(xInput sender, string newValue)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

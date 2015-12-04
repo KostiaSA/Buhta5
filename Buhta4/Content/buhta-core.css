@@ -100,4 +100,8 @@ span.fancytree-checkbox:hover {
     cursor: pointer;
 }
 
+.selectize-dropdown, .selectize-dropdown.form-control {
+    z-index: 1100;
+}
+
 

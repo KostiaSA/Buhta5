@@ -54,7 +54,7 @@ namespace Buhta
             }
         }
 
-        public TagInTable InTable = TagInTable.None;
+        //public TagInTable InTable = TagInTable.None;
         //public string ClassAttr;
         //public string StyleAttr;
         public List<bsWrapper> Wrappers = new List<bsWrapper>();
