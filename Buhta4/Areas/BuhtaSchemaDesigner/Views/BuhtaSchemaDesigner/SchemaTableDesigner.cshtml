@@ -82,8 +82,13 @@
        span.Bind_Text(() => Model.GetEditedObjectName());
    })
         <small>(таблица)</small>
+        @Html.bsSpan(() => Model.test777);
     </h3>
 
+    @Html.bsButton((but)=> {
+    but.Text = "Test777";
+    but.Bind_OnClick((args)=> { Model.test777 = 3; });
+})
 
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
@@ -107,6 +112,17 @@
                 <div class="panel-body">
                     <form role="form" class="form-horizontal">
                         <div class="row">
+
+                            @Html.bsSelect(tag =>
+                       {
+                           //tag.Bind_Value_To_String("test777");
+                           tag.Bind_Value_To_String(() => Model.test777, (value) => { Model.test777 = int.Parse(value); });
+                           tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name","Position");
+                           tag.Label = "Тип данных";
+                       })
+
+
+
 
                             @Html.bsInput(s =>
                {

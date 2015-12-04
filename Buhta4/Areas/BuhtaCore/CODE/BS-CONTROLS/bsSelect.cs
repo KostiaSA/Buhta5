@@ -42,11 +42,11 @@ namespace Buhta
             var binder = new TwoWayBinder();
 
             binder.ModelGetMethod = getValueMethod;
-            binder.jsSetMethodName = "val";
+            binder.jsSetMethodName = "first()[0].selectize.setValue";
 
             binder.Is2WayBinding = true;
             binder.jsOnChangeEventName = "change";
-            binder.jsGetMethodName = "val";
+            binder.jsGetMethodName = "first()[0].selectize.getValue";
             binder.ModelSetMethod = setValueMethod;
 
             AddBinder(binder);
@@ -57,28 +57,28 @@ namespace Buhta
             AddBinder(new TwoWayBinder()
             {
                 ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "val",
+                jsSetMethodName = "first()[0].selectize.setValue",
                 Is2WayBinding = true,
                 jsOnChangeEventName = "change",
-                jsGetMethodName = "val"
+                jsGetMethodName = "first()[0].selectize.getValue"
             });
         }
 
-        //bsGridDataSourceToObjectsListBinder dataSourceBinderToObjectsList;
-        //public void Bind_DataSource_To_ObjectsList(string datasourceModelPropertyName, string keyFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName = null)
-        //{
-        //    KeyFieldName = keyFieldName;
-        //    dataSourceBinderToObjectsList = new bsGridDataSourceToObjectsListBinder()
-        //    {
-        //        Tree = this,
-        //        DatasourceModelPropertyName = datasourceModelPropertyName,
-        //        KeyFieldName = keyFieldName,
-        //        IconFieldName = iconFieldName,
-        //        SelectedRowsModelPropertyName = selectedRowsModelPropertyName
+        bsSelectOptionsToObjectsListBinder optionsBinderToObjectsList;
+        public void Bind_Options_To_ObjectsList(string datasourceModelPropertyName, string keyFieldName, string titleFieldName = null, string sortFieldName = null)
+        {
+            //KeyFieldName = keyFieldName;
+            optionsBinderToObjectsList = new bsSelectOptionsToObjectsListBinder()
+            {
+                Select = this,
+                DatasourceModelPropertyName = datasourceModelPropertyName,
+                KeyFieldName = keyFieldName,
+                TitleFieldName = titleFieldName,
+                SortFieldName = sortFieldName
 
-        //    };
-        //    AddBinder(dataSourceBinderToObjectsList);
-        //}
+            };
+            AddBinder(optionsBinderToObjectsList);
+        }
 
 
 
@@ -91,30 +91,9 @@ namespace Buhta
 
         string GetDisplayText(object value)
         {
-            //if (Lookup != null)
-            //    return Lookup.GetDisplayText(value);
-            //else
             return value.ToString();
         }
 
-        //object ParseDisplayText(string text)
-        //{
-        //    if (Lookup != null)
-        //        return Lookup.ParseDisplayText(text);
-        //    else
-        //    {
-        //        if (ValueType == typeof(String))
-        //            return text;
-        //        else
-        //        if (ValueType == typeof(int))
-        //            return int.Parse(text);
-        //        else
-        //        if (ValueType == typeof(Decimal))
-        //            return Decimal.Parse(text);
-        //        else
-        //            return nameof(ParseDisplayText) + ": неизвестный тип '" + ValueType.FullName + "'";
-        //    }
-        //}
 
         public override string GetHtml()
         {
@@ -133,7 +112,6 @@ namespace Buhta
 
             Html.Append("<div class='form-group'>"); // begin form-group
 
-            // EmitProperty_Bind2Way_M(Script, Value_Bind, "val", "change");
             AddClass("form-control");
 
             if (Label != null)
@@ -152,24 +130,19 @@ namespace Buhta
             Html.Append("</div>"); // end form-group
 
 
-            JsObject init = new JsObject(); 
+            JsObject init = new JsObject();
             init.AddProperty("dropdownParent", "body");
-            init.AddProperty("valueField", "id");
-            init.AddProperty("labelField", "title");
 
-            var options = new jsArray();
-
-            var item1 = new JsObject();
-            item1.AddProperty("id",1);
-            item1.AddProperty("title", "Один");
-            options.AddObject(item1);
-
-            var item2 = new JsObject();
-            item2.AddProperty("id", 2);
-            item2.AddProperty("title", "Два");
-            options.AddObject(item2);
-
-            init.AddProperty("options", options);
+            if (optionsBinderToObjectsList != null)
+            {
+                init.AddProperty("valueField", "id");
+                if (optionsBinderToObjectsList.TitleFieldName != null)
+                    init.AddProperty("labelField", "title");
+                else
+                    init.AddProperty("labelField", "id");
+                if (optionsBinderToObjectsList.SortFieldName != null)
+                    init.AddProperty("sortField", "sort");
+            }
 
             Script.AppendLine("$('#" + UniqueId + "').selectize(" + init.ToJson() + ");");
 

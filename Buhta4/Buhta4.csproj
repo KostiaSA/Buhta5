@@ -158,6 +158,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsSelectOptionsToObjectsListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridDataSourceToObjectsListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridRowDblClickEventBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSchemaRolesBinder.cs" />
