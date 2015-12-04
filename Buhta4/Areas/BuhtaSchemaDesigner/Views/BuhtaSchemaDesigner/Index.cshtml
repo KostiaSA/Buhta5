@@ -88,7 +88,7 @@
 
     @Html.bsInput(inp =>
 {
-    inp.Bind_Value_To_String(nameof(Model.TestProp1));
+    inp.Bind_Value<string>(nameof(Model.TestProp1));
 })
 
     @Html.bsTree(tree =>

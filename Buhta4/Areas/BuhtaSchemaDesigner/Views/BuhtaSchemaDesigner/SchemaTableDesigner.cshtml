@@ -125,22 +125,21 @@
 
                             @Html.bsInput(s =>
                        {
-                           s.Size = bsInputSize.Small;
-                           s.Bind_Value_To_String(nameof(Model.Table) + "." + nameof(Model.Table.Name));
+                           s.Bind_Value<String>(nameof(Model.Table) + "." + nameof(Model.Table.Name));
                            s.Label = "Имя таблицы";
                            s.AddStyle("max-width", "500px");
                        })
 
                             @Html.bsInput(s =>
                {
-                   s.Bind_Value_To_String(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
+                   s.Bind_Value<string>(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
                    s.Label = "Test1";
                })
 
 
                             @Html.bsInput(s =>
                {
-                   s.Bind_Value_To_String(nameof(Model.Table) + "." + nameof(Model.Table.Description));
+                   s.Bind_Value<string>(nameof(Model.Table) + "." + nameof(Model.Table.Description));
                    s.Label = "Описание";
                })
 
@@ -155,33 +154,33 @@
                             @Html.bsInput(s =>
                {
                    //s.Type = bsInputType.Checkbox;
-                   s.Bind_Value_To_Boolean(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
+                   s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
                    s.Label = "Редактируется пользователем (с сохранением истории)";
                })
 
                             @Html.bsInput(s =>
                {
                    //s.Type = bsInputType.Checkbox;
-                   s.Bind_Value_To_Boolean(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
+                   s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
                    s.Label = "Редактируется пользователем (с сохранением истории)";
                })
 
                             @Html.bsInput(s =>
                     {
                         //s.Type = bsInputType.Checkbox;
-                        s.Bind_Value_To_Boolean(nameof(Model.Table) + "." + nameof(Model.Table.IsSubconto));
+                        s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsSubconto));
                         s.Label = "Может использоваться как субконто";
                     })
                             @Html.bsInput(s =>
                 {
                     //s.Type = bsInputType.Checkbox;
-                    s.Bind_Value_To_Boolean(nameof(Model.Table) + "." + nameof(Model.Table.IsProvodkaOwner));
+                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsProvodkaOwner));
                     s.Label = "Может производить движение по регистрам (например, бух. документ)";
                 })
                             @Html.bsInput(s =>
                 {
                     //s.Type = bsInputType.Checkbox;
-                    s.Bind_Value_To_Boolean(nameof(Model.Table) + "." + nameof(Model.Table.IsNotSyncronize));
+                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsNotSyncronize));
                     s.Label = "Не синхронизировать структуру таблицы на sql-сервере";
                 })
                         </div>

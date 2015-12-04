@@ -49,80 +49,138 @@ namespace Buhta
         public string Value = "";
 
 
-        public void Bind_Value_To_Boolean(string modelPropertyName)
-        {
-            Type = bsInputType.Checkbox;
+        //public void Bind_Value_To_Boolean(string modelPropertyName)
+        //{
+        //    Type = bsInputType.Checkbox;
 
-            AddBinder(new TwoWayBinder<bool>()
+        //    AddBinder(new TwoWayBinder<bool>()
+        //    {
+        //        ModelPropertyName = modelPropertyName,
+        //        jsSetMethodName = "prop",
+        //        jsSetPropertyName = "checked",
+        //        Is2WayBinding = true,
+        //        jsOnChangeEventName = "change",
+        //        jsGetMethodName = "prop",
+        //        jsGetPropertyName = "checked"
+        //    });
+        //}
+
+        //public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod)
+        //{
+        //    Bind_Value_To_Boolean(getValueMethod, null);
+        //}
+
+        //public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod, BinderSetMethod<bool> setValueMethod)
+        //{
+        //    Type = bsInputType.Checkbox;
+
+        //    var binder = new TwoWayBinder<bool>();
+
+        //    AddBinder(binder);
+
+        //    binder.ModelGetMethod = getValueMethod;
+        //    binder.jsSetMethodName = "prop";
+        //    binder.jsSetPropertyName = "checked";
+        //    binder.Is2WayBinding = true;
+        //    binder.jsOnChangeEventName = "change";
+        //    binder.jsGetMethodName = "prop";
+        //    binder.jsGetPropertyName = "checked";
+        //}
+
+
+        public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
+        {
+            Bind_Value<T>(getValueMethod, null);
+        }
+
+        public void Bind_Value<T>(BinderGetMethod<T> getValueMethod, BinderSetMethod<T> setValueMethod)
+        {
+            if (typeof(T) == typeof(string))
             {
-                ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "prop",
-                jsSetPropertyName = "checked",
-                Is2WayBinding = true,
-                jsOnChangeEventName = "change",
-                jsGetMethodName = "prop",
-                jsGetPropertyName = "checked"
-            });
-        }
+                Type = bsInputType.Text;
 
-        public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod)
-        {
-            Bind_Value_To_Boolean(getValueMethod, null);
-        }
+                var binder = new TwoWayBinder<T>();
 
-        public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod, BinderSetMethod<bool> setValueMethod)
-        {
-            Type = bsInputType.Checkbox;
+                binder.ModelGetMethod = getValueMethod;
+                binder.jsSetMethodName = "val";
 
-            var binder = new TwoWayBinder<bool>();
+                binder.Is2WayBinding = true;
+                binder.jsOnChangeEventName = "change";
+                binder.jsGetMethodName = "val";
+                binder.ModelSetMethod = setValueMethod;
 
-            AddBinder(binder);
-
-            binder.ModelGetMethod = getValueMethod;
-            binder.jsSetMethodName = "prop";
-            binder.jsSetPropertyName = "checked";
-            binder.Is2WayBinding = true;
-            binder.jsOnChangeEventName = "change";
-            binder.jsGetMethodName = "prop";
-            binder.jsGetPropertyName = "checked";
-        }
-
-
-        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod)
-        {
-            Bind_Value_To_String(getValueMethod, null);
-        }
-
-        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod, BinderSetMethod<string> setValueMethod)
-        {
-            Type = bsInputType.Text;
-
-            var binder = new TwoWayBinder<string>();
-
-            binder.ModelGetMethod = getValueMethod;
-            binder.jsSetMethodName = "val";
-
-            binder.Is2WayBinding = true;
-            binder.jsOnChangeEventName = "change";
-            binder.jsGetMethodName = "val";
-            binder.ModelSetMethod = setValueMethod;
-
-            AddBinder(binder);
-        }
-
-
-        public void Bind_Value_To_String(string modelPropertyName)
-        {
-            Type = bsInputType.Text;
-
-            AddBinder(new TwoWayBinder<string>()
+                AddBinder(binder);
+            }
+            else
+            if (typeof(T) == typeof(bool))
             {
-                ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "val",
-                Is2WayBinding = true,
-                jsOnChangeEventName = "change",
-                jsGetMethodName = "val"
-            });
+                Type = bsInputType.Checkbox;
+
+                var binder = new TwoWayBinder<T>();
+
+                binder.ModelGetMethod = getValueMethod;
+                binder.jsSetMethodName = "prop";
+                binder.jsSetPropertyName = "checked";
+
+                binder.Is2WayBinding = true;
+                binder.jsOnChangeEventName = "change";
+                binder.jsGetMethodName = "prop";
+                binder.jsGetPropertyName = "checked";
+                binder.ModelSetMethod = setValueMethod;
+
+                AddBinder(binder);
+            }
+            else
+                throw new Exception(nameof(bsInput) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
+
+        }
+        //public void Bind_Value_To_String(string modelPropertyName)
+        //{
+        //    Type = bsInputType.Text;
+
+            //    AddBinder(new TwoWayBinder<string>()
+            //    {
+            //        ModelPropertyName = modelPropertyName,
+            //        jsSetMethodName = "val",
+            //        Is2WayBinding = true,
+            //        jsOnChangeEventName = "change",
+            //        jsGetMethodName = "val"
+            //    });
+            //}
+
+        public void Bind_Value<T>(string modelPropertyName)
+        {
+
+            if (typeof(T) == typeof(string))
+            {
+                Type = bsInputType.Text;
+                AddBinder(new TwoWayBinder<T>()
+                {
+                    ModelPropertyName = modelPropertyName,
+                    jsSetMethodName = "val",
+                    Is2WayBinding = true,
+                    jsOnChangeEventName = "change",
+                    jsGetMethodName = "val"
+                });
+            }
+            else
+            if (typeof(T) == typeof(bool))
+            {
+                Type = bsInputType.Checkbox;
+
+                AddBinder(new TwoWayBinder<bool>()
+                {
+                    ModelPropertyName = modelPropertyName,
+                    jsSetMethodName = "prop",
+                    jsSetPropertyName = "checked",
+                    Is2WayBinding = true,
+                    jsOnChangeEventName = "change",
+                    jsGetMethodName = "prop",
+                    jsGetPropertyName = "checked"
+                });
+            }
+            else
+                throw new Exception(nameof(bsInput) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
         }
 
 
@@ -133,7 +191,7 @@ namespace Buhta
             listBinder = new bsInputToRolesListBinder()
             {
                 ModelPropertyName = modelPropertyName,
-                RootRole= rootRole
+                RootRole = rootRole
                 //jsSetMethodName = "val",
                 //Is2WayBinding = true,
                 //jsOnChangeEventName = "change",

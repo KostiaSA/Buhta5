@@ -52,7 +52,7 @@ namespace Buhta
             dt.AddAttr("disabled", "disabled");
             dt.AddStyle("max-width", "350px");
             dt.Type = bsInputType.Text;
-            dt.Bind_Value_To_String(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(Column.DataType.GetNameDisplay));
+            dt.Bind_Value<string>(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(Column.DataType.GetNameDisplay));
             html.Append(dt.GetHtml());
 
             if (Column.DataType.GetType() == typeof(StringDataType))
@@ -62,7 +62,7 @@ namespace Buhta
                 size.Label = "Максимальная длина";
                 size.AddStyle("max-width", "80px");
                 size.Type = bsInputType.Text;
-                size.Bind_Value_To_String(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(StringDataType.MaxSize));
+                size.Bind_Value<string>(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(StringDataType.MaxSize));
                 html.Append(size.GetHtml());
             }
 
