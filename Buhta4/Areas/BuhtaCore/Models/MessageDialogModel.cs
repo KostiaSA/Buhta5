@@ -18,7 +18,7 @@ namespace Buhta
         public BinderEventMethod CancelEventMethod;
 
         bool okClicked;
-        public void OkButtonClick(dynamic args)
+        public virtual void OkButtonClick(dynamic args)
         {
             okClicked = true;
             Modal.Close();
@@ -26,7 +26,7 @@ namespace Buhta
                 OkEventMethod(args);
         }
 
-        public void CancelButtonClick(dynamic args)
+        public virtual void CancelButtonClick(dynamic args)
         {
             Modal.Close();
         }

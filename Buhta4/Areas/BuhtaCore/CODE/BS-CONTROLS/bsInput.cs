@@ -46,46 +46,27 @@ namespace Buhta
         public bool? Disabled;
         public string Disabled_Bind;
 
+        public int? MaxWidth;
+
         public string Value = "";
 
+        public void Bind_OnChange(string modelEventMethodName)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "change"
+            });
+        }
 
-        //public void Bind_Value_To_Boolean(string modelPropertyName)
-        //{
-        //    Type = bsInputType.Checkbox;
-
-        //    AddBinder(new TwoWayBinder<bool>()
-        //    {
-        //        ModelPropertyName = modelPropertyName,
-        //        jsSetMethodName = "prop",
-        //        jsSetPropertyName = "checked",
-        //        Is2WayBinding = true,
-        //        jsOnChangeEventName = "change",
-        //        jsGetMethodName = "prop",
-        //        jsGetPropertyName = "checked"
-        //    });
-        //}
-
-        //public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod)
-        //{
-        //    Bind_Value_To_Boolean(getValueMethod, null);
-        //}
-
-        //public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod, BinderSetMethod<bool> setValueMethod)
-        //{
-        //    Type = bsInputType.Checkbox;
-
-        //    var binder = new TwoWayBinder<bool>();
-
-        //    AddBinder(binder);
-
-        //    binder.ModelGetMethod = getValueMethod;
-        //    binder.jsSetMethodName = "prop";
-        //    binder.jsSetPropertyName = "checked";
-        //    binder.Is2WayBinding = true;
-        //    binder.jsOnChangeEventName = "change";
-        //    binder.jsGetMethodName = "prop";
-        //    binder.jsGetPropertyName = "checked";
-        //}
+        public void Bind_OnChange(BinderEventMethod eventMethod)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethod = eventMethod,
+                jsEventName = "change"
+            });
+        }
 
 
         public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
@@ -134,19 +115,6 @@ namespace Buhta
                 throw new Exception(nameof(bsInput) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
 
         }
-        //public void Bind_Value_To_String(string modelPropertyName)
-        //{
-        //    Type = bsInputType.Text;
-
-            //    AddBinder(new TwoWayBinder<string>()
-            //    {
-            //        ModelPropertyName = modelPropertyName,
-            //        jsSetMethodName = "val",
-            //        Is2WayBinding = true,
-            //        jsOnChangeEventName = "change",
-            //        jsGetMethodName = "val"
-            //    });
-            //}
 
         public void Bind_Value<T>(string modelPropertyName)
         {
@@ -192,10 +160,6 @@ namespace Buhta
             {
                 ModelPropertyName = modelPropertyName,
                 RootRole = rootRole
-                //jsSetMethodName = "val",
-                //Is2WayBinding = true,
-                //jsOnChangeEventName = "change",
-                //jsGetMethodName = "val"
             };
             AddBinder(listBinder);
         }
@@ -205,9 +169,6 @@ namespace Buhta
         public string PlaceHolder;
 
         public string Image;
-
-        //public OldBaseBinder Lookup;
-
 
         public bsInputSize Size = bsInputSize.Default;
 
@@ -219,37 +180,10 @@ namespace Buhta
             return value.ToString();
         }
 
-        //object ParseDisplayText(string text)
-        //{
-        //    if (Lookup != null)
-        //        return Lookup.ParseDisplayText(text);
-        //    else
-        //    {
-        //        if (ValueType == typeof(String))
-        //            return text;
-        //        else
-        //        if (ValueType == typeof(int))
-        //            return int.Parse(text);
-        //        else
-        //        if (ValueType == typeof(Decimal))
-        //            return Decimal.Parse(text);
-        //        else
-        //            return nameof(ParseDisplayText) + ": неизвестный тип '" + ValueType.FullName + "'";
-        //    }
-        //}
-
         public override string GetHtml()
         {
-
-
-            //EmitProperty(Script, "disabled", Disabled);
-            //EmitProperty_Bind(Script, Disabled_Bind, "disabled");
-
-
-            //EmitProperty_M(Script, "val", Text);
-
-            //EmitBinders(Script);
-
+            if (MaxWidth != null)
+                AddAttr("max-width", MaxWidth + "px");
 
             if (Size == bsInputSize.Large)
                 AddClass("input-lg");
@@ -269,7 +203,6 @@ namespace Buhta
             if (Type == bsInputType.Text)
             {
 
-                // EmitProperty_Bind2Way_M(Script, Value_Bind, "val", "change");
                 AddClass("form-control");
 
                 if (Label != null)
@@ -303,18 +236,6 @@ namespace Buhta
             else
             if (Type == bsInputType.List)
             {
-
-                //if (Value_Binder != null)
-                //{
-                //    Model.RegisterBinder(Value_Binder);
-                //    Value_Binder.LastSendedText = Model.GetPropertyDisplayText(Value_Binder);
-                //    Script.AppendLine("tag.val(" + Value_Binder.LastSendedText.AsJavaScript() + ");");
-                //    Script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + Value_Binder.PropertyName + "',function(newValue){");
-                //    Script.AppendLine("    tag.val(newValue);");
-                //    Script.AppendLine("});");
-
-
-                //}
 
                 AddClass("form-control");
 

@@ -23,7 +23,7 @@ namespace Buhta
 
         public BaseModel Model { get { return model; } }
 
-        protected List<BaseBinder> Binders = new List<BaseBinder>();
+        public List<BaseBinder> Binders = new List<BaseBinder>();
         protected void AddBinder(BaseBinder binder)
         {
             binder.Control = this;

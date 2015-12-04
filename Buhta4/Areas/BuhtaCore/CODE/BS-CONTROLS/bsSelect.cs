@@ -25,6 +25,8 @@ namespace Buhta
     {
         public bsSelect(BaseModel model) : base(model) { }
 
+        public int? MaxWidth;
+
         public Type ValueType = typeof(String);
 
         public bool? Disabled;
@@ -86,7 +88,7 @@ namespace Buhta
 
         public string Image;
 
-//        public bsSelectSize Size = bsSelectSize.Default;
+        //        public bsSelectSize Size = bsSelectSize.Default;
 
         string GetDisplayText(object value)
         {
@@ -144,6 +146,9 @@ namespace Buhta
             }
 
             Script.AppendLine("$('#" + UniqueId + "').selectize(" + init.ToJson() + ");");
+            if (MaxWidth != null)
+                Script.AppendLine("$('#" + UniqueId + "').parent().first().find('.selectize-control').css('max-width','" + MaxWidth + "px');");
+
 
             return base.GetHtml();
         }

@@ -156,6 +156,33 @@ namespace Buhta
                 ParentModel.Update();
         }
 
+        public void UpdateDatasets()
+        {
+            var toSend = new StringBuilder();
+
+            foreach (var binder in BindedBinders.Values.ToList())
+            {
+                if (binder.IsNotAutoUpdate)
+                {
+                    var newText = binder.GetJsForSettingProperty();
+                    if (binder.LastSendedText != newText)
+                    {
+                        toSend.AppendLine(newText);
+                        binder.LastSendedText = newText;
+                    }
+                }
+
+            }
+
+            if (toSend.Length > 0)
+            {
+                Thread.Sleep(1); // не удалять, иначе все глючит !!!
+                Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
+            }
+            if (ParentModel != null)
+                ParentModel.Update();
+        }
+
         public void ExecuteJavaScript(string script)
         {
             Thread.Sleep(1); // не удалять, иначе все глючит !!!

@@ -44,8 +44,8 @@ namespace Buhta
                 else
                     sb.Append(Json.Encode(obj.value) + ",");
             }
-
-            sb.RemoveLastChar();
+            if (sb.Length > 1)
+                sb.RemoveLastChar();
             sb.Append("]");
             return sb.ToString();
         }

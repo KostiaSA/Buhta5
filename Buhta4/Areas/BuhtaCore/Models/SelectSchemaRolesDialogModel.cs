@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class SelectSchemaRolesDialogModel : BaseModel
+    public class SelectSchemaRolesDialogModel : MessageDialogModel
     {
         public SchemaBaseRole RootRole;
         public bool NeedSave;
@@ -29,18 +29,19 @@ namespace Buhta
 
         }
 
-        public void OkButtonClick(dynamic args)
+        public override void OkButtonClick(dynamic args)
         {
             EditedList.Clear();
             foreach (var roleID in SelectedRows)
                 EditedList.Add(roleID);
-            Modal.Close();
+
+            base.OkButtonClick(null);
         }
 
-        public void CancelButtonClick(dynamic args)
-        {
-            Modal.Close();
-        }
+        //public void CancelButtonClick(dynamic args)
+        //{
+        //    Modal.Close();
+        //}
 
         public void RowSelect(dynamic args)
         {

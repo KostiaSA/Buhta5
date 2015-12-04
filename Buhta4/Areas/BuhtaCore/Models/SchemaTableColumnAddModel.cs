@@ -11,9 +11,12 @@ namespace Buhta
     {
         public SchemaTableColumn Column { get; set; }
 
-        public SchemaTableColumnAddModel(Controller controller, BaseModel parentModel, SchemaTable table) : base(controller, parentModel) {
+        public SchemaTableColumnAddModel(Controller controller, BaseModel parentModel, SchemaTable table) : base(controller, parentModel)
+        {
+            NewColumnDataTypes = new List<SqlDataType>();
+
             Column = new SchemaTableColumn();
-            Column.Position = table.GetMaxColumnPosition()+1;
+            Column.Position = table.GetMaxColumnPosition() + 1;
             Column.Table = table;
             Column.Name = "";
             //c.ColumnRoles.Add(newRole.ID);
@@ -22,6 +25,9 @@ namespace Buhta
             //EditedTable.Columns.Add(c);
             //    ColumnsGrid.DataSource = null;
         }
+
+        public string NewColumnDataTypeName { get; set; }
+        public List<SqlDataType> NewColumnDataTypes { get; set; }
 
         public override void SaveChanges()
         {
@@ -33,6 +39,45 @@ namespace Buhta
                 (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
             }
         }
+
+        public void OnChangeRoles(dynamic args)
+        {
+            var newRoleID = Column.ColumnRoles.First();
+            var newRole = SchemaBaseRole.Roles[newRoleID] as Колонка_ColumnRole;
+
+            NewColumnDataTypes.Clear();
+
+            SqlDataType newDataType = null;
+            //string newColumName = "Новая колонка";
+            if (newRole.AllowedDataTypes.Count > 0)
+            {
+                foreach (var dataType in newRole.AllowedDataTypes.Values)
+                    NewColumnDataTypes.Add(dataType);
+
+                foreach (var keyVP in newRole.AllowedDataTypes)
+                    if (keyVP.Value == newDataType)
+                    {
+                        if (string.IsNullOrWhiteSpace(Column.Name))
+                            Column.Name = keyVP.Key;
+                        break;
+                    }
+
+                newDataType = newRole.DataType;
+                NewColumnDataTypes.First();
+            }
+            else
+            {
+                newDataType = newRole.DataType;
+                NewColumnDataTypes.Add(newDataType);
+            }
+
+            NewColumnDataTypeName = newDataType.Name;
+            if (string.IsNullOrWhiteSpace(Column.Name))
+                Column.Name = newRole.NewColumnName;
+            UpdateDatasets();
+
+        }
+
 
         public override void CancelChanges()
         {
