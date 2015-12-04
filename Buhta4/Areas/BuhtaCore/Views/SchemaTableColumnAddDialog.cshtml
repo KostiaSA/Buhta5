@@ -1,16 +1,14 @@
 ﻿@model SchemaTableColumnAddModel
-
 <div class="modal" data-width="1000" tabindex="-1" role="dialog">
     @*<div class="modal-dialog">
         <div class="modal-content">*@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Добавление колонки</h4>
+        <h4 class="modal-title" style="color: #01BC8C">Добавление колонки в таблицу "@Model.Column.Table.Name"</h4>
     </div>
     <div class="modal-body">
         <form role="form" class="form-horizontal">
             <div class="row">
-
                 @Html.bsInput(tag =>
            {
                tag.Type = bsInputType.List;
@@ -18,37 +16,34 @@
                tag.Bind_OnChange(Model.OnChangeRoles);
                tag.Label = "Роли";
            })
-                 
+
                 @Html.bsSelect(tag =>
            {
                tag.Bind_Value<string>(nameof(Model.NewColumnDataTypeName));
                tag.Bind_Options_To_ObjectsList(nameof(Model.NewColumnDataTypes), "Name", "GetNameDisplay", "Name");
-               tag. MaxWidth=250;
+               tag.Bind_Disabled(() => Model.NewColumnDataTypes.Count <= 1);
+               tag.MaxWidth = 250;
                tag.Label = "Тип данных";
            })
-
                 @Html.bsInput(tag =>
            {
                tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Name));
                tag.Label = "Имя колонки";
                tag.AddStyle("max-width", "400px");
                tag.Bind_OnChange((args) => { Model.Column.Description = "жо1"; });
+               tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.NewColumnDataTypeName));
            })
-
                 @Html.bsInput(tag =>
            {
                tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Description));
                tag.Label = "Описание";
+               tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.NewColumnDataTypeName));
                //s.AddStyle("max-width", "400px");
            })
 
 
-
-
-
             </div>
         </form>
-
     </div>
     <div class="modal-footer">
         @Html.bsButton(button =>
@@ -63,6 +58,5 @@
        button.ButtonStyle = bsButtonStyle.Default;
        button.Bind_OnClick(Model.CancelButtonClick);
    })
-
     </div>
 </div>

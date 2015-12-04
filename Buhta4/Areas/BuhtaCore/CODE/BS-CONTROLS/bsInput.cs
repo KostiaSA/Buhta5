@@ -43,8 +43,8 @@ namespace Buhta
 
         public bsInputType Type = bsInputType.Text;
 
-        public bool? Disabled;
-        public string Disabled_Bind;
+        //public bool? Disabled;
+        //public string Disabled_Bind;
 
         public int? MaxWidth;
 
@@ -65,6 +65,26 @@ namespace Buhta
             {
                 ModelEventMethod = eventMethod,
                 jsEventName = "change"
+            });
+        }
+
+        public void Bind_Disabled(string modelPropertyName)
+        {
+            AddBinder(new OneWayBinder<bool>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "prop",
+                jsSetPropertyName = "disabled"
+            });
+        }
+
+        public void Bind_Disabled(BinderGetMethod<bool> getValueMethod)
+        {
+            AddBinder(new OneWayBinder<bool>()
+            {
+                ModelGetMethod = getValueMethod,
+                jsSetMethodName = "prop",
+                jsSetPropertyName = "disabled"
             });
         }
 

@@ -70,30 +70,29 @@ table.fancytree-ext-table tbody tr:hover {
     outline: 1px solid transparent;
 }
 
-table.fancytree-ext-table tbody tr.fancytree-active, 
-table.fancytree-ext-table tbody tr.fancytree-active:hover
-{ 
+table.fancytree-ext-table tbody tr.fancytree-active,
+table.fancytree-ext-table tbody tr.fancytree-active:hover {
     background-color: #F7F7F7 !important;
     outline: 0px solid transparent !important;
 }
 
-table.fancytree-ext-table tbody tr.fancytree-selected, 
-table.fancytree-ext-table tbody tr.fancytree-selected:hover, 
-table.fancytree-ext-table tbody tr.fancytree-selected .fancytree-title, 
+table.fancytree-ext-table tbody tr.fancytree-selected,
+table.fancytree-ext-table tbody tr.fancytree-selected:hover,
+table.fancytree-ext-table tbody tr.fancytree-selected .fancytree-title,
 table.fancytree-ext-table tbody tr.fancytree-selected:hover .fancytree-title {
     background-color: transparent;
     outline: 0px solid transparent;
-    color:#428BCA;
+    color: #428BCA;
 }
 
-table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active, 
+table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active,
 table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active:hover {
-  background-color: #F7F7F7;
-  outline: 0px solid transparent;
+    background-color: #F7F7F7;
+    outline: 0px solid transparent;
 }
 
 table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-selected {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 span.fancytree-checkbox:hover {
@@ -104,4 +103,8 @@ span.fancytree-checkbox:hover {
     z-index: 1100;
 }
 
-
+.selectize-control .selectize-input.disabled {
+    cursor: not-allowed  !important;
+    background-color: #eee;
+    opacity: 1;
+}

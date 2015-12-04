@@ -19,6 +19,53 @@ namespace Buhta
         }
     }
 
+    public class bsSelectDisabledBinder : BaseBinder
+    {
+        public string ModelPropertyName;
+        public BinderGetMethod<bool> ModelGetMethod;
+
+        public bsSelectDisabledBinder()
+        {
+            ValueType = typeof(bool);
+        }
+
+        public override string GetJsForSettingProperty()
+        {
+            if (ModelGetMethod == null && ModelPropertyName == null)
+                throw new Exception(nameof(bsSelectDisabledBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
+
+            bool disabled=false;
+            if (ModelGetMethod != null)
+                disabled = ModelGetMethod();
+            else
+            if (ModelPropertyName != null)
+            {
+                var disabled_obj = Control.Model.GetPropertyValue(ModelPropertyName);
+                if (disabled_obj == null)
+                    disabled = false;
+                else
+                    disabled = (bool)disabled_obj;
+
+            }
+
+            if (disabled)
+                return "$('#" + Control.UniqueId + "')[0].selectize.disable();";
+            else
+                return "$('#" + Control.UniqueId + "')[0].selectize.enable();";
+
+        }
+
+        public override void EmitBindingScript(StringBuilder script)
+        {
+            Control.Model.RegisterBinder(this);
+            LastSendedText = GetJsForSettingProperty();
+            script.AppendLine(LastSendedText);
+
+        }
+
+
+    }
+
     //public enum bsSelectSize { Default, Large, Small, ExtraSmall }
 
     public class bsSelect : bsControl
@@ -29,10 +76,21 @@ namespace Buhta
 
         public Type ValueType = typeof(String);
 
-        public bool? Disabled;
-        public string Disabled_Bind;
+        public void Bind_Disabled(string modelPropertyName)
+        {
+            AddBinder(new bsSelectDisabledBinder()
+            {
+                ModelPropertyName = modelPropertyName
+            });
+        }
 
-        public string Value = "";
+        public void Bind_Disabled(BinderGetMethod<bool> getValueMethod)
+        {
+            AddBinder(new bsSelectDisabledBinder()
+            {
+                ModelGetMethod = getValueMethod
+            });
+        }
 
         public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
         {
