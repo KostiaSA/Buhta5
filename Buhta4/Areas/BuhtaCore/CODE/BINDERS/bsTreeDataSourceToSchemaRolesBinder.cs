@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsTreeDataSourceToSchemaRolesBinder : OneWayBinder
+    public class bsTreeDataSourceToSchemaRolesBinder : OneWayBinder<object>
     {
         public string SelectedRowsModelPropertyName;
         public SchemaBaseRole RootRole;

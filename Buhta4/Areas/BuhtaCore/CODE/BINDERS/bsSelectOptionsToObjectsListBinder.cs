@@ -12,7 +12,7 @@ using System.Web;
 namespace Buhta
 {
     [Serializable]
-    public class bsSelectOptionsToObjectsListBinder : OneWayBinder
+    public class bsSelectOptionsToObjectsListBinder : OneWayBinder<object>
     {
         public string DatasourceModelPropertyName;
 

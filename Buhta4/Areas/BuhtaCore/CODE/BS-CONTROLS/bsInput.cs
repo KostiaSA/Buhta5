@@ -53,7 +53,7 @@ namespace Buhta
         {
             Type = bsInputType.Checkbox;
 
-            AddBinder(new TwoWayBinder()
+            AddBinder(new TwoWayBinder<bool>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "prop",
@@ -65,16 +65,16 @@ namespace Buhta
             });
         }
 
-        public void Bind_Value_To_Boolean(BinderGetMethod getValueMethod)
+        public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod)
         {
             Bind_Value_To_Boolean(getValueMethod, null);
         }
 
-        public void Bind_Value_To_Boolean(BinderGetMethod getValueMethod, BinderSetMethod setValueMethod)
+        public void Bind_Value_To_Boolean(BinderGetMethod<bool> getValueMethod, BinderSetMethod<bool> setValueMethod)
         {
             Type = bsInputType.Checkbox;
 
-            var binder = new TwoWayBinder();
+            var binder = new TwoWayBinder<bool>();
 
             AddBinder(binder);
 
@@ -88,16 +88,16 @@ namespace Buhta
         }
 
 
-        public void Bind_Value_To_String(BinderGetMethod getValueMethod)
+        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod)
         {
             Bind_Value_To_String(getValueMethod, null);
         }
 
-        public void Bind_Value_To_String(BinderGetMethod getValueMethod, BinderSetMethod setValueMethod)
+        public void Bind_Value_To_String(BinderGetMethod<string> getValueMethod, BinderSetMethod<string> setValueMethod)
         {
             Type = bsInputType.Text;
 
-            var binder = new TwoWayBinder();
+            var binder = new TwoWayBinder<string>();
 
             binder.ModelGetMethod = getValueMethod;
             binder.jsSetMethodName = "val";
@@ -115,7 +115,7 @@ namespace Buhta
         {
             Type = bsInputType.Text;
 
-            AddBinder(new TwoWayBinder()
+            AddBinder(new TwoWayBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "val",

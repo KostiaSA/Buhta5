@@ -19,7 +19,7 @@ namespace Buhta
             return new MvcHtmlString(tag.GetHtml());
         }
 
-        public static MvcHtmlString bsSpan(this HtmlHelper helper, BinderGetMethod getTextMethod)
+        public static MvcHtmlString bsSpan(this HtmlHelper helper, BinderGetMethod<string> getTextMethod)
         {
             var tag = new bsSpan(helper.ViewData.Model as BaseModel);
             tag.Bind_Text(getTextMethod);
@@ -37,16 +37,16 @@ namespace Buhta
         public string Text = "";
         public void Bind_Text(string modelPropertyName)
         {
-            AddBinder(new OneWayBinder()
+            AddBinder(new OneWayBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "text"
             });
         }
 
-        public void Bind_Text(BinderGetMethod getValueMethod)
+        public void Bind_Text(BinderGetMethod<string> getValueMethod)
         {
-            AddBinder(new OneWayBinder()
+            AddBinder(new OneWayBinder<string>()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "text"

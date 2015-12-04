@@ -7,13 +7,18 @@ using System.Web;
 
 namespace Buhta
 {
-    public delegate object BinderGetMethod();
-    public delegate void BinderSetMethod(string value);
+    public delegate T BinderGetMethod<T>();
+    public delegate void BinderSetMethod<T>(T value);
     public delegate void BinderEventMethod(dynamic args);
 
     public abstract class BaseBinder
     {
+        public Type ValueType;
         public abstract void EmitBindingScript(StringBuilder script);
+
+        public virtual string GetJsForSettingProperty() { return ""; }
+        public string LastSendedText = "";
+        public bool IsNotAutoUpdate;
 
         string uniqueId;
         public string UniqueId

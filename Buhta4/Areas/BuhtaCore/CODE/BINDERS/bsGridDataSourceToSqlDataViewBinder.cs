@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsGridDataSourceToSqlDataViewBinder : OneWayBinder
+    public class bsGridDataSourceToSqlDataViewBinder : OneWayBinder<object>
     {
         public string DatasourceModelPropertyName;
 

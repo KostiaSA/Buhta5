@@ -43,7 +43,75 @@ namespace Buhta
 
         public void BinderSetValue(string binderId, string value)
         {
-            (BindedBinders[binderId] as TwoWayBinder).ModelSetMethod(value);
+            var binder = BindedBinders[binderId];
+            if (binder.ValueType == typeof(string))
+                (binder as TwoWayBinder<string>).ModelSetMethod(value);
+            else
+            if (binder.ValueType == typeof(int))
+                (binder as TwoWayBinder<int>).ModelSetMethod(int.Parse(value));
+            else
+            if (binder.ValueType == typeof(Guid))
+                (binder as TwoWayBinder<Guid>).ModelSetMethod(Guid.Parse(value));
+            else
+            if (binder.ValueType == typeof(bool))
+                (binder as TwoWayBinder<bool>).ModelSetMethod(bool.Parse(value));
+            else
+            if (binder.ValueType == typeof(DateTime))
+                (binder as TwoWayBinder<DateTime>).ModelSetMethod(DateTime.Parse(value));
+            else
+            if (binder.ValueType == typeof(decimal))
+                (binder as TwoWayBinder<decimal>).ModelSetMethod(decimal.Parse(value));
+            else
+            if (binder.ValueType == typeof(float))
+                (binder as TwoWayBinder<float>).ModelSetMethod(float.Parse(value));
+            else
+                throw new Exception("model." + nameof(BinderSetValue) + ": неизвестный тип '" + binder.ValueType.FullName + "'");
+
+        }
+
+        public void SetPropertyValue(string propName, object value)
+        {
+            var names = propName.Split('.');
+            object obj = this;
+            for (int i = 0; i < names.Length; i++)
+            {
+                Type _type = obj.GetType();
+                PropertyInfo _prop = _type.GetProperty(names[i]);
+                if (_prop == null)
+                    throw new Exception("model." + nameof(SetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
+                if (i < names.Length - 1)
+                {
+                    obj = _prop.GetValue(obj);
+                    if (obj == null)
+                        throw new Exception("model." + nameof(SetPropertyValue) + ": объект '" + names[i] + "'==null в '" + propName + "'");
+                }
+                else
+                {
+                    if (_prop.PropertyType == typeof(string))
+                        _prop.SetValue(obj, value.ToString(), null);
+                    else
+                    if (_prop.PropertyType == typeof(Boolean))
+                        _prop.SetValue(obj, Boolean.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(Guid))
+                        _prop.SetValue(obj, Guid.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(int))
+                        _prop.SetValue(obj, int.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(Decimal))
+                        _prop.SetValue(obj, Decimal.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(float))
+                        _prop.SetValue(obj, float.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(DateTime))
+                        _prop.SetValue(obj, DateTime.Parse(value.ToString()), null);
+                    else
+                        throw new Exception("model." + nameof(SetPropertyValue) + ": неизвестный тип '" + _prop.PropertyType.FullName + "'");
+                }
+
+            }
         }
 
         public BaseModel(Controller controller, BaseModel parentModel)
@@ -64,21 +132,18 @@ namespace Buhta
 
             foreach (var binder in BindedBinders.Values.ToList())
             {
-                if (binder is OneWayBinder)
+                if (!binder.IsNotAutoUpdate || includeDatasets)
                 {
-                    var b = binder as OneWayBinder;
-                    if (!b.IsNotAutoUpdate || includeDatasets)
+                    var newText = binder.GetJsForSettingProperty();
+                    //Debug.WriteLine("newText: "+ newText);
+                    if (binder.LastSendedText != newText)
                     {
-                        var newText = b.GetJsForSettingProperty();
-                        //Debug.WriteLine("newText: "+ newText);
-                        if (b.LastSendedText != newText)
-                        {
-                            //Debug.WriteLine("add ok");
-                            toSend.AppendLine(newText);
-                            b.LastSendedText = newText;
-                        }
+                        //Debug.WriteLine("add ok");
+                        toSend.AppendLine(newText);
+                        binder.LastSendedText = newText;
                     }
                 }
+
             }
 
             if (toSend.Length > 0)
@@ -312,41 +377,41 @@ namespace Buhta
         //    return null;
         //}
 
-        public void SetPropertyValue(string propName, object value)
-        {
-            var names = propName.Split('.');
-            object obj = this;
-            for (int i = 0; i < names.Length; i++)
-            {
-                Type _type = obj.GetType();
-                PropertyInfo _prop = _type.GetProperty(names[i]);
-                if (_prop == null)
-                    throw new Exception("model." + nameof(SetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
-                if (i < names.Length - 1)
-                {
-                    obj = _prop.GetValue(obj);
-                    if (obj == null)
-                        throw new Exception("model." + nameof(SetPropertyValue) + ": объект '" + names[i] + "'==null в '" + propName + "'");
-                }
-                else
-                {
-                    if (_prop.PropertyType == typeof(Boolean))
-                        _prop.SetValue(obj, Boolean.Parse(value.ToString()), null);
-                    else
-                    if (_prop.PropertyType == typeof(int))
-                        _prop.SetValue(obj, int.Parse(value.ToString()), null);
-                    else
-                    if (_prop.PropertyType == typeof(Decimal))
-                        _prop.SetValue(obj, Decimal.Parse(value.ToString()), null);
-                    else
-                    if (_prop.PropertyType == typeof(DateTime))
-                        _prop.SetValue(obj, DateTime.Parse(value.ToString()), null);
-                    else
-                        _prop.SetValue(obj, value, null);
-                }
+        //public void SetPropertyValue(string propName, object value)
+        //{
+        //    var names = propName.Split('.');
+        //    object obj = this;
+        //    for (int i = 0; i < names.Length; i++)
+        //    {
+        //        Type _type = obj.GetType();
+        //        PropertyInfo _prop = _type.GetProperty(names[i]);
+        //        if (_prop == null)
+        //            throw new Exception("model." + nameof(SetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
+        //        if (i < names.Length - 1)
+        //        {
+        //            obj = _prop.GetValue(obj);
+        //            if (obj == null)
+        //                throw new Exception("model." + nameof(SetPropertyValue) + ": объект '" + names[i] + "'==null в '" + propName + "'");
+        //        }
+        //        else
+        //        {
+        //            if (_prop.PropertyType == typeof(Boolean))
+        //                _prop.SetValue(obj, Boolean.Parse(value.ToString()), null);
+        //            else
+        //            if (_prop.PropertyType == typeof(int))
+        //                _prop.SetValue(obj, int.Parse(value.ToString()), null);
+        //            else
+        //            if (_prop.PropertyType == typeof(Decimal))
+        //                _prop.SetValue(obj, Decimal.Parse(value.ToString()), null);
+        //            else
+        //            if (_prop.PropertyType == typeof(DateTime))
+        //                _prop.SetValue(obj, DateTime.Parse(value.ToString()), null);
+        //            else
+        //                _prop.SetValue(obj, value, null);
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         public void InvokeMethod(string propName, dynamic args)
         {

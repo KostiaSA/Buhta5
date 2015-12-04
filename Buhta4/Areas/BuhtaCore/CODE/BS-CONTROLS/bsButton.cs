@@ -48,16 +48,16 @@ namespace Buhta
 
         public void Bind_Text(string modelPropertyName)
         {
-            AddBinder(new OneWayBinder()
+            AddBinder(new OneWayBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "text"
             });
         }
 
-        public void Bind_Text(BinderGetMethod getValueMethod)
+        public void Bind_Text(BinderGetMethod<string> getValueMethod)
         {
-            AddBinder(new OneWayBinder()
+            AddBinder(new OneWayBinder<string>()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "text"
@@ -66,7 +66,7 @@ namespace Buhta
 
         public void Bind_Disabled(string modelPropertyName)
         {
-            AddBinder(new OneWayBinder()
+            AddBinder(new OneWayBinder<bool>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "prop",
@@ -74,9 +74,9 @@ namespace Buhta
             });
         }
 
-        public void Bind_Disabled(BinderGetMethod getValueMethod)
+        public void Bind_Disabled(BinderGetMethod<bool> getValueMethod)
         {
-            AddBinder(new OneWayBinder()
+            AddBinder(new OneWayBinder<bool>()
             {
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "prop",

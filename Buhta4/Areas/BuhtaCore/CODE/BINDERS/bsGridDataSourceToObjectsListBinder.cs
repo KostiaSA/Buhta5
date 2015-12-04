@@ -12,7 +12,7 @@ using System.Web;
 namespace Buhta
 {
     [Serializable]
-    public class bsGridDataSourceToObjectsListBinder : OneWayBinder
+    public class bsGridDataSourceToObjectsListBinder : OneWayBinder<object>
     {
         public string DatasourceModelPropertyName;
 

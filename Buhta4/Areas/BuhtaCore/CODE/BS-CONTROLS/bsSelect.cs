@@ -19,7 +19,7 @@ namespace Buhta
         }
     }
 
-    public enum bsSelectSize { Default, Large, Small, ExtraSmall }
+    //public enum bsSelectSize { Default, Large, Small, ExtraSmall }
 
     public class bsSelect : bsControl
     {
@@ -32,14 +32,14 @@ namespace Buhta
 
         public string Value = "";
 
-        public void Bind_Value(BinderGetMethod getValueMethod)
+        public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
         {
-            Bind_Value_To_String(getValueMethod, null);
+            Bind_Value<T>(getValueMethod, null);
         }
 
-        public void Bind_Value_To_String(BinderGetMethod getValueMethod, BinderSetMethod setValueMethod)
+        public void Bind_Value<T>(BinderGetMethod<T> getValueMethod, BinderSetMethod<T> setValueMethod)
         {
-            var binder = new TwoWayBinder();
+            var binder = new TwoWayBinder<T>();
 
             binder.ModelGetMethod = getValueMethod;
             binder.jsSetMethodName = "first()[0].selectize.setValue";
@@ -52,9 +52,9 @@ namespace Buhta
             AddBinder(binder);
         }
 
-        public void Bind_Value_To_String(string modelPropertyName)
+        public void Bind_Value<T>(string modelPropertyName)
         {
-            AddBinder(new TwoWayBinder()
+            AddBinder(new TwoWayBinder<T>()
             {
                 ModelPropertyName = modelPropertyName,
                 jsSetMethodName = "first()[0].selectize.setValue",
@@ -67,7 +67,6 @@ namespace Buhta
         bsSelectOptionsToObjectsListBinder optionsBinderToObjectsList;
         public void Bind_Options_To_ObjectsList(string datasourceModelPropertyName, string keyFieldName, string titleFieldName = null, string sortFieldName = null)
         {
-            //KeyFieldName = keyFieldName;
             optionsBinderToObjectsList = new bsSelectOptionsToObjectsListBinder()
             {
                 Select = this,
@@ -87,7 +86,7 @@ namespace Buhta
 
         public string Image;
 
-        public bsSelectSize Size = bsSelectSize.Default;
+//        public bsSelectSize Size = bsSelectSize.Default;
 
         string GetDisplayText(object value)
         {
@@ -98,14 +97,14 @@ namespace Buhta
         public override string GetHtml()
         {
 
-            if (Size == bsSelectSize.Large)
-                AddClass("select-lg");
-            else
-            if (Size == bsSelectSize.Small)
-                AddClass("select-sm");
-            else
-            if (Size == bsSelectSize.ExtraSmall)
-                AddClass("select-xs");
+            //if (Size == bsSelectSize.Large)
+            //    AddClass("input-lg");
+            //else
+            //if (Size == bsSelectSize.Small)
+            //    AddClass("input-sm");
+            //else
+            //if (Size == bsSelectSize.ExtraSmall)
+            //    AddClass("input-xs");
 
             if (PlaceHolder != null)
                 AddAttr("placeholder", PlaceHolder);

@@ -8,7 +8,7 @@ using System.Web;
 namespace Buhta
 {
 
-    public class TwoWayBinder : OneWayBinder
+    public class TwoWayBinder<T> : OneWayBinder<T>
     {
 
         public bool Is2WayBinding;
@@ -16,7 +16,12 @@ namespace Buhta
         public string jsGetPropertyName;
         public string jsGetMethodName;
 
-        public BinderSetMethod ModelSetMethod { get; set; }
+        public TwoWayBinder()
+        {
+            ValueType = typeof(T);
+        }
+
+        public BinderSetMethod<T> ModelSetMethod { get; set; }
 
         public override void EmitBindingScript(StringBuilder script)
         {
@@ -27,7 +32,7 @@ namespace Buhta
             if (ModelSetMethod != null)
                 propName = UniqueId;
             if (propName == null)
-                throw new Exception(nameof(TwoWayBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
+                throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
             if (jsGetPropertyName != null)
             {

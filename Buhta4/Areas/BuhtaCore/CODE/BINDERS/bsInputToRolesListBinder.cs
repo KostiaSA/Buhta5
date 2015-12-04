@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsInputToRolesListBinder : OneWayBinder
+    public class bsInputToRolesListBinder : OneWayBinder<object>
     {
         public SchemaBaseRole RootRole;
         public void SelectButtonClick(dynamic args)

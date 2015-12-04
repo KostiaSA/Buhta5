@@ -8,22 +8,23 @@ using System.Web;
 namespace Buhta
 {
 
-    public class OneWayBinder:BaseBinder
+    public class OneWayBinder<T> : BaseBinder
     {
         public string jsSetMethodName;
         public string jsSetPropertyName;
         public bool jsSetIsValueAsObject;
         public string ModelPropertyName;
-        public BinderGetMethod ModelGetMethod;
+        public BinderGetMethod<T> ModelGetMethod;
 
-        public string LastSendedText;
+        public OneWayBinder()
+        {
+            ValueType = typeof(T);
+        }
 
-        public bool IsNotAutoUpdate;
-
-        public virtual string GetJsForSettingProperty()
+        public override string GetJsForSettingProperty()
         {
             if (ModelGetMethod == null && ModelPropertyName == null)
-                throw new Exception(nameof(OneWayBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
+                throw new Exception(nameof(OneWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
 
             string value = "";
             if (ModelGetMethod != null)
@@ -40,7 +41,7 @@ namespace Buhta
             }
 
             if (jsSetMethodName == null)
-                throw new Exception(nameof(OneWayBinder) + "." + nameof(GetJsForSettingProperty) + ": не заполнен '" + nameof(jsSetMethodName) + "'");
+                throw new Exception(nameof(OneWayBinder<T>) + "." + nameof(GetJsForSettingProperty) + ": не заполнен '" + nameof(jsSetMethodName) + "'");
 
             //Debug.Print("$('#" + TagUniqueId + "')." + jQueryMethodName + "(" + value + ");");
 
