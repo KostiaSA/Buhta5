@@ -31,6 +31,12 @@ namespace Buhta
 
         public override void SaveChanges()
         {
+            var newDataType = NewColumnDataTypes.Find((dt) => dt.Name == NewColumnDataTypeName);
+
+            Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
+            Column.DataType.Column = Column;
+            Column.Table.Columns.Add(Column);
+
             base.SaveChanges();
             Modal.Close();
             if (ParentModel != null)

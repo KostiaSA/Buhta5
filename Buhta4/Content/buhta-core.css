@@ -104,7 +104,21 @@ span.fancytree-checkbox:hover {
 }
 
 .selectize-control .selectize-input.disabled {
-    cursor: not-allowed  !important;
+    cursor: not-allowed !important;
     background-color: #eee;
     opacity: 1;
+}
+
+.modal-edit-form .modal-title,
+.modal-edit-form .control-label {
+    color: #418BCA;
+}
+
+.modal-add-form .modal-title,
+.modal-add-form .control-label {
+    color: #01BC8C;
+}
+
+.modal-title.delele-color {
+    color: red;
 }

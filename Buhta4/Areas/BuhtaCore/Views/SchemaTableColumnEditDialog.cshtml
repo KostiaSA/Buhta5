@@ -1,11 +1,11 @@
 ﻿@model SchemaTableColumnEditModel
 
-<div class="modal" data-width="1000" tabindex="-1" role="dialog">
+<div class="modal modal-edit-form" data-width="1000" tabindex="-1" role="dialog">
     @*<div class="modal-dialog">
         <div class="modal-content">*@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Редактирование колонки</h4>
+        <h4 class="modal-title">Редактирование колонки в таблице "@Model.Column.Table.Name"</h4>
     </div>
     <div class="modal-body">
         <form role="form" class="form-horizontal">
@@ -54,9 +54,8 @@
     <div class="modal-footer">
         @Html.bsButton(button =>
    {
-       button.Text = "Ok";
-       button.AddStyle("min-width", "70px");
-       button.ButtonStyle = bsButtonStyle.Success;
+       button.Text = "Сохранить";
+       button.ButtonStyle = bsButtonStyle.Primary;
        button.Bind_Disabled(() => !Model.GetNeedSave());
        button.Bind_OnClick(Model.SaveButtonClick);
    })
