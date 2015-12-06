@@ -1,6 +1,5 @@
 ﻿
 @model SchemaTableDesignerModel
-
 @{
     ViewBag.Title = "EditTable";
 }
@@ -67,14 +66,12 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>*@
-
 <div class="container body-content">
     <div class="pull-right">
         <button class="btn btn-default ">&lt;&lt;Назад</button>
         @Html.bsEditFormSaveButton((button) => { button.AddStyle("margin-left", "20px"); })
         @Html.bsEditFormCancelButton((button) => { })
     </div>
-
     <h3>
         <img src="~/Areas/BuhtaSchemaDesigner/Content/icon/SchemaTable_32.png" />
         @Html.bsSpan((span) =>
@@ -84,12 +81,11 @@
         <small>(таблица)</small>
         @Html.bsSpan(() => Model.test777.ToString());
     </h3>
-
-    @Html.bsButton((but)=> {
+    @Html.bsButton((but) =>
+{
     but.Text = "Test777";
-    but.Bind_OnClick((args)=> { Model.test777 = 3; });
+    but.Bind_OnClick((args) => { Model.test777 = 3; });
 })
-
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
         <li role="presentation">
@@ -100,7 +96,6 @@
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Индексы</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Прочее</a></li>
     </ul>
-
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
@@ -112,15 +107,12 @@
                 <div class="panel-body">
                     <form role="form" class="form-horizontal">
                         <div class="row">
-
                             @Html.bsSelect(tag =>
                        {
-                           tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name","Position");
+                           tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name", "Position");
                            tag.Bind_Value<int>(() => Model.test777, (value) => { Model.test777 = value; });
                            tag.Label = "Тип данных";
                        })
-
-
 
 
                             @Html.bsInput(s =>
@@ -129,20 +121,17 @@
                            s.Label = "Имя таблицы";
                            s.AddStyle("max-width", "500px");
                        })
-
                             @Html.bsInput(s =>
                {
                    s.Bind_Value<string>(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
                    s.Label = "Test1";
                })
 
-
                             @Html.bsInput(s =>
                {
                    s.Bind_Value<string>(nameof(Model.Table) + "." + nameof(Model.Table.Description));
                    s.Label = "Описание";
                })
-
                             @Html.bsInput(input =>
                {
                    input.Type = bsInputType.List;
@@ -150,21 +139,18 @@
                    input.Label = "Роли";
                })
 
-
                             @Html.bsInput(s =>
                {
                    //s.Type = bsInputType.Checkbox;
                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
                    s.Label = "Редактируется пользователем (с сохранением истории)";
                })
-
                             @Html.bsInput(s =>
                {
                    //s.Type = bsInputType.Checkbox;
                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
                    s.Label = "Редактируется пользователем (с сохранением истории)";
                })
-
                             @Html.bsInput(s =>
                     {
                         //s.Type = bsInputType.Checkbox;
@@ -190,18 +176,15 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">
             <h4 id="links" style="padding-top: 60px; margin-top: -40px;">Колонки</h4>
-
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     @*<h3 class="panel-title">Свойства</h3>*@
                     таблица подключена к серверу
                 </div>
             </div>
-
         </div>
         <div role="tabpanel" class="tab-pane" id="columns">
             <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Колонки </h4>
-
             <div class="panel panel-warning">
                 <div class="panel-heading">
                     <div>всего колонок: 8</div>
@@ -249,7 +232,7 @@
                    {
                        c.Caption = "Позиция";
                        c.Field_Bind = nameof(SchemaTableColumn.Position);
-                     //  c.DataType = GridColumnDataType.Number;
+                       //  c.DataType = GridColumnDataType.Number;
                    });
 
                })
@@ -267,16 +250,25 @@
                            button.Size = bsButtonSize.Small;
                            button.Bind_OnClick(Model.AddColumnButtonClick);
                            button.Text = "Добавить колонку";
+                           button.AddClass("add-color");
                        })
                             @Html.bsButton(button =>
-                                {
-                                    button.Size = bsButtonSize.Small;
-                                    button.Bind_OnClick(Model.EditColumnButtonClick);
-                                    button.Text = "Изменить";
-                                })
+                       {
+                           button.Size = bsButtonSize.Small;
+                           button.Bind_OnClick(Model.EditColumnButtonClick);
+                           button.Text = "Изменить";
+                           button.AddClass("edit-color");
+                           button.AddStyle("margin-left","5px");
+                       })
+                            @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           button.Bind_OnClick(Model.DeleteColumnButtonClick);
+                           button.Text = "Удалить";
+                           button.AddClass("delete-color");
+                           button.AddStyle("margin-left", "5px");
+                       })
 
-
-                            <button class="btn btn-default btn-sm">Удалить</button>
                         </div>
                     </div>
                 </div>
@@ -291,16 +283,11 @@
     settings.Bind_OnClick(Model.SaveButtonClick);
     settings.Text = "Сохранить";
 })
-
             <br>
         </div>
     </div>
 
 
-
-
 </div>
-
 @section scripts {
 }
-

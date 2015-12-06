@@ -119,6 +119,20 @@ span.fancytree-checkbox:hover {
     color: #01BC8C;
 }
 
-.modal-title.delele-color {
-    color: red;
+.modal-body.delete-color,
+.modal-title.delete-color {
+    color: #EF6F6C;
+}
+
+
+.btn.edit-color {
+    color: #418BCA;
+}
+
+.btn.add-color {
+    color: #01BC8C;
+}
+
+.btn.delete-color {
+    color: #EF6F6C;
 }

@@ -62,7 +62,6 @@ namespace Buhta
                 ret.AddObject(jsrow);
             }
 
-//            return "$('#" + Control.UniqueId + "')[0].selectize.clear(true);$('#" + Control.UniqueId + "')[0].selectize.clearOptions();$('#" + Control.UniqueId + "')[0].selectize.addOption(" + ret.ToJson() + ")";
             return "(function(){ var tag=$('#" + Control.UniqueId + "')[0].selectize; tag.clear(true); tag.clearOptions(); tag.addOption(" + ret.ToJson() + ");})();";
 
         }

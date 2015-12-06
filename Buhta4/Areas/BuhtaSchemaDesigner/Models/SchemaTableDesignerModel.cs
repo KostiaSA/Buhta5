@@ -43,6 +43,21 @@ namespace Buhta
                 EditColumn(SelectedColumnName);
         }
 
+        public void DeleteColumnButtonClick(dynamic args)
+        {
+            if (!string.IsNullOrWhiteSpace(SelectedColumnName))
+                ShowDeleteConfirmationMessageDialog("Удаление", "Удалить колонку '" + SelectedColumnName + "'?", DeleteColumn);
+        }
+
+        public void DeleteColumn(dynamic args)
+        {
+
+            var column = Table.GetColumnByName(SelectedColumnName);
+            Table.Columns.Remove(column);
+            SelectedColumnName = "";
+            UpdateDatasets();
+        }
+
         public void AddColumnButtonClick(dynamic args)
         {
             AddColumn();
@@ -60,7 +75,7 @@ namespace Buhta
 
         void AddColumn()
         {
-            var model = new SchemaTableColumnAddModel(Controller, this,Table);
+            var model = new SchemaTableColumnAddModel(Controller, this, Table);
             model.IsInsertMode = true;
             model.StartEditing();
             var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnAddDialog.cshtml", model);

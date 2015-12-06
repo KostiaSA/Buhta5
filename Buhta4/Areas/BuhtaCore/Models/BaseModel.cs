@@ -515,6 +515,17 @@ namespace Buhta
             modal.Show();
         }
 
+        public void ShowDeleteConfirmationMessageDialog(string title, string message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        {
+            var model = new MessageDialogModel(Controller, this);
+            model.Title = title;
+            model.Message = message;
+            model.OkEventMethod = okEventMethod;
+            model.CancelEventMethod = cancelEventMethod;
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\DeleteConfirmationMessageDialog.cshtml", model);
+            modal.Show();
+        }
+
         //public void ShowWindow(string viewName, object model)
         //{
         //    var windowHtml = R.RenderViewToString(Controller, @"~\Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml", model); //-это работает

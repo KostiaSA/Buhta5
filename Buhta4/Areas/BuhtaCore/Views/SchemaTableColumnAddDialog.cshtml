@@ -10,40 +10,28 @@
         <form role="form" class="form-horizontal">
             <div class="row">
                 @Html.bsInput(tag =>
-           {
-               tag.Type = bsInputType.List;
-               tag.Bind_Value_To_RolesList(nameof(Model.Column) + "." + nameof(Model.Column.ColumnRoles), new Колонка_ColumnRole());
-               tag.Bind_OnChange(Model.OnChangeRoles);
-               tag.Label = "Роли";
-           })
-
-                @*@Html.bsSelect(tag =>
-           {
-               tag.Bind_Value<string>(nameof(Model.NewColumnDataTypeName));
-               tag.Bind_Options_To_ObjectsList(nameof(Model.NewColumnDataTypes), "Name", "GetNameDisplay", "Name");
-               tag.Bind_Disabled(() => Model.NewColumnDataTypes.Count <= 1);
-               tag.MaxWidth = 250;
-               tag.Label = "Тип данных";
-           })*@
+                   {
+                       tag.Type = bsInputType.List;
+                       tag.Bind_Value_To_RolesList(nameof(Model.Column) + "." + nameof(Model.Column.ColumnRoles), new Колонка_ColumnRole());
+                       tag.Bind_OnChange(Model.OnChangeRoles);
+                       tag.Label = "Роли";
+                   })
 
                 @Html.Raw(Model.GetColumnDataTypeInputsHtml())
 
-
                 @Html.bsInput(tag =>
-           {
-               tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Name));
-               tag.Label = "Имя колонки";
-               tag.AddStyle("max-width", "400px");
-               tag.Bind_OnChange((args) => { Model.Column.Description = "жо1"; });
-               tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.EditedColumnDataTypeName));
-           })
+                   {
+                       tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Name));
+                       tag.Label = "Имя колонки";
+                       tag.AddStyle("max-width", "400px");
+                       tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.EditedColumnDataTypeName));
+                   })
                 @Html.bsInput(tag =>
-           {
-               tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Description));
-               tag.Label = "Описание";
-               tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.EditedColumnDataTypeName));
-               //s.AddStyle("max-width", "400px");
-           })
+                   {
+                       tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Description));
+                       tag.Label = "Описание";
+                       tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.EditedColumnDataTypeName));
+                   })
 
 
             </div>
