@@ -53,7 +53,7 @@ namespace Buhta
                     return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "('" + jsSetPropertyName + "'," + value + ");";
             }
             else
-                return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "(" + value + ");";
+                return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "(" + value + ",true);";
 
         }
 
@@ -62,6 +62,7 @@ namespace Buhta
             Control.Model.RegisterBinder(this);
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
+            Debug.Print("EmitBindingScript: " + LastSendedText);
 
         }
 

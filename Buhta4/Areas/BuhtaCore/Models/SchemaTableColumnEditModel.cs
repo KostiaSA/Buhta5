@@ -7,13 +7,21 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class SchemaTableColumnEditModel : BaseEditFormModel
+    public class SchemaTableColumnEditModel : SchemaTableColumnBaseModel
     {
-        public SchemaTableColumn Column { get { return (SchemaTableColumn)EditedObject; } }
+        public override SchemaTableColumn Column { get { return (SchemaTableColumn)EditedObject; }  set { } }
 
         public override string PageTitle { get { return "Колонка: " + Column.Name; } }
 
         public SchemaTableColumnEditModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
+
+        public override void StartEditing()
+        {
+            base.StartEditing();
+            EditedColumnDataTypes.Add(Column.DataType);
+            EditedColumnDataTypeName = Column.DataType.Name;
+
+        }
 
         public override void SaveChanges()
         {
@@ -43,30 +51,5 @@ namespace Buhta
         }
 
 
-        public string GetColumnDataTypeInputsHtml()
-        {
-            var html = new StringBuilder();
-
-            var dt = new bsInput(this);
-            dt.Label = "Тип данных";
-            dt.AddAttr("disabled", "disabled");
-            dt.AddStyle("max-width", "350px");
-            dt.Type = bsInputType.Text;
-            dt.Bind_Value<string>(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(Column.DataType.GetNameDisplay));
-            html.Append(dt.GetHtml());
-
-            if (Column.DataType.GetType() == typeof(StringDataType))
-            {
-
-                var size = new bsInput(this);
-                size.Label = "Максимальная длина";
-                size.AddStyle("max-width", "80px");
-                size.Type = bsInputType.Text;
-                size.Bind_Value<string>(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(StringDataType.MaxSize));
-                html.Append(size.GetHtml());
-            }
-
-            return html.ToString();
-        }
     }
 }

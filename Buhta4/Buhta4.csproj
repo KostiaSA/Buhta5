@@ -190,6 +190,7 @@
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\MessageDialogModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnBaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnAddModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />

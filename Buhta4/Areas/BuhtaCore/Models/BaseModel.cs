@@ -128,9 +128,11 @@ namespace Buhta
 
         public void Update(bool includeDatasets = false)
         {
+            Debug.WriteLine("");
+            Debug.WriteLine("");
             var toSend = new StringBuilder();
 
-            foreach (var binder in BindedBinders.Values.ToList())
+            foreach (var binder in BindedBinders.Values.ToList().OrderBy((a) => a.UpdatePriority))
             {
                 if (!binder.IsNotAutoUpdate || includeDatasets)
                 {
@@ -138,7 +140,7 @@ namespace Buhta
                     //Debug.WriteLine("newText: "+ newText);
                     if (binder.LastSendedText != newText)
                     {
-                        //Debug.WriteLine("add ok");
+                        Debug.WriteLine("add ok: "+ newText);
                         toSend.AppendLine(newText);
                         binder.LastSendedText = newText;
                     }

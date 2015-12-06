@@ -31,6 +31,53 @@ namespace Buhta
         }
     }
 
+    public class bsInputVisibleBinder : BaseBinder
+    {
+        public string ModelPropertyName;
+        public BinderGetMethod<bool> ModelGetMethod;
+
+        public bsInputVisibleBinder()
+        {
+            ValueType = typeof(bool);
+        }
+
+        public override string GetJsForSettingProperty()
+        {
+            if (ModelGetMethod == null && ModelPropertyName == null)
+                throw new Exception(nameof(bsInputVisibleBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
+
+            bool visible = false;
+            if (ModelGetMethod != null)
+                visible = ModelGetMethod();
+            else
+            if (ModelPropertyName != null)
+            {
+                var disabled_obj = Control.Model.GetPropertyValue(ModelPropertyName);
+                if (disabled_obj == null)
+                    visible = false;
+                else
+                    visible = (bool)disabled_obj;
+
+            }
+
+            if (visible)
+                return "$('#" + Control.UniqueId + "').parents('.form-group').first().removeClass('hidden');";
+            else
+                return "$('#" + Control.UniqueId + "').parents('.form-group').first().addClass('hidden');";
+
+        }
+
+        public override void EmitBindingScript(StringBuilder script)
+        {
+            Control.Model.RegisterBinder(this);
+            LastSendedText = GetJsForSettingProperty();
+            script.AppendLine(LastSendedText);
+
+        }
+
+
+    }
+
     public enum bsInputSize { Default, Large, Small, ExtraSmall }
 
     public enum bsInputType { Text, Checkbox, Radio, List }
@@ -85,6 +132,22 @@ namespace Buhta
                 ModelGetMethod = getValueMethod,
                 jsSetMethodName = "prop",
                 jsSetPropertyName = "disabled"
+            });
+        }
+
+        public void Bind_Visible(string modelPropertyName)
+        {
+            AddBinder(new bsInputVisibleBinder()
+            {
+                ModelPropertyName = modelPropertyName
+            });
+        }
+
+        public void Bind_Visible(BinderGetMethod<bool> getValueMethod)
+        {
+            AddBinder(new bsInputVisibleBinder()
+            {
+                ModelGetMethod = getValueMethod
             });
         }
 

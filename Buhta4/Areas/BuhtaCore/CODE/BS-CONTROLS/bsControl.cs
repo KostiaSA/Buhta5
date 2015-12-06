@@ -129,61 +129,61 @@ namespace Buhta
             return sb.ToString();
         }
 
-        public void EmitProperty_M(StringBuilder script, string jqxMethodName, object value)
-        {
-            if (value != null)
-                Script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + value.AsJavaScript() + ");");
-        }
+        //public void EmitProperty_M(StringBuilder script, string jqxMethodName, object value)
+        //{
+        //    if (value != null)
+        //        Script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + value.AsJavaScript() + ");");
+        //}
 
 
-        public void EmitEvent_Bind(StringBuilder script, string modelMethodName, string jqxEventName)
-        {
-            if (modelMethodName != null)
-            {
-                Script.AppendLine("$('#" + UniqueId + "').on('" + jqxEventName + "',function(event){");
-                Script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
-                Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
-                Script.AppendLine("});");
+        //public void EmitEvent_Bind(StringBuilder script, string modelMethodName, string jqxEventName)
+        //{
+        //    if (modelMethodName != null)
+        //    {
+        //        Script.AppendLine("$('#" + UniqueId + "').on('" + jqxEventName + "',function(event){");
+        //        Script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
+        //        Script.AppendLine(" bindingHub.server.sendEvent('" + Model.BindingId + "','" + modelMethodName + "', args );");
+        //        Script.AppendLine("});");
 
-            }
+        //    }
 
-        }
-        public void EmitProperty_Bind_M(StringBuilder script, string modelPropertyName, string jqxMethodName)
-        {
-            if (modelPropertyName != null)
-            {
-                if (!Model.BindedProps.ContainsKey(modelPropertyName))
-                {
-                    Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
-                }
-                script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
-                script.AppendLine("    $('#" + UniqueId + "')" + jqxMethodName + "(newValue);");
-                script.AppendLine("});");
-            }
+        //}
+        //public void EmitProperty_Bind_M(StringBuilder script, string modelPropertyName, string jqxMethodName)
+        //{
+        //    if (modelPropertyName != null)
+        //    {
+        //        if (!Model.BindedProps.ContainsKey(modelPropertyName))
+        //        {
+        //            Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
+        //        }
+        //        script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+        //        script.AppendLine("    $('#" + UniqueId + "')" + jqxMethodName + "(newValue);");
+        //        script.AppendLine("});");
+        //    }
 
-        }
+        //}
 
-        public void EmitProperty_Bind2Way_M(StringBuilder script, string modelPropertyName, string jqxMethodName, string jqxEventName)
-        {
-            if (modelPropertyName != null)
-            {
-                if (!Model.BindedProps.ContainsKey(modelPropertyName))
-                {
-                    Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
-                }
-                script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
-                script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
-                script.AppendLine("    $('#" + UniqueId + "')" + jqxMethodName + "(newValue);");
-                script.AppendLine("});");
+        //public void EmitProperty_Bind2Way_M(StringBuilder script, string modelPropertyName, string jqxMethodName, string jqxEventName)
+        //{
+        //    if (modelPropertyName != null)
+        //    {
+        //        if (!Model.BindedProps.ContainsKey(modelPropertyName))
+        //        {
+        //            Model.BindedProps.Add(modelPropertyName, Model.GetPropertyValue(modelPropertyName).AsJavaScript());
+        //        }
+        //        script.AppendLine("$('#" + UniqueId + "')." + jqxMethodName + "(" + Model.BindedProps[modelPropertyName] + ");");
+        //        script.AppendLine("signalr.subscribeModelPropertyChanged('" + Model.BindingId + "', '" + modelPropertyName + "',function(newValue){");
+        //        script.AppendLine("    $('#" + UniqueId + "')" + jqxMethodName + "(newValue);");
+        //        script.AppendLine("});");
 
-                script.AppendLine("$('#" + UniqueId + "')on('" + jqxEventName + "', function () {");
-                script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + modelPropertyName + "',$('#" + UniqueId + "')" + jqxMethodName + "()); ");
-                script.AppendLine("}); ");
+        //        script.AppendLine("$('#" + UniqueId + "')on('" + jqxEventName + "', function () {");
+        //        script.AppendLine("    bindingHub.server.sendBindedValueChanged('" + Model.BindingId + "', '" + modelPropertyName + "',$('#" + UniqueId + "')" + jqxMethodName + "()); ");
+        //        script.AppendLine("}); ");
 
-            }
+        //    }
 
-        }
+        //}
 
         //public void EmitProperty_Bind2Way_Checked(StringBuilder script, OldBaseBinder binder, string jqxEventName)
         //{

@@ -20,6 +20,8 @@ namespace Buhta
         public string LastSendedText = "";
         public bool IsNotAutoUpdate;
 
+        public int UpdatePriority = 1000;
+
         string uniqueId;
         public string UniqueId
         {

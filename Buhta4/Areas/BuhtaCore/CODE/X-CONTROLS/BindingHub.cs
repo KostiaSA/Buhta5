@@ -17,6 +17,7 @@ namespace Buhta
 
         public void SendBindedValueChanged(string modelBindingID, string propertyName, string newValue)
         {
+            Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
 
             try
             {
@@ -26,6 +27,7 @@ namespace Buhta
 
                 if (propertyName.StartsWith("binder:"))
                 {
+                    Debug.Print("obj.BinderSetValue: " + propertyName + ", " + newValue);
                     obj.BinderSetValue(propertyName, newValue);
                     obj.Update();
                 }

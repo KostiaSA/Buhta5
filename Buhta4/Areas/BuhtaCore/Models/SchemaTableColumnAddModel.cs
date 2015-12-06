@@ -7,31 +7,24 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class SchemaTableColumnAddModel : BaseEditFormModel
+    public class SchemaTableColumnAddModel : SchemaTableColumnBaseModel
     {
-        public SchemaTableColumn Column { get; set; }
 
         public SchemaTableColumnAddModel(Controller controller, BaseModel parentModel, SchemaTable table) : base(controller, parentModel)
         {
-            NewColumnDataTypes = new List<SqlDataType>();
+            EditedColumnDataTypes = new List<SqlDataType>();
 
             Column = new SchemaTableColumn();
             Column.Position = table.GetMaxColumnPosition() + 1;
             Column.Table = table;
+            Column.DataType = new GuidDataType() { Column = Column };
             Column.Name = "";
-            //c.ColumnRoles.Add(newRole.ID);
-            //c.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
-            //c.DataType.Column = c;
-            //EditedTable.Columns.Add(c);
-            //    ColumnsGrid.DataSource = null;
         }
 
-        public string NewColumnDataTypeName { get; set; }
-        public List<SqlDataType> NewColumnDataTypes { get; set; }
 
         public override void SaveChanges()
         {
-            var newDataType = NewColumnDataTypes.Find((dt) => dt.Name == NewColumnDataTypeName);
+            var newDataType = EditedColumnDataTypes.Find((dt) => dt.Name == EditedColumnDataTypeName);
 
             Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
             Column.DataType.Column = Column;
@@ -51,14 +44,14 @@ namespace Buhta
             var newRoleID = Column.ColumnRoles.First();
             var newRole = SchemaBaseRole.Roles[newRoleID] as Колонка_ColumnRole;
 
-            NewColumnDataTypes.Clear();
+            EditedColumnDataTypes.Clear();
 
             SqlDataType newDataType = null;
             //string newColumName = "Новая колонка";
             if (newRole.AllowedDataTypes.Count > 0)
             {
                 foreach (var dataType in newRole.AllowedDataTypes.Values)
-                    NewColumnDataTypes.Add(dataType);
+                    EditedColumnDataTypes.Add(dataType);
 
                 foreach (var keyVP in newRole.AllowedDataTypes)
                     if (keyVP.Value == newDataType)
@@ -69,19 +62,20 @@ namespace Buhta
                     }
 
                 newDataType = newRole.DataType;
-                NewColumnDataTypes.First();
+                EditedColumnDataTypes.First();
             }
             else
             {
                 newDataType = newRole.DataType;
-                NewColumnDataTypes.Add(newDataType);
+                EditedColumnDataTypes.Add(newDataType);
             }
 
-            NewColumnDataTypeName = newDataType.Name;
+            Column.DataType = newDataType;
             if (string.IsNullOrWhiteSpace(Column.Name))
                 Column.Name = newRole.NewColumnName;
-            UpdateDatasets();
 
+            EditedColumnDataTypeName = Column.DataType.Name;
+            UpdateDatasets();
         }
 
 
@@ -96,30 +90,5 @@ namespace Buhta
         }
 
 
-        //public string GetColumnDataTypeInputsHtml()
-        //{
-        //    var html = new StringBuilder();
-
-        //    var dt = new bsInput(this);
-        //    dt.Label = "Тип данных";
-        //    dt.AddAttr("disabled", "disabled");
-        //    dt.AddStyle("max-width", "350px");
-        //    dt.Type = bsInputType.Text;
-        //    dt.Bind_Value_To_String(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(Column.DataType.GetNameDisplay));
-        //    html.Append(dt.GetHtml());
-
-        //    if (Column.DataType.GetType() == typeof(StringDataType))
-        //    {
-
-        //        var size = new bsInput(this);
-        //        size.Label = "Максимальная длина";
-        //        size.AddStyle("max-width", "80px");
-        //        size.Type = bsInputType.Text;
-        //        size.Bind_Value_To_String(nameof(Column) + "." + nameof(Column.DataType) + "." + nameof(StringDataType.MaxSize));
-        //        html.Append(size.GetHtml());
-        //    }
-
-        //    return html.ToString();
-        //}
     }
 }

@@ -115,8 +115,8 @@
 
                             @Html.bsSelect(tag =>
                        {
-                           tag.Bind_Value<int>(() => Model.test777, (value) => { Model.test777 = value; });
                            tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name","Position");
+                           tag.Bind_Value<int>(() => Model.test777, (value) => { Model.test777 = value; });
                            tag.Label = "Тип данных";
                        })
 

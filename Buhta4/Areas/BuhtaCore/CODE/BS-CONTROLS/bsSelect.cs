@@ -34,7 +34,7 @@ namespace Buhta
             if (ModelGetMethod == null && ModelPropertyName == null)
                 throw new Exception(nameof(bsSelectDisabledBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
 
-            bool disabled=false;
+            bool disabled = false;
             if (ModelGetMethod != null)
                 disabled = ModelGetMethod();
             else
@@ -99,6 +99,8 @@ namespace Buhta
 
         public void Bind_Value<T>(BinderGetMethod<T> getValueMethod, BinderSetMethod<T> setValueMethod)
         {
+            if (optionsBinderToObjectsList == null)
+                throw new Exception(nameof(bsSelect) + ": сначала надо привязать '" + nameof(Bind_Options_To_ObjectsList) + "', а уже затем '" + nameof(Bind_Value) + "'");
             var binder = new TwoWayBinder<T>();
 
             binder.ModelGetMethod = getValueMethod;
@@ -114,6 +116,9 @@ namespace Buhta
 
         public void Bind_Value<T>(string modelPropertyName)
         {
+            if (optionsBinderToObjectsList == null)
+                throw new Exception(nameof(bsSelect) + ": сначала надо привязать '"+ nameof(Bind_Options_To_ObjectsList) + "', а уже затем '" + nameof(Bind_Value) + "' к '"+ modelPropertyName + "'");
+
             AddBinder(new TwoWayBinder<T>()
             {
                 ModelPropertyName = modelPropertyName,
