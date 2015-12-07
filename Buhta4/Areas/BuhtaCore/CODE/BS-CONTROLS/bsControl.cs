@@ -15,6 +15,8 @@ namespace Buhta
         protected StringBuilder Script = new StringBuilder();
         protected StringBuilder Html = new StringBuilder();
 
+        public ValidatorBinder ValidatorBinder;
+
         BaseModel model;
         public bsControl(BaseModel _model)
         {

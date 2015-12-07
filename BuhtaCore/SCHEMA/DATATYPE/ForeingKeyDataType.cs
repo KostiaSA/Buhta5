@@ -37,6 +37,7 @@ namespace Buhta
             set { lookupQueryID = value; firePropertyChanged("LookupQueryID"); }
         }
 
+        [NonSerialized]
         SchemaTable refTable_cached;
         public SchemaTable GetRefTable()
         {

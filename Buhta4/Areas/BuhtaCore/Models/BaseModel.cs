@@ -132,7 +132,7 @@ namespace Buhta
             Debug.WriteLine("");
             var toSend = new StringBuilder();
 
-            foreach (var binder in BindedBinders.Values.ToList().OrderBy((a) => a.UpdatePriority))
+            foreach (var binder in BindedBinders.Values.ToList().Where((a)=>a.IsActive).OrderBy((a) => a.UpdatePriority))
             {
                 if (!binder.IsNotAutoUpdate || includeDatasets)
                 {
@@ -162,7 +162,7 @@ namespace Buhta
         {
             var toSend = new StringBuilder();
 
-            foreach (var binder in BindedBinders.Values.ToList())
+            foreach (var binder in BindedBinders.Values.ToList().Where((a) => a.IsActive).OrderBy((a) => a.UpdatePriority))
             {
                 if (binder.IsNotAutoUpdate)
                 {

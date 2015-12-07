@@ -10,9 +10,11 @@ namespace Buhta
     public delegate T BinderGetMethod<T>();
     public delegate void BinderSetMethod<T>(T value);
     public delegate void BinderEventMethod(dynamic args);
+    public delegate void BinderValidateMethod(StringBuilder error);
 
     public abstract class BaseBinder
     {
+        public bool IsActive = true;
         public Type ValueType;
         public abstract void EmitBindingScript(StringBuilder script);
 

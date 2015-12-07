@@ -114,6 +114,23 @@ namespace Buhta
 
         }
 
+        public virtual void Validate_Name(StringBuilder error)
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                error.AppendLine("Имя колонки не может быть пустым");
+
+            if (Name != null && Name.Length > 128)
+                error.AppendLine("Имя колонки длинее 128 символов");
+
+        }
+
+        public virtual void Validate_Roles(StringBuilder error)
+        {
+            if (ColumnRoles.Count == 0 && !(this is SchemaTableSystemColumn))
+                error.AppendLine("У колонки нет ролей.");
+
+        }
+
         public virtual void Validate(StringBuilder error)
         {
             if (string.IsNullOrWhiteSpace(Name))

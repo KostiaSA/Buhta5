@@ -152,6 +152,25 @@ namespace Buhta
         }
 
 
+        public void Bind_Validator(string modelValidateMethodName)
+        {
+            ValidatorBinder = (new ValidatorBinder()
+            {
+                ModelValidateMethodName = modelValidateMethodName
+            });
+            AddBinder(ValidatorBinder);
+        }
+
+        public void Bind_Validator(BinderValidateMethod modelValidateMethod)
+        {
+            ValidatorBinder = (new ValidatorBinder()
+            {
+                ModelValidateMethod = modelValidateMethod
+            });
+            AddBinder(ValidatorBinder);
+        }
+
+
         public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
         {
             Bind_Value<T>(getValueMethod, null);

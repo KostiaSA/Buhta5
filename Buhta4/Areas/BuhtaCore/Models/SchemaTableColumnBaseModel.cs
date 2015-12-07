@@ -26,14 +26,41 @@ namespace Buhta
             get
             {
                 if (Column != null && Column.DataType is StringDataType)
-                    return (Column.DataType as StringDataType);
+                    fakeStringDataType = (Column.DataType as StringDataType);
                 else
                 {
                     if (fakeStringDataType == null)
                         fakeStringDataType = new StringDataType() { Column = Column };
-                    return fakeStringDataType;
                 }
+                return fakeStringDataType;
             }
+        }
+
+
+        string getEditedColumnDataTypeName()
+        {
+            if (string.IsNullOrWhiteSpace(EditedColumnDataTypeName) && Column != null && Column.DataType != null)
+                EditedColumnDataTypeName = Column.DataType.Name;
+            return EditedColumnDataTypeName;
+        }
+
+
+        void setEditedColumnDataTypeName(string newDataTypeName)
+        {
+            if (string.IsNullOrWhiteSpace(EditedColumnDataTypeName) || (Column.DataType.Name != newDataTypeName))
+            {
+                EditedColumnDataTypeName = newDataTypeName;
+
+                if (newDataTypeName == ColumnStringDataType.Name)
+                    Column.DataType = ColumnStringDataType;
+                else
+                {
+                    var newDataType = EditedColumnDataTypes.Find((dt) => dt.Name == EditedColumnDataTypeName);
+                    Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
+                }
+                Column.DataType.Column = Column;
+            }
+
         }
 
         public string GetColumnDataTypeInputsHtml()
@@ -42,8 +69,9 @@ namespace Buhta
 
             var dataTypeTag = new bsSelect(this);
             dataTypeTag.Bind_Disabled(() => this is SchemaTableColumnEditModel || EditedColumnDataTypes.Count <= 1);
-            dataTypeTag.Bind_Options_To_ObjectsList(nameof(EditedColumnDataTypes), "Name", "GetNameDisplay", "Name");
-            dataTypeTag.Bind_Value<string>(nameof(EditedColumnDataTypeName));
+            dataTypeTag.Bind_Options_To_ObjectsList(nameof(EditedColumnDataTypes), "Name", "Name", "Name");
+            //            dataTypeTag.Bind_Value<string>(nameof(EditedColumnDataTypeName));
+            dataTypeTag.Bind_Value<string>(getEditedColumnDataTypeName, setEditedColumnDataTypeName);
             dataTypeTag.MaxWidth = 300;
             dataTypeTag.Label = "Тип данных";
 
@@ -55,7 +83,7 @@ namespace Buhta
             stringSizeTag.AddStyle("max-width", "80px");
             stringSizeTag.Type = bsInputType.Text;
             stringSizeTag.Bind_Value<string>(nameof(ColumnStringDataType) + "." + nameof(StringDataType.MaxSize));
-            stringSizeTag.Bind_Visible(()=> Column.DataType.GetType() == typeof(StringDataType));
+            stringSizeTag.Bind_Visible(() => Column.DataType.GetType() == typeof(StringDataType));
             html.Append(stringSizeTag.GetHtml());
 
             return html.ToString();

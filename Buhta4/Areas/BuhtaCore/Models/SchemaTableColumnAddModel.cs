@@ -24,10 +24,10 @@ namespace Buhta
 
         public override void SaveChanges()
         {
-            var newDataType = EditedColumnDataTypes.Find((dt) => dt.Name == EditedColumnDataTypeName);
+            //var newDataType = EditedColumnDataTypes.Find((dt) => dt.Name == EditedColumnDataTypeName);
+            //Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
+            //Column.DataType.Column = Column;
 
-            Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
-            Column.DataType.Column = Column;
             Column.Table.Columns.Add(Column);
 
             base.SaveChanges();
