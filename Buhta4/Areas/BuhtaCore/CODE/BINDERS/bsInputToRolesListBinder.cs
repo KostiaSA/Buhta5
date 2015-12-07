@@ -77,7 +77,7 @@ namespace Buhta
 
         public override void EmitBindingScript(StringBuilder script)
         {
-            Control.Model.RegisterBinder(this);
+            //Control.Model.RegisterBinder(this);
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
         }

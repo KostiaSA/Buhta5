@@ -57,7 +57,7 @@ namespace Buhta
 
         public override void EmitBindingScript(StringBuilder script)
         {
-            Control.Model.RegisterBinder(this);
+            //Control.Model.RegisterBinder(this);
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
@@ -73,6 +73,7 @@ namespace Buhta
         public bsSelect(BaseModel model) : base(model) { }
 
         public int? MaxWidth;
+        public bool IsRequired;
 
         public Type ValueType = typeof(String);
 
@@ -180,7 +181,11 @@ namespace Buhta
 
             if (Label != null)
             {
-                Html.Append("<label class='col-sm-3 control-label' >" + Label + "</label>");
+                Html.Append("<label class='col-sm-3 control-label' >" + Label.AsHtml());
+                if (IsRequired)
+                    Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                Html.Append("</label>");
+
                 Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
             }
 

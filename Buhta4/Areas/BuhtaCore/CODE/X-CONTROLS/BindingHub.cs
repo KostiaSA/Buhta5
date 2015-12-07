@@ -33,9 +33,10 @@ namespace Buhta
                 }
                 else
                 {
-                    obj.SetPropertyValue(propertyName, newValue);
-                    obj.FireOnChangeByBrowser(obj, propertyName, newValue);
-                    obj.Update();
+                    throw new Exception("internal error BindingHub.SendBindedValueChanged");
+                    //obj.SetPropertyValue(propertyName, newValue);
+                    //obj.FireOnChangeByBrowser(obj, propertyName, newValue);
+                    //obj.Update();
                 }
             }
             catch (Exception e)

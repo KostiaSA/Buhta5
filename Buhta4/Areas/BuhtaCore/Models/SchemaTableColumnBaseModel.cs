@@ -68,6 +68,8 @@ namespace Buhta
             var html = new StringBuilder();
 
             var dataTypeTag = new bsSelect(this);
+            dataTypeTag.IsRequired = this is SchemaTableColumnAddModel;
+
             dataTypeTag.Bind_Disabled(() => this is SchemaTableColumnEditModel || EditedColumnDataTypes.Count <= 1);
             dataTypeTag.Bind_Options_To_ObjectsList(nameof(EditedColumnDataTypes), "Name", "Name", "Name");
             //            dataTypeTag.Bind_Value<string>(nameof(EditedColumnDataTypeName));
@@ -79,6 +81,7 @@ namespace Buhta
             html.Append(dataTypeTag.GetHtml());
 
             var stringSizeTag = new bsInput(this);
+            stringSizeTag.IsRequired = this is SchemaTableColumnAddModel;
             stringSizeTag.Label = "Максимальная длина";
             stringSizeTag.AddStyle("max-width", "80px");
             stringSizeTag.Type = bsInputType.Text;

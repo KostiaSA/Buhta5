@@ -15,7 +15,6 @@ namespace Buhta
         protected StringBuilder Script = new StringBuilder();
         protected StringBuilder Html = new StringBuilder();
 
-        public ValidatorBinder ValidatorBinder;
 
         BaseModel model;
         public bsControl(BaseModel _model)
@@ -35,7 +34,11 @@ namespace Buhta
         protected void EmitBinders(StringBuilder script)
         {
             foreach (var binder in Binders)
+            {
+                Model.RegisterBinder(binder);
                 binder.EmitBindingScript(script);
+            }
+
         }
 
 

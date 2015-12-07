@@ -15,6 +15,7 @@
            {
                tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Name));
                tag.Label = "Имя колонки";
+               tag.Bind_Validator(Model.Column.Validate_Name);
                tag.MaxWidth=400;
            })
 
@@ -29,6 +30,7 @@
                tag.Type = bsInputType.List;
                tag.Bind_Value_To_RolesList(nameof(Model.Column) + "." + nameof(Model.Column.ColumnRoles), new Колонка_ColumnRole());
                tag.Label = "Роли";
+               tag.Bind_Validator(Model.Column.Validate_Roles);
            })
 
 

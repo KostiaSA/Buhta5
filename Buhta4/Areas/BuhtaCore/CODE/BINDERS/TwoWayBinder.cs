@@ -28,11 +28,16 @@ namespace Buhta
             base.EmitBindingScript(script);
 
             script.AppendLine("$('#" + Control.UniqueId + "').on('" + jsOnChangeEventName + "', function () {");
-            var propName = ModelPropertyName;
-            if (ModelSetMethod != null)
-                propName = UniqueId;
-            if (propName == null)
+
+            var  propName = UniqueId;
+            if (propName == null && ModelSetMethod != null)
                 throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
+
+            //var propName = ModelPropertyName;
+            //if (ModelSetMethod != null)
+            //    propName = UniqueId;
+            //if (propName == null)
+            //    throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
             if (jsGetPropertyName != null)
             {

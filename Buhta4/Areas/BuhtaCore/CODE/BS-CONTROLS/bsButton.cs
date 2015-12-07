@@ -157,7 +157,7 @@ namespace Buhta
             }
 
 
-            Html.Append("<button type='button' id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text + "</button>");
+            Html.Append("<button type='button' id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text.AsHtml() + "</button>");
 
             return base.GetHtml();
         }

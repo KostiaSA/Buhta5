@@ -12,7 +12,7 @@ namespace Buhta
     {
         public override void EmitBindingScript(StringBuilder script)
         {
-            Control.Model.RegisterBinder(this);
+            //Control.Model.RegisterBinder(this);
 
             if (ModelEventMethod == null && ModelEventMethodName == null)
                 throw new Exception(nameof(bsGridRowDblClickEventBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки событий нужно указать имя обработчика или event-метод");

@@ -21,30 +21,42 @@ namespace Buhta
 
         public override string GetJsForSettingProperty()
         {
-            if (ModelValidateMethod == null && ModelValidateMethodName == null)
-                throw new Exception(nameof(ValidatorBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя validate-метода или сам validate-метод");
-
+            string retStr;
             var error = new StringBuilder();
-            if (ModelValidateMethod != null)
+            foreach (var _b in Control.Binders.Where((b) => b is ValidatorBinder))
             {
-                ModelValidateMethod(error);
-            }
-            else
-            if (ModelValidateMethodName != null)
-            {
-                Control.Model.InvokeMethod(ModelValidateMethodName, error);
+                var b = _b as ValidatorBinder;
+                if (b.ModelValidateMethod == null && b.ModelValidateMethodName == null)
+                    throw new Exception(nameof(ValidatorBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя validate-метода или сам validate-метод");
+
+                if (b.ModelValidateMethod != null)
+                {
+                    b.ModelValidateMethod(error);
+                }
+                else
+                if (b.ModelValidateMethodName != null)
+                {
+                    Control.Model.InvokeMethod(b.ModelValidateMethodName, error);
+                }
             }
 
             if (error.Length > 0)
-                return "alter('" + error.ToString() + "');";
+                retStr = "$('#" + Control.UniqueId + "-error-text').removeClass('hidden').text(" + error.ToString().AsJavaScript() + "); $('#" + Control.UniqueId + "').parents('.form-group').first().addClass('has-error');";
             else
-                return "alter('нет ошибок');";
-            //return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "(" + value + ",true);";
+                retStr = "$('#" + Control.UniqueId + "-error-text').addClass('hidden');$('#" + Control.UniqueId + "').parents('.form-group').first().removeClass('has-error');";
 
+            foreach (var _b in Control.Binders.Where((b) => b is ValidatorBinder))
+            {
+                if (_b != this)
+                    _b.LastSendedText = retStr;
+            }
+
+            return retStr;
         }
 
         public override void EmitBindingScript(StringBuilder script)
         {
+            //            Control.Model.RegisterBinder(this);
         }
 
 

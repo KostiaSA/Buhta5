@@ -45,27 +45,73 @@ namespace Buhta
         {
             var binder = BindedBinders[binderId];
             if (binder.ValueType == typeof(string))
-                (binder as TwoWayBinder<string>).ModelSetMethod(value);
+            {
+                var b = (binder as TwoWayBinder<string>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(value);
+            }
             else
             if (binder.ValueType == typeof(int))
-                (binder as TwoWayBinder<int>).ModelSetMethod(int.Parse(value));
+            {
+                var b = (binder as TwoWayBinder<int>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(int.Parse(value));
+            }
             else
             if (binder.ValueType == typeof(Guid))
-                (binder as TwoWayBinder<Guid>).ModelSetMethod(Guid.Parse(value));
+            {
+                var b = (binder as TwoWayBinder<Guid>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(Guid.Parse(value));
+            }
             else
             if (binder.ValueType == typeof(bool))
-                (binder as TwoWayBinder<bool>).ModelSetMethod(bool.Parse(value));
+            {
+                var b = (binder as TwoWayBinder<bool>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(bool.Parse(value));
+            }
             else
             if (binder.ValueType == typeof(DateTime))
-                (binder as TwoWayBinder<DateTime>).ModelSetMethod(DateTime.Parse(value));
+            {
+                var b = (binder as TwoWayBinder<DateTime>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(DateTime.Parse(value));
+            }
             else
             if (binder.ValueType == typeof(decimal))
-                (binder as TwoWayBinder<decimal>).ModelSetMethod(decimal.Parse(value));
+            {
+                var b = (binder as TwoWayBinder<decimal>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(decimal.Parse(value));
+            }
             else
             if (binder.ValueType == typeof(float))
-                (binder as TwoWayBinder<float>).ModelSetMethod(float.Parse(value));
+            {
+                var b = (binder as TwoWayBinder<float>);
+                if (b.ModelPropertyName != null)
+                    SetPropertyValue(b.ModelPropertyName, value);
+                else
+                    b.ModelSetMethod(float.Parse(value));
+            }
             else
                 throw new Exception("model." + nameof(BinderSetValue) + ": неизвестный тип '" + binder.ValueType.FullName + "'");
+
+            foreach (var b in binder.Control.Binders)
+                if (b is ValidatorBinder)
+                    b.IsActive = true;
 
         }
 
@@ -132,7 +178,7 @@ namespace Buhta
             Debug.WriteLine("");
             var toSend = new StringBuilder();
 
-            foreach (var binder in BindedBinders.Values.ToList().Where((a)=>a.IsActive).OrderBy((a) => a.UpdatePriority))
+            foreach (var binder in BindedBinders.Values.ToList().Where((a) => a.IsActive).OrderBy((a) => a.UpdatePriority))
             {
                 if (!binder.IsNotAutoUpdate || includeDatasets)
                 {
@@ -140,7 +186,7 @@ namespace Buhta
                     //Debug.WriteLine("newText: "+ newText);
                     if (binder.LastSendedText != newText)
                     {
-                        Debug.WriteLine("add ok: "+ newText);
+                        Debug.WriteLine("add ok: " + newText);
                         toSend.AppendLine(newText);
                         binder.LastSendedText = newText;
                     }

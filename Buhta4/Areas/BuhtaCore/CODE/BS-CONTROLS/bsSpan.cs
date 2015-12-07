@@ -73,7 +73,7 @@ namespace Buhta
 
         public override string GetHtml()
         {
-            Html.Append("<span id='" + UniqueId + "' " + GetAttrs() + ">" + Text + "</span>");
+            Html.Append("<span id='" + UniqueId + "' " + GetAttrs() + ">" + Text.AsHtml() + "</span>");
             return base.GetHtml();
         }
     }

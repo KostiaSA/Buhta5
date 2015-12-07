@@ -69,7 +69,7 @@ namespace Buhta
 
         public override void EmitBindingScript(StringBuilder script)
         {
-            Control.Model.RegisterBinder(this);
+            //Control.Model.RegisterBinder(this);
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
@@ -94,6 +94,8 @@ namespace Buhta
         //public string Disabled_Bind;
 
         public int? MaxWidth;
+
+        public bool IsRequired;
 
         public string Value = "";
 
@@ -154,20 +156,18 @@ namespace Buhta
 
         public void Bind_Validator(string modelValidateMethodName)
         {
-            ValidatorBinder = (new ValidatorBinder()
+            AddBinder(new ValidatorBinder()
             {
                 ModelValidateMethodName = modelValidateMethodName
             });
-            AddBinder(ValidatorBinder);
         }
 
         public void Bind_Validator(BinderValidateMethod modelValidateMethod)
         {
-            ValidatorBinder = (new ValidatorBinder()
+            AddBinder(new ValidatorBinder()
             {
                 ModelValidateMethod = modelValidateMethod
             });
-            AddBinder(ValidatorBinder);
         }
 
 
@@ -309,11 +309,16 @@ namespace Buhta
 
                 if (Label != null)
                 {
-                    Html.Append("<label class='col-sm-3 control-label' >" + Label + "</label>");
+
+                    Html.Append("<label class='col-sm-3 control-label' >" + Label.AsHtml());
+                    if (IsRequired)
+                        Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                    Html.Append("</label>");
                     Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
                 }
 
                 Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + ">" + /*GetDisplayText(Value) +*/ "</input>");
+                Html.Append("<small id='" + UniqueId + "-error-text' class='error-text hidden'></small>");
 
                 if (Label != null)
                 {
@@ -329,7 +334,7 @@ namespace Buhta
                 Html.Append("<label>");
 
                 Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + "></input>");
-                Html.Append(Label != null ? Label.ToString() : "");
+                Html.Append(Label != null ? Label.ToString().AsJavaScript() : "");
 
                 Html.Append("</label>");
                 Html.Append("</div>");
@@ -344,14 +349,17 @@ namespace Buhta
                 if (Label != null)
                 {
                     //Html.Append("<div class='col-sm-3'>"); // begin col-sm-3
-                    Html.Append("<label class='col-sm-3 control-label' >" + Label + "</label>");
+                    Html.Append("<label class='col-sm-3 control-label'>"+ Label.AsHtml());
+                    if (IsRequired)
+                        Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                    Html.Append("</label>");
                     //Html.Append("</div>");  // end col-sm-3
                     Html.Append("<div class='col-sm-8'>");  // begin col-sm-9
                 }
 
 
                 Html.Append("<div class='input-group bs-input'>");
-                Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value) + "</input>");
+                Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value).AsHtml() + "</input>");
                 Html.Append("<span class='input-group-btn'>");
                 //Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
 
