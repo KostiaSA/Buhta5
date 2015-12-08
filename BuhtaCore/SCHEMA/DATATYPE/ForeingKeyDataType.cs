@@ -78,19 +78,19 @@ namespace Buhta
             }
         }
 
-        public override void Validate(StringBuilder error)
+        public override void Validate(ValidateErrorList error)
         {
             base.Validate(error);
 
             if (RefTableID == null)
-                error.AppendLine("У колонки '" + (Column.Name == null ? "?" : Column.Name) + "' не заполнена ссылка на таблицу - внешний ключ.");
+                error.AddError((Column.Name == null ? "?" : Column.Name),"У колонки не заполнена ссылка на таблицу - внешний ключ.");
             else
             {
                 if (!SchemaBaseRole.Roles.ContainsKey((Guid)RefTableID))
                 {
                     var table = App.Schema.GetObject<SchemaTable>((Guid)RefTableID);
                     if (table == null)
-                        error.AppendLine("У колонки '" + (Column.Name == null ? "?" : Column.Name) + "' неверная ссылка на таблицу - внешний ключ.");
+                        error.AddError((Column.Name == null ? "?" : Column.Name), "У колонки неверная ссылка на таблицу - внешний ключ.");
                 }
             }
 

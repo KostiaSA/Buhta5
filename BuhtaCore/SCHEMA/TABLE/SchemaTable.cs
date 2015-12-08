@@ -213,24 +213,24 @@ namespace Buhta
 
         }
 
-        public override void Validate(StringBuilder error)
+        public override void Validate(ValidateErrorList error)
         {
             base.Validate(error);
 
             if (Name != null && Name.Length > 128)
-                error.AppendLine("Имя таблицы длинее 128 символов.");
+                error.AddError("Имя таблицы", "Имя таблицы длинее 128 символов.");
 
             if (TableRoles.Count == 0)
-                error.AppendLine("Не указана ни одна роль таблицы.");
+                error.AddError("Роли", "Не указана ни одна роль таблицы.");
 
             foreach (var helperTable in App.Schema.HelperTables)
             {
                 if (Name != null && Name.Equals(helperTable.Name, StringComparison.OrdinalIgnoreCase))
-                    error.AppendLine("Таблица не может называться " + Name.AsSQL() + ", есть такая системная таблица.");
+                    error.AddError("Имя таблицы", "Таблица не может называться " + Name.AsSQL() + ", есть такая системная таблица.");
             }
 
             if (Name != null && Name.StartsWith(logPrefix, StringComparison.OrdinalIgnoreCase))
-                error.AppendLine("Имя таблицы не может начинаться с '" + logPrefix + "'");
+                error.AddError("Имя таблицы", "Имя таблицы не может начинаться с '" + logPrefix + "'");
 
 
             // уникальность имен колонок
@@ -238,7 +238,7 @@ namespace Buhta
             foreach (var tableCol in Columns)
             {
                 if (uniqueList.Contains(tableCol.Name))
-                    error.AppendLine("Есть несколько колонок с именем " + tableCol.Name.AsSQL());
+                    error.AddError("Таблица", "Есть несколько колонок с именем " + tableCol.Name.AsSQL());
                 else
                     uniqueList.Add(tableCol.Name);
             }
@@ -259,7 +259,7 @@ namespace Buhta
             {
                 if (!SchemaBaseRole.Roles.ContainsKey(tableRoleID))
                 {
-                    error.AppendLine("У таблицы указана неверная роль: " + tableRoleID.AsSQL());
+                    error.AddError(Name, "У таблицы указана неверная роль: " + tableRoleID.AsSQL());
                 }
                 else
                 {
@@ -276,8 +276,8 @@ namespace Buhta
                                 if (tableCol.ColumnRoles.Contains(roleCol.ID))
                                     goto m1;
                             }
-                            error.AppendLine("Отсутствует обязательная колонка с ролью: " + roleCol.Name.AsSQL());
-                        m1: ;
+                            error.AddError(Name, "Отсутствует обязательная колонка с ролью: " + roleCol.Name.AsSQL());
+                            m1:;
                         }
 
                         // проверка наличия обязательных ролевых полей
@@ -290,12 +290,12 @@ namespace Buhta
                                     count++;
                             }
                             if (count > 1)
-                                error.AppendLine("Есть несколько колонок с уникальной ролью: " + roleCol.Name.AsSQL());
+                                error.AddError(Name, "Есть несколько колонок с уникальной ролью: " + roleCol.Name.AsSQL());
                         }
                     }
                     else
                     {
-                        error.AppendLine("У таблицы указана неверная роль: " + role.Name.AsSQL());
+                        error.AddError(Name, "У таблицы указана неверная роль: " + role.Name.AsSQL());
                     }
                 }
             }
@@ -1016,41 +1016,41 @@ FROM INFORMATION_SCHEMA.COLUMNS C WHERE TABLE_NAME=" + tableName.AsSQL() + " ord
                     }
                     else
                         if (dataType == "bit")
-                        {
-                            c.DataType = new BitDataType() { Column = c };
-                        }
-                        else
+                    {
+                        c.DataType = new BitDataType() { Column = c };
+                    }
+                    else
                             if (dataType == "datetime")
-                            {
-                                c.DataType = new DateTimeDataType() { Column = c };
-                            }
-                            else
+                    {
+                        c.DataType = new DateTimeDataType() { Column = c };
+                    }
+                    else
                                 if (dataType == "money")
-                                {
-                                    c.DataType = new MoneyDataType() { Column = c };
-                                }
-                                else
+                    {
+                        c.DataType = new MoneyDataType() { Column = c };
+                    }
+                    else
                                     if (dataType == "uniqueidentifier")
-                                    {
-                                        c.DataType = new GuidDataType() { Column = c };
-                                    }
-                                    else
+                    {
+                        c.DataType = new GuidDataType() { Column = c };
+                    }
+                    else
                                         if (dataType == "decimal")
-                                    {
-                                        c.DataType = new DecimalDataType() { Column = c, Scale = (int)row["NUMERIC_SCALE"], Precision = (byte)row["NUMERIC_PRECISION"] };
-                                    }
-                                    else
+                    {
+                        c.DataType = new DecimalDataType() { Column = c, Scale = (int)row["NUMERIC_SCALE"], Precision = (byte)row["NUMERIC_PRECISION"] };
+                    }
+                    else
                                         if (dataType == "nvarchar" || dataType == "varchar" || dataType == "char" || dataType == "nchar")
-                                        {
-                                            c.DataType = new StringDataType() { MaxSize = (int)row["CHARACTER_MAXIMUM_LENGTH"] == -1 ? 0 : (int)row["CHARACTER_MAXIMUM_LENGTH"], Column = c };
-                                        }
-                                        else
+                    {
+                        c.DataType = new StringDataType() { MaxSize = (int)row["CHARACTER_MAXIMUM_LENGTH"] == -1 ? 0 : (int)row["CHARACTER_MAXIMUM_LENGTH"], Column = c };
+                    }
+                    else
                                             if (dataType == "binary" || dataType == "varbinary")
-                                            {
-                                                c.DataType = new StringDataType() { MaxSize = (int)row["CHARACTER_MAXIMUM_LENGTH"] == -1 ? 0 : (int)row["CHARACTER_MAXIMUM_LENGTH"], Column = c };
-                                            }
-                                            else
-                                                throw new Exception("Неизвестный тип данных " + dataType);
+                    {
+                        c.DataType = new StringDataType() { MaxSize = (int)row["CHARACTER_MAXIMUM_LENGTH"] == -1 ? 0 : (int)row["CHARACTER_MAXIMUM_LENGTH"], Column = c };
+                    }
+                    else
+                        throw new Exception("Неизвестный тип данных " + dataType);
 
 
                     c.IsNotNullable = row["IS_NULLABLE"].ToString() == "NO";

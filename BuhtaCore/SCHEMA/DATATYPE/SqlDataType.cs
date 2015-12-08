@@ -63,10 +63,10 @@ namespace Buhta
             throw new Exception("Abstract method GetEditControl()");
         }
 
-        public virtual void Validate(StringBuilder error)
+        public virtual void Validate(ValidateErrorList errors)
         {
             if (Column == null)
-                error.AppendLine("У типа данных '" + Name + "' не заполнено поле 'Column'.");
+                errors.AddError(Name,"У типа данных не заполнено поле 'Column'.");
         }
 
         public virtual SqlDataType Clone()

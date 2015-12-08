@@ -38,24 +38,24 @@ namespace Buhta
             Opers.CollectionChanged += Opers_CollectionChanged;
         }
 
-        public virtual void Validate(StringBuilder error)
+        public virtual void Validate(ValidateErrorList error)
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                error.AppendLine("У детали не заполнено поле 'Имя'.");
+                error.AddError(Name, "У детали не заполнено поле 'Имя'.");
                 Name = "";
             }
 
             if (DetailTableID == null)
-                error.AppendLine("У детали '" + Name + "' не заполнена соответствующая таблица.");
+                error.AddError(Name, "У детали не заполнена соответствующая таблица.");
 
             if (DetailQueryID == null)
-                error.AppendLine("У детали '" + Name + "' не заполнен запрос для отображения.");
+                error.AddError(Name, "У детали не заполнен запрос для отображения.");
 
             if (Opers.Count > 0 && DetailTableID != null)
             {
                 if (GetDetailTable(true).GetColumnByRole(RoleConst.ВложеннаяТаблица_БизнесОперация)==null)
-                    error.AppendLine("У деталь-таблицы '" + GetDetailTable().Name + "' должна быть колонка с ролью 'ВложеннаяТаблица.БизнесОперация'.");
+                    error.AddError(GetDetailTable().Name, "У деталь-таблицы должна быть колонка с ролью 'ВложеннаяТаблица.БизнесОперация'.");
 
             }
 

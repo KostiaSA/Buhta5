@@ -10,7 +10,7 @@ namespace Buhta
     public delegate T BinderGetMethod<T>();
     public delegate void BinderSetMethod<T>(T value);
     public delegate void BinderEventMethod(dynamic args);
-    public delegate void BinderValidateMethod(StringBuilder error);
+    public delegate void BinderValidateMethod(ValidateErrorList error);
 
     public abstract class BaseBinder
     {

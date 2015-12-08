@@ -41,6 +41,14 @@ namespace Buhta
             (BindedBinders[binderId] as EventBinder).ModelEventMethod(args);
         }
 
+        public void ActivateAllValidatorBinders()
+        {
+            foreach (var binder in BindedBinders.Values)
+                if (binder is ValidatorBinder)
+                    binder.IsActive = true;
+
+        }
+
         public void BinderSetValue(string binderId, string value)
         {
             var binder = BindedBinders[binderId];
@@ -540,11 +548,19 @@ namespace Buhta
             modal.Show();
         }
 
-        public void ShowErrorMessageDialog(string title, string message, BinderEventMethod closeEventMethod = null)
+        public void ShowErrorMessageDialog(object title, object message, BinderEventMethod closeEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);
-            model.Title = title;
-            model.Message = message;
+            if (title is MvcHtmlString)
+                model.TitleHtml = title as MvcHtmlString;
+            else
+                model.Title = title.ToString();
+
+            if (message is MvcHtmlString)
+                model.MessageHtml = message as MvcHtmlString;
+            else
+                model.Message = message.ToString();
+
             model.CancelEventMethod = closeEventMethod;
             var modal = CreateModal(@"~\Areas\BuhtaCore\Views\ErrorMessageDialog.cshtml", model);
             modal.Show();

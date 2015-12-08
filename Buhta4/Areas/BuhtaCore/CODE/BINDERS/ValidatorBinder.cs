@@ -22,7 +22,7 @@ namespace Buhta
         public override string GetJsForSettingProperty()
         {
             string retStr;
-            var error = new StringBuilder();
+            var error = new ValidateErrorList();
             foreach (var _b in Control.Binders.Where((b) => b is ValidatorBinder))
             {
                 var b = _b as ValidatorBinder;
@@ -40,8 +40,8 @@ namespace Buhta
                 }
             }
 
-            if (error.Length > 0)
-                retStr = "$('#" + Control.UniqueId + "-error-text').removeClass('hidden').text(" + error.ToString().AsJavaScript() + "); $('#" + Control.UniqueId + "').parents('.form-group').first().addClass('has-error');";
+            if (!error.IsEmpty)
+                retStr = "$('#" + Control.UniqueId + "-error-text').removeClass('hidden').html(" + error.ToHtmlStringOnlyMessages().AsJavaScript() + "); $('#" + Control.UniqueId + "').parents('.form-group').first().addClass('has-error');";
             else
                 retStr = "$('#" + Control.UniqueId + "-error-text').addClass('hidden');$('#" + Control.UniqueId + "').parents('.form-group').first().removeClass('has-error');";
 

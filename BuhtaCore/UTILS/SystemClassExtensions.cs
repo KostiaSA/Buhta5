@@ -769,6 +769,8 @@ namespace Buhta
                 return "null";
             if (value is string)
                 return (value as string).AsJavaScript();
+            if (value is HtmlString)
+                return (value.ToString()).AsJavaScript();
             if (value is StringBuilder)
                 return (value as StringBuilder).ToString().AsJavaScript();
             if (value is int)

@@ -179,6 +179,7 @@
     <Compile Include="SCHEMA\Schema.cs" />
     <Compile Include="SCHEMA\SchemaConfig.cs" />
     <Compile Include="SCHEMA\DATABASE\SchemaExternalDatabase.cs" />
+    <Compile Include="SCHEMA\ValidateError.cs" />
     <Compile Include="SCHEMA\SchemaObject.cs" />
     <Compile Include="SCHEMA\TABLE\REGISTR\RegistrSubcontoDataType.cs" />
     <Compile Include="SCHEMA\TABLE\SchemaTable.cs" />

@@ -157,7 +157,7 @@ namespace Buhta
 
         public void StartEditing()
         {
-            needSave=false;
+            needSave = false;
         }
 
         bool needSave;
@@ -212,12 +212,12 @@ namespace Buhta
         }
 
 
-        public virtual void Validate(StringBuilder error)
+        public virtual void Validate(ValidateErrorList error)
         {
             if (ID == Guid.Empty)
-                error.AppendLine("Пустое поле 'ID'.");
+                error.AddError(Name, "Пустое поле 'ID'.");
             if (string.IsNullOrWhiteSpace(Name))
-                error.AppendLine("Не заполнено поле 'Имя'.");
+                error.AddError(Name, "Не заполнено поле 'Имя'.");
         }
 
         //public void Save()

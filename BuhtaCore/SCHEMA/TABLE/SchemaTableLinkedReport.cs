@@ -42,28 +42,28 @@ namespace Buhta
         {
         }
 
-        public virtual void Validate(StringBuilder error)
+        public virtual void Validate(ValidateErrorList error)
         {
-            if (ReportID == null)
-            {
-                error.AppendLine("У привязанной печатной формы не указан шаблон.");
-            }
+            //if (ReportID == null)
+            //{
+            //    error.AppendLine("У привязанной печатной формы не указан шаблон.");
+            //}
 
-            var report = App.Schema.GetSampleObject<SchemaReport>((Guid)ReportID);
-            if (ReportID == null)
-            {
-                error.AppendLine("У привязанной печатной формы указан неверный шаблон.");
-            }
+            //var report = App.Schema.GetSampleObject<SchemaReport>((Guid)ReportID);
+            //if (ReportID == null)
+            //{
+            //    error.AppendLine("У привязанной печатной формы указан неверный шаблон.");
+            //}
 
-            if (Copies < 0)
-            {
-                error.AppendLine("У привязанной печатной формы указано отрицательное к-во копий");
-            }
+            //if (Copies < 0)
+            //{
+            //    error.AppendLine("У привязанной печатной формы указано отрицательное к-во копий");
+            //}
 
-            if (Copies == 0)
-            {
-                error.AppendLine("У привязанной печатной формы указано нулевое к-во копий");
-            }
+            //if (Copies == 0)
+            //{
+            //    error.AppendLine("У привязанной печатной формы указано нулевое к-во копий");
+            //}
 
         }
 

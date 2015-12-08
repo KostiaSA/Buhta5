@@ -24,18 +24,30 @@ namespace Buhta
 
         public override void SaveChanges()
         {
-            //var newDataType = EditedColumnDataTypes.Find((dt) => dt.Name == EditedColumnDataTypeName);
-            //Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
-            //Column.DataType.Column = Column;
 
-            Column.Table.Columns.Add(Column);
+            ActivateAllValidatorBinders();
 
-            base.SaveChanges();
-            Modal.Close();
-            if (ParentModel != null)
+            var errors = new ValidateErrorList();
+            Column.Validate(errors);
+            if (!errors.IsEmpty)
             {
-                ParentModel.Update(true);
-                (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
+                ShowErrorMessageDialog("Есть ошибки", errors.ToHtmlString());
+            }
+            else
+            {
+                //var newDataType = EditedColumnDataTypes.Find((dt) => dt.Name == EditedColumnDataTypeName);
+                //Column.DataType = newDataType.Clone();// (SqlDataType)Activator.CreateInstance(newDataType.GetType());
+                //Column.DataType.Column = Column;
+
+                Column.Table.Columns.Add(Column);
+
+                base.SaveChanges();
+                Modal.Close();
+                if (ParentModel != null)
+                {
+                    ParentModel.Update(true);
+                    (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
+                }
             }
         }
 
@@ -62,7 +74,6 @@ namespace Buhta
                     }
 
                 newDataType = newRole.DataType;
-                EditedColumnDataTypes.First();
             }
             else
             {
@@ -70,11 +81,10 @@ namespace Buhta
                 EditedColumnDataTypes.Add(newDataType);
             }
 
-            Column.DataType = newDataType;
             if (string.IsNullOrWhiteSpace(Column.Name))
                 Column.Name = newRole.NewColumnName;
 
-            EditedColumnDataTypeName = Column.DataType.Name;
+            setEditedColumnDataTypeName(newDataType.Name);
             UpdateDatasets();
         }
 

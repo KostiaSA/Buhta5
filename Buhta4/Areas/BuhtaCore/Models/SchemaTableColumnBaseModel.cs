@@ -45,7 +45,7 @@ namespace Buhta
         }
 
 
-        void setEditedColumnDataTypeName(string newDataTypeName)
+        protected void setEditedColumnDataTypeName(string newDataTypeName)
         {
             if (string.IsNullOrWhiteSpace(EditedColumnDataTypeName) || (Column.DataType.Name != newDataTypeName))
             {

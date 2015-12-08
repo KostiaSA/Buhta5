@@ -114,39 +114,44 @@ namespace Buhta
 
         }
 
-        public virtual void Validate_Name(StringBuilder error)
+        public virtual void Validate_Name(ValidateErrorList error)
         {
             if (string.IsNullOrWhiteSpace(Name))
-                error.AppendLine("Имя колонки не может быть пустым");
+                error.AddError(Name,"Имя колонки не может быть пустым");
 
             if (Name != null && Name.Length > 128)
-                error.AppendLine("Имя колонки длинее 128 символов");
+                error.AddError(Name, "Имя колонки длинее 128 символов");
+
+            if (!Table.Columns.Contains(this) && Table.GetColumnByName(Name) != null) // колонка в процессе добавления
+                error.AddError(Name, "уже есть колонка с таким именем");
 
         }
 
-        public virtual void Validate_Roles(StringBuilder error)
+        public virtual void Validate_Roles(ValidateErrorList error)
         {
             if (ColumnRoles.Count == 0 && !(this is SchemaTableSystemColumn))
-                error.AppendLine("У колонки нет ролей.");
+                error.AddError(Name, "У колонки нет ролей.");
 
         }
 
-        public virtual void Validate(StringBuilder error)
+        public virtual void Validate(ValidateErrorList error)
         {
-            if (string.IsNullOrWhiteSpace(Name))
-                error.AppendLine("У колонки не заполнено поле 'Имя'.");
+            Validate_Name(error);
+            Validate_Roles(error);
+            //if (string.IsNullOrWhiteSpace(Name))
+            //    error.AppendLine("У колонки не заполнено поле 'Имя'.");
 
-            if (Name != null && Name.Length > 128)
-                error.AppendLine("Имя колонки длинее 128 символов: " + Name.Substring(0, 50).AsSQL());
+            //if (Name != null && Name.Length > 128)
+            //    error.AppendLine("Имя колонки длинее 128 символов: " + Name.Substring(0, 50).AsSQL());
 
             if (DataType == null)
-                error.AppendLine("У колонки не заполнено поле 'Тип данных'.");
+                error.AddError(Name, "У колонки не заполнено поле 'Тип данных'.");
 
             if (Table == null)
-                error.AppendLine("У колонки не заполнено поле 'Таблица'.");
+                error.AddError(Name, "У колонки не заполнено поле 'Таблица'.");
 
-            if (ColumnRoles.Count == 0 && !(this is SchemaTableSystemColumn))
-                error.AppendLine("У колонки " + Name.AsSQL() + " нет ролей.");
+            //if (ColumnRoles.Count == 0 && !(this is SchemaTableSystemColumn))
+              //  error.AppendLine("У колонки " + Name.AsSQL() + " нет ролей.");
 
             if (DataType != null)
                 DataType.Validate(error);
