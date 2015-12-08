@@ -53,6 +53,7 @@
         @Html.bsButton(button =>
    {
        button.Text = "Отмена";
+       button.AddClass("modal-cancel-button");
        button.ButtonStyle = bsButtonStyle.Default;
        button.Bind_OnClick(Model.CancelButtonClick);
    })

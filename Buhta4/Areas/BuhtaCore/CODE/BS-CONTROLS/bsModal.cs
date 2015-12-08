@@ -52,6 +52,15 @@ namespace Buhta
             });
         }
 
+        public void Bind_CancelCloseQuery(string modelEventMethodName)
+        {
+            AddBinder(new EventBinder()
+            {
+                ModelEventMethodName = modelEventMethodName,
+                jsEventName = "hide"
+            });
+        }
+
 
         //        public event EventHandler OnClose;
 
@@ -79,6 +88,7 @@ namespace Buhta
             EmitBinders(script);
             script.Append("var modal = $(" + windowHtml.AsJavaScript() + ");");
             script.Append("modal.attr('id','" + UniqueId + "');");
+
             script.Append("$('body').append(modal);");
 
             if (ViewModel is MessageDialogModel)
@@ -90,6 +100,8 @@ namespace Buhta
             }
 
             script.Append("modal.modal(" + init.AsJavaScript() + ");");
+            script.Append("modal.off('keyup.dismiss.modal');");
+            script.Append("modal.on('keyup.esc.modal', function(e) {if (e.which == 27) { modal.find('.modal-cancel-button').trigger('click')}; });");
 
             //if (OnClose_Bind != null)
             //{

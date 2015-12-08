@@ -17,6 +17,7 @@ namespace Buhta
             var model = helper.ViewData.Model as MessageDialogModel;
             var button = new bsButton(model);
 
+            button.AddClass("modal-cancel-button");
             button.ButtonStyle = bsButtonStyle.Default;
             button.Bind_OnClick(model.CancelButtonClick);
             button.Text = "Отмена";
