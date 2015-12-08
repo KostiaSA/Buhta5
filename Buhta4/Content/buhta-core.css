@@ -124,6 +124,10 @@ span.fancytree-checkbox:hover {
     color: #EF6F6C;
 }
 
+.modal-body.warning-color,
+.modal-title.warning-color {
+    color: #F89A14;
+}
 
 .btn.edit-color {
     color: #418BCA;
@@ -140,6 +144,7 @@ span.fancytree-checkbox:hover {
 .error-text {
     color: #EF6F6C;
 }
+
 
 .form-group.has-error .control-label {
     color: #EF6F6C;

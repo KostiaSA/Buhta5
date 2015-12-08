@@ -10,6 +10,15 @@ namespace Buhta
     public class SchemaTableColumnAddModel : SchemaTableColumnBaseModel
     {
 
+        //public override bool GetNeedSave()
+        //{
+        //    if (Column != null)
+        //        return Column.GetNeedSave();
+        //    else
+        //        return false;
+        //}
+
+
         public SchemaTableColumnAddModel(Controller controller, BaseModel parentModel, SchemaTable table) : base(controller, parentModel)
         {
             EditedColumnDataTypes = new List<SqlDataType>();
@@ -19,6 +28,8 @@ namespace Buhta
             Column.Table = table;
             Column.DataType = new GuidDataType() { Column = Column };
             Column.Name = "";
+
+            EditedObject = Column;
         }
 
 
@@ -91,12 +102,12 @@ namespace Buhta
 
         public override void CancelChanges()
         {
-            Modal.Close();
-            //if (ParentModel != null)
-            //{
-            //    ParentModel.Update(true);
-            //    (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
-            //}
+            if (GetNeedSave())
+            {
+                ShowLostChangesConfirmationDialog((args=> { Modal.Close(); }));
+            }
+            else
+                Modal.Close();
         }
 
 

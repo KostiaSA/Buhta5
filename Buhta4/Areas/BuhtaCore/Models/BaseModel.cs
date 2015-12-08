@@ -591,6 +591,29 @@ namespace Buhta
             modal.Show();
         }
 
+        public void ShowLostChangesConfirmationDialog(BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        {
+            ShowLostChangesConfirmationDialog("Предупреждение", "Выйти без сохранения?", okEventMethod, cancelEventMethod);
+        }
+
+        public void ShowLostChangesConfirmationDialog(object title, object message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        {
+            var model = new MessageDialogModel(Controller, this);
+            if (title is MvcHtmlString)
+                model.TitleHtml = title as MvcHtmlString;
+            else
+                model.Title = title.ToString();
+
+            if (message is MvcHtmlString)
+                model.MessageHtml = message as MvcHtmlString;
+            else
+                model.Message = message.ToString();
+            model.OkEventMethod = okEventMethod;
+            model.CancelEventMethod = cancelEventMethod;
+            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\LostChangesConfirmationDialog.cshtml", model);
+            modal.Show();
+        }
+
         public void ShowDeleteConfirmationMessageDialog(object title, object message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);

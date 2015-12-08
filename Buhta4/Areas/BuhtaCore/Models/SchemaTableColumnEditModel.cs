@@ -9,7 +9,7 @@ namespace Buhta
 {
     public class SchemaTableColumnEditModel : SchemaTableColumnBaseModel
     {
-        public override SchemaTableColumn Column { get { return (SchemaTableColumn)EditedObject; }  set { } }
+        public override SchemaTableColumn Column { get { return (SchemaTableColumn)EditedObject; } set { } }
 
         public override string PageTitle { get { return "Колонка: " + Column.Name; } }
 
@@ -25,16 +25,37 @@ namespace Buhta
 
         public override void SaveChanges()
         {
-            base.SaveChanges();
-            Modal.Close();
-            if (ParentModel != null)
+            ActivateAllValidatorBinders();
+
+            var errors = new ValidateErrorList();
+            Column.Validate(errors);
+            if (!errors.IsEmpty)
             {
-                ParentModel.Update(true);
-                (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
+                ShowErrorMessageDialog("Есть ошибки", errors.ToHtmlString());
+            }
+            else
+            {
+                base.SaveChanges();
+                Modal.Close();
+                if (ParentModel != null)
+                {
+                    ParentModel.Update(true);
+                    (ParentModel as SchemaTableDesignerModel).SelectedColumnByColumnName(Column.Name);
+                }
             }
         }
 
         public override void CancelChanges()
+        {
+            if (GetNeedSave())
+            {
+                ShowLostChangesConfirmationDialog(CancelAndClose);
+            }
+            else
+                CancelAndClose(null);
+        }
+
+        public void CancelAndClose(dynamic args)
         {
             var table = Column.Table;
             var colIndex = table.Columns.IndexOf(Column);

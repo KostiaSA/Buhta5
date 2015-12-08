@@ -584,6 +584,7 @@
     <Content Include="Areas\BuhtaCore\Views\ErrorMessageDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\SchemaTableColumnAddDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\DeleteConfirmationMessageDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\LostChangesConfirmationDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />
