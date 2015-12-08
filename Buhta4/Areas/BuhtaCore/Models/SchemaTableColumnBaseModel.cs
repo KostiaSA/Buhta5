@@ -63,7 +63,7 @@ namespace Buhta
 
         }
 
-        public string GetColumnDataTypeInputsHtml()
+        public MvcHtmlString GetColumnDataTypeInputsHtml()
         {
             var html = new StringBuilder();
 
@@ -89,7 +89,7 @@ namespace Buhta
             stringSizeTag.Bind_Visible(() => Column.DataType.GetType() == typeof(StringDataType));
             html.Append(stringSizeTag.GetHtml());
 
-            return html.ToString();
+            return new MvcHtmlString(html.ToString());
         }
 
     }

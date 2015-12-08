@@ -1,5 +1,4 @@
 ﻿@model SchemaTableColumnEditModel
-
 <div class="modal modal-edit-form" data-width="1000" tabindex="-1" role="dialog">
     @*<div class="modal-dialog">
         <div class="modal-content">*@
@@ -10,21 +9,18 @@
     <div class="modal-body">
         <form role="form" class="form-horizontal">
             <div class="row">
-
                 @Html.bsInput(tag =>
            {
                tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Name));
                tag.Label = "Имя колонки";
                tag.Bind_Validator(Model.Column.Validate_Name);
-               tag.MaxWidth=400;
+               tag.MaxWidth = 400;
            })
-
                 @Html.bsInput(tag =>
            {
                tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Description));
                tag.Label = "Описание";
            })
-
                 @Html.bsInput(tag =>
            {
                tag.Type = bsInputType.List;
@@ -33,10 +29,7 @@
                tag.Bind_Validator(Model.Column.Validate_Roles);
            })
 
-
-
-                @Html.Raw(Model.GetColumnDataTypeInputsHtml())
-
+                @Model.GetColumnDataTypeInputsHtml()
 
                 @Html.bsInput(tag =>
            {
@@ -46,11 +39,8 @@
            })
 
 
-
-
             </div>
         </form>
-
     </div>
     <div class="modal-footer">
         @Html.bsButton(button =>
@@ -66,7 +56,6 @@
        button.ButtonStyle = bsButtonStyle.Default;
        button.Bind_OnClick(Model.CancelButtonClick);
    })
-
     </div>
     @*</div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->*@
