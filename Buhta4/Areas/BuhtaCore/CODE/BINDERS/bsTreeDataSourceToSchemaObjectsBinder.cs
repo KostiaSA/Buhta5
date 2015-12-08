@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Buhta
 {
@@ -37,31 +38,48 @@ namespace Buhta
             }
 
 
+            HashSet<SchemaObject> list = new HashSet<SchemaObject>();
+            foreach (var _obj in App.Schema.Objects_cache.Values.Where((o) => o.SampleObject is SchemaTable).ToList())
+            {
+                list.Add(_obj.SampleObject);
+
+                SchemaObject parent = _obj.SampleObject.GetParentObject();
+                while (parent != null)
+                {
+                    if (!list.Contains(parent))
+                        list.Add(parent);
+                    parent = parent.GetParentObject();
+                }
+            }
+
+
+
             var ret = new jsArray();
 
-            foreach (var _obj in App.Schema.Objects_cache.Values.Where((o) => o.SampleObject is SchemaTable || o.SampleObject is SchemaFolder || o.SampleObject is SchemaModule))
+            foreach (var obj in list)
             {
                 var treeNode = new JsObject();
-                SchemaObject obj = _obj.SampleObject;
 
                 treeNode.AddProperty("expanded", true);
                 treeNode.AddProperty("title", obj.Name);
                 treeNode.AddProperty("id", obj.ID.ToString());
                 if (!string.IsNullOrWhiteSpace(obj.ParentObjectID.ToString()))
                     treeNode.AddProperty("parent", obj.ParentObjectID.ToString());
-                //treeNode.AddProperty("icon", row[iconFieldName].ToString());
+                treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(@"~/Areas/BuhtaSchemaDesigner/Content/icon/" + obj.GetType().Name + "_16.png"));
 
                 if (selectedRow != null && selectedRow == obj.ID)
                 {
                     treeNode.AddProperty("selected", true);
                 }
 
-                //var jsRow = new JsObject();
-                //foreach (var col in Tree.Columns)
-                //{
-                //    jsRow.AddRawProperty(col.Field_Bind, row[col.Field_Bind].AsJavaScript());
-                //}
-                //treeNode.AddProperty("row", jsRow);
+                var jsRow = new JsObject();
+                foreach (var col in Tree.Columns)
+                {
+                    var _propValue = obj.GetPropertyValue(col.Field_Bind);
+                    if (_propValue != null)
+                        jsRow.AddRawProperty(col.Field_Bind, _propValue.AsJavaScript());
+                }
+                treeNode.AddProperty("row", jsRow);
 
                 ret.AddObject(treeNode);
 

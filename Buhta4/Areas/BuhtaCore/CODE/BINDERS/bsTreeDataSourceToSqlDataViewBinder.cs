@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Buhta
 {
@@ -73,7 +74,7 @@ namespace Buhta
                 treeNode.AddProperty("title", row[displayFieldName].ToString());
                 treeNode.AddProperty("id", row[keyFieldName].ToString());
                 treeNode.AddProperty("parent", row[parentFieldName].ToString());
-                treeNode.AddProperty("icon", row[iconFieldName].ToString());
+                treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(row[iconFieldName].ToString()));
 
                 if (selectedRows != null && selectedRows.Contains(row[keyFieldName].ToString()))
                 {

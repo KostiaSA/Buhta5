@@ -47,8 +47,8 @@ SELECT [ID]
       ,[UpdateUser]
       ,[LockedByUser]
       ,[LockDateTime]
-      ,'Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__TreeGridIcon__]
-      ,'Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
+      ,'~/Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__TreeGridIcon__]
+      ,'~/Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
   FROM [SchemaObject]
 ");
                     SelectedRows.Add("84ff8c4c-2c17-4af8-a2a1-02c958bd75bf");
