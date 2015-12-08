@@ -80,7 +80,7 @@ namespace Buhta
 
     public enum bsInputSize { Default, Large, Small, ExtraSmall }
 
-    public enum bsInputType { Text, Checkbox, Radio, List }
+    public enum bsInputType { Text, Checkbox, Radio, List, Lookup }
 
     public class bsInput : bsControl
     {
@@ -266,6 +266,17 @@ namespace Buhta
             AddBinder(listBinder);
         }
 
+        bsInputToSchemaObjectBinder schemaObjectBinder;
+        public void Bind_Value_To_SchemaObject(string modelPropertyName, Type schemaObjectType)
+        {
+            Type = bsInputType.Lookup;
+            schemaObjectBinder = new bsInputToSchemaObjectBinder()
+            {
+                ModelPropertyName = modelPropertyName,
+                SchemaObjectType = schemaObjectType
+            };
+            AddBinder(schemaObjectBinder);
+        }
 
         public string Label;
         public string PlaceHolder;
@@ -366,6 +377,43 @@ namespace Buhta
                 var selectButton = new bsButton(Model);
                 selectButton.Text = "Выбрать";
                 selectButton.Bind_OnClick(listBinder.SelectButtonClick);
+                Html.Append(selectButton.GetHtml());
+
+
+                Html.Append("</span>");
+                Html.Append("</div>");
+
+                if (Label != null)
+                {
+                    Html.Append("</div>");  // end col-sm-9
+                }
+            }
+            else
+            if (Type == bsInputType.Lookup)
+            {
+
+                AddClass("form-control");
+
+                if (Label != null)
+                {
+                    //Html.Append("<div class='col-sm-3'>"); // begin col-sm-3
+                    Html.Append("<label class='col-sm-3 control-label'>" + Label.AsHtml());
+                    if (IsRequired)
+                        Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                    Html.Append("</label>");
+                    //Html.Append("</div>");  // end col-sm-3
+                    Html.Append("<div class='col-sm-8'>");  // begin col-sm-9
+                }
+
+
+                Html.Append("<div class='input-group bs-input'>");
+                Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value).AsHtml() + "</input>");
+                Html.Append("<span class='input-group-btn'>");
+                //Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
+
+                var selectButton = new bsButton(Model);
+                selectButton.Text = "Поиск";
+                selectButton.Bind_OnClick(schemaObjectBinder.SelectButtonClick);
                 Html.Append(selectButton.GetHtml());
 
 

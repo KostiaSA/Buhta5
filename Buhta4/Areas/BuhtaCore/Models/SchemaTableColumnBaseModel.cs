@@ -36,6 +36,22 @@ namespace Buhta
             }
         }
 
+        ForeingKeyDataType fakeForeingKeyDataType;
+        public ForeingKeyDataType ColumnForeingKeyDataType
+        {
+            get
+            {
+                if (Column != null && Column.DataType is ForeingKeyDataType)
+                    fakeForeingKeyDataType = (Column.DataType as ForeingKeyDataType);
+                else
+                {
+                    if (fakeForeingKeyDataType == null)
+                        fakeForeingKeyDataType = new ForeingKeyDataType() { Column = Column };
+                }
+                return fakeForeingKeyDataType;
+            }
+        }
+
 
         string getEditedColumnDataTypeName()
         {

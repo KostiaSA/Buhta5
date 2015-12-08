@@ -158,9 +158,11 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsInputToSchemaObjectBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsSelectOptionsToObjectsListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridDataSourceToObjectsListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridRowDblClickEventBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSchemaObjectsBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSchemaRolesBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsGridDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\bsTreeDataSourceToSqlDataViewBinder.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Areas\BuhtaCore\Models\MessageDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnBaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnAddModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\SelectSchemaObjectDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />
@@ -585,6 +588,7 @@
     <Content Include="Areas\BuhtaCore\Views\SchemaTableColumnAddDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\DeleteConfirmationMessageDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\LostChangesConfirmationDialog.cshtml" />
+    <Content Include="Areas\BuhtaCore\Views\SelectSchemaObjectDialog.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

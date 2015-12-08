@@ -77,13 +77,28 @@ namespace Buhta
             dataSourceBinderToSchemaRoles = new bsTreeDataSourceToSchemaRolesBinder()
             {
                 Tree = this,
-                RootRole=rootRole,
+                RootRole = rootRole,
                 SelectedRowsModelPropertyName = selectedRowsModelPropertyName
 
             };
             AddBinder(dataSourceBinderToSchemaRoles);
             if (selectedRowsModelPropertyName != null)
                 IsShowCheckboxes = true;
+        }
+
+        bsTreeDataSourceToSchemaObjectsBinder dataSourceBinderToSchemaObjects;
+        public void Bind_DataSource_To_SchemaObjects(string selectedObjectModelPropertyName, Type schemaObjectType)
+        {
+            dataSourceBinderToSchemaObjects = new bsTreeDataSourceToSchemaObjectsBinder()
+            {
+                Tree = this,
+                SchemaObjectType = schemaObjectType,
+                selectedObjectModelPropertyName = selectedObjectModelPropertyName
+
+            };
+            AddBinder(dataSourceBinderToSchemaObjects);
+            //if (selectedRowsModelPropertyName != null)
+            IsShowCheckboxes = false;
         }
 
 
@@ -112,7 +127,7 @@ namespace Buhta
             });
         }
 
-        public void Bind_OnRowDblClick(string modelEventMethodName, Boolean isIgnoreForFolder=true)
+        public void Bind_OnRowDblClick(string modelEventMethodName, Boolean isIgnoreForFolder = true)
         {
             AddBinder(new bsTreeRowEventBinder()
             {
@@ -126,7 +141,7 @@ namespace Buhta
         {
             AddBinder(new bsTreeRowEventBinder()
             {
-                isIgnoreForFolder= isIgnoreForFolder,
+                isIgnoreForFolder = isIgnoreForFolder,
                 ModelEventMethod = eventMethod,
                 jsEventName = "dblclick"
             });
@@ -205,7 +220,7 @@ namespace Buhta
 
             Script.AppendLine("var renderColumns=function(event, data) {");
             Script.AppendLine("  var node = data.node;");
-            Script.AppendLine("  var row = node.data.row;");
+            Script.AppendLine("  var row = node.data.row || {};");
             Script.AppendLine("  row.node = node;");
             Script.AppendLine("  var td = $(node.tr).find('>td');");
             int i = -1;
