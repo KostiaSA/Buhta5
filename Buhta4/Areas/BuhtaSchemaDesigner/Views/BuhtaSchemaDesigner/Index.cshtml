@@ -5,7 +5,7 @@
 }
 
 
-<nav class=" navbar navbar-default navbar-fixed-top navbar-static-top1">
+@*<nav class=" navbar navbar-default navbar-fixed-top navbar-static-top1">
     <div class="container container-fluid1">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
 
@@ -78,21 +78,71 @@
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
-</nav>
+</nav>*@
 
 <div class="container">
-    <h3>
+     <h3>
         @*<img src="~/Areas/BuhtaCore/Content/icon/schema-table.png" />*@
         Дизайнер схемы
     </h3>
 
-    @Html.bsInput(inp =>
-{
-    inp.Bind_Value<string>(nameof(Model.TestProp1));
-})
-
     @Html.bsTree(tree =>
 {
+
+
+    tree.AddToolbarButton(tag =>
+    {
+        tag.Role = bsTreeToolbarButtonRole.ExpandAll;
+        tag.Text = "@<i class='fa fa-plus' style='color:rgba(248, 154, 20, 0.7)'></i>";
+        //s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
+        //tag.ButtonStyle = bsButtonStyle.Default;
+        tag.Size = bsButtonSize.Small;
+    });
+
+    tree.AddToolbarButton(tag =>
+    {
+        tag.Role = bsTreeToolbarButtonRole.CollapseAll;
+        tag.Text = "@<i class='fa fa-minus' style='color:rgba(248, 154, 20, 0.7)'></i>";
+        //s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
+        //tag.ButtonStyle = bsButtonStyle.Default;
+        tag.Size = bsButtonSize.Small;
+    });
+
+    tree.AddToolbarButton(tag =>
+    {
+        tag.Role = bsTreeToolbarButtonRole.Add;
+        //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+        tag.Text = "Новый объект";
+        //s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
+        tag.AddClass("add-color");
+        //tag.ButtonStyle = bsButtonStyle.Default;
+        tag.Size = bsButtonSize.Small;
+    });
+
+    tree.AddToolbarButton(tag =>
+    {
+        tag.Role = bsTreeToolbarButtonRole.Edit;
+        //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+        tag.Text = "Изменить";
+        //s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
+        tag.AddClass("edit-color");
+        //tag.ButtonStyle = bsButtonStyle.Default;
+        tag.Bind_OnClick(Model.OnRowDoubleClick);
+
+        tag.Size = bsButtonSize.Small;
+    });
+
+    tree.AddToolbarButton(tag =>
+    {
+        tag.Role = bsTreeToolbarButtonRole.Delete;
+        //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
+        tag.Text = "Удалить";
+        //s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
+        tag.AddClass("delete-color");
+        //tag.ButtonStyle = bsButtonStyle.Default;
+        tag.Size = bsButtonSize.Small;
+    });
+
 
     tree.AddColumn(c =>
     {

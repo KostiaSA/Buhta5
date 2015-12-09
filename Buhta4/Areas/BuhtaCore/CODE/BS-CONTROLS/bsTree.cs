@@ -25,6 +25,7 @@ namespace Buhta
 
     public enum bsTreeSize { Default, Large, Small, ExtraSmall }
 
+
     public class bsTree : bsControl
     {
         public bsTree(BaseModel model) : base(model) { }
@@ -51,6 +52,7 @@ namespace Buhta
         //public BaseBsTreeDataSourceBinder DataSourceBinder;
 
         List<bsTreeColumnSettings> columns = new List<bsTreeColumnSettings>();
+        List<bsControl> toolbar = new List<bsControl>();
         public List<bsTreeColumnSettings> Columns { get { return columns; } }
 
 
@@ -107,6 +109,14 @@ namespace Buhta
             var col = new bsTreeColumnSettings(Model);
             settings(col);
             columns.Add(col);
+        }
+
+        public void AddToolbarButton(Action<bsTreeToolbarButton> settings)
+        {
+            var button = new bsTreeToolbarButton(Model);
+            button.Tree = this;
+            settings(button);
+            toolbar.Add(button);
         }
 
         public void Bind_OnRowClick(string modelEventMethodName)
@@ -261,6 +271,18 @@ namespace Buhta
 
             }
 
+            // toolbar
+            if (toolbar.Count > 0)
+            {
+                Html.Append("<div class='row'>");  // begin row
+                Html.Append("<div class='pull-right'>");
+                foreach (var control in toolbar)
+                    Html.Append(control.GetHtml());  // begin row
+                Html.Append("</div>");
+                Html.Append("</div>");  // end row
+            }
+
+            Html.Append("<div class='row' style='margin-top:10px'>");  // begin row
             Html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
             //Html.Append("<colgroup>");
             //foreach (var col in Columns)
@@ -282,10 +304,20 @@ namespace Buhta
             Html.Append("</tbody>");
 
             Html.Append("</table>");
+            Html.Append("</div>");  // end row
 
             return base.GetHtml();
         }
 
+        public void JavaScript_ExpandAll(dynamic args)
+        {
+            Model.ExecuteJavaScript("$('#" + UniqueId + "').fancytree('getRootNode').visit(function(node){node.setExpanded(true);});");
+        }
+
+        public void JavaScript_CollapseAll(dynamic args)
+        {
+            Model.ExecuteJavaScript("$('#" + UniqueId + "').fancytree('getRootNode').visit(function(node){node.setExpanded(false);});");
+        }
     }
 
 }

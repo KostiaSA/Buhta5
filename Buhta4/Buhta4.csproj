@@ -174,6 +174,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\ValidatorBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\TwoWayBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BINDERS\OneWayBinder.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsTreeToolbarButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsSelect.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsMessageDialogCancelButton.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\bsMessageDialogOkButton.cs" />
@@ -552,6 +553,9 @@
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\ui.fancytree.css" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\vline-rtl.gif" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\vline.gif" />
+    <Content Include="Content\vendors\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\vendors\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\vendors\select2-master\dist\css\select2-bootstrap.css" />
     <Content Include="Content\vendors\select2-master\dist\css\select2-spinner.gif" />
     <Content Include="Content\vendors\select2-master\dist\css\select2.css" />
@@ -589,6 +593,11 @@
     <Content Include="Areas\BuhtaCore\Views\DeleteConfirmationMessageDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\LostChangesConfirmationDialog.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\SelectSchemaObjectDialog.cshtml" />
+    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\vendors\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

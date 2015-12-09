@@ -61,7 +61,7 @@ SELECT [ID]
 
         public void OnRowDoubleClick(dynamic args)
         {
-            openSchemaObjectDesigner(args.rowId.ToString());
+            openSchemaObjectDesigner(ActiveRowId);
             //var action = new OpenChildWindowAction();
             //action.Url = "BuhtaSchemaDesigner/SchemaTableDesigner?ID=" + args.rowId; 
             //ExecuteJavaScript(chromeWindowId, action.GetJsCode());

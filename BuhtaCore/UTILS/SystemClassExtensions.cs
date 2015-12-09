@@ -601,6 +601,17 @@ namespace Buhta
             return ms;
         }
 
+        public static string AsHtmlEx(this string value)
+        {
+            if (value.StartsWith("@@"))
+                return HttpUtility.HtmlEncode(value.Substring(1));
+            else
+            if (value.StartsWith("@"))
+                return value.Substring(1);
+            else
+                return HttpUtility.HtmlEncode(value);
+        }
+
         public static string AsHtml(this string value)
         {
             return HttpUtility.HtmlEncode(value);
