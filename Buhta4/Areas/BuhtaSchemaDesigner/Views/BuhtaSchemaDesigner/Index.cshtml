@@ -90,7 +90,7 @@
 {
 
 
-    tree.AddToolbarButton(tag =>
+    tree.AddButtonToLeftToolbar(tag =>
     {
         tag.Role = bsTreeToolbarButtonRole.ExpandAll;
         tag.Text = "@<i class='fa fa-plus' style='color:rgba(248, 154, 20, 0.7)'></i>";
@@ -99,7 +99,7 @@
         tag.Size = bsButtonSize.Small;
     });
 
-    tree.AddToolbarButton(tag =>
+    tree.AddButtonToLeftToolbar(tag =>
     {
         tag.Role = bsTreeToolbarButtonRole.CollapseAll;
         tag.Text = "@<i class='fa fa-minus' style='color:rgba(248, 154, 20, 0.7)'></i>";
@@ -108,7 +108,7 @@
         tag.Size = bsButtonSize.Small;
     });
 
-    tree.AddToolbarButton(tag =>
+    tree.AddButtonToRightToolbar(tag =>
     {
         tag.Role = bsTreeToolbarButtonRole.Add;
         //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
@@ -119,7 +119,7 @@
         tag.Size = bsButtonSize.Small;
     });
 
-    tree.AddToolbarButton(tag =>
+    tree.AddButtonToRightToolbar(tag =>
     {
         tag.Role = bsTreeToolbarButtonRole.Edit;
         //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
@@ -132,7 +132,7 @@
         tag.Size = bsButtonSize.Small;
     });
 
-    tree.AddToolbarButton(tag =>
+    tree.AddButtonToRightToolbar(tag =>
     {
         tag.Role = bsTreeToolbarButtonRole.Delete;
         //s.OnClick_Bind = nameof(Model.Test1ButtonClick);

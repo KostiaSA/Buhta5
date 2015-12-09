@@ -52,7 +52,8 @@ namespace Buhta
         //public BaseBsTreeDataSourceBinder DataSourceBinder;
 
         List<bsTreeColumnSettings> columns = new List<bsTreeColumnSettings>();
-        List<bsControl> toolbar = new List<bsControl>();
+        List<bsControl> leftToolbar = new List<bsControl>();
+        List<bsControl> rightToolbar = new List<bsControl>();
         public List<bsTreeColumnSettings> Columns { get { return columns; } }
 
 
@@ -111,12 +112,20 @@ namespace Buhta
             columns.Add(col);
         }
 
-        public void AddToolbarButton(Action<bsTreeToolbarButton> settings)
+        public void AddButtonToRightToolbar(Action<bsTreeToolbarButton> settings)
         {
             var button = new bsTreeToolbarButton(Model);
             button.Tree = this;
             settings(button);
-            toolbar.Add(button);
+            rightToolbar.Add(button);
+        }
+
+        public void AddButtonToLeftToolbar(Action<bsTreeToolbarButton> settings)
+        {
+            var button = new bsTreeToolbarButton(Model);
+            button.Tree = this;
+            settings(button);
+            leftToolbar.Add(button);
         }
 
         public void Bind_OnRowClick(string modelEventMethodName)
@@ -193,6 +202,24 @@ namespace Buhta
             });
         }
 
+
+        void EmitFilterScript()
+        {
+            Script.Append(@"
+$('#" + UniqueId + @"-filter-input').keyup(function(e){
+ var opts = {
+  autoExpand: true,
+  leavesOnly: true
+ };
+ var match = $(this).val();
+ if (e && e.which === 27 || $.trim(match) === ''){
+    $('#" + UniqueId + @"').fancytree('getTree').clearFilter();
+    return;
+ }
+ $('#" + UniqueId + @"').fancytree('getTree').filterNodes(match, opts);
+}).focus();");
+        }
+
         public override string GetHtml()
         {
 
@@ -202,7 +229,12 @@ namespace Buhta
 
             jsArray extensions = new jsArray();
             extensions.AddObject("table");
+            extensions.AddObject("filter");
             init.AddProperty("extensions", extensions);
+
+            JsObject filter = new JsObject();
+            filter.AddProperty("mode","hide");
+            init.AddProperty("filter", filter);
 
             JsObject table = new JsObject();
             table.AddProperty("indentation", 20);
@@ -272,17 +304,35 @@ namespace Buhta
             }
 
             // toolbar
-            if (toolbar.Count > 0)
+            EmitFilterScript();
+            if (rightToolbar.Count > 0 || leftToolbar.Count > 0)
             {
                 Html.Append("<div class='row'>");  // begin row
-                Html.Append("<div class='pull-right'>");
-                foreach (var control in toolbar)
-                    Html.Append(control.GetHtml());  // begin row
-                Html.Append("</div>");
+
+                Html.Append(@"<form class='form-inline'>");
+                Html.Append(@"<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-left:0px'>");
+                Html.Append(@"<input id='" + UniqueId + @"-filter-input' type='text' class='form-control input-sm' placeholder='строка для поиска' style='max-width:150px; margin-left1:-15px; display:inline-block'>");
+                if (leftToolbar.Count > 0)
+                {
+                    foreach (var control in leftToolbar)
+                        Html.Append(control.GetHtml());
+                }
+                Html.Append(@"</div>");
+
+                if (rightToolbar.Count > 0)
+                {
+                    Html.Append("<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-right:0px'>");
+                    Html.Append("<div class='pull-right'>");
+                    foreach (var control in rightToolbar)
+                        Html.Append(control.GetHtml());
+                    Html.Append("</div>");
+                    Html.Append("</div>");
+                }
                 Html.Append("</div>");  // end row
+                Html.Append("</form>");
             }
 
-            Html.Append("<div class='row' style='margin-top:10px'>");  // begin row
+            Html.Append("<div class='row'>");  // begin row
             Html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
             //Html.Append("<colgroup>");
             //foreach (var col in Columns)

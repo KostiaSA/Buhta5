@@ -33,6 +33,7 @@ namespace Buhta
         public override string GetHtml()
         {
             AddStyle("margin-left", "5px");
+         //   AddStyle("margin-bottom", "10px");
 
             if (Role == bsTreeToolbarButtonRole.ExpandAll)
                 Bind_OnClick(Tree.JavaScript_ExpandAll);
