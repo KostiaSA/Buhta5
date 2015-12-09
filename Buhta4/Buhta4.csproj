@@ -540,6 +540,7 @@
     <Content Include="Content\vendors\DataTables-1.10.10\extensions\Select\js\dataTables.select.min.js" />
     <Content Include="Content\vendors\DataTables-1.10.10\media\js\dataTables.bootstrap.js" />
     <Content Include="Content\vendors\DataTables-1.10.10\media\js\jquery.dataTables.js" />
+    <Content Include="Content\vendors\fancytree-master\src\jquery.fancytree.filter.js" />
     <Content Include="Content\vendors\fancytree-master\src\jquery.fancytree.js" />
     <Content Include="Content\vendors\fancytree-master\src\jquery.fancytree.table.js" />
     <Content Include="Content\vendors\fancytree-master\src\skin-bootstrap-n\ui.fancytree.css" />

@@ -234,6 +234,8 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
 
             JsObject filter = new JsObject();
             filter.AddProperty("mode","hide");
+            filter.AddProperty("counter", "false");
+            filter.AddProperty("hideExpandedCounter", "false");
             init.AddProperty("filter", filter);
 
             JsObject table = new JsObject();
@@ -279,7 +281,7 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
                     if (i != 0)
                         Script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");
                     else
-                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row));");
+                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row));node.saveHtml=f" + i + "(row);");
                 }
                 else
                 {
