@@ -215,6 +215,7 @@
                        c.Caption = "Тип данных";
                        c.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
                        c.BackColor = TextColor.DateTime;
+                       c.CellTemplate = @"<span style='font-size:1.2em'>{{GetDataTypeDisplay}}\n""</span>";
                    });
 
                    grid.AddColumn(c =>
@@ -232,6 +233,7 @@
                        //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
 
                        c.CellTemplate = "<span style='font-weight:bold'>{{Description}}</span>";
+                       c.Align = bsGridColumnAlign.center;
 
                    });
 
@@ -240,6 +242,7 @@
                        c.Caption = "Позиция";
                        c.Field_Bind = nameof(SchemaTableColumn.Position);
                        c.Sort = bsGridColumnSort.asc1;
+                       c.Align = bsGridColumnAlign.right;
                        //  c.DataType = GridColumnDataType.Number;
                    });
 

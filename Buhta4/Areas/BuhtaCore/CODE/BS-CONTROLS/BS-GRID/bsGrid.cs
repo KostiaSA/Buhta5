@@ -205,6 +205,11 @@ namespace Buhta
                     script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.BackColor + "');");
                 if (col.HtmlClass != null)
                     script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.HtmlClass + "');");
+                if (col.Align == bsGridColumnAlign.center)
+                    script.AppendLine("  td.eq(" + colIndex + ").css('text-align','center');");
+                if (col.Align == bsGridColumnAlign.right)
+                    script.AppendLine("  td.eq(" + colIndex + ").css('text-align','right');");
+
                 colIndex++;
             }
 
@@ -224,13 +229,17 @@ namespace Buhta
             {
                 if (col.CellTemplate != null)
                 {
-                    script.AppendLine(@"  var f" + i + "=function(row){");
                     if (col.CellTemplateJS != null)
+                    {
+                        script.AppendLine("  var f" + i + "=function(row){");
                         Script.AppendLine(col.CellTemplateJS);
-                    script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate + @""", row);");
-                    script.AppendLine(@"  };");
+                        script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", row);");
+                        script.AppendLine("  };");
+                        script.AppendLine("  td.eq(" + i + ").html(f" + i + "(rec));");
+                    }
+                    else
+                        script.AppendLine("  td.eq(" + i + @").html(Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", rec));");
 
-                    script.AppendLine("  td.eq(" + i + ").html(f" + i + "(rec));");
                 }
                 i++;
             }

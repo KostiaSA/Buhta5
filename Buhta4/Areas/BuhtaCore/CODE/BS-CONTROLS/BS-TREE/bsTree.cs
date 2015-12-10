@@ -277,7 +277,7 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
                     Script.AppendLine(@"  var f" + i + "=function(row){");
                     if (col.CellTemplateJS != null)
                         Script.AppendLine(col.CellTemplateJS);
-                    Script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate + @""", row);");
+                    Script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", row);");
                     Script.AppendLine(@"  };");
                     if (i != 0)
                         Script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");

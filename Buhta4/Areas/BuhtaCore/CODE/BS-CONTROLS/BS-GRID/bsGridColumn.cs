@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace Buhta
 {
     public enum bsGridColumnSort { none = 0, asc1 = 1, asc2 = 2, asc3 = 3, desc1 = -1, desc2 = -2, desc3 = -3 }
+    public enum bsGridColumnAlign { left = 0, center = 1, right = 2 }
 
     public class bsGridColumn : bsControl
     {
@@ -20,6 +21,8 @@ namespace Buhta
 
         public string Caption;
         public string Caption_Bind;
+
+        public bsGridColumnAlign Align;
 
         public string Field_Bind;
 
