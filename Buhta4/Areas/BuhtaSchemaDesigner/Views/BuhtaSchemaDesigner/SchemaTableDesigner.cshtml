@@ -201,6 +201,7 @@
                    {
                        c.Caption = "Имя колонки";
                        c.Field_Bind = nameof(SchemaTableColumn.Name);
+                       c.TextColor = TextColor.KeyField;
                    });
 
                    grid.AddColumn(c =>
@@ -213,12 +214,25 @@
                    {
                        c.Caption = "Тип данных";
                        c.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
+                       c.BackColor = TextColor.DateTime;
                    });
 
                    grid.AddColumn(c =>
                    {
                        c.Caption = "Описание";
                        c.Field_Bind = nameof(SchemaTableColumn.Description);
+                       //                       c.CellTemplateJS = @"
+                       // if (row.node.children) {
+                       //   row._ee=' ('+row.node.children.length.toString()+')'
+                       //   row._fontWeight='bold'
+                       // }
+                       // else
+                       //   row._fontWeight='normal';
+                       //";
+                       //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
+
+                       c.CellTemplate = "<span style='font-weight:bold'>{{Description}}</span>";
+
                    });
 
                    grid.AddColumn(c =>

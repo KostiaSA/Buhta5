@@ -190,6 +190,58 @@ namespace Buhta
 
         }
 
+        string GetCreatedRowEventScript()
+        {
+            var script = new StringBuilder();
+
+            script.AppendLine("function(row, data, dataIndex) {");
+            script.AppendLine("  var td=$(row).children('td');");
+            int colIndex = 0;
+            foreach (var col in Columns)
+            {
+                if (col.TextColor != null)
+                    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.TextColor + "');");
+                if (col.BackColor != null)
+                    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.BackColor + "');");
+                if (col.HtmlClass != null)
+                    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.HtmlClass + "');");
+                colIndex++;
+            }
+
+            if (Columns.Where((c) => c.CellTemplate != null).Count() > 0)
+            {
+                colIndex = 0;
+                script.AppendLine(@"  var rec={};");
+                foreach (var col in Columns)
+                {
+                    script.AppendLine(@"  rec['" + col.Field_Bind + "']=data[" + colIndex + "];");
+                    colIndex++;
+                }
+            }
+
+            int i = 0;
+            foreach (var col in Columns)//.Where(c => c.Hidden != true))
+            {
+                if (col.CellTemplate != null)
+                {
+                    script.AppendLine(@"  var f" + i + "=function(row){");
+                    if (col.CellTemplateJS != null)
+                        Script.AppendLine(col.CellTemplateJS);
+                    script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate + @""", row);");
+                    script.AppendLine(@"  };");
+
+                    script.AppendLine("  td.eq(" + i + ").html(f" + i + "(rec));");
+                }
+                i++;
+            }
+
+            script.AppendLine("}");
+
+            return script.ToString();
+
+        }
+
+
         class SortRec
         {
             public int ColIndex;
@@ -206,6 +258,7 @@ namespace Buhta
             JsObject init = new JsObject();
             init.AddProperty("paging", false);
             init.AddProperty("select", true);
+            init.AddRawProperty("createdRow", GetCreatedRowEventScript());
 
             //jsArray extensions = new jsArray();
             //extensions.AddObject("table");
@@ -247,8 +300,8 @@ namespace Buhta
                 jsorder.AddObject(rec.AscDesc);
                 order.AddObject(jsorder);
             }
-            if (order.Length>0)
-            init.AddProperty("order", order);
+            if (order.Length > 0)
+                init.AddProperty("order", order);
 
             //if (IsShowCheckboxes)
             //    init.AddProperty("checkbox", true);

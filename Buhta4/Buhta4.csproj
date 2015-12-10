@@ -190,6 +190,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-TREE\bsTreeColumn.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-MODAL\bsModal.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\BindingHub.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\UTILS\Colors.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
@@ -233,6 +234,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\buhta-colors.css" />
     <Content Include="Content\buhta-core.css" />
     <Content Include="Content\JQWidgets\images\backgroundTop.png" />
     <Content Include="Content\JQWidgets\images\backImage.png" />
