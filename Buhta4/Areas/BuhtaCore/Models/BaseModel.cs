@@ -150,6 +150,14 @@ namespace Buhta
                     if (_prop.PropertyType == typeof(Guid))
                         _prop.SetValue(obj, Guid.Parse(value.ToString()), null);
                     else
+                    if (_prop.PropertyType == typeof(Guid?))
+                    {
+                        if (value == null)
+                            _prop.SetValue(obj, null, null);
+                        else
+                            _prop.SetValue(obj, Guid.Parse(value.ToString()), null);
+                    }
+                    else
                     if (_prop.PropertyType == typeof(int))
                         _prop.SetValue(obj, int.Parse(value.ToString()), null);
                     else

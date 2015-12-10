@@ -7,11 +7,11 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class bsGridColumnSettings : bsControl
-    {
-        public bsGridColumnSettings(BaseModel model) : base(model) { }
+    public enum bsGridColumnSort { none = 0, asc1 = 1, asc2 = 2, asc3 = 3, desc1 = -1, desc2 = -2, desc3 = -3 }
 
-        //public GridColumnDataType DataType = GridColumnDataType.String;
+    public class bsGridColumn : bsControl
+    {
+        public bsGridColumn(BaseModel model) : base(model) { }
 
         public int? Width;
         public string Width_Bind;
@@ -28,14 +28,7 @@ namespace Buhta
 
         public string CellTemplateJS;
 
-        //public void EmitDataField(StringBuilder script,int colIndex)
-        //{
-        //    script.Append("fields.push({");
-        //    script.Append("name:"+Field_Bind.AsJavaScript()+",");
-        //    script.Append("type:" +  Enum.GetName(typeof(GridColumnDataType),DataType).ToLower().AsJavaScript() + ",");
-        //    script.Append("map:'"+colIndex+"'");
-        //    script.AppendLine("});");
-        //}
+        public bsGridColumnSort Sort;
 
         public void EmitColgroupCol(StringBuilder html, StringBuilder script)
         {
@@ -44,27 +37,4 @@ namespace Buhta
         }
     }
 
-    public class bsGridColumn
-    {
-
-        public bsGridColumnSettings Settings;
-
-        //public old_bsGrid Tree { get; private set; }
-
-        public bsGridColumn()
-        {
-            //Settings = new bsGridColumnSettings();
-        }
-
-        public string GetHtml()
-        {
-
-            //EmitProperty_Px(Script, "width", Settings.Width);
-            //EmitProperty_Bind(Script, Settings.Width_Bind, "width");
-
-            return "";
-        }
-
-
-    }
 }

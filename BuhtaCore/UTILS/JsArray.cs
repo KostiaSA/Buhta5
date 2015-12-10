@@ -7,7 +7,7 @@ using System.Web.Helpers;
 
 namespace Buhta
 {
-    public class jsArray : JsBaseObject
+    public class JsArray : JsBaseObject
     {
         class obj
         {

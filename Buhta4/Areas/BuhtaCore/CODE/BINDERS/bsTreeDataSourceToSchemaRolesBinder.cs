@@ -21,7 +21,7 @@ namespace Buhta
             IsNotAutoUpdate = true;
         }
 
-        void AddRoleNode(jsArray nodeList, SchemaBaseRole role)
+        void AddRoleNode(JsArray nodeList, SchemaBaseRole role)
         {
             var node = new JsObject();
             node.AddProperty("title", "жопа");
@@ -39,7 +39,7 @@ namespace Buhta
             node.AddProperty("row", row);
             nodeList.AddObject(node);
 
-            var children = new jsArray();
+            var children = new JsArray();
 
             foreach (var childRole in SchemaBaseRole.Roles.Values.OrderBy((r) => r.Position))
             {
@@ -69,7 +69,7 @@ namespace Buhta
             if (RootRole==null)
                 throw new Exception(nameof(bsTreeDataSourceToSchemaRolesBinder) + ": при привязке свойства '" + SelectedRowsModelPropertyName + "' должна быть указана '" + nameof(RootRole) + "'");
 
-            var jstree = new jsArray();
+            var jstree = new JsArray();
             AddRoleNode(jstree, RootRole);
 
             return "$('#" + Control.UniqueId + "').fancytree('option','source'," + jstree.ToJson() + ");";

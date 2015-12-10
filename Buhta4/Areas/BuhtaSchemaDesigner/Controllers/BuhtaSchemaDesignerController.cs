@@ -24,6 +24,7 @@ namespace Buhta
         public ActionResult SchemaTableDesigner(string ID)
         {
             var model = new SchemaTableDesignerModel(this, null);
+            App.Schema.ReloadObjectCache(Guid.Parse(ID));
             model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
             model.StartEditing();
 

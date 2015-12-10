@@ -54,7 +54,7 @@ namespace Buhta
 
 
 
-            var ret = new jsArray();
+            var ret = new JsArray();
 
             foreach (var obj in list)
             {

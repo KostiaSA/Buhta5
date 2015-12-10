@@ -278,6 +278,18 @@ namespace Buhta
             AddBinder(schemaObjectBinder);
         }
 
+        public void Bind_Value_To_SchemaObject(BinderGetMethod<Guid?> getValueMethod, BinderSetMethod<Guid?> setValueMethod, Type schemaObjectType)
+        {
+            Type = bsInputType.Lookup;
+            schemaObjectBinder = new bsInputToSchemaObjectBinder()
+            {
+                ModelGetMethod = getValueMethod,
+                ModelSetMethod = setValueMethod,
+                SchemaObjectType = schemaObjectType
+            };
+            AddBinder(schemaObjectBinder);
+        }
+
         public string Label;
         public string PlaceHolder;
 

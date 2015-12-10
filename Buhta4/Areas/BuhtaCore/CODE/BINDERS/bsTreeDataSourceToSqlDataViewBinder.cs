@@ -44,7 +44,7 @@ namespace Buhta
                 selectedRows = (ObservableCollection<string>)_selectedRows;
             }
 
-            var ret = new jsArray();
+            var ret = new JsArray();
 
             var displayFieldName = DisplayFieldName;
             if (displayFieldName == null && dataView.Table.Columns.Contains("__title__"))

@@ -8,16 +8,20 @@ using System.Web;
 
 namespace Buhta
 {
-    public class bsInputToSchemaObjectBinder : OneWayBinder<Guid>
+    public class bsInputToSchemaObjectBinder : OneWayBinder<Guid?>
     {
+        public BinderSetMethod<Guid?> ModelSetMethod { get; set; }
+
+        SelectSchemaObjectDialogModel schemaObjectDialogmodel = null;
+
         public Type SchemaObjectType;
         public void SelectButtonClick(dynamic args)
         {
 
             var oldValue = Control.Model.GetPropertyValue(ModelPropertyName);
-            if (oldValue==null || oldValue is Guid?)
+            if (oldValue == null || oldValue is Guid?)
             {
-                var schemaObjectDialogmodel = new SelectSchemaObjectDialogModel(Control.Model.Controller, Control.Model, oldValue as Guid?, SchemaObjectType);
+                schemaObjectDialogmodel = new SelectSchemaObjectDialogModel(Control.Model.Controller, Control.Model, oldValue as Guid?, SchemaObjectType);
                 schemaObjectDialogmodel.OkEventMethod = CallOnChangeBinder;
 
                 var modal = Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaObjectDialog.cshtml", schemaObjectDialogmodel);
@@ -27,8 +31,18 @@ namespace Buhta
                 throw new Exception(nameof(bsInputToSchemaObjectBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'Guid'");
         }
 
-        public void CallOnChangeBinder(dynamic args)
+        void CallOnChangeBinder(dynamic args)
         {
+            if (ModelSetMethod == null && ModelPropertyName == null)
+                throw new Exception(nameof(bsInputToSchemaObjectBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или set-метод");
+
+            if (ModelPropertyName != null)
+            {
+                Control.Model.SetPropertyValue(ModelPropertyName, schemaObjectDialogmodel.Value);
+            }
+            else
+                ModelSetMethod(schemaObjectDialogmodel.Value);
+
             foreach (var binder in Control.Binders)
             {
                 if (binder is EventBinder)
@@ -50,16 +64,31 @@ namespace Buhta
 
         public override string GetJsForSettingProperty()
         {
-            var value = Control.Model.GetPropertyValue(ModelPropertyName);
-            if (value==null || value is Guid?)
+            if (ModelGetMethod == null && ModelPropertyName == null)
+                throw new Exception(nameof(bsInputToSchemaObjectBinder) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
+
+            Guid? value;
+            if (ModelGetMethod != null)
             {
-                string lookupValue="<пусто>";
-                if (value != null)
-                    lookupValue = App.Schema.GetObjectName(value as Guid?);
-                return "$('#" + Control.UniqueId + "').val(" + lookupValue.AsJavaScript() + ");";
+                value = ModelGetMethod();
             }
             else
-                throw new Exception(nameof(bsInputToSchemaObjectBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'Guid'");
+            {
+                var _value = Control.Model.GetPropertyValue(ModelPropertyName);
+                if (_value == null)
+                    value = null;
+                else
+                {
+                    if (_value is Guid?)
+                        value = (Guid?)_value;
+                    else
+                        throw new Exception(nameof(bsInputToSchemaObjectBinder) + "." + nameof(GetJsForSettingProperty) + "(): привязанное свойство должено быть 'Guid'");
+                }
+            }
+            string lookupValue = "<пусто>";
+            if (value != null)
+                lookupValue = App.Schema.GetObjectName(value as Guid?);
+            return "$('#" + Control.UniqueId + "').val(" + lookupValue.AsJavaScript() + ");";
         }
 
         public override void EmitBindingScript(StringBuilder script)

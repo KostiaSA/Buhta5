@@ -46,7 +46,7 @@ namespace Buhta
             //    ((dynamic)_objectList).CollectionChanged += new NotifyCollectionChangedEventHandler(DataSourceRows_CollectionChanged);
             //}
 
-            var ret = new jsArray();
+            var ret = new JsArray();
 
 
             foreach (var obj in objectList)

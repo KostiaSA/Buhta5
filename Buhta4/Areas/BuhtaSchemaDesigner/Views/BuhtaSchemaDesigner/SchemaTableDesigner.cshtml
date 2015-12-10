@@ -79,13 +79,7 @@
        span.Bind_Text(() => Model.GetEditedObjectName());
    })
         <small>(таблица)</small>
-        @Html.bsSpan(() => Model.test777.ToString());
     </h3>
-    @Html.bsButton((but) =>
-{
-    but.Text = "Test777";
-    but.Bind_OnClick((args) => { Model.test777 = 3; });
-})
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
         <li role="presentation">
@@ -110,7 +104,6 @@
                             @Html.bsSelect(tag =>
                        {
                            tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name", "Position");
-                           tag.Bind_Value<int>(() => Model.test777, (value) => { Model.test777 = value; });
                            tag.Label = "Тип данных";
                        })
 
@@ -232,6 +225,7 @@
                    {
                        c.Caption = "Позиция";
                        c.Field_Bind = nameof(SchemaTableColumn.Position);
+                       c.Sort = bsGridColumnSort.asc1;
                        //  c.DataType = GridColumnDataType.Number;
                    });
 
@@ -258,7 +252,7 @@
                            button.Bind_OnClick(Model.EditColumnButtonClick);
                            button.Text = "Изменить";
                            button.AddClass("edit-color");
-                           button.AddStyle("margin-left","5px");
+                           button.AddStyle("margin-left", "5px");
                        })
                             @Html.bsButton(button =>
                        {
@@ -278,11 +272,11 @@
             нет данных
             <br>
             @Html.bsButton(settings =>
-{
-    settings.Bind_Disabled(() => !Model.GetNeedSave());
-    settings.Bind_OnClick(Model.SaveButtonClick);
-    settings.Text = "Сохранить";
-})
+                {
+                    settings.Bind_Disabled(() => !Model.GetNeedSave());
+                    settings.Bind_OnClick(Model.SaveButtonClick);
+                    settings.Text = "Сохранить";
+                })
             <br>
         </div>
     </div>

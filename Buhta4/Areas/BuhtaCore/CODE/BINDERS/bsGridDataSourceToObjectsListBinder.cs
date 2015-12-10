@@ -50,13 +50,13 @@ namespace Buhta
             //    ((dynamic)_objectList).CollectionChanged += new NotifyCollectionChangedEventHandler(DataSourceRows_CollectionChanged);
             //}
 
-            var ret = new jsArray();
+            var ret = new JsArray();
 
 
             foreach (var obj in objectList)
             {
                 //DataRow row = rowView.Row;
-                var jsrow = new jsArray();
+                var jsrow = new JsArray();
 
                 //if (obj is INotifyPropertyChanged)
                 //{

@@ -227,13 +227,13 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
 
             JsObject init = new JsObject();
 
-            jsArray extensions = new jsArray();
+            JsArray extensions = new JsArray();
             extensions.AddObject("table");
             extensions.AddObject("filter");
             init.AddProperty("extensions", extensions);
 
             JsObject filter = new JsObject();
-            filter.AddProperty("mode","hide");
+            filter.AddProperty("mode", "hide");
             filter.AddProperty("counter", "false");
             filter.AddProperty("hideExpandedCounter", "false");
             init.AddProperty("filter", filter);
@@ -281,7 +281,8 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
                     if (i != 0)
                         Script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");
                     else
-                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row));node.saveHtml=f" + i + "(row);");
+                        // node.saveHtml ипользуется в jquery.fancytree.filter.js
+                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row)); node.saveHtml=f" + i + "(row);");
                 }
                 else
                 {

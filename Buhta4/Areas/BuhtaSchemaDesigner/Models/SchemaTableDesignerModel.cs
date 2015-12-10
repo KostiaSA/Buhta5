@@ -11,8 +11,6 @@ namespace Buhta
     public class SchemaTableDesignerModel : SchemaObjectEditModel<SchemaTable>
     {
 
-        public int test777 { get; set; }
-
         public SchemaTable Table { get { return (SchemaTable)EditedObject; } }
 
         public SchemaTableDesignerModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }

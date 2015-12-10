@@ -50,8 +50,8 @@ namespace Buhta
 
         //public BasebsGridDataSourceBinder DataSourceBinder;
 
-        List<bsGridColumnSettings> columns = new List<bsGridColumnSettings>();
-        public List<bsGridColumnSettings> Columns { get { return columns; } }
+        List<bsGridColumn> columns = new List<bsGridColumn>();
+        public List<bsGridColumn> Columns { get { return columns; } }
 
         public string KeyFieldName;
 
@@ -66,7 +66,7 @@ namespace Buhta
                 if (col.Field_Bind == KeyFieldName)
                     return index;
             }
-            throw new Exception(nameof(bsGrid) + ": нет колонки с " + nameof(bsGridColumnSettings.Field_Bind) + "='" + KeyFieldName + "'");
+            throw new Exception(nameof(bsGrid) + ": нет колонки с " + nameof(bsGridColumn.Field_Bind) + "='" + KeyFieldName + "'");
 
         }
 
@@ -104,9 +104,9 @@ namespace Buhta
         }
 
 
-        public void AddColumn(Action<bsGridColumnSettings> settings)
+        public void AddColumn(Action<bsGridColumn> settings)
         {
-            var col = new bsGridColumnSettings(Model);
+            var col = new bsGridColumn(Model);
             settings(col);
             columns.Add(col);
         }
@@ -190,6 +190,13 @@ namespace Buhta
 
         }
 
+        class SortRec
+        {
+            public int ColIndex;
+            public int SortIndex;
+            public string AscDesc;
+
+        }
         public override string GetHtml()
         {
 
@@ -204,7 +211,7 @@ namespace Buhta
             //extensions.AddObject("table");
             //init.AddProperty("extensions", extensions);
 
-            jsArray columns = new jsArray();
+            JsArray columns = new JsArray();
             foreach (var col in Columns)
             {
                 var jscol = new JsObject();
@@ -214,6 +221,34 @@ namespace Buhta
             }
             init.AddProperty("columns", columns);
 
+            // сортировка
+
+            List<SortRec> sortArray = new List<SortRec>();
+            int colIndex = 0;
+            foreach (var col in Columns)
+            {
+                if (col.Sort != bsGridColumnSort.none)
+                {
+                    var sortRec = new SortRec() { ColIndex = colIndex };
+                    sortRec.SortIndex = Math.Abs((int)col.Sort);
+                    if ((int)col.Sort > 0)
+                        sortRec.AscDesc = "asc";
+                    else
+                        sortRec.AscDesc = "desc";
+                    sortArray.Add(sortRec);
+                }
+                colIndex++;
+            }
+            JsArray order = new JsArray();
+            foreach (SortRec rec in sortArray.OrderBy((r) => r.SortIndex))
+            {
+                var jsorder = new JsArray();
+                jsorder.AddObject(rec.ColIndex);
+                jsorder.AddObject(rec.AscDesc);
+                order.AddObject(jsorder);
+            }
+            if (order.Length>0)
+            init.AddProperty("order", order);
 
             //if (IsShowCheckboxes)
             //    init.AddProperty("checkbox", true);

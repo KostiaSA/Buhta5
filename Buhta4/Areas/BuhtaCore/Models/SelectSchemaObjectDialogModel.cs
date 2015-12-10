@@ -34,6 +34,7 @@ namespace Buhta
 
         public void RowSelect(dynamic args)
         {
+            глюк где-то здесь
             Guid id = Guid.Parse(args.rowId.Value);
 
             if (args.isSelected.Value)
