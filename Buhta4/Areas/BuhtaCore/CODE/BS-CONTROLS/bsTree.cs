@@ -38,6 +38,7 @@ namespace Buhta
 
         public bool IsShowCheckboxes;
         public bool IsShowIcons;
+        public bool IsShowTextFilter;
 
         public BaseAction ClickAction;
 
@@ -307,20 +308,27 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
             }
 
             // toolbar
-            EmitFilterScript();
-            if (rightToolbar.Count > 0 || leftToolbar.Count > 0)
+            if (IsShowTextFilter)
+                EmitFilterScript();
+
+            if (rightToolbar.Count > 0 || leftToolbar.Count > 0 || IsShowTextFilter)
             {
                 Html.Append("<div class='row'>");  // begin row
 
                 Html.Append(@"<form class='form-inline'>");
-                Html.Append(@"<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-left:0px'>");
-                Html.Append(@"<input id='" + UniqueId + @"-filter-input' type='text' class='form-control input-sm' placeholder='строка для поиска' style='max-width:150px; margin-left1:-15px; display:inline-block'>");
-                if (leftToolbar.Count > 0)
+
+                if (leftToolbar.Count > 0 || IsShowTextFilter)
                 {
+                    Html.Append(@"<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-left:0px'>");
+
+                    if (IsShowTextFilter)
+                        Html.Append(@"<input id='" + UniqueId + @"-filter-input' type='text' class='form-control input-sm' placeholder='строка для поиска' style='max-width:150px; margin-left1:-15px; display:inline-block'>");
+
                     foreach (var control in leftToolbar)
                         Html.Append(control.GetHtml());
+
+                    Html.Append(@"</div>");
                 }
-                Html.Append(@"</div>");
 
                 if (rightToolbar.Count > 0)
                 {

@@ -10,6 +10,8 @@
     <div class="modal-body">
         @Html.bsTree(tree =>
    {
+       tree.IsShowTextFilter = true;
+
        tree.AddColumn(c =>
        {
            c.Caption = "Объект";
@@ -31,7 +33,7 @@
        });
 
        tree.Bind_DataSource_To_SchemaObjects(nameof(Model.Value), Model.SchemaObjectType);
-       tree.Bind_OnRowSelect(Model.RowSelect);
+       tree.Bind_OnRowActivate(Model.RowActivate);
        tree.Bind_OnRowDblClick(Model.OkButtonClick);
 
    })
@@ -43,7 +45,6 @@
        button.Text = "   Ok   ";
        button.AddStyle("min-width", "70px");
        button.ButtonStyle = bsButtonStyle.Success;
-       button.Bind_Disabled(() => !Model.NeedSave);
        button.Bind_OnClick(Model.OkButtonClick);
    })
         @Html.bsButton(button =>

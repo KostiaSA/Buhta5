@@ -32,15 +32,9 @@ namespace Buhta
         //    Modal.Close();
         //}
 
-        public void RowSelect(dynamic args)
+        public void RowActivate(dynamic args)
         {
-            глюк где-то здесь
-            Guid id = Guid.Parse(args.rowId.Value);
-
-            if (args.isSelected.Value)
-            {
-                Value = id;
-            }
+            Value = Guid.Parse(args.rowId.Value);
         }
 
     }
