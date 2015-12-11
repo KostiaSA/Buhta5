@@ -385,7 +385,7 @@ namespace Buhta
             return GetColumnByName(columnName) != null;
         }
 
-        Dictionary<string, SchemaTableColumn> columnsByName = new Dictionary<string, SchemaTableColumn>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, SchemaTableColumn> columnsByName = new Dictionary<string, SchemaTableColumn>(StringComparer.CurrentCultureIgnoreCase);
         public SchemaTableColumn GetColumnByName(string columnName)
         {
             if (columnsByName.Values.Count == 0)

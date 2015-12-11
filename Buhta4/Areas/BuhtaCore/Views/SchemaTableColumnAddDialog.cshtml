@@ -21,16 +21,6 @@
 
                 @Model.GetColumnDataTypeInputsHtml()
 
-                @Html.bsInput(tag =>
-           {
-               tag.IsRequired = true;
-               tag.Bind_Value_To_SchemaObject(nameof(Model.ColumnForeingKeyDataType)+"."+ nameof(Model.ColumnForeingKeyDataType.RefTableID), typeof(SchemaTable));
-               //tag.Bind_Validator(Model.Column.Validate_Roles);
-               tag.Label = "Ссылка на таблицу";
-           })
-
-
-
 
                 @Html.bsInput(tag =>
            {

@@ -5,80 +5,45 @@
 }
 
 
-@*<nav class=" navbar navbar-default navbar-fixed-top navbar-static-top1">
-        <div class="container container-fluid1">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+<nav class=" navbar navbar-default">
+    <div class="container container-fluid1">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
 
-                <form class="navbar-form navbar-left" role="search">
+            @*<form class="navbar-form navbar-left" role="search">
                     <div href=# class="btn btn-default" id="aaaXXX">назад</div>
                     <script>
                         $("#aaaXXX").on('click', function () {
                             if (window.opener) window.open('', window.opener.name).focus();
                         });</script>
 
-                </form>
+                </form>*@
 
 
 
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Таблица</a></li>
-                    <li><a href="#columns">Колонки</a></li>
-                    <li><a href="#">Индексы</a></li>
-                    <li><a href="#links">Уроды</a></li>
-                    <li><a href="#">Индексы</a></li>
-                    <li><a href="#" id="qq">Отчеты</a></li>
-                </ul>
-                <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
-                <form class="navbar-form navbar-right" role="search">
-
-                    @Html.bsButton(s =>
-                   {
-                       //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-                       s.Text = "Добавить";
-                       s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
-                       s.ButtonStyle = bsButtonStyle.Default;
-                       s.Size = bsButtonSize.Small;
-                   })
-
-                    @Html.bsButton(s =>
-                   {
-                       s.Bind_OnClick(Model.OnChangeButtonClick);
-                       s.Text = "Изменить";
-                       s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-update.png";
-                       s.ButtonStyle = bsButtonStyle.Default;
-                       s.Size = bsButtonSize.Small;
-                   })
-
-                    @Html.bsButton(s =>
-                   {
-                       //s.OnClick_Bind = nameof(Model.Test1ButtonClick);
-                       s.Text = "Удалить";
-                       s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-delete.png";
-
-                       s.Size = bsButtonSize.Small;
-                       s.ButtonStyle = bsButtonStyle.Default;
-                   })
-
-
-                </form>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SQL<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>*@
+            <ul class="nav navbar-nav app-navbar">
+                <li>
+                    <a href="javascript:void(0)" data-toggle="search">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png" height="28" />
+                        <p>рабочий стол</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-windows.png" height="28" />
+                        <p>открытые окна</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-setup.png" height="28" />
+                        <p>настройка</p>
+                    </a>
+                </li>
+            </ul>
+            <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
 <div class="container">
     <h3>

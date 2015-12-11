@@ -36,8 +36,8 @@ CREATE TABLE [dbo].[__undo__](
         public CrudMode CrudMode;
         public Guid? NewBussinesOperID;
 
-        public Dictionary<string, object> Values = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        public Dictionary<string, object> NewValues = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, object> Values = new Dictionary<string, object>(StringComparer.CurrentCultureIgnoreCase);
+        public Dictionary<string, object> NewValues = new Dictionary<string, object>(StringComparer.CurrentCultureIgnoreCase);
 
         public event EventHandler OnLoadData;
         public event EventHandler OnSaveData;

@@ -105,6 +105,14 @@ namespace Buhta
             stringSizeTag.Bind_Visible(() => Column.DataType.GetType() == typeof(StringDataType));
             html.Append(stringSizeTag.GetHtml());
 
+            var refTableTag = new bsInput(this);
+            refTableTag.IsRequired = true;
+            refTableTag.Bind_Value_To_SchemaObject(nameof(ColumnForeingKeyDataType) + "." + nameof(ColumnForeingKeyDataType.RefTableID), typeof(SchemaTable));
+            refTableTag.Label = "Ссылка на таблицу";
+            refTableTag.Bind_Visible(() => Column.DataType.GetType() == typeof(ForeingKeyDataType));
+            html.Append(refTableTag.GetHtml());
+
+
             return new MvcHtmlString(html.ToString());
         }
 

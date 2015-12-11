@@ -214,6 +214,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-desktop.png" />
+    <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-schema.png" />
+    <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-setup.png" />
+    <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-tasks.png" />
+    <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-windows.png" />
+    <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-windows2.png" />
     <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-delete.png" />
     <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-insert.png" />
     <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-update.png" />
@@ -723,7 +729,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\BuhtaCore\Content\icon\" />
     <Folder Include="Areas\BuhtaCore\Controllers\" />
     <Folder Include="Areas\BuhtaCore\Views\Shared\" />
     <Folder Include="Models\" />

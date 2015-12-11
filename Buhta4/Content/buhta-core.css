@@ -82,8 +82,8 @@ table.fancytree-ext-table tbody tr.fancytree-selected .fancytree-title,
 table.fancytree-ext-table tbody tr.fancytree-selected:hover .fancytree-title {
     background-color: transparent;
     outline: 0px solid transparent;
-    font-style:italic;
-    font-weight:bold;
+    font-style: italic;
+    font-weight: bold;
     /*color: #428BCA;*/
 }
 
@@ -170,3 +170,24 @@ mark {
     padding: 1px;
     border: 1px solid rgba(66, 139, 202, 0.47);
 }
+
+.navbar-nav.app-navbar > li > a {
+    padding-top: 7px;
+    padding-bottom: 5px;
+    opacity: 0.9;
+}
+
+.navbar-nav.app-navbar > li > a:hover {
+    opacity: 1;
+}
+
+    .navbar-nav.app-navbar > li > a > p {
+        padding-top: 2px;
+        padding-bottom: 0px;
+        font-size: 70%;
+        width: 38px;
+        text-align: center;
+        line-height: 100%;
+        margin-left: -5px;
+        margin-bottom: 0px;
+    }
