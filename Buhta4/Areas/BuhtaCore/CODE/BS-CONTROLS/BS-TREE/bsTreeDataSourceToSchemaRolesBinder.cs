@@ -24,7 +24,7 @@ namespace Buhta
         void AddRoleNode(JsArray nodeList, SchemaBaseRole role)
         {
             var node = new JsObject();
-            node.AddProperty("title", "жопа");
+            node.AddProperty("title", role.Name);
             node.AddProperty("key", role.ID);
             node.AddProperty("expanded", true);
 

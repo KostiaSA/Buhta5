@@ -52,10 +52,10 @@ namespace Buhta
 
         //public BaseBsTreeDataSourceBinder DataSourceBinder;
 
-        List<bsTreeColumnSettings> columns = new List<bsTreeColumnSettings>();
+        List<bsTreeColumn> columns = new List<bsTreeColumn>();
         List<bsControl> leftToolbar = new List<bsControl>();
         List<bsControl> rightToolbar = new List<bsControl>();
-        public List<bsTreeColumnSettings> Columns { get { return columns; } }
+        public List<bsTreeColumn> Columns { get { return columns; } }
 
 
         bsTreeDataSourceToSqlDataViewBinder dataSourceBinderToSqlDataView;
@@ -106,9 +106,9 @@ namespace Buhta
         }
 
 
-        public void AddColumn(Action<bsTreeColumnSettings> settings)
+        public void AddColumn(Action<bsTreeColumn> settings)
         {
-            var col = new bsTreeColumnSettings(Model);
+            var col = new bsTreeColumn(Model);
             settings(col);
             columns.Add(col);
         }
@@ -268,30 +268,46 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
             Script.AppendLine("  var row = node.data.row || {};");
             Script.AppendLine("  row.node = node;");
             Script.AppendLine("  var td = $(node.tr).find('>td');");
-            int i = -1;
+            int colIndex = -1;
             foreach (var col in Columns.Where(c => c.Hidden != true))
             {
-                i++;
+                colIndex++;
+
+                if (colIndex != 0)
+                    Script.AppendLine("  var td_tag=td.eq(" + colIndex + ");");
+                else
+                    Script.AppendLine("  var td_tag=td.eq(" + colIndex + ").find('.fancytree-title');");
+
+
                 if (col.CellTemplate != null)
                 {
-                    Script.AppendLine(@"  var f" + i + "=function(row){");
+                    Script.AppendLine(@"  var f" + colIndex + "=function(row){");
                     if (col.CellTemplateJS != null)
                         Script.AppendLine(col.CellTemplateJS);
                     Script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", row);");
                     Script.AppendLine(@"  };");
-                    if (i != 0)
-                        Script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");
+                    if (colIndex != 0)
+                        Script.AppendLine("  td_tag.html(f" + colIndex + "(row));");
                     else
                         // node.saveHtml ипользуется в jquery.fancytree.filter.js
-                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row)); node.saveHtml=f" + i + "(row);");
+                        Script.AppendLine("  td_tag.html(f" + colIndex + "(row)); node.saveHtml=f" + colIndex + "(row);");
                 }
                 else
                 {
-                    if (i != 0)
-                        Script.AppendLine("  td.eq(" + i + ").text(row['" + col.Field_Bind + "']);");
-                    else
-                        Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').text(row['" + col.Field_Bind + "']);");
+                   Script.AppendLine("  td_tag.text(row['" + col.Field_Bind + "']);");
                 }
+
+                if (col.TextColor != null)
+                    Script.AppendLine("  td_tag.addClass('" + col.TextColor + "');");
+                if (col.BackColor != null)
+                    Script.AppendLine("  td_tag.addClass('" + col.BackColor + "');");
+                if (col.HtmlClass != null)
+                    Script.AppendLine("  td_tag.addClass('" + col.HtmlClass + "');");
+                if (col.Align == bsTreeColumnAlign.center)
+                    Script.AppendLine("  td_tag.css('text-align','center');");
+                if (col.Align == bsTreeColumnAlign.right)
+                    Script.AppendLine("  td_tag.css('text-align','right');");
+
 
             }
             Script.AppendLine("}");

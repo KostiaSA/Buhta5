@@ -9,17 +9,19 @@
     <div class="modal-body">
         @Html.bsTree(tree =>
    {
+       tree.IsShowTextFilter = true;
        tree.AddColumn(c =>
        {
            c.Caption = "Роль";
            c.Field_Bind = nameof(SchemaBaseRole.Name);
-           c.CellTemplateJS = @"
-             if (row.node.isSelected())
-               row._fontWeight='bold';
-             else
-              row._fontWeight='normal';
-           ";
-           c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
+           //c.CellTemplateJS = @"
+           //  if (row.node.isSelected())
+           //    row._fontWeight='bold';
+           //  else
+           //   row._fontWeight='normal';
+           //";
+           //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
+           c.TextColor = TextColor.SchemaRole;
        });
 
        tree.AddColumn(c =>

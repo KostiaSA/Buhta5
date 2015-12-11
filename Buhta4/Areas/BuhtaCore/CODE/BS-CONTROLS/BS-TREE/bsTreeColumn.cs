@@ -7,9 +7,12 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
-    public class bsTreeColumnSettings : bsControl
+
+    public enum bsTreeColumnAlign { left = 0, center = 1, right = 2 }
+
+    public class bsTreeColumn : bsControl
     {
-        public bsTreeColumnSettings(BaseModel model) : base(model) { }
+        public bsTreeColumn(BaseModel model) : base(model) { }
 
         //public GridColumnDataType DataType = GridColumnDataType.String;
 
@@ -20,6 +23,12 @@ namespace Buhta
 
         public string Caption;
         public string Caption_Bind;
+
+        public bsTreeColumnAlign Align;
+
+        public string TextColor;
+        public string BackColor;
+        public string HtmlClass;
 
         public string Field_Bind;
 
@@ -44,27 +53,4 @@ namespace Buhta
         }
     }
 
-    public class bsTreeColumn
-    {
-
-        public bsTreeColumnSettings Settings;
-
-        //public old_bsTree Tree { get; private set; }
-
-        public bsTreeColumn()
-        {
-            //Settings = new bsTreeColumnSettings();
-        }
-
-        public string GetHtml()
-        {
-
-            //EmitProperty_Px(Script, "width", Settings.Width);
-            //EmitProperty_Bind(Script, Settings.Width_Bind, "width");
-
-            return "";
-        }
-
-
-    }
 }

@@ -82,7 +82,9 @@ table.fancytree-ext-table tbody tr.fancytree-selected .fancytree-title,
 table.fancytree-ext-table tbody tr.fancytree-selected:hover .fancytree-title {
     background-color: transparent;
     outline: 0px solid transparent;
-    color: #428BCA;
+    font-style:italic;
+    font-weight:bold;
+    /*color: #428BCA;*/
 }
 
 table.fancytree-ext-table.fancytree-treefocus tbody tr.fancytree-active,
