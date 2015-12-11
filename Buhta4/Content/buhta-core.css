@@ -99,6 +99,14 @@ span.fancytree-checkbox:hover {
     cursor: pointer;
 }
 
+table.fancytree-ext-table tbody tr.fancytree-focused span.fancytree-title {
+    outline: 0px dotted #000;
+}
+
+table.fancytree-ext-table tbody tr.fancytree-active, table.fancytree-ext-table tbody tr.fancytree-active:hover {
+    background-color: rgba(212, 212, 212, 0.38) !important;
+}
+
 .selectize-dropdown, .selectize-dropdown.form-control {
     z-index: 1100;
 }

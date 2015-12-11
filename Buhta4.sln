@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buhta4", "Buhta4\Buhta4.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuhtaCore", "BuhtaCore\BuhtaCore.csproj", "{0857807A-9AF1-4F7E-B8D9-E4657F66A16A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company", "Company\Company.csproj", "{26E71DB1-382F-4D5A-9DAB-04A8CD18E2B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0857807A-9AF1-4F7E-B8D9-E4657F66A16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0857807A-9AF1-4F7E-B8D9-E4657F66A16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0857807A-9AF1-4F7E-B8D9-E4657F66A16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E71DB1-382F-4D5A-9DAB-04A8CD18E2B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E71DB1-382F-4D5A-9DAB-04A8CD18E2B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E71DB1-382F-4D5A-9DAB-04A8CD18E2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E71DB1-382F-4D5A-9DAB-04A8CD18E2B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

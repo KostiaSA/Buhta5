@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -75,25 +76,18 @@ namespace Buhta
                 Converters = new List<JsonConverter> { new JsonImageConverter() }
             };
 
-            ////Application.EnableVisualStyles();
-            ////Application.SetCompatibleTextRenderingDefault(false);
-
-            ////DevExpress.Skins.SkinManager.EnableFormSkins();
-            ////DevExpress.UserSkins.BonusSkins.Register();
-            ////UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
-
             ////if (!System.Diagnostics.Debugger.IsAttached)
             ////{
             ////    Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
             ////    AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             ////}
 
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru");
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru");
-            System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru");
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru");
+            Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentUICulture.NumberFormat.NumberDecimalSeparator = ".";
 
             Random = new Random();
 
@@ -103,7 +97,14 @@ namespace Buhta
             var mefCatalog = new AggregateCatalog();
             mefCatalog.Catalogs.Add(new AssemblyCatalog(typeof(App).Assembly));
 
-            ////mefCatalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory, "company.dll"));
+
+            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"bin\buhtacore.dll"))
+                throw new Exception("AppDomain.CurrentDomain.BaseDirectory работает неправильно.");
+
+            mefCatalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory+"bin", "company.dll"));
+
+            //Debug.Print("AppDomain.CurrentDomain.BaseDirectory", AppDomain.CurrentDomain.BaseDirectory);
+
             ////mefCatalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory, "nopCommerce.dll"));
 
             CompositionContainer mefContainer = new CompositionContainer(mefCatalog);

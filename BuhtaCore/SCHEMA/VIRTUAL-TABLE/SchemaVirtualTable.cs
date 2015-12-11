@@ -131,23 +131,23 @@ namespace Buhta
         public static void LoadVirtualTables()
         {
 
-            ////VirtualTables = new Dictionary<Guid, SchemaVirtualTable>();
-            ////foreach (Lazy<SchemaVirtualTable> vTable in App.Mef.SchemaVirtualTables)
-            ////{
-            ////    if (VirtualTables.ContainsKey(vTable.Value.ID))
-            ////    {
-            ////        throw new Exception("Ошибка загрузки витруальных таблиц  '" + vTable.Value.GetType().FullName + "'.\n" +
-            ////                            "Роль '" + VirtualTables[vTable.Value.ID].GetType().FullName +
-            ////                            " имеет такой-же ID: " + VirtualTables[vTable.Value.ID].ID.AsSQL());
-            ////    }
-            ////    VirtualTables.Add(vTable.Value.ID, vTable.Value);
-            ////}
+            VirtualTables = new Dictionary<Guid, SchemaVirtualTable>();
+            foreach (Lazy<SchemaVirtualTable> vTable in App.Mef.SchemaVirtualTables)
+            {
+                if (VirtualTables.ContainsKey(vTable.Value.ID))
+                {
+                    throw new Exception("Ошибка загрузки витруальных таблиц  '" + vTable.Value.GetType().FullName + "'.\n" +
+                                        "Роль '" + VirtualTables[vTable.Value.ID].GetType().FullName +
+                                        " имеет такой-же ID: " + VirtualTables[vTable.Value.ID].ID.AsSQL());
+                }
+                VirtualTables.Add(vTable.Value.ID, vTable.Value);
+            }
 
-            ////// инициализация
-            ////foreach (var vTable in VirtualTables.Values)
-            ////{
-            ////    vTable.Initialize();
-            ////}
+            // инициализация
+            foreach (var vTable in VirtualTables.Values)
+            {
+                vTable.Initialize();
+            }
 
         }
 

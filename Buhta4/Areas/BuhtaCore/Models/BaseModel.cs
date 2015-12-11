@@ -202,7 +202,6 @@ namespace Buhta
                     //Debug.WriteLine("newText: "+ newText);
                     if (binder.LastSendedText != newText)
                     {
-                        Debug.WriteLine("add ok: " + newText);
                         toSend.AppendLine(newText);
                         binder.LastSendedText = newText;
                     }

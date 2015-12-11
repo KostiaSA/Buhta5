@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace Buhta
                                         " имеет такой-же ID: " + Roles[role.Value.ID].ID.AsSQL());
                 }
                 Roles.Add(role.Value.ID, role.Value);
+
+                Debug.Print("роль: " + role.Value.GetType().FullName);
             }
 
             // инициализация

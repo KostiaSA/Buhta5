@@ -41,7 +41,7 @@ namespace Buhta
 
             var children = new JsArray();
 
-            foreach (var childRole in SchemaBaseRole.Roles.Values.OrderBy((r) => r.Position))
+            foreach (var childRole in SchemaBaseRole.Roles.Values.OrderBy((r) => r.Name))
             {
                 if (childRole.GetType().BaseType != null && childRole.GetType().BaseType.Equals(role.GetType()))
                     AddRoleNode(children, childRole);
