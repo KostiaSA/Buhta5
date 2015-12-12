@@ -194,6 +194,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
+    <Compile Include="Areas\BuhtaCore\Models\AppNavBarModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\MessageDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnBaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnAddModel.cs" />
@@ -607,6 +608,7 @@
     <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\vendors\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Areas\BuhtaCore\Views\AppNavBar.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

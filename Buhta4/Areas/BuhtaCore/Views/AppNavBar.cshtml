@@ -1,0 +1,82 @@
+﻿@model AppNavBarModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>if (!localStorage.BuhtaSessionId) { localStorage.BuhtaSessionId="@Guid.NewGuid()"}</script>
+<nav class="navbar navbar-default">
+    <div class="container container-fluid1" style="padding-left:0px;padding-right:0px">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+
+            @*<form class="navbar-form navbar-left" role="search">
+                    <div href=# class="btn btn-default" id="aaaXXX">назад</div>
+                    <script>
+                        $("#aaaXXX").on('click', function () {
+                            if (window.opener) window.open('', window.opener.name).focus();
+                        });</script>
+
+                </form>*@
+
+
+
+            <ul class="nav navbar-nav app-navbar">
+                <li>
+                    <a href="javascript:void(0)" data-toggle="search">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png" height="30" />
+                        <p>рабочий<br>стол</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-windows2.png" height="30" />
+                        <p>открытые<br>окна</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-setup.png" height="30" />
+                        <p>настройка</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-schema.png" height="30" />
+                        <p>Дизайнер<br>конфигур.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-tasks.png" height="30" />
+                        <p>Список<br>задач</p>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav app-navbar pull-right">
+                <li >
+                    <a href="#" style="text-align:right">
+                        <span class="org-name">ООО Бухта и рога или копыта</span>
+                        <span class="user-name">Константин Савченков</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-applock.png" height="30" />
+                        <p>Блокировка<br>экрана</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Areas/BuhtaCore/Content/icon/app-navbar-exit.png" height="30" />
+                        <p>Завершить<br>работу</p>
+                    </a>
+                </li>
+            </ul>
+            <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
