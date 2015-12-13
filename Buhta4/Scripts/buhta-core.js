@@ -1,11 +1,11 @@
 ﻿
 
-if (window.opener) {
-    window.name = "win" + Math.random().toString().replace(".", "");
-}
-else {
-    window.name = "parent";
-}
+//if (window.opener) {
+//    window.name = "win" + Math.random().toString().replace(".", "");
+//}
+//else {
+//    window.name = "parent";
+//}
 
 var bindingHub;
 var signalr = {};
@@ -16,6 +16,10 @@ var _docReady = [];
 var docReady = function (callback) { _docReady.push(callback); };
 
 $(document).ready(function () {
+    $(window).on('beforeunload', function () {
+        bindingHub.server.unloadChromeWindow(localStorage.ChromeSessionId, window.name);
+    });
+
     $.connection.hub.start().done(function () {
         for (i = 0; i < _docReady.length; i++) {
             _docReady[i]();

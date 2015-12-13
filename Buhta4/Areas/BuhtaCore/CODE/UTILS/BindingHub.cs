@@ -15,9 +15,16 @@ namespace Buhta
     {
         public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
 
+        public void UnloadChromeWindow(string sessionID, string chromeWindowName)
+        {
+            AppServer.SetCurrentAppNavBarModel(sessionID);
+            if (AppServer.CurrentAppNavBarModel != null)
+                AppServer.CurrentAppNavBarModel.DestroyChromeWindow(chromeWindowName);
+        }
+
         public void SendBindedValueChanged(string modelBindingID, string propertyName, string newValue)
         {
-            Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
+            //Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
 
             try
             {

@@ -180,6 +180,14 @@ mark {
     text-align: center;
 }
 
+.navbar-nav.app-navbar > li:hover {
+    background-color:rgba(216, 216, 216, 0.54);
+}
+
+.navbar-nav.app-navbar > li:active {
+    background-color:rgba(216, 216, 216, 1);
+}
+
 .navbar-nav.app-navbar > li > a:hover {
     opacity: 1;
 }

@@ -1,6 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    @{  Session["fake-не-удалять"] = 0;
+        AppServer.SetCurrentAppNavBarModel(Session.SessionID, Model.Controller);
+        AppServer.RegisterNewChromeWindow();
+    }
+    <script>
+        localStorage.ChromeSessionId = "@Session.SessionID";
+        window.name = "@AppServer.CurrentChromeWindow.Name";
+    </script>
+
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,16 +37,16 @@
 
 
     @*<script src="~/Scripts/JQWidgets/jqxcore.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxdata.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxbuttons.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxscrollbar.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxdatatable.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxgrid.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxgrid.sort.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxgrid.pager.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxgrid.selection.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxtreegrid.js"></script>
-    <script src="~/Scripts/JQWidgets/jqxinput.js"></script>*@
+        <script src="~/Scripts/JQWidgets/jqxdata.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxbuttons.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxscrollbar.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxdatatable.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxgrid.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxgrid.sort.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxgrid.pager.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxgrid.selection.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxtreegrid.js"></script>
+        <script src="~/Scripts/JQWidgets/jqxinput.js"></script>*@
 
     <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 
@@ -60,7 +70,7 @@
 
 
     @*<link href="~/Content/vendors/fancytree-master/src/skin-xp/ui.fancytree.css" rel="stylesheet" />
-      <link href="~/Content/vendors/fancytree-master/src/skin-bootstrap/ui.fancytree.css" rel="stylesheet" />*@
+        <link href="~/Content/vendors/fancytree-master/src/skin-bootstrap/ui.fancytree.css" rel="stylesheet" />*@
 
     <link href="~/Content/vendors/fancytree-master/src/skin-win8/ui.fancytree.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-ui.min.js"></script>
@@ -75,8 +85,8 @@
     @RenderSection("scripts", required: false)
 
     @*<link href="~/Content/vendors/select2-master/dist/css/select2.css" rel="stylesheet" />
-    <link href="~/Content/vendors/select2-master/dist/css/select2-bootstrap.css" rel="stylesheet" />
-    <script src="~/Content/vendors/select2-master/dist/js/select2.full.js"></script>*@
+        <link href="~/Content/vendors/select2-master/dist/css/select2-bootstrap.css" rel="stylesheet" />
+        <script src="~/Content/vendors/select2-master/dist/js/select2.full.js"></script>*@
 
     <link href="~/Content/vendors/selectize.js-master/dist/css/selectize.css" rel="stylesheet" />
     <link href="~/Content/vendors/selectize.js-master/dist/css/selectize.bootstrap3.css" rel="stylesheet" />
@@ -90,8 +100,9 @@
 </head>
 <body>
     <div class="page-container">
-        @{ Html.RenderPartial("~/Areas/BuhtaCore/Views/AppNavBar.cshtml", new AppNavBarModel(ViewContext.RouteData.Values["controller"] as Controller,null)); }
+        @{ Html.RenderPartial("~/Areas/BuhtaCore/Views/AppNavBar.cshtml", new AppNavBarModel(ViewContext.RouteData.Values["controller"] as Controller, null)); }
         @RenderBody()
+        @AppServer.GetDebugInfo()
     </div>
 </body>
 </html>

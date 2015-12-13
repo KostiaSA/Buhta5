@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Buhta
 {
+    [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class BuhtaSchemaDesignerController : Controller
     {
 
