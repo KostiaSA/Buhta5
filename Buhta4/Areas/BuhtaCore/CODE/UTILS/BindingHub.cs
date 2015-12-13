@@ -22,12 +22,12 @@ namespace Buhta
                 AppServer.CurrentAppNavBarModel.DestroyChromeWindow(chromeWindowName);
         }
 
-        public void SendBindedValueChanged(string modelBindingID, string propertyName, string newValue)
+        public void SendBindedValueChanged(string sessionID, string modelBindingID, string propertyName, string newValue)
         {
             //Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
-
             try
             {
+                AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
@@ -58,38 +58,39 @@ namespace Buhta
 
         }
 
-        public void SendSelectedRowsChanged(string modelBindingID, string propertyName, string rowID, bool isSelected)
+        //public void SendSelectedRowsChanged(string modelBindingID, string propertyName, string rowID, bool isSelected)
+        //{
+        //    try
+        //    {
+        //        BaseModel obj = BindingModelList[modelBindingID];
+        //        obj.Hub = this;
+        //        Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
+
+        //        var selectedList = obj.GetPropertyValue<ObservableCollection<string>>(propertyName);
+        //        if (isSelected && !selectedList.Contains(rowID))
+        //            selectedList.Add(rowID);
+        //        if (!isSelected && selectedList.Contains(rowID))
+        //            selectedList.Remove(rowID);
+        //        obj.FireOnChangeByBrowser(obj, propertyName, rowID);
+        //        obj.Update();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        var obj = BindingModelList[modelBindingID];
+        //        if (obj == null)
+        //            Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+        //        else
+        //            Clients.Caller.receiveServerError("модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
+
+        //    }
+
+        //}
+
+        public void SendEvent(string sessionID, string modelBindingID, string funcName, dynamic args)
         {
             try
             {
-                BaseModel obj = BindingModelList[modelBindingID];
-                obj.Hub = this;
-                Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
-
-                var selectedList = obj.GetPropertyValue<ObservableCollection<string>>(propertyName);
-                if (isSelected && !selectedList.Contains(rowID))
-                    selectedList.Add(rowID);
-                if (!isSelected && selectedList.Contains(rowID))
-                    selectedList.Remove(rowID);
-                obj.FireOnChangeByBrowser(obj, propertyName, rowID);
-                obj.Update();
-            }
-            catch (Exception e)
-            {
-                var obj = BindingModelList[modelBindingID];
-                if (obj == null)
-                    Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID);
-                else
-                    Clients.Caller.receiveServerError("модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
-
-            }
-
-        }
-
-        public void SendEvent(string modelBindingID, string funcName, dynamic args)
-        {
-            try
-            {
+                AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
@@ -115,30 +116,31 @@ namespace Buhta
             }
         }
 
-        public void SendGridDataSourceRequest(string modelBindingID, string propName, string fieldNames)
+        //public void SendGridDataSourceRequest(string modelBindingID, string propName, string fieldNames)
+        //{
+        //    try
+        //    {
+        //        BaseModel obj = BindingModelList[modelBindingID];
+        //        obj.Hub = this;
+        //        Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
+
+        //        obj.UpdateCollection(propName, fieldNames);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        var obj = BindingModelList[modelBindingID];
+        //        if (obj == null)
+        //            Clients.Caller.receiveServerError(nameof(SendGridDataSourceRequest) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+        //        else
+        //            Clients.Caller.receiveServerError(nameof(SendGridDataSourceRequest) + " в '" + obj.GetType().FullName + "'\n" + e.GetFullMessage());
+        //    }
+        //}
+
+        public void SubscribeBindedValueChanged(string sessionID, string modelBindingID, string propertyName)
         {
             try
             {
-                BaseModel obj = BindingModelList[modelBindingID];
-                obj.Hub = this;
-                Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
-
-                obj.UpdateCollection(propName, fieldNames);
-            }
-            catch (Exception e)
-            {
-                var obj = BindingModelList[modelBindingID];
-                if (obj == null)
-                    Clients.Caller.receiveServerError(nameof(SendGridDataSourceRequest) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
-                else
-                    Clients.Caller.receiveServerError(nameof(SendGridDataSourceRequest) + " в '" + obj.GetType().FullName + "'\n" + e.GetFullMessage());
-            }
-        }
-
-        public void SubscribeBindedValueChanged(string modelBindingID, string propertyName)
-        {
-            try
-            {
+                AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);

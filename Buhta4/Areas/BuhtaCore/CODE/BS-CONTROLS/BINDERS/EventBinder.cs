@@ -28,9 +28,9 @@ namespace Buhta
             script.AppendLine("$('#" + Control.UniqueId + "').on('" + jsEventName + "',function(event){");
             script.AppendLine(" var args={}; if (event) {args=event.args || {}};");
             if (ModelEventMethodName != null)
-                script.AppendLine(" bindingHub.server.sendEvent('" + Control.Model.BindingId + "','" + ModelEventMethodName + "', args );");
+                script.AppendLine(" bindingHub.server.sendEvent(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "','" + ModelEventMethodName + "', args );");
             else
-                script.AppendLine(" bindingHub.server.sendEvent('" + Control.Model.BindingId + "','" + UniqueId + "', args );");
+                script.AppendLine(" bindingHub.server.sendEvent(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "','" + UniqueId + "', args );");
             script.AppendLine("});");
             return;
 

@@ -32,7 +32,7 @@ signalr.bindedValueChangedListeners = [];
 
 signalr.subscribeModelPropertyChanged = function (modelBindingId, propertyName, callBack) {
     docReady(function () {
-        bindingHub.server.subscribeBindedValueChanged(modelBindingId, propertyName);
+        bindingHub.server.subscribeBindedValueChanged(localStorage.ChromeSessionId, modelBindingId, propertyName);
         //alert("hub.start():" + propertyName);
         //console.log('subscribeBindedValueChanged**', modelBindingId, propertyName);
     });

@@ -94,7 +94,7 @@ namespace Buhta
             if (ViewModel is MessageDialogModel)
             {
                 script.Append("modal.on('hidden.bs.modal', function (e) {");
-                script.Append(" bindingHub.server.sendEvent('" + ViewModel.BindingId + "','" + nameof(MessageDialogModel.ClosedByEsc) + "', {} );");
+                script.Append(" bindingHub.server.sendEvent(localStorage.ChromeSessionId,'" + ViewModel.BindingId + "','" + nameof(MessageDialogModel.ClosedByEsc) + "', {} );");
                 script.Append("}); ");
 
             }

@@ -30,9 +30,9 @@ namespace Buhta
             script.AppendLine("    var _args={rowId:data.node.key, tagId:event.target.id, isSelected:data.node.isSelected()};");
 
             if (ModelEventMethodName != null)
-                script.AppendLine("    bindingHub.server.sendEvent('" + Control.Model.BindingId + "','" + ModelEventMethodName + "', _args );");
+                script.AppendLine("    bindingHub.server.sendEvent(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "','" + ModelEventMethodName + "', _args );");
             else
-                script.AppendLine("    bindingHub.server.sendEvent('" + Control.Model.BindingId + "','" + UniqueId + "', _args );");
+                script.AppendLine("    bindingHub.server.sendEvent(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "','" + UniqueId + "', _args );");
 
             if (isIgnoreForFolder)
                 script.AppendLine("  };");
