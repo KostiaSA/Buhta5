@@ -11,6 +11,7 @@ namespace Buhta
     public partial class AppServer
     {
         public static ConcurrentDictionary<string, AppNavBarModel> AppNavBars = new ConcurrentDictionary<string, AppNavBarModel>();
+        public static ConcurrentDictionary<string, ChromeWindow> ChromeWindows = new ConcurrentDictionary<string, ChromeWindow>();
 
         [ThreadStatic]
         public static AppNavBarModel CurrentAppNavBarModel;
@@ -41,6 +42,7 @@ namespace Buhta
         public static void RegisterNewChromeWindow()
         {
             var win = new ChromeWindow();
+
             win.ChromeSessionId = CurrentAppNavBarModel.ChromeSessionId;
             win.Name = "win-" + Guid.NewGuid().ToString();
             CurrentAppNavBarModel.ChromeWindows.TryAdd(win.Name, win);
@@ -60,7 +62,11 @@ namespace Buhta
             {
                 sb.AppendLine("sessionId: " + navBar.ChromeSessionId + "  last: " + navBar.LastRequestTime.ToLongTimeString() + "<br>");
                 foreach (var win in navBar.ChromeWindows.Values)
+                {
                     sb.AppendLine("  window.name: " + win.Name + "<br>");
+                    if (win.SignalrCaller != null)
+                        sb.AppendLine("SignalrCaller: " + win.SignalrCaller.ToGuidOrNull() + "<br>");
+                }
             }
 
             sb.AppendLine("</div>");
@@ -70,6 +76,7 @@ namespace Buhta
 
     public class ChromeWindow
     {
+        public dynamic SignalrCaller;
         public String ChromeSessionId;
         public String Name;
     }

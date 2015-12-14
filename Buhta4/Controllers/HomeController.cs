@@ -13,7 +13,9 @@ namespace Buhta.Controllers
         {
             //var model = new SchemaTableColumnEditModel(this, null);
             //model.Column = new SchemaTableColumn() { Name = "это жопа1" };
-            return View();
+//            return View();
+            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml", new BuhtaSchemaDesignerModel(this, null));
+
         }
 
         public ActionResult About()

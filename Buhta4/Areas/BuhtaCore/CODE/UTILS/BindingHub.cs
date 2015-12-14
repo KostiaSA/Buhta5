@@ -15,11 +15,30 @@ namespace Buhta
     {
         public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
 
-        public void UnloadChromeWindow(string sessionID, string chromeWindowName)
+        //public void UnloadChromeWindow(string sessionID, string chromeWindowName)
+        //{
+        //    AppServer.SetCurrentAppNavBarModel(sessionID);
+        //    if (AppServer.CurrentAppNavBarModel != null)
+        //        AppServer.CurrentAppNavBarModel.DestroyChromeWindow(chromeWindowName);
+        //}
+
+        public void RegisterChromeWindow(string sessionID, string chromeWindowName)
         {
-            AppServer.SetCurrentAppNavBarModel(sessionID);
-            if (AppServer.CurrentAppNavBarModel != null)
-                AppServer.CurrentAppNavBarModel.DestroyChromeWindow(chromeWindowName);
+            try
+            {
+                AppServer.SetCurrentAppNavBarModel(sessionID);
+                ChromeWindow win;
+                AppServer.CurrentAppNavBarModel.ChromeWindows.TryGetValue(chromeWindowName, out win);
+                win.SignalrCaller = Clients.Caller;
+                if (!AppServer.ChromeWindows.TryAdd(Context.ConnectionId, win))
+                    throw new Exception("internal error");
+
+            }
+            catch (Exception e)
+            {
+                Clients.Caller.receiveServerError("ошибка '" + nameof(RegisterChromeWindow) + "': " + e.GetFullMessage());
+
+            }
         }
 
         public void SendBindedValueChanged(string sessionID, string modelBindingID, string propertyName, string newValue)
@@ -159,6 +178,18 @@ namespace Buhta
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            ChromeWindow win;
+            if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out win))
+                throw new Exception(nameof(OnDisconnected) + ": internal error");
+
+            AppServer.SetCurrentAppNavBarModel(win.ChromeSessionId);
+            if (AppServer.CurrentAppNavBarModel != null)
+                AppServer.CurrentAppNavBarModel.DestroyChromeWindow(win.Name);
+
+            if (!AppServer.ChromeWindows.TryRemove(Context.ConnectionId, out win))
+                throw new Exception("internal error");
+
+
             return base.OnDisconnected(stopCalled);
         }
         public override Task OnConnected()

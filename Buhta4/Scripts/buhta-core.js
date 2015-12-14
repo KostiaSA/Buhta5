@@ -16,15 +16,19 @@ var _docReady = [];
 var docReady = function (callback) { _docReady.push(callback); };
 
 $(document).ready(function () {
-    $(window).on('beforeunload', function () {
-        bindingHub.server.unloadChromeWindow(localStorage.ChromeSessionId, window.name);
-    });
+    //$(window).on('unload', function () {
+    //    alert('beforeunload-1');
+    //    bindingHub.server.unloadChromeWindow(localStorage.ChromeSessionId, window.name);
+    //});
 
     $.connection.hub.start().done(function () {
+        bindingHub.server.registerChromeWindow(localStorage.ChromeSessionId, window.name);
+
         for (i = 0; i < _docReady.length; i++) {
             _docReady[i]();
-        }
+        };
     })
+
 });
 
 
