@@ -158,6 +158,8 @@
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\ACTIONS\GotoParentWindowAction.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBarButton.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBar.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-INPUT\bsInputToSchemaObjectBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-SELECT\bsSelectOptionsToObjectsListBinder.cs" />
     <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-GRID\bsGridDataSourceToObjectsListBinder.cs" />
@@ -194,7 +196,7 @@
     <Compile Include="Areas\BuhtaCore\CODE\UTILS\RenderView.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\BaseEditFormModel.cs" />
-    <Compile Include="Areas\BuhtaCore\Models\AppNavBarModel.cs" />
+    <Compile Include="Areas\BuhtaCore\CODE\BS-CONTROLS\BS-APPNAVBAR\AppNavBarModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\MessageDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnBaseModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnAddModel.cs" />

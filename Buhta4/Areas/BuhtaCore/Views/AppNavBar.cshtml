@@ -4,20 +4,55 @@
     ViewBag.Title = "Index";
 }
 
-<nav class="navbar navbar-default">
+@Html.bsAppNavBar((navbar) =>
+   {
+       navbar.AddButtonToLeftToolbar((tag) =>
+       {
+           tag.Text = "@рабочий<br>стол";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png";
+       });
+
+       navbar.AddButtonToLeftToolbar((tag) =>
+       {
+           tag.Text = "@открытые<br>окна";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-windows2.png";
+       });
+
+       navbar.AddButtonToLeftToolbar((tag) =>
+       {
+           tag.Text = "настройка";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-setup.png";
+       });
+
+       navbar.AddButtonToLeftToolbar((tag) =>
+       {
+           tag.Text = "@дизайнер<br>конфигур.";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-schema.png";
+       });
+
+       navbar.AddButtonToLeftToolbar((tag) =>
+       {
+           tag.Text = "@список<br>задач";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-tasks.png";
+       });
+
+       navbar.AddButtonToRightToolbar((tag) =>
+       {
+           tag.Text = "@блокировка<br>экрана";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-applock.png";
+       });
+
+       navbar.AddButtonToRightToolbar((tag) =>
+       {
+           tag.Text = "@завершить<br>работу";
+           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-exit.png";
+       });
+   })
+
+
+@*<nav class="navbar navbar-default">
     <div class="container container-fluid1" style="padding-left:0px;padding-right:0px">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
-
-            @*<form class="navbar-form navbar-left" role="search">
-                    <div href=# class="btn btn-default" id="aaaXXX">назад</div>
-                    <script>
-                        $("#aaaXXX").on('click', function () {
-                            if (window.opener) window.open('', window.opener.name).focus();
-                        });</script>
-
-                </form>*@
-
-
 
             <ul class="nav navbar-nav app-navbar">
                 <li>
@@ -74,7 +109,7 @@
             <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
-</nav>
+</nav>*@
 
 
 
