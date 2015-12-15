@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "EditTable";
 }
+
+<script>
+    window._buhtaModelName = "@Model.GetType().FullName";
+    window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
+</script>
+
 @*<style>
         body {
             position: relative;

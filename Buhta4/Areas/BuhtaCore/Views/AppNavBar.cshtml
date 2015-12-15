@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
 }
 
+
 @Html.bsAppNavBar((navbar) =>
    {
        navbar.AddButtonToLeftToolbar((tag) =>
@@ -28,6 +29,7 @@
        {
            tag.Text = "@дизайнер<br>конфигур.";
            tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-schema.png";
+           tag.Bind_OnClick(Model.OpenSchemaDesigner);
        });
 
        navbar.AddButtonToLeftToolbar((tag) =>

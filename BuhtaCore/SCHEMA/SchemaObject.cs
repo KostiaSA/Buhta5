@@ -18,6 +18,7 @@ namespace Buhta
         void SaveChanges();
         void CancelChanges();
         string GetEditedObjectName();
+        string GetRecordId();
     }
 
     public interface IEditControl
@@ -174,6 +175,10 @@ namespace Buhta
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public string GetRecordId()
+        {
+            return ID.ToString();
+        }
 
         ////public void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
         ////{

@@ -79,6 +79,8 @@ namespace Buhta
         public dynamic SignalrCaller;
         public String ChromeSessionId;
         public String Name;
+        public string ModelName;
+        public string RecordId;
     }
 
     public class AppNavBarModel : BaseModel
@@ -105,5 +107,16 @@ namespace Buhta
             Modal.Close();
         }
 
+        public void OpenSchemaDesigner(dynamic args)
+        {
+            foreach (var win in ChromeWindows.Values)
+            {
+                if (win.ModelName == typeof(BuhtaSchemaDesignerModel).FullName)
+                {
+                    ExecuteJavaScript("window.open('', '" + win.Name + "').focus();");
+                    return;
+                }
+            }
+        }
     }
 }

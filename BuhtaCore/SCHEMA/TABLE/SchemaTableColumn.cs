@@ -418,6 +418,11 @@ namespace Buhta
         {
             return Name;
         }
+
+        public string GetRecordId()
+        {
+            return Name;
+        }
     }
 
     public class TableColumnRolesSelectorTypeConverter : TypeConverter

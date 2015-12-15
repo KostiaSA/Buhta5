@@ -22,7 +22,7 @@ namespace Buhta
         //        AppServer.CurrentAppNavBarModel.DestroyChromeWindow(chromeWindowName);
         //}
 
-        public void RegisterChromeWindow(string sessionID, string chromeWindowName)
+        public void RegisterChromeWindow(string sessionID, string chromeWindowName, string modelName, string recordId)
         {
             try
             {
@@ -30,6 +30,8 @@ namespace Buhta
                 ChromeWindow win;
                 AppServer.CurrentAppNavBarModel.ChromeWindows.TryGetValue(chromeWindowName, out win);
                 win.SignalrCaller = Clients.Caller;
+                win.ModelName = modelName;
+                win.RecordId = recordId;
                 if (!AppServer.ChromeWindows.TryAdd(Context.ConnectionId, win))
                     throw new Exception("internal error");
 
