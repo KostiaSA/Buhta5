@@ -102,7 +102,7 @@
 </head>
 <body>
     <div class="page-container">
-        @{ Html.RenderPartial("~/Areas/BuhtaCore/Views/AppNavBar.cshtml", new AppNavBarModel(ViewContext.RouteData.Values["controller"] as Controller, null)); }
+        @{ Html.RenderPartial("~/Areas/BuhtaCore/Views/AppNavBar.cshtml", AppServer.CurrentAppNavBarModel); }
         @RenderBody()
         @AppServer.GetDebugInfo()
     </div>

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -81,6 +82,13 @@ namespace Buhta
         public String Name;
         public string ModelName;
         public string RecordId;
+
+        public void ExecuteJavaScript(string script)
+        {
+            Thread.Sleep(1); // не удалять, иначе все глючит !!!
+            SignalrCaller.receiveScript(script);
+        }
+
     }
 
     public class AppNavBarModel : BaseModel
@@ -113,7 +121,8 @@ namespace Buhta
             {
                 if (win.ModelName == typeof(BuhtaSchemaDesignerModel).FullName)
                 {
-                    ExecuteJavaScript("window.open('', '" + win.Name + "').focus();");
+                    win.ExecuteJavaScript(@"$('body').append('<div style=""display:none"" id=""buhta-focus-me-2128506""/>');");
+                    //win.ExecuteJavaScript(@"$('body').append('<div id=""buhta-focus-me-212850611""/>');alert('1')");
                     return;
                 }
             }

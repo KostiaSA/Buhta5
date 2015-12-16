@@ -111,7 +111,7 @@ namespace Buhta
             if (Image != null)
                 imageHtml = "<img src=" + new UrlHelper(HttpContext.Current.Request.RequestContext).Content(Image).AsJavaScript() + " width='30' height='30'/>";
 
-            Html.Append("<a id='" + UniqueId + "' " + GetAttrs() + " href=javascript:void(0)'>" + imageHtml + "<p>" + Text.AsHtmlEx() + "</p></a>");
+            Html.Append("<a id='" + UniqueId + "' " + GetAttrs() + " href='javascript:void(0)'>" + imageHtml + "<p>" + Text.AsHtmlEx() + "</p></a>");
 
             return base.GetHtml();
         }
