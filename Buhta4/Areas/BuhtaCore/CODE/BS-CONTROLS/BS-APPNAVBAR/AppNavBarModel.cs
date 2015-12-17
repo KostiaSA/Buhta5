@@ -121,7 +121,20 @@ namespace Buhta
             {
                 if (win.ModelName == typeof(BuhtaSchemaDesignerModel).FullName)
                 {
-                    win.ExecuteJavaScript(@"$('body').append('<div style=""display:none"" id=""buhta-focus-me-2128506""/>');");
+//                    win.ExecuteJavaScript(@"
+//$('body').append('<div style=""display:none"" id=""buhta-focus-me-2128506""/>');
+//setTimeout(function () {  
+//  if (document.getElementById('buhta-focus-me-2128506')!=null)
+//    alert(' ');
+//}, 50);
+//");
+                    win.ExecuteJavaScript(@"
+document.body.setAttribute('buhta-focus-me-2128506','ok');
+setTimeout(function () {  
+  if (document.body.getAttribute('buhta-focus-me-2128506')=='ok')
+    alert(' ');
+}, 100);
+");
                     //win.ExecuteJavaScript(@"$('body').append('<div id=""buhta-focus-me-212850611""/>');alert('1')");
                     return;
                 }
