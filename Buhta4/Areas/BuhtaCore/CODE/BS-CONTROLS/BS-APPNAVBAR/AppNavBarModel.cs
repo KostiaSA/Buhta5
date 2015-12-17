@@ -100,12 +100,16 @@ namespace Buhta
 
         public ConcurrentDictionary<string, ChromeWindow> ChromeWindows = new ConcurrentDictionary<string, ChromeWindow>();
 
-        public AppNavBarModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
+        public AppNavBarModel(Controller controller, BaseModel parentModel) : base(controller, parentModel)
+        {
+            ShareMode = ModelShareMode.Session;
+        }
 
         public void DestroyChromeWindow(string chromeWindowName)
         {
             ChromeWindow fakeWin;
             ChromeWindows.TryRemove(chromeWindowName, out fakeWin);
+            Update();
         }
 
         bool okClicked;

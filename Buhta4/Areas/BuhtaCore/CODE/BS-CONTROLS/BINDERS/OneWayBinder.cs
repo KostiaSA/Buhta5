@@ -31,15 +31,15 @@ namespace Buhta
             string value = "";
             if (ModelGetMethod != null)
             {
-                var _value = ModelGetMethod().ToString();
+                var _value_obj = ModelGetMethod();
 
-                if ((jsSetMethodName == "text" || jsSetMethodName.EndsWith(".text")) && _value.StartsWith("@") && !_value.StartsWith("@@"))
+                if ((jsSetMethodName == "text" || jsSetMethodName.EndsWith(".text")) && _value_obj.ToString().StartsWith("@") && !_value_obj.ToString().StartsWith("@@"))
                 {
-                    value = "'" + _value.AsHtmlEx().Replace("'", "\'") + "'";
+                    value = "'" + _value_obj.ToString().AsHtmlEx().Replace("'", "\'") + "'";
                     isHtmlMode = true;
                 }
                 else
-                    value = _value.AsJavaScript();
+                    value = _value_obj.AsJavaScript();
             }
             else
             if (ModelPropertyName != null)
@@ -49,17 +49,13 @@ namespace Buhta
                     value = "null";
                 else
                 {
-                    var _value = value_obj.ToString();
-
-                    if ((jsSetMethodName == "text" || jsSetMethodName.EndsWith(".text")) && _value.StartsWith("@") && !_value.StartsWith("@@"))
+                    if ((jsSetMethodName == "text" || jsSetMethodName.EndsWith(".text")) && value_obj.ToString().StartsWith("@") && !value_obj.ToString().StartsWith("@@"))
                     {
-                        value = "'" + _value.AsHtmlEx().Replace("'", "\'") + "'";
+                        value = "'" + value_obj.ToString().AsHtmlEx().Replace("'", "\'") + "'";
                         isHtmlMode = true;
                     }
                     else
-                        value = _value.AsJavaScript();
-
-                    //value = value_obj.AsJavaScript();
+                        value = value_obj.AsJavaScript();
                 }
 
             }

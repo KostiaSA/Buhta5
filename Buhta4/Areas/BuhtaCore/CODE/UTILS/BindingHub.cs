@@ -31,7 +31,7 @@ namespace Buhta
                 if (AppServer.CurrentAppNavBarModel.Hub == null)
                     AppServer.CurrentAppNavBarModel.Hub = this;
 
-                Groups.Add(Context.ConnectionId, AppServer.CurrentAppNavBarModel.BindingId /*это groupName*/);
+                Groups.Add(Context.ConnectionId, sessionID /*это groupName*/);
 
                 ChromeWindow win;
                 AppServer.CurrentAppNavBarModel.ChromeWindows.TryGetValue(chromeWindowName, out win);
@@ -56,8 +56,7 @@ namespace Buhta
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
-                if (obj.Hub == null)
-                    obj.Hub = this;
+                obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
                 if (propertyName.StartsWith("binder:"))
@@ -120,8 +119,7 @@ namespace Buhta
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
-                if (obj.Hub == null)
-                    obj.Hub = this;
+                obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
                 if (funcName.StartsWith("binder:"))
@@ -165,27 +163,27 @@ namespace Buhta
         //    }
         //}
 
-        public void SubscribeBindedValueChanged(string sessionID, string modelBindingID, string propertyName)
-        {
-            try
-            {
-                AppServer.SetCurrentAppNavBarModel(sessionID);
-                BaseModel obj = BindingModelList[modelBindingID];
-                if (obj.Hub == null)
-                    obj.Hub = this;
-                Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
-            }
-            catch (Exception e)
-            {
-                var obj = BindingModelList[modelBindingID];
-                if (obj == null)
-                    Clients.Caller.receiveServerError(nameof(SubscribeBindedValueChanged) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
-                else
-                    Clients.Caller.receiveServerError(nameof(SubscribeBindedValueChanged) + " в '" + obj.GetType().FullName + "', свойство '" + propertyName + "'\n" + e.GetFullMessage());
-                //Clients.Caller.receiveServerError( "свойство '" + propertyName + "':\n" + e.GetFullMessage());
-            }
+        //public void SubscribeBindedValueChanged(string sessionID, string modelBindingID, string propertyName)
+        //{
+        //    try
+        //    {
+        //        AppServer.SetCurrentAppNavBarModel(sessionID);
+        //        BaseModel obj = BindingModelList[modelBindingID];
+        //        if (obj.Hub == null)
+        //            obj.Hub = this;
+        //        Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        var obj = BindingModelList[modelBindingID];
+        //        if (obj == null)
+        //            Clients.Caller.receiveServerError(nameof(SubscribeBindedValueChanged) + ": не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+        //        else
+        //            Clients.Caller.receiveServerError(nameof(SubscribeBindedValueChanged) + " в '" + obj.GetType().FullName + "', свойство '" + propertyName + "'\n" + e.GetFullMessage());
+        //        //Clients.Caller.receiveServerError( "свойство '" + propertyName + "':\n" + e.GetFullMessage());
+        //    }
 
-        }
+        //}
 
         public override Task OnDisconnected(bool stopCalled)
         {

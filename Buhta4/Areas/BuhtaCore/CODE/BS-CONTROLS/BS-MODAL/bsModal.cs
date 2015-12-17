@@ -68,7 +68,7 @@ namespace Buhta
         public void Close()
         {
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            Model.Hub.Clients.Group(Model.BindingId).receiveScript("$('#" + UniqueId + "').modal('hide');");
+            Model.ExecuteJavaScript("$('#" + UniqueId + "').modal('hide');");
         }
 
         public void Show()
@@ -113,7 +113,7 @@ namespace Buhta
             //}
 
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            Model.Hub.Clients.Group(Model.BindingId).receiveScript(script.ToString());
+            Model.ExecuteJavaScript(script.ToString());
 
         }
 

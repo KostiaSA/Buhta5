@@ -13,7 +13,11 @@ using System.Web.Mvc.Html;
 
 namespace Buhta
 {
-    public enum ModelShareMode { None, Session, All}
+
+    // для рассылки None используем Hub.Clients.Caller
+    // для рассылки Session используем Hub.Clients.Group(SessionID)
+    // для рассылки All используем Hub.Clients.All
+    public enum ModelShareMode { None, Session, All }
 
     public class BaseModel : ObservableObject
     {
@@ -187,10 +191,6 @@ namespace Buhta
 
         public virtual string PageTitle { get { return "PageTitle"; } }
 
-        public void UpdateNewNew()
-        {
-        }
-
         public void Update(bool includeDatasets = false)
         {
             Debug.WriteLine("");
@@ -215,8 +215,19 @@ namespace Buhta
             if (toSend.Length > 0)
             {
                 Thread.Sleep(1); // не удалять, иначе все глючит !!!
-                if (Hub != null)
-                    Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
+                ExecuteJavaScript(toSend.ToString());
+
+                //if (ShareMode == ModelShareMode.None)
+                //    Hub.Clients.Caller.receiveScript(toSend.ToString());
+                //else
+                //if (ShareMode == ModelShareMode.Session)
+                //    Hub.Clients.Group(AppServer.CurrentAppNavBarModel.ChromeSessionId).receiveScript(toSend.ToString());
+                //else
+                //if (ShareMode == ModelShareMode.All)
+                //    Hub.Clients.All.receiveScript(toSend.ToString());
+                //else
+                //    throw new Exception(nameof(BaseModel)+"."+nameof(Update)+ ": internal error bad ShareMode");
+
                 //Debug.Print(toSend.ToString());
             }
             if (ParentModel != null)
@@ -244,8 +255,9 @@ namespace Buhta
             if (toSend.Length > 0)
             {
                 Thread.Sleep(1); // не удалять, иначе все глючит !!!
-                if (Hub != null)
-                    Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
+                ExecuteJavaScript(toSend.ToString());
+                //if (Hub != null)
+                //    Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
             }
             if (ParentModel != null)
                 ParentModel.Update();
@@ -254,8 +266,21 @@ namespace Buhta
         public void ExecuteJavaScript(string script)
         {
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            if (Hub != null)
-                Hub.Clients.Group(BindingId).receiveScript(script);
+            //if (Hub != null)
+            //    Hub.Clients.Group(BindingId).receiveScript(script);
+            if (ShareMode == ModelShareMode.None)
+                Hub.Clients.Caller.receiveScript(script);
+            else
+            if (ShareMode == ModelShareMode.Session)
+            {
+                if (Hub != null)  // бывает при первой загрузке страницы, это нормально
+                    Hub.Clients.Group(AppServer.CurrentAppNavBarModel.ChromeSessionId).receiveScript(script);
+            }
+            else
+            if (ShareMode == ModelShareMode.All)
+                Hub.Clients.All.receiveScript(script);
+            else
+                throw new Exception(nameof(BaseModel) + "." + nameof(ExecuteJavaScript) + ": internal error bad ShareMode");
         }
 
 
@@ -307,51 +332,51 @@ namespace Buhta
             return list;
         }
 
-        // используется при изменении "collection"
-        public void UpdateCollection(string propName)
-        {
-            var result = false;
-            foreach (var key in BindedCollections.Keys.ToList())
-            {
-                var param = key.Split('\t');
-                if (propName == param[0])
-                {
-                    var fieldNames = param[1];
-                    UpdateCollection(propName, fieldNames);
-                    result = true;
-                }
-            }
-            if (!result)
-                throw new Exception("Model." + nameof(UpdateCollection) + ": не найден набор данных '" + propName + "'");
-        }
+        //// используется при изменении "collection"
+        //public void UpdateCollection(string propName)
+        //{
+        //    var result = false;
+        //    foreach (var key in BindedCollections.Keys.ToList())
+        //    {
+        //        var param = key.Split('\t');
+        //        if (propName == param[0])
+        //        {
+        //            var fieldNames = param[1];
+        //            UpdateCollection(propName, fieldNames);
+        //            result = true;
+        //        }
+        //    }
+        //    if (!result)
+        //        throw new Exception("Model." + nameof(UpdateCollection) + ": не найден набор данных '" + propName + "'");
+        //}
 
 
         // используется при первой загрузке "collection" в grid-у
-        public void UpdateCollection(string propName, string fieldNames)
-        {
+        //public void UpdateCollection(string propName, string fieldNames)
+        //{
 
-            object newValue = GetPropertyValue(propName);
-            List<object[]> toSend;
+        //    object newValue = GetPropertyValue(propName);
+        //    List<object[]> toSend;
 
 
-            if (newValue is IEnumerable<object>)
-                toSend = EnumerableToJSArray((IEnumerable<object>)newValue, fieldNames);
-            else
-            if (newValue is DataView)
-                toSend = DataViewToJSArray((DataView)newValue, fieldNames);
-            else
-                throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
+        //    if (newValue is IEnumerable<object>)
+        //        toSend = EnumerableToJSArray((IEnumerable<object>)newValue, fieldNames);
+        //    else
+        //    if (newValue is DataView)
+        //        toSend = DataViewToJSArray((DataView)newValue, fieldNames);
+        //    else
+        //        throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
 
-            Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            if (Hub != null)
-                Hub.Clients.Group(BindingId).receiveBindedValueChanged(BindingId, propName, toSend);
+        //    Thread.Sleep(1); // не удалять, иначе все глючит !!!
+        //    if (Hub != null)
+        //        Hub.Clients.Group(BindingId).receiveBindedValueChanged(BindingId, propName, toSend);
 
-            if (BindedCollections.ContainsKey(propName + "\t" + fieldNames))
-                BindedCollections[propName + "\t" + fieldNames] = newValue;
-            else
-                BindedCollections.Add(propName + "\t" + fieldNames, newValue);
+        //    if (BindedCollections.ContainsKey(propName + "\t" + fieldNames))
+        //        BindedCollections[propName + "\t" + fieldNames] = newValue;
+        //    else
+        //        BindedCollections.Add(propName + "\t" + fieldNames, newValue);
 
-        }
+        //}
 
 
         //public void UpdateGridDataSource(xGridSettings grid)
