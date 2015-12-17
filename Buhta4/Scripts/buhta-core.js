@@ -140,3 +140,18 @@ buhta.DataTables.SelectRowById = function (tableId, keyColumnName, id) {
             this.deselect();
     });
 }
+
+
+buhta.setBrowserTabFocused = function () {
+    document.body.setAttribute('data-buhta-focus-me-2128506', 'ok');
+    if (document.body.getAttribute('data-buhta-chrome-ext') == 'ok') {
+        setTimeout(function () {
+            if (document.body.getAttribute('data-buhta-focus-me-2128506') == 'ok')
+                alert(' ');
+        }, 250);
+    }
+    else {
+        alert(' ');
+    }
+}
+

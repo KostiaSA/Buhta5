@@ -26,9 +26,21 @@ namespace Buhta
             if (ModelGetMethod == null && ModelPropertyName == null)
                 throw new Exception(nameof(OneWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
 
+            bool isHtmlMode = false;
+
             string value = "";
             if (ModelGetMethod != null)
-                value = ModelGetMethod().AsJavaScript();
+            {
+                var _value = ModelGetMethod().ToString();
+
+                if ((jsSetMethodName == "text" || jsSetMethodName.EndsWith(".text")) && _value.StartsWith("@") && !_value.StartsWith("@@"))
+                {
+                    value = "'" + _value.AsHtmlEx().Replace("'", "\'") + "'";
+                    isHtmlMode = true;
+                }
+                else
+                    value = _value.AsJavaScript();
+            }
             else
             if (ModelPropertyName != null)
             {
@@ -36,7 +48,19 @@ namespace Buhta
                 if (value_obj == null)
                     value = "null";
                 else
-                    value = value_obj.AsJavaScript();
+                {
+                    var _value = value_obj.ToString();
+
+                    if ((jsSetMethodName == "text" || jsSetMethodName.EndsWith(".text")) && _value.StartsWith("@") && !_value.StartsWith("@@"))
+                    {
+                        value = "'" + _value.AsHtmlEx().Replace("'", "\'") + "'";
+                        isHtmlMode = true;
+                    }
+                    else
+                        value = _value.AsJavaScript();
+
+                    //value = value_obj.AsJavaScript();
+                }
 
             }
 
@@ -53,7 +77,18 @@ namespace Buhta
                     return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "('" + jsSetPropertyName + "'," + value + ");";
             }
             else
-                return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "(" + value + ",true);";
+            {
+                if (isHtmlMode)
+                {
+                    if (jsSetMethodName == "text")
+                        return "$('#" + Control.UniqueId + "').html(" + value + ");";
+                    else // .text
+                        return "$('#" + Control.UniqueId + "')." + jsSetMethodName.Replace(".text", ".html") + "(" + value + ");";
+
+                }
+                else
+                    return "$('#" + Control.UniqueId + "')." + jsSetMethodName + "(" + value + ",true);";
+            }
 
         }
 

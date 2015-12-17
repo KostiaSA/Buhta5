@@ -6,50 +6,52 @@
 
 
 @Html.bsAppNavBar((navbar) =>
-   {
-       navbar.AddButtonToLeftToolbar((tag) =>
-       {
-           tag.Text = "@рабочий<br>стол";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png";
-       });
+{
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        tag.Text = "@рабочий<br>стол";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png";
+    });
 
-       navbar.AddButtonToLeftToolbar((tag) =>
-       {
-           tag.Text = "@открытые<br>окна";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-windows2.png";
-       });
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        // tag.Text = "@открытые<br>окна";
+        tag.UniqueId = "870D2DE34A194250921C33FD936C14FF";
+        tag.Bind_Text(Model.GetOpenWindowsLabel);
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-windows2.png";
+    });
 
-       navbar.AddButtonToLeftToolbar((tag) =>
-       {
-           tag.Text = "настройка";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-setup.png";
-       });
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        tag.Text = "настройка";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-setup.png";
+    });
 
-       navbar.AddButtonToLeftToolbar((tag) =>
-       {
-           tag.Text = "@дизайнер<br>конфигур.";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-schema.png";
-           tag.Bind_OnClick(Model.OpenSchemaDesigner);
-       });
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        tag.Text = "@дизайнер<br>конфигур.";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-schema.png";
+        tag.Bind_OnClick(Model.OpenSchemaDesigner);
+    });
 
-       navbar.AddButtonToLeftToolbar((tag) =>
-       {
-           tag.Text = "@список<br>задач";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-tasks.png";
-       });
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        tag.Text = "@список<br>задач";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-tasks.png";
+    });
 
-       navbar.AddButtonToRightToolbar((tag) =>
-       {
-           tag.Text = "@блокировка<br>экрана";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-applock.png";
-       });
+    navbar.AddButtonToRightToolbar((tag) =>
+    {
+        tag.Text = "@блокировка<br>экрана";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-applock.png";
+    });
 
-       navbar.AddButtonToRightToolbar((tag) =>
-       {
-           tag.Text = "@завершить<br>работу";
-           tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-exit.png";
-       });
-   })
+    navbar.AddButtonToRightToolbar((tag) =>
+    {
+        tag.Text = "@завершить<br>работу";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-exit.png";
+    });
+})
 
 
 @*<nav class="navbar navbar-default">

@@ -48,7 +48,7 @@ namespace Buhta
             AddBinder(new OneWayBinder<string>()
             {
                 ModelGetMethod = getValueMethod,
-                jsSetMethodName = "text"
+                jsSetMethodName = "children('p').text"
             });
         }
 

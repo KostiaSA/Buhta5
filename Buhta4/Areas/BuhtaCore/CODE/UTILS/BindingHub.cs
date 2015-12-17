@@ -13,6 +13,7 @@ namespace Buhta
 
     public class BindingHub : Hub
     {
+
         public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
 
         //public void UnloadChromeWindow(string sessionID, string chromeWindowName)
@@ -27,6 +28,11 @@ namespace Buhta
             try
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
+                if (AppServer.CurrentAppNavBarModel.Hub == null)
+                    AppServer.CurrentAppNavBarModel.Hub = this;
+
+                Groups.Add(Context.ConnectionId, AppServer.CurrentAppNavBarModel.BindingId /*это groupName*/);
+
                 ChromeWindow win;
                 AppServer.CurrentAppNavBarModel.ChromeWindows.TryGetValue(chromeWindowName, out win);
                 win.SignalrCaller = Clients.Caller;
@@ -50,7 +56,8 @@ namespace Buhta
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
-                obj.Hub = this;
+                if (obj.Hub == null)
+                    obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
                 if (propertyName.StartsWith("binder:"))
@@ -113,7 +120,8 @@ namespace Buhta
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
-                obj.Hub = this;
+                if (obj.Hub == null)
+                    obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
                 if (funcName.StartsWith("binder:"))
@@ -163,7 +171,8 @@ namespace Buhta
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 BaseModel obj = BindingModelList[modelBindingID];
-                obj.Hub = this;
+                if (obj.Hub == null)
+                    obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
             }
             catch (Exception e)

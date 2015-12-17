@@ -115,33 +115,21 @@ namespace Buhta
             Modal.Close();
         }
 
+        public string GetOpenWindowsLabel()
+        {
+            var countStr = "";
+            if (ChromeWindows.Count > 1)
+                countStr = " (" + ChromeWindows.Count + ")";
+            return "@открытые<br>окна" + countStr;
+        }
+
         public void OpenSchemaDesigner(dynamic args)
         {
             foreach (var win in ChromeWindows.Values)
             {
                 if (win.ModelName == typeof(BuhtaSchemaDesignerModel).FullName)
                 {
-//                    win.ExecuteJavaScript(@"
-//$('body').append('<div style=""display:none"" id=""buhta-focus-me-2128506""/>');
-//setTimeout(function () {  
-//  if (document.getElementById('buhta-focus-me-2128506')!=null)
-//    alert(' ');
-//}, 50);
-//");
-                    win.ExecuteJavaScript(@"
-document.body.setAttribute('data-buhta-focus-me-2128506','ok');
-if (document.body.getAttribute('data-buhta-chrome-ext')=='ok') {
-  setTimeout(function () {  
-    if (document.body.getAttribute('data-buhta-focus-me-2128506')=='ok')
-      alert(' ');
-  }, 250);
-}
-else
-{
-  alert(' ');
-}
-");
-                    //win.ExecuteJavaScript(@"$('body').append('<div id=""buhta-focus-me-212850611""/>');alert('1')");
+                    win.ExecuteJavaScript("buhta.setBrowserTabFocused();");
                     return;
                 }
             }

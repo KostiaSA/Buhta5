@@ -57,6 +57,10 @@ namespace Buhta
                 }
                 return uniqueId;
             }
+            set
+            {
+                uniqueId = value;
+            }
         }
 
         //public TagInTable InTable = TagInTable.None;

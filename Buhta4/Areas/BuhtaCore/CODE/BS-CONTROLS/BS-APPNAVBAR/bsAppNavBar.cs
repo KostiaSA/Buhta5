@@ -73,6 +73,9 @@ namespace Buhta
             Html.Append("</div>");
             Html.Append("</nav>");
 
+            if (Model is AppNavBarModel)
+                Model.Update();
+
             return base.GetHtml();
         }
     }

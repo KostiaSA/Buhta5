@@ -13,8 +13,11 @@ using System.Web.Mvc.Html;
 
 namespace Buhta
 {
+    public enum ModelShareMode { None, Session, All}
+
     public class BaseModel : ObservableObject
     {
+        public ModelShareMode ShareMode = ModelShareMode.None;
         public BaseModel ParentModel;
         public Controller Controller;
         public bsModal Modal;  // если это модель диалога
@@ -212,7 +215,8 @@ namespace Buhta
             if (toSend.Length > 0)
             {
                 Thread.Sleep(1); // не удалять, иначе все глючит !!!
-                Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
+                if (Hub != null)
+                    Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
                 //Debug.Print(toSend.ToString());
             }
             if (ParentModel != null)
@@ -240,7 +244,8 @@ namespace Buhta
             if (toSend.Length > 0)
             {
                 Thread.Sleep(1); // не удалять, иначе все глючит !!!
-                Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
+                if (Hub != null)
+                    Hub.Clients.Group(BindingId).receiveScript(toSend.ToString());
             }
             if (ParentModel != null)
                 ParentModel.Update();
@@ -249,7 +254,8 @@ namespace Buhta
         public void ExecuteJavaScript(string script)
         {
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            Hub.Clients.Group(BindingId).receiveScript(script);
+            if (Hub != null)
+                Hub.Clients.Group(BindingId).receiveScript(script);
         }
 
 
@@ -337,7 +343,8 @@ namespace Buhta
                 throw new Exception(nameof(UpdateCollection) + ": " + propName + " должен быть IEnumerable или DataView");
 
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
-            Hub.Clients.Group(BindingId).receiveBindedValueChanged(BindingId, propName, toSend);
+            if (Hub != null)
+                Hub.Clients.Group(BindingId).receiveBindedValueChanged(BindingId, propName, toSend);
 
             if (BindedCollections.ContainsKey(propName + "\t" + fieldNames))
                 BindedCollections[propName + "\t" + fieldNames] = newValue;
