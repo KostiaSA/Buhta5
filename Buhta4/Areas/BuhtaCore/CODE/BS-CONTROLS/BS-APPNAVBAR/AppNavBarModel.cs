@@ -129,11 +129,17 @@ namespace Buhta
 //}, 50);
 //");
                     win.ExecuteJavaScript(@"
-document.body.setAttribute('buhta-focus-me-2128506','ok');
-setTimeout(function () {  
-  if (document.body.getAttribute('buhta-focus-me-2128506')=='ok')
-    alert(' ');
-}, 100);
+document.body.setAttribute('data-buhta-focus-me-2128506','ok');
+if (document.body.getAttribute('data-buhta-chrome-ext')=='ok') {
+  setTimeout(function () {  
+    if (document.body.getAttribute('data-buhta-focus-me-2128506')=='ok')
+      alert(' ');
+  }, 250);
+}
+else
+{
+  alert(' ');
+}
 ");
                     //win.ExecuteJavaScript(@"$('body').append('<div id=""buhta-focus-me-212850611""/>');alert('1')");
                     return;
