@@ -7,18 +7,32 @@
 
 @Html.bsAppNavBar((navbar) =>
 {
+
+
     navbar.AddButtonToLeftToolbar((tag) =>
     {
-        tag.Text = "@рабочий<br>стол";
-        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png";
+        tag.Text = "@окно<br>назад";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-prev-window.png";
+    });
+
+
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        tag.Text = "@окно<br>вперед";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-next-window.png";
     });
 
     navbar.AddButtonToLeftToolbar((tag) =>
     {
-        // tag.Text = "@открытые<br>окна";
         tag.UniqueId = "870D2DE34A194250921C33FD936C14FF";
         tag.Bind_Text(Model.GetOpenWindowsLabel);
         tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-windows2.png";
+    });
+
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
+        tag.Text = "@рабочий<br>стол";
+        tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-desktop.png";
     });
 
     navbar.AddButtonToLeftToolbar((tag) =>
