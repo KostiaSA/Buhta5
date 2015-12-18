@@ -1,0 +1,309 @@
+﻿
+@model SchemaTableDesignerModel
+
+@{ Layout = "~/MODULES/BUHTA/CORE/SHARED/_Layout.cshtml"; }
+
+<script>
+    window._buhtaModelName = "@Model.GetType().FullName";
+    window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
+</script>
+
+@*<style>
+        body {
+            position: relative;
+        }
+    </style>
+    <script> $('body').scrollspy({ target: '#bs-example-navbar-collapse', offset: 0 }) </script>
+    <nav class="navbar navbar-default 1navbar-fixed-top navbar-static-top1">
+        <div class="container container-fluid1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+
+                <form class="navbar-form navbar-left">
+                    <div href=# class="btn btn-default" id="aaaXXX">назад</div>
+                    <script>
+                        $("#aaaXXX").on('click', function () {
+                            if (window.opener) window.open('', window.opener.name).focus();
+                        });</script>
+
+                </form>
+
+
+
+                @*<ul class="nav navbar-nav">
+                    <li><a href="#">Таблица</a></li>
+                    <li><a href="#columns">Колонки</a></li>
+                    <li><a href="#">Индексы</a></li>
+                    <li><a href="#links">Уроды</a></li>
+                    <li><a href="#">Индексы</a></li>
+                    <li><a href="#" id="qq">Отчеты</a></li>
+                </ul>
+                <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
+
+                <form class="navbar-form navbar-right" role="search">
+                    @Html.bsButton(s =>
+               {
+                   s.Bind_OnClick(Model.SaveButtonClick);
+                   s.Bind_Disabled(() => !Model.NeedSave);
+                   s.Text = "Сохранить";
+                   s.ButtonStyle = bsButtonStyle.Success;
+                   // s.ClickAction = new CloseWindowAction();
+               })
+
+
+                    @Html.bsButton(s =>
+                        {
+                            s.Bind_OnClick(Model.Test1ButtonClick);
+                            s.Text = "Test-BS";
+                            s.ButtonStyle = bsButtonStyle.Danger;
+                            // s.ClickAction = new CloseWindowAction();
+                        })
+
+
+                    <div href=# class="btn btn-default" id="aaa">Закрыть</div>
+                    <script>
+                        $("#aaa").on('click', function () {
+                            if (window.opener)
+                                window.open('', window.opener.name).focus();
+                            window.close();
+                        });</script>
+
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>*@
+<div class="container body-content">
+    <div class="pull-right">
+        <button class="btn btn-default ">&lt;&lt;Назад</button>
+        @Html.bsEditFormSaveButton((button) => { button.AddStyle("margin-left", "20px"); })
+        @Html.bsEditFormCancelButton((button) => { })
+    </div>
+    <h3>
+        <img src="~/Areas/BuhtaSchemaDesigner/Content/icon/SchemaTable_32.png" />
+        @Html.bsSpan((span) =>
+   {
+       span.Bind_Text(() => Model.GetEditedObjectName());
+   })
+        <small>(таблица)</small>
+    </h3>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
+        <li role="presentation">
+            <a href="#columns" aria-controls="messages" role="tab" data-toggle="tab">
+                Колонки <sup>@Html.bsSpan(() => Model.Table.Columns.Count.ToNumberInRoundBrackets())</sup>
+            </a>
+        </li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Индексы</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Прочее</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <h4 style="padding-top: 15px;">Основные свойства <small>(только для тех, кто в танке)</small></h4>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    таблица подключена к серверу
+                </div>
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal">
+                        <div class="row">
+                            @Html.bsSelect(tag =>
+                       {
+                           tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name", "Position");
+                           tag.Label = "Тип данных";
+                       })
+
+
+                            @Html.bsInput(s =>
+                       {
+                           s.Bind_Value<String>(nameof(Model.Table) + "." + nameof(Model.Table.Name));
+                           s.Label = "Имя таблицы";
+                           s.AddStyle("max-width", "500px");
+                       })
+                            @Html.bsInput(s =>
+               {
+                   s.Bind_Value<string>(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
+                   s.Label = "Test1";
+               })
+
+                            @Html.bsInput(s =>
+               {
+                   s.Bind_Value<string>(nameof(Model.Table) + "." + nameof(Model.Table.Description));
+                   s.Label = "Описание";
+               })
+                            @Html.bsInput(input =>
+               {
+                   input.Type = bsInputType.List;
+                   input.Bind_Value_To_RolesList(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles), new Таблица_TableRole());
+                   input.Label = "Роли";
+               })
+
+                            @Html.bsInput(s =>
+               {
+                   //s.Type = bsInputType.Checkbox;
+                   s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
+                   s.Label = "Редактируется пользователем (с сохранением истории)";
+               })
+                            @Html.bsInput(s =>
+               {
+                   //s.Type = bsInputType.Checkbox;
+                   s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
+                   s.Label = "Редактируется пользователем (с сохранением истории)";
+               })
+                            @Html.bsInput(s =>
+                    {
+                        //s.Type = bsInputType.Checkbox;
+                        s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsSubconto));
+                        s.Label = "Может использоваться как субконто";
+                    })
+                            @Html.bsInput(s =>
+                {
+                    //s.Type = bsInputType.Checkbox;
+                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsProvodkaOwner));
+                    s.Label = "Может производить движение по регистрам (например, бух. документ)";
+                })
+                            @Html.bsInput(s =>
+                {
+                    //s.Type = bsInputType.Checkbox;
+                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsNotSyncronize));
+                    s.Label = "Не синхронизировать структуру таблицы на sql-сервере";
+                })
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+            <h4 id="links" style="padding-top: 60px; margin-top: -40px;">Колонки</h4>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @*<h3 class="panel-title">Свойства</h3>*@
+                    таблица подключена к серверу
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="columns">
+            <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Колонки </h4>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <div>всего колонок: 8</div>
+                </div>
+                <div class="panel-body" style="background-color: rgba(214, 214, 214, 0.0)">
+                    @Html.bsGrid(grid =>
+               {
+                   Model.ColumnsGrid = grid;
+                   grid.AddClass("cell-border");
+                   grid.AddClass("compact");
+                   grid.Bind_DataSource_To_ObjectsList(nameof(Model.Table) + "." + nameof(Model.Table.Columns), nameof(SchemaTableColumn.Name));
+
+                   grid.Bind_OnRowSelect((args) =>
+                   {
+                       Model.SelectedColumnName = args.rowId;
+                   });
+
+                   grid.Bind_OnRowDblClick(Model.ColumnGridRowDblClick);
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Имя колонки";
+                       c.Field_Bind = nameof(SchemaTableColumn.Name);
+                       c.TextColor = TextColor.KeyField;
+                   });
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Роль";
+                       c.Field_Bind = nameof(SchemaTableColumn.RolesDisplayValue);
+                   });
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Тип данных";
+                       c.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
+                       c.BackColor = TextColor.DateTime;
+                       c.CellTemplate = @"<span style='font-size:1.2em'>{{GetDataTypeDisplay}}\n""</span>";
+                   });
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Описание";
+                       c.Field_Bind = nameof(SchemaTableColumn.Description);
+                       //                       c.CellTemplateJS = @"
+                       // if (row.node.children) {
+                       //   row._ee=' ('+row.node.children.length.toString()+')'
+                       //   row._fontWeight='bold'
+                       // }
+                       // else
+                       //   row._fontWeight='normal';
+                       //";
+                       //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
+
+                       c.CellTemplate = "<span style='font-weight:bold'>{{Description}}</span>";
+                       c.Align = bsGridColumnAlign.center;
+
+                   });
+
+                   grid.AddColumn(c =>
+                   {
+                       c.Caption = "Позиция";
+                       c.Field_Bind = nameof(SchemaTableColumn.Position);
+                       c.Sort = bsGridColumnSort.asc1;
+                       c.Align = bsGridColumnAlign.right;
+                       //  c.DataType = GridColumnDataType.Number;
+                   });
+
+               })
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            <button class="btn btn-default btn-sm">Отметить</button>
+                            <button class="btn btn-default btn-sm">Убрать</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-default btn-sm">импорт</button>
+                        </div>
+                        <div class="btn-group  pull-right">
+                            @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           button.Bind_OnClick(Model.AddColumnButtonClick);
+                           button.Text = "Добавить колонку";
+                           button.AddClass("add-color");
+                       })
+                            @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           button.Bind_OnClick(Model.EditColumnButtonClick);
+                           button.Text = "Изменить";
+                           button.AddClass("edit-color");
+                           button.AddStyle("margin-left", "5px");
+                       })
+                            @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           button.Bind_OnClick(Model.DeleteColumnButtonClick);
+                           button.Text = "Удалить";
+                           button.AddClass("delete-color");
+                           button.AddStyle("margin-left", "5px");
+                       })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="settings">
+            нет данных
+            <br>
+            @Html.bsButton(settings =>
+                {
+                    settings.Bind_Disabled(() => !Model.GetNeedSave());
+                    settings.Bind_OnClick(Model.SaveButtonClick);
+                    settings.Text = "Сохранить";
+                })
+            <br>
+        </div>
+    </div>
+
+
+</div>
+@section scripts {
+}

@@ -16,7 +16,7 @@
     <RootNamespace>Buhta</RootNamespace>
     <AssemblyName>Buhta4</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <MvcBuildViews>true</MvcBuildViews>
+    <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -204,16 +204,16 @@
     <Compile Include="Areas\BuhtaCore\Models\SelectSchemaRolesDialogModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaObjectEditModel.cs" />
     <Compile Include="Areas\BuhtaCore\Models\SchemaTableColumnEditModel.cs" />
-    <Compile Include="Areas\BuhtaCore\Models\SchemaTableEditModel.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\BuhtaSchemaDesignerAreaRegistration.cs" />
-    <Compile Include="Areas\BuhtaSchemaDesigner\Controllers\BuhtaSchemaDesignerController.cs" />
-    <Compile Include="Areas\BuhtaSchemaDesigner\Models\BuhtaSchemaDesignerModel.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\HOME-PAGE\HomePageModel.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\SCHEMA\DESIGNER\SchemaDesignerModel.cs" />
     <Compile Include="Areas\BuhtaSchemaDesigner\Models\RolesTreeGridModel.cs" />
-    <Compile Include="Areas\BuhtaSchemaDesigner\Models\SchemaTableDesignerModel.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableDesignerModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MODULES\BUHTA\CORE\SHARED\BuhtaController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,22 +223,22 @@
     <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-tasks.png" />
     <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-windows.png" />
     <Content Include="Areas\BuhtaCore\Content\icon\app-navbar-windows2.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-delete.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-insert.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\button-update.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaAccessRole_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaDatabase_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaDesigner_32.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaExternalDatabase_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaFolderBW_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaFolder_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaMenuItem_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaMenu_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaModule_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaQuery_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaTable_16.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaTable_32.png" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Content\icon\SchemaUser_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\button-delete.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\button-insert.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\button-update.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaAccessRole_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaDatabase_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaDesigner_32.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaExternalDatabase_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaFolderBW_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaFolder_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaMenuItem_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaMenu_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaModule_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaQuery_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaTable_16.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaTable_32.png" />
+    <Content Include="MODULES\BUHTA\CORE\Content\icon\SchemaUser_16.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -590,9 +590,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\web.config" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml" />
-    <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\SHARED\_Layout.cshtml" />
+    <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index_old.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableDesignerView.cshtml" />
     <Content Include="Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\RolesTreeGrid.cshtml" />
     <Content Include="Content\vendors\fancytree-master\src\skin-xp\ui.fancytree.less" />
     <Content Include="Content\vendors\fancytree-master\src\skin-win8\ui.fancytree.less" />
@@ -611,6 +611,8 @@
     <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Areas\BuhtaCore\Views\AppNavBar.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\Web.config" />
+    <Content Include="MODULES\BUHTA\CORE\SCHEMA\DESIGNER\SchemaDesignerView.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />
@@ -721,26 +723,27 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Web_old.config" />
+    <Content Include="Views\_ViewStart_old.cshtml" />
+    <Content Include="Views\Shared\Error_old.cshtml" />
+    <Content Include="Views\Shared\_Layout_old.cshtml" />
+    <Content Include="Views\Home\About_old.cshtml" />
+    <Content Include="Views\Home\Contact_old.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\HOME-PAGE\HomePageView.cshtml" />
+    <Content Include="Views\Home\Chat_old.cshtml" />
     <Content Include="Areas\BuhtaCore\Views\TableColumnEditorWindow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BuhtaCore\Controllers\" />
     <Folder Include="Areas\BuhtaCore\Views\Shared\" />
+    <Folder Include="Areas\BuhtaSchemaDesigner\Controllers\" />
+    <Folder Include="Areas\BuhtaSchemaDesigner\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Shared\BuhtaCore\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>

@@ -9,13 +9,30 @@ namespace Buhta.Controllers
     [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
     public class HomeController : Controller
     {
+
+        public ActionResult SchemaTableDesigner(string ID)
+        {
+            var model = new SchemaTableDesignerModel(this, null);
+            App.Schema.ReloadObjectCache(Guid.Parse(ID));
+            model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
+            model.StartEditing();
+
+            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml", model);
+        }
+
+      
+        public ActionResult SchemaDesigner()
+        {
+            var model = new SchemaDesignerModel(this, null);
+            return View(@"~\MODULES\BUHTA\CORE\SCHEMA\DESIGNER\SchemaDesignerView.cshtml", model);
+
+        }
+
         public ActionResult Index()
         {
-            //var model = new SchemaTableColumnEditModel(this, null);
-            //model.Column = new SchemaTableColumn() { Name = "это жопа1" };
-//            return View();
-            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\Index.cshtml", new BuhtaSchemaDesignerModel(this, null));
 
+            var model = new HomePageModel(this, null);
+            return View(@"~\MODULES\BUHTA\CORE\HOME-PAGE\HomePageView.cshtml", model);
         }
 
         public ActionResult About()
@@ -42,7 +59,6 @@ namespace Buhta.Controllers
 
 
 
-        SchemaTable OrgTable;
 
         public ActionResult EditTable()
         {

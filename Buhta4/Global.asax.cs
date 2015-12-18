@@ -13,11 +13,43 @@ using System.Web.Routing;
 
 namespace Buhta
 {
+
+    //public class CustomViewLocationRazorViewEngine : RazorViewEngine
+    //{
+    //    public CustomViewLocationRazorViewEngine()
+    //    {
+    //        ViewLocationFormats = new[]
+    //        {
+    //          "~/MODULES/BUHTA/CORE/{0}.cshtml",
+    //          "~/MODULES/BUHTA/CORE/HOME-PAGE/{0}.cshtml",
+    //          "~/Views/{0}.cshtml",
+    //          "~/RazorViews/Common/{0}.cshtml"
+    //        };
+
+    //        MasterLocationFormats = new[]
+    //        {
+    //          "~/RazorViews/{1}/{0}.cshtml",
+    //          "~/RazorViews/Common/{0}.cshtml"
+    //        };
+
+    //        PartialViewLocationFormats = new[]
+    //        {
+    //          "~/RazorViews/{1}/{0}.cshtml",
+    //          "~/RazorViews/Common/{0}.cshtml"
+    //        };
+    //    }
+    //}
+
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
+            //ViewEngines.Engines.Clear();
+            //var viewEngine = new CustomViewLocationRazorViewEngine();
+            //ViewEngines.Engines.Add(viewEngine);
+
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

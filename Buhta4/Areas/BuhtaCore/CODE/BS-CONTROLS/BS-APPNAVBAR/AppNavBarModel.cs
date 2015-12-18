@@ -131,12 +131,17 @@ namespace Buhta
         {
             foreach (var win in ChromeWindows.Values)
             {
-                if (win.ModelName == typeof(BuhtaSchemaDesignerModel).FullName)
+                if (win.ModelName == typeof(SchemaDesignerModel).FullName)
                 {
                     win.ExecuteJavaScript("buhta.setBrowserTabFocused();");
                     return;
                 }
             }
+
+            var action = new OpenChildWindowAction();
+            action.Url = "/Buhta/SchemaDesigner";
+            ExecuteJavaScript(action.GetJsCode());
+
         }
     }
 }
