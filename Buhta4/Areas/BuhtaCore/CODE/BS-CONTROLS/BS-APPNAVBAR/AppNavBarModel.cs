@@ -82,11 +82,17 @@ namespace Buhta
         public String Name;
         public string ModelName;
         public string RecordId;
+        public DateTime CreateDate;
 
         public void ExecuteJavaScript(string script)
         {
             Thread.Sleep(1); // не удалять, иначе все глючит !!!
             SignalrCaller.receiveScript(script);
+        }
+
+        public void SetFocused()
+        {
+            ExecuteJavaScript("buhta.setBrowserTabFocused();");
         }
 
     }
@@ -99,6 +105,7 @@ namespace Buhta
         public DateTime LastRequestTime;
 
         public ConcurrentDictionary<string, ChromeWindow> ChromeWindows = new ConcurrentDictionary<string, ChromeWindow>();
+        public ChromeWindow FocusedWindow;
 
         public AppNavBarModel(Controller controller, BaseModel parentModel) : base(controller, parentModel)
         {
@@ -133,7 +140,7 @@ namespace Buhta
             {
                 if (win.ModelName == typeof(SchemaDesignerModel).FullName)
                 {
-                    win.ExecuteJavaScript("buhta.setBrowserTabFocused();");
+                    win.SetFocused();
                     return;
                 }
             }
@@ -141,6 +148,40 @@ namespace Buhta
             var action = new OpenChildWindowAction();
             action.Url = "/Buhta/SchemaDesigner";
             ExecuteJavaScript(action.GetJsCode());
+
+        }
+
+        public void GotoNextWindow(dynamic args)
+        {
+            var wins = ChromeWindows.Values.OrderBy((w)=>w.CreateDate).ToList();
+
+            for (int i=0; i<wins.Count;i++)
+            {
+                if (wins[i]==FocusedWindow)
+                {
+                    if (i < wins.Count - 1)
+                        wins[i + 1].SetFocused();
+                    else
+                        wins[0].SetFocused();
+                }
+            }
+
+        }
+
+        public void GotoPrevWindow(dynamic args)
+        {
+            var wins = ChromeWindows.Values.OrderByDescending((w) => w.CreateDate).ToList();
+
+            for (int i = 0; i < wins.Count; i++)
+            {
+                if (wins[i] == FocusedWindow)
+                {
+                    if (i < wins.Count - 1)
+                        wins[i + 1].SetFocused();
+                    else
+                        wins[0].SetFocused();
+                }
+            }
 
         }
     }

@@ -38,6 +38,7 @@ namespace Buhta
                 win.SignalrCaller = Clients.Caller;
                 win.ModelName = modelName;
                 win.RecordId = recordId;
+                win.CreateDate = DateTime.Now;
                 if (!AppServer.ChromeWindows.TryAdd(Context.ConnectionId, win))
                     throw new Exception("internal error");
 
@@ -55,6 +56,9 @@ namespace Buhta
             try
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
+                if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out AppServer.CurrentAppNavBarModel.FocusedWindow))
+                    throw new Exception("internal error AppServer.ChromeWindows.TryGetValue");
+
                 BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
@@ -118,6 +122,8 @@ namespace Buhta
             try
             {
                 AppServer.SetCurrentAppNavBarModel(sessionID);
+                if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out AppServer.CurrentAppNavBarModel.FocusedWindow))
+                    throw new Exception("internal error AppServer.ChromeWindows.TryGetValue");
                 BaseModel obj = BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);

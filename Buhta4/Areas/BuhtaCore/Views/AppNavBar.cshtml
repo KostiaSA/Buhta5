@@ -13,6 +13,7 @@
     {
         tag.Text = "@окно<br>назад";
         tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-prev-window.png";
+        tag.Bind_OnClick(Model.GotoPrevWindow);
     });
 
 
@@ -20,6 +21,7 @@
     {
         tag.Text = "@окно<br>вперед";
         tag.Image = "~/Areas/BuhtaCore/Content/icon/app-navbar-next-window.png";
+        tag.Bind_OnClick(Model.GotoNextWindow);
     });
 
     navbar.AddButtonToLeftToolbar((tag) =>
