@@ -11,6 +11,8 @@ namespace Buhta
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            //routes.IgnoreRoute("{*allfiles}", new { allfiles = @".*\.(css|js|gif|jpg|png)" });
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(

@@ -47,8 +47,8 @@ SELECT [ID]
       ,[UpdateUser]
       ,[LockedByUser]
       ,[LockDateTime]
-      ,'~/Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__TreeGridIcon__]
-      ,'~/Areas/BuhtaSchemaDesigner/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
+      ,'~/MODULES/BUHTA/CORE/Content/icon/'+RootClass+'_16.png' AS [__TreeGridIcon__]
+      ,'~/MODULES/BUHTA/CORE/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
   FROM [SchemaObject]
 ");
                     SelectedRows.Add("84ff8c4c-2c17-4af8-a2a1-02c958bd75bf");
@@ -93,6 +93,15 @@ SELECT [ID]
 
         private void openSchemaObjectDesigner(string schemaObjectID)
         {
+            foreach (var win in AppServer.CurrentAppNavBarModel.ChromeWindows.Values)
+            {
+                if (win.ModelName == typeof(SchemaTableDesignerModel).FullName && win.RecordId== schemaObjectID)
+                {
+                    win.SetFocused();
+                    return;
+                }
+            }
+
             var action = new OpenChildWindowAction();
             action.Url = "/Buhta/SchemaTableDesigner?ID=" + schemaObjectID; 
             ExecuteJavaScript(action.GetJsCode());
