@@ -217,10 +217,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\pages\buttons.css" />
+    <Content Include="Content\pages\formelements.css" />
+    <Content Include="Content\panel.css" />
+    <Content Include="Content\vendors\Buttons-master\css\buttons.css" />
+    <Content Include="Content\vendors\Buttons-master\css\main.css" />
+    <Content Include="Content\vendors\Buttons-master\css\prettify.css" />
+    <Content Include="Content\vendors\Buttons-master\js\buttons.js" />
+    <Content Include="Content\vendors\Buttons-master\js\main.js" />
+    <Content Include="Content\vendors\Buttons-master\js\vendor\scrollto.js" />
+    <Content Include="Content\vendors\DataTables-1.10.10\extensions\Select\css\select.bootstrap.css" />
+    <Content Include="Content\vendors\DataTables-1.10.10\extensions\Select\css\select.bootstrap.min.css" />
+    <Content Include="Content\vendors\DataTables-1.10.10\media\css\dataTables.bootstrap.css" />
+    <Content Include="Content\vendors\DataTables-1.10.10\media\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\vendors\DataTables-1.10.10\media\css\jquery.dataTables.css" />
+    <Content Include="Content\vendors\DataTables-1.10.10\media\css\jquery.dataTables.min.css" />
+    <Content Include="Content\vendors\DataTables-1.10.10\media\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\vendors\DataTables-1.10.10\media\js\jquery.dataTables.min.js" />
+    <Content Include="Content\vendors\selectize.js-master\dist\css\selectize.css" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-applock.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-desktop.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-exit.png" />
-    <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-exit2.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-next-window.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-prev-window.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-schema.png" />
@@ -248,8 +265,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\buhta-colors.css" />
-    <Content Include="Content\buhta-core.css" />
+    <Content Include="MODULES\BUHTA\CORE\Content\buhta-colors.css" />
+    <Content Include="MODULES\BUHTA\CORE\Content\buhta-core.css" />
     <Content Include="Content\JQWidgets\images\backgroundTop.png" />
     <Content Include="Content\JQWidgets\images\backImage.png" />
     <Content Include="Content\JQWidgets\images\bg_black.png" />
@@ -616,14 +633,14 @@
     <Content Include="Content\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Areas\BuhtaCore\Views\AppNavBar.cshtml" />
-    <Content Include="MODULES\BUHTA\CORE\Web.config" />
+    <Content Include="MODULES\Web.config" />
     <Content Include="MODULES\BUHTA\CORE\SCHEMA\DESIGNER\SchemaDesignerView.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\buhta-core.js" />
+    <Content Include="MODULES\BUHTA\CORE\Scripts\buhta-core.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

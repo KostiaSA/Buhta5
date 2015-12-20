@@ -111,8 +111,8 @@ namespace Buhta
             mefContainer.ComposeParts(Mef);
 
 
-            Schema = new Schema("ps-web", null, "BuhtaSchema", "sa1", "sonyk");    // работа
-            //Schema = new Schema(@"5.19.239.191", 54033, "BuhtaSchema", "sa1", "sonyk");    // работа
+            //Schema = new Schema("ps-web", null, "BuhtaSchema", "sa1", "sonyk");    // работа
+            Schema = new Schema(@"5.19.239.191", 52538, "BuhtaSchema", "sa1", "sonyk");    // работа
 
             var sqlDatabases = Schema.GetObjects<SchemaDatabase>();
 
