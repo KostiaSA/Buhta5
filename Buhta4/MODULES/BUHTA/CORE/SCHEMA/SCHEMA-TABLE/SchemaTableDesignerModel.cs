@@ -63,20 +63,20 @@ namespace Buhta
 
         void EditColumn(string columnName)
         {
-            var model = new SchemaTableColumnEditModel(Controller, this);
+            var model = new SchemaTableColumnEditDialogModel(Controller, this);
             model.IsInsertMode = false;
             model.EditedObject = Table.GetColumnByName(columnName);
             model.StartEditing();
-            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnEditDialog.cshtml", model);
+            var modal = CreateModal(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableColumnEditDialogView.cshtml", model);
             modal.Show();
         }
 
         void AddColumn()
         {
-            var model = new SchemaTableColumnAddModel(Controller, this, Table);
+            var model = new SchemaTableColumnAddDialogModel(Controller, this, Table);
             model.IsInsertMode = true;
             model.StartEditing();
-            var modal = CreateModal(@"~\Areas\BuhtaCore\Views\SchemaTableColumnAddDialog.cshtml", model);
+            var modal = CreateModal(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableColumnAddDialogView.cshtml", model);
             modal.Show();
         }
 

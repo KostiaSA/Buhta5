@@ -1,0 +1,64 @@
+﻿@model SchemaTableColumnAddDialogModel
+<div class="modal modal-add-form" data-width="1000" tabindex="-1" role="dialog">
+    @*<div class="modal-dialog">
+        <div class="modal-content">*@
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Добавление колонки в таблицу "@Model.Column.Table.Name"</h4>
+    </div>
+    <div class="modal-body">
+        <form role="form" class="form-horizontal">
+            <div class="row">
+                @Html.bsInput(tag =>
+           {
+               tag.IsRequired = true;
+               tag.Type = bsInputType.List;
+               tag.Bind_Value_To_RolesList(nameof(Model.Column) + "." + nameof(Model.Column.ColumnRoles), new Колонка_ColumnRole());
+               tag.Bind_OnChange(Model.OnChangeRoles);
+               tag.Bind_Validator(Model.Column.Validate_Roles);
+               tag.Label = "Роли";
+           })
+
+                @Model.GetColumnDataTypeInputsHtml()
+
+
+                @Html.bsInput(tag =>
+           {
+               tag.IsRequired = true;
+               tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Name));
+               tag.Bind_Validator(Model.Column.Validate_Name);
+               //tag.Bind_Validator((error)=> {
+               //    if (Model.Column.Table.GetColumnByName(Model.Column.Name) != null)
+               //        error.AppendLine("уже есть колонка с таким именем");
+               //});
+               tag.Label = "Имя колонки";
+               tag.AddStyle("max-width", "400px");
+               tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.EditedColumnDataTypeName));
+           })
+                @Html.bsInput(tag =>
+                   {
+                       tag.Bind_Value<string>(nameof(Model.Column) + "." + nameof(Model.Column.Description));
+                       tag.Label = "Описание";
+                       tag.Bind_Disabled(() => string.IsNullOrWhiteSpace(Model.EditedColumnDataTypeName));
+                   })
+
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        @Html.bsButton(button =>
+   {
+       button.Text = "Добавить колонку";
+       button.ButtonStyle = bsButtonStyle.Success;
+       button.Bind_OnClick(Model.SaveButtonClick);
+   })
+        @Html.bsButton(button =>
+   {
+       button.Text = "Отмена";
+       button.AddClass("modal-cancel-button");
+       button.ButtonStyle = bsButtonStyle.Default;
+       button.Bind_OnClick(Model.CancelButtonClick);
+   })
+    </div>
+</div>
