@@ -463,7 +463,10 @@ namespace Buhta
 
         public int GetMaxColumnPosition()
         {
-            return Columns.Max((col) => col.Position);
+            if (Columns.Count == 0)
+                return 0;
+            else
+                return Columns.Max((col) => col.Position);
         }
 
         public List<IViewColumn> GetColumns()

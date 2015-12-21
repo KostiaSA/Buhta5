@@ -17,14 +17,15 @@ namespace Buhta
         public ObservableCollection<string> SelectedRows { get; set; }
 
 
-        public SchemaDesignerModel(Controller controller, BaseModel parentModel) : base(controller,parentModel) {
+        public SchemaDesignerModel(Controller controller, BaseModel parentModel) : base(controller, parentModel)
+        {
             SelectedRows = new ObservableCollection<string>();
             SelectedRows.CollectionChanged += SelectedRows_CollectionChanged;
         }
 
         private void SelectedRows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            TestProp1 = "выбрано "+SelectedRows.Count;
+            TestProp1 = "выбрано " + SelectedRows.Count;
         }
 
         public DataView SchemaObjectList
@@ -91,11 +92,78 @@ SELECT [ID]
                 openSchemaObjectDesigner(ActiveRowId);
         }
 
-        private void openSchemaObjectDesigner(string schemaObjectID)
+        public void OnCreateNewObjectButtonClick(dynamic args)
+        {
+            Guid parentFolder;
+            if (ActiveRowId == null)
+            {
+                ShowInfoMessageDialog("новый объект", "Сначала выберите каталог или модуль для добавления");
+                return;
+            }
+            parentFolder = Guid.Parse(ActiveRowId);
+            var parentObject = App.Schema.GetSampleObject<SchemaObject>(parentFolder);
+            if (!(parentObject is SchemaFolder || parentObject is SchemaModule))
+            {
+                ShowErrorMessageDialog("новый объект", "Добавлять объекты можно только в модуль или каталог");
+                return;
+            }
+
+            var dialogModel = new SelectSchemaObjectTypeDialogModel(Controller, this, null);
+            dialogModel.OkEventMethod = (arg) =>
+            {
+                CreateNewObject(dialogModel.Value, parentFolder);
+            };
+            var modal = CreateModal(@"~/MODULES/BUHTA/CORE/DIALOGS/SelectSchemaObjectTypeDialogView.cshtml", dialogModel);
+            modal.Show();
+        }
+
+        public void CreateNewObject(string objectTypeName, Guid parentFolder)
+        {
+            if (objectTypeName == "E08D5D71-87CC-4D9C-8A5C-817F67ED5C1F")
+            {
+                //    treeList.RefreshDataSource();
+                //    var importDialog = new ImportSchemaTablesFromSqlDatabase_dialog();
+                //    importDialog.parentObject = focusedObject;
+                //    if (importDialog.ShowDialog() == DialogResult.OK)
+                //    {
+                //        treeList.RefreshDataSource();
+                //    }
+                //    return;
+            }
+
+            foreach (Lazy<SchemaObject> dt in App.Mef.SchemaObjects)
+            {
+                if (dt.Value.GetType().FullName == objectTypeName)
+                {
+
+                    var newObject = (SchemaObject)Activator.CreateInstance(dt.Value.GetType());
+                    newObject.ID = Guid.NewGuid();
+                    newObject.Name = "NewTableName";
+                    newObject.PrepareNew();
+                    newObject.ParentObjectID = parentFolder;
+
+
+                    // добавляем в cache
+                    var obj_cache_to_load = new SchemaObject_cache();
+                    obj_cache_to_load.Schema = App.Schema;
+                    obj_cache_to_load.Name = newObject.Name;
+                    obj_cache_to_load.JSON = newObject.GetJsonText();
+                    App.Schema.Objects_cache.Add(newObject.ID, obj_cache_to_load);
+
+
+                    openSchemaObjectDesigner(newObject.ID.ToString(), "add");
+
+                    return;
+                }
+            }
+
+        }
+
+        private void openSchemaObjectDesigner(string schemaObjectID, string mode = "edit")
         {
             foreach (var win in AppServer.CurrentAppNavBarModel.ChromeWindows.Values)
             {
-                if (win.ModelName == typeof(SchemaTableDesignerModel).FullName && win.RecordId== schemaObjectID)
+                if (win.ModelName == typeof(SchemaTableDesignerModel).FullName && win.RecordId == schemaObjectID)
                 {
                     win.SetFocused();
                     return;
@@ -103,7 +171,7 @@ SELECT [ID]
             }
 
             var action = new OpenChildWindowAction();
-            action.Url = "/Buhta/SchemaTableDesigner?ID=" + schemaObjectID; 
+            action.Url = "/Buhta/SchemaTableDesigner?ID=" + schemaObjectID + "&mode=" + mode;
             ExecuteJavaScript(action.GetJsCode());
         }
 

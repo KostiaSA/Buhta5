@@ -11,5 +11,14 @@
     color:#99389f
 }
 
+.textcolor-add {
+    color: #01BC8C;
+}
 
+.textcolor-edit {
+    color: #418BCA;
+}
 
+.textcolor-delete {
+    color: #EF6F6C;
+}

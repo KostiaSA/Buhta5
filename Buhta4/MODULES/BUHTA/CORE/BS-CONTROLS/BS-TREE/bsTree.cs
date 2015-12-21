@@ -89,7 +89,7 @@ namespace Buhta
                 SelectedRowsModelPropertyName = selectedRowsModelPropertyName
 
             };
-            AddBinder(dataSourceBinderToSqlDataView);
+            AddBinder(dataSourceBinderToObjectList);
         }
 
         bsTreeDataSourceToSchemaRolesBinder dataSourceBinderToSchemaRoles;

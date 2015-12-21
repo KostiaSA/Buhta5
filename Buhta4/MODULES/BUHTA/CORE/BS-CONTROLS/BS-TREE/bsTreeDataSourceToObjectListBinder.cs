@@ -35,7 +35,6 @@ namespace Buhta
             var list = _list as IEnumerable<object>;
             if (list == null)
                 throw new Exception(nameof(bsTreeDataSourceToObjectListBinder) + ": свойство '" + DatasourceModelPropertyName + "' должно быть типа 'IEnumerable<object>'");
-            DataView dataView = (DataView)_list;
 
             if (SelectedRowsModelPropertyName != null)
             {

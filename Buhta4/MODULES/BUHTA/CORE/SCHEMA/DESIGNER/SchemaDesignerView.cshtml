@@ -42,6 +42,7 @@
         //s.Image = "Areas/BuhtaSchemaDesigner/Content/icon/button-insert.png";
         tag.AddClass("add-color");
         //tag.ButtonStyle = bsButtonStyle.Default;
+        tag.Bind_OnClick(Model.OnCreateNewObjectButtonClick);
         tag.Size = bsButtonSize.Small;
     });
 

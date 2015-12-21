@@ -10,10 +10,11 @@ namespace Buhta.Controllers
     public class BuhtaController : Controller
     {
 
-        public ActionResult SchemaTableDesigner(string ID)
+        public ActionResult SchemaTableDesigner(string ID, string mode = "edit")
         {
             var model = new SchemaTableDesignerModel(this, null);
-            App.Schema.ReloadObjectCache(Guid.Parse(ID));
+            if (mode == "edit")
+                App.Schema.ReloadObjectCache(Guid.Parse(ID));
             model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
             model.StartEditing();
             return View(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableDesignerView.cshtml", model);
