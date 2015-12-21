@@ -11,10 +11,7 @@ namespace Buhta
     {
         public MessageDialogModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
-        public string Title;
         public MvcHtmlString TitleHtml = MvcHtmlString.Empty;
-
-        public string Message;
         public MvcHtmlString MessageHtml = MvcHtmlString.Empty;
 
         public BinderEventMethod OkEventMethod;

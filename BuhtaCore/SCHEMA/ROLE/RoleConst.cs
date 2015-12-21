@@ -35,6 +35,12 @@ namespace Buhta
         public static Guid Документ = Guid.Parse("0302A919-F292-4F01-AAEF-BDBF4E4CD0AA");
         public static Guid Документ_Дата = Guid.Parse("22EE024C-C2C9-457E-A06F-5674289AF1E3");
         public static Guid Документ_Сумма = Guid.Parse("1EF063F4-46A1-4212-994F-812B7FB071FF");
+
+        public static Guid User = Guid.Parse("C45C8A3F-B4BC-44FF-95CA-0E10E8B4CB42");
+        public static Guid UserGroup = Guid.Parse("C4F10D5B-1329-41C7-86E7-BD1EE884748B");
+        public static Guid UserGroupLink = Guid.Parse("16A94022-6C39-4D7E-BCB8-B2C30A473C6B");
+        public static Guid UserAccessRoleLink = Guid.Parse("7AA70E3A-6E86-4401-891A-FDB1A46C23DE");
+
     }
 
 }

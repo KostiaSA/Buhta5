@@ -16,8 +16,7 @@ namespace Buhta.Controllers
             App.Schema.ReloadObjectCache(Guid.Parse(ID));
             model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
             model.StartEditing();
-
-            return View(@"~\Areas\BuhtaSchemaDesigner\Views\BuhtaSchemaDesigner\SchemaTableDesigner.cshtml", model);
+            return View(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableDesignerView.cshtml", model);
         }
 
       

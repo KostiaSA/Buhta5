@@ -30,7 +30,7 @@ namespace Buhta
         public Dictionary<string, object> BindedProps = new Dictionary<string, object>();
         //List<OldBaseBinder> OldBindedBinders = new List<OldBaseBinder>();
         public Dictionary<string, object> BindedCollections = new Dictionary<string, object>();
-        Dictionary<string, BaseBinder> BindedBinders = new Dictionary<string, BaseBinder>();
+        public Dictionary<string, BaseBinder> BindedBinders = new Dictionary<string, BaseBinder>();
 
         //public void OldRegisterBinder(OldBaseBinder binder)
         //{
@@ -577,53 +577,45 @@ namespace Buhta
             return modal;
         }
 
-        public void ShowInfoMessageDialog(object title, object message, BinderEventMethod closeEventMethod = null)
+        public void ShowInfoMessageDialog(string title, string message, BinderEventMethod closeEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);
-            if (title is MvcHtmlString)
-                model.TitleHtml = title as MvcHtmlString;
-            else
-                model.Title = title.ToString();
+            model.TitleHtml = new MvcHtmlString(title.ToString().AsHtmlEx());
+            model.MessageHtml = new MvcHtmlString(message.ToString().AsHtmlEx());
 
-            if (message is MvcHtmlString)
-                model.MessageHtml = message as MvcHtmlString;
-            else
-                model.Message = message.ToString();
             model.CancelEventMethod = closeEventMethod;
             var modal = CreateModal(@"~\MODULES\BUHTA\CORE\DIALOGS\InfoMessageDialogView.cshtml", model);
             modal.Show();
         }
 
-        public void ShowErrorMessageDialog(object title, object message, BinderEventMethod closeEventMethod = null)
+        public void ShowErrorMessageDialog(string title, string message, BinderEventMethod closeEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);
-            if (title is MvcHtmlString)
-                model.TitleHtml = title as MvcHtmlString;
-            else
-                model.Title = title.ToString();
-
-            if (message is MvcHtmlString)
-                model.MessageHtml = message as MvcHtmlString;
-            else
-                model.Message = message.ToString();
+            model.TitleHtml = new MvcHtmlString(title.ToString().AsHtmlEx());
+            model.MessageHtml = new MvcHtmlString(message.ToString().AsHtmlEx());
 
             model.CancelEventMethod = closeEventMethod;
             var modal = CreateModal(@"~\MODULES\BUHTA\CORE\DIALOGS\ErrorMessageDialogView.cshtml", model);
             modal.Show();
         }
 
-        public void ShowConfirmationMessageDialog(object title, object message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        public void ShowExceptionMessageDialog(string title, string message, BinderEventMethod closeEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);
-            if (title is MvcHtmlString)
-                model.TitleHtml = title as MvcHtmlString;
-            else
-                model.Title = title.ToString();
+            model.TitleHtml = new MvcHtmlString(title.ToString().AsHtmlEx());
+            model.MessageHtml = new MvcHtmlString(message.ToString().AsHtmlEx());
 
-            if (message is MvcHtmlString)
-                model.MessageHtml = message as MvcHtmlString;
-            else
-                model.Message = message.ToString();
+            model.CancelEventMethod = closeEventMethod;
+            var modal = CreateModal(@"~\MODULES\BUHTA\CORE\DIALOGS\ExceptionMessageDialogView.cshtml", model);
+            modal.Show();
+        }
+
+        public void ShowConfirmationMessageDialog(string title, string message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        {
+            var model = new MessageDialogModel(Controller, this);
+            model.TitleHtml = new MvcHtmlString(title.ToString().AsHtmlEx());
+            model.MessageHtml = new MvcHtmlString(message.ToString().AsHtmlEx());
+
             model.OkEventMethod = okEventMethod;
             model.CancelEventMethod = cancelEventMethod;
             var modal = CreateModal(@"~\MODULES\BUHTA\CORE\DIALOGS\ConfirmationMessageDialogView.cshtml", model);
@@ -635,36 +627,24 @@ namespace Buhta
             ShowLostChangesConfirmationDialog("Предупреждение", "Выйти без сохранения?", okEventMethod, cancelEventMethod);
         }
 
-        public void ShowLostChangesConfirmationDialog(object title, object message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        public void ShowLostChangesConfirmationDialog(string title, string message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);
-            if (title is MvcHtmlString)
-                model.TitleHtml = title as MvcHtmlString;
-            else
-                model.Title = title.ToString();
+            model.TitleHtml = new MvcHtmlString(title.ToString().AsHtmlEx());
+            model.MessageHtml = new MvcHtmlString(message.ToString().AsHtmlEx());
 
-            if (message is MvcHtmlString)
-                model.MessageHtml = message as MvcHtmlString;
-            else
-                model.Message = message.ToString();
             model.OkEventMethod = okEventMethod;
             model.CancelEventMethod = cancelEventMethod;
             var modal = CreateModal(@"~\MODULES\BUHTA\CORE\DIALOGS\LostChangesConfirmationDialogView.cshtml", model);
             modal.Show();
         }
 
-        public void ShowDeleteConfirmationMessageDialog(object title, object message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
+        public void ShowDeleteConfirmationMessageDialog(string title, string message, BinderEventMethod okEventMethod, BinderEventMethod cancelEventMethod = null)
         {
             var model = new MessageDialogModel(Controller, this);
-            if (title is MvcHtmlString)
-                model.TitleHtml = title as MvcHtmlString;
-            else
-                model.Title = title.ToString();
+            model.TitleHtml = new MvcHtmlString(title.ToString().AsHtmlEx());
+            model.MessageHtml = new MvcHtmlString(message.ToString().AsHtmlEx());
 
-            if (message is MvcHtmlString)
-                model.MessageHtml = message as MvcHtmlString;
-            else
-                model.Message = message.ToString();
             model.OkEventMethod = okEventMethod;
             model.CancelEventMethod = cancelEventMethod;
             var modal = CreateModal(@"~\MODULES\BUHTA\CORE\DIALOGS\DeleteConfirmationMessageDialogView.cshtml", model);

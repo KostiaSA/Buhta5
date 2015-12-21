@@ -31,7 +31,7 @@ namespace Buhta
             Column.Validate(errors);
             if (!errors.IsEmpty)
             {
-                ShowErrorMessageDialog("Есть ошибки", errors.ToHtmlString());
+                ShowErrorMessageDialog("Есть ошибки", "@" + errors.ToHtmlString());
             }
             else
             {

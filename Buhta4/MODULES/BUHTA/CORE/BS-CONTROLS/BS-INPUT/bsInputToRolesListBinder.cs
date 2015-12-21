@@ -19,8 +19,7 @@ namespace Buhta
             {
                 var rolesDialogmodel = new SelectSchemaRolesDialogModel(Control.Model.Controller, Control.Model, selectedList as ObservableCollection<Guid>, RootRole);
                 rolesDialogmodel.OkEventMethod = CallOnChangeBinder;
-
-                var modal = Control.Model.CreateModal(@"~/Areas/BuhtaCore/Views/SelectSchemaRolesDialog.cshtml", rolesDialogmodel);
+                var modal = Control.Model.CreateModal(@"~/MODULES/BUHTA/CORE/DIALOGS/SelectSchemaRolesDialogView.cshtml", rolesDialogmodel);
                 modal.Show();
             }
             else

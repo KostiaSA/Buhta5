@@ -21,6 +21,12 @@ namespace Buhta
             ValueType = typeof(T);
         }
 
+        public override string GetPropertyNameForErrorMessage()
+        {
+            return ModelPropertyName;
+        }
+
+
         public override string GetJsForSettingProperty()
         {
             if (ModelGetMethod == null && ModelPropertyName == null)

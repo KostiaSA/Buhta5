@@ -96,7 +96,7 @@ namespace Buhta
                 treeNode.AddProperty("id", obj.ID.ToString());
                 if (!string.IsNullOrWhiteSpace(obj.ParentObjectID.ToString()))
                     treeNode.AddProperty("parent", obj.ParentObjectID.ToString());
-                treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(@"~/Areas/BuhtaSchemaDesigner/Content/icon/" + obj.GetType().Name + "_16.png"));
+                treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(@"~/MODULES/BUHTA/CORE/Content/icon/" + obj.GetType().Name + "_16.png"));
 
                 if (selectedRow != null && selectedRow == obj.ID)
                 {
@@ -126,7 +126,7 @@ namespace Buhta
                 treeNode.AddProperty("id", virtualTable.ID.ToString());
                 if (!string.IsNullOrWhiteSpace(virtualTable.ParentObjectID.ToString()))
                     treeNode.AddProperty("parent", virtualTable.ParentObjectID.ToString());
-                treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(@"~/Areas/BuhtaSchemaDesigner/Content/icon/" + virtualTable.GetType().Name + "_16.png"));
+                treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(@"~/MODULES/BUHTA/CORE/Content/icon/" + virtualTable.GetType().Name + "_16.png"));
 
                 if (selectedRow != null && selectedRow == virtualTable.ID)
                 {

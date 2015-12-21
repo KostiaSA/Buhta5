@@ -75,6 +75,23 @@ namespace Buhta
             AddBinder(dataSourceBinderToSqlDataView);
         }
 
+        bsTreeDataSourceToObjectListBinder dataSourceBinderToObjectList;
+        public void Bind_DataSource_To_ObjectList(string datasourceModelPropertyName, string displayFieldName, string keyFieldName, string parentFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName = null)
+        {
+            dataSourceBinderToObjectList = new bsTreeDataSourceToObjectListBinder()
+            {
+                Tree = this,
+                DatasourceModelPropertyName = datasourceModelPropertyName,
+                DisplayFieldName = displayFieldName,
+                KeyFieldName = keyFieldName,
+                ParentFieldName = parentFieldName,
+                IconFieldName = iconFieldName,
+                SelectedRowsModelPropertyName = selectedRowsModelPropertyName
+
+            };
+            AddBinder(dataSourceBinderToSqlDataView);
+        }
+
         bsTreeDataSourceToSchemaRolesBinder dataSourceBinderToSchemaRoles;
         public void Bind_DataSource_To_ToSchemaRoles(string selectedRowsModelPropertyName, SchemaBaseRole rootRole)
         {

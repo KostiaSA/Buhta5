@@ -55,6 +55,7 @@ namespace Buhta
             //Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
             try
             {
+                AppServer.CurrentAppNavBarModel = null;
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out AppServer.CurrentAppNavBarModel.FocusedWindow))
                     throw new Exception("internal error AppServer.ChromeWindows.TryGetValue");
@@ -65,7 +66,7 @@ namespace Buhta
 
                 if (propertyName.StartsWith("binder:"))
                 {
-                    Debug.Print("obj.BinderSetValue: " + propertyName + ", " + newValue);
+                    //Debug.Print("obj.BinderSetValue: " + propertyName + ", " + newValue);
                     obj.BinderSetValue(propertyName, newValue);
                     obj.Update();
                 }
@@ -80,10 +81,21 @@ namespace Buhta
             catch (Exception e)
             {
                 var obj = BindingModelList[modelBindingID];
-                if (obj == null)
-                    Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID);
+                if (obj != null)
+                {
+                    BaseBinder binder;
+                    if (obj.BindedBinders.TryGetValue(propertyName, out binder) && binder.GetPropertyNameForErrorMessage() != null)
+                        propertyName = binder.GetPropertyNameForErrorMessage();
+                    obj.ShowExceptionMessageDialog("Сервер вернул ошибку", "@модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':<br>" + e.GetFullMessage().Replace("\n", "<br>"));
+                    //Clients.Caller.receiveServerError();
+                }
                 else
-                    Clients.Caller.receiveServerError("модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':\n" + e.GetFullMessage());
+                if (AppServer.CurrentAppNavBarModel != null)
+                {
+                    AppServer.CurrentAppNavBarModel.ShowExceptionMessageDialog("Сервер вернул ошибку", e.GetFullMessage().Replace("\n", "<br>"));
+                }
+                else
+                    Clients.Caller.receiveServerError(e.GetFullMessage().Replace("\n", "<br>"));
 
             }
 
@@ -142,10 +154,21 @@ namespace Buhta
             catch (Exception e)
             {
                 var obj = BindingModelList[modelBindingID];
-                if (obj == null)
-                    Clients.Caller.receiveServerError("не найден " + nameof(modelBindingID) + " = " + modelBindingID + " для метода '" + funcName + "'");
+                if (obj != null)
+                {
+                    BaseBinder binder;
+                    if (obj.BindedBinders.TryGetValue(funcName, out binder) && binder.GetPropertyNameForErrorMessage() != null)
+                        funcName = binder.GetPropertyNameForErrorMessage();
+                    obj.ShowExceptionMessageDialog("Сервер вернул ошибку", "@модель '" + obj.GetType().FullName + "', свойство '" + funcName + "':<br>" + e.GetFullMessage().Replace("\n", "<br>"));
+                    //Clients.Caller.receiveServerError();
+                }
                 else
-                    Clients.Caller.receiveServerError("вызов '" + obj.GetType().FullName + "', метод '" + funcName + "':\n" + e.GetFullMessage());
+                if (AppServer.CurrentAppNavBarModel != null)
+                {
+                    AppServer.CurrentAppNavBarModel.ShowExceptionMessageDialog("Сервер вернул ошибку", e.GetFullMessage().Replace("\n", "<br>"));
+                }
+                else
+                    Clients.Caller.receiveServerError(e.GetFullMessage().Replace("\n", "<br>"));
             }
         }
 

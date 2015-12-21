@@ -39,6 +39,12 @@ namespace Buhta
 
         public bsControl Control;
 
+        public virtual string GetPropertyNameForErrorMessage()
+        {
+            return null;
+        }
+           
+
     }
 
 }

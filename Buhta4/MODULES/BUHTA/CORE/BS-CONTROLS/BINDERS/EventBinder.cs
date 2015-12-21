@@ -15,6 +15,11 @@ namespace Buhta
         public string ModelEventMethodName;
         public BinderEventMethod ModelEventMethod { get; set; }
 
+        public override string GetPropertyNameForErrorMessage()
+        {
+            return ModelEventMethodName;
+        }
+
         public override void EmitBindingScript(StringBuilder script)
         {
             //Control.Model.RegisterBinder(this);

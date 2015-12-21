@@ -166,6 +166,7 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaObjectsBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaRolesBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-GRID\bsGridDataSourceToSqlDataViewBinder.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToObjectListBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSqlDataViewBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-INPUT\bsInputToRolesListBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BINDERS\BaseBinder.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-BUTTON\bsButton.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeColumn.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-MODAL\bsModal.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\DIALOGS\SelectSchemaObjectTypeDialogModel.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\BindingHub.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\Colors.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\RenderView.cs" />
@@ -627,6 +629,8 @@
     <Content Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\AppNavBarView.cshtml" />
     <Content Include="MODULES\Web.config" />
     <Content Include="MODULES\BUHTA\CORE\SCHEMA\DESIGNER\SchemaDesignerView.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\DIALOGS\SelectSchemaObjectTypeDialogView.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\DIALOGS\ExceptionMessageDialogView.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

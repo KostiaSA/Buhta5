@@ -1,0 +1,55 @@
+﻿@model SelectSchemaObjectTypeDialogModel
+
+<div class="modal" data-width="1000" tabindex="-1" role="dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Выберите объект схемы данных</h4>
+    </div>
+    <div class="modal-body">
+        @Html.bsTree(tree =>
+   {
+       tree.IsShowTextFilter = true;
+
+       tree.AddColumn(c =>
+       {
+           c.Caption = "Объект";
+           c.Field_Bind = nameof(SchemaObject.Name);
+           //c.CellTemplateJS = @"
+           //  if (row.node.isSelected())
+           //    row._fontWeight='bold';
+           //  else
+           //   row._fontWeight='normal';
+           //";
+           //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
+       });
+
+       tree.AddColumn(c =>
+       {
+           c.Caption = "Описание";
+           c.Field_Bind = nameof(SchemaBaseRole.Description);
+
+       });
+
+       tree.Bind_DataSource_To_ObjectList(nameof(Model.ObjectTypesList), "Title", "ID");
+       tree.Bind_OnRowActivate(Model.RowActivate);
+       tree.Bind_OnRowDblClick(Model.OkButtonClick);
+
+   })
+
+    </div>
+    <div class="modal-footer">
+        @Html.bsButton(button =>
+   {
+       button.Text = "   Ok   ";
+       button.AddStyle("min-width", "70px");
+       button.ButtonStyle = bsButtonStyle.Success;
+       button.Bind_OnClick(Model.OkButtonClick);
+   })
+        @Html.bsButton(button =>
+   {
+       button.Text = "Отмена";
+       button.ButtonStyle = bsButtonStyle.Default;
+       button.Bind_OnClick(Model.CancelButtonClick);
+   })
+    </div>
+</div><!-- /.modal -->
