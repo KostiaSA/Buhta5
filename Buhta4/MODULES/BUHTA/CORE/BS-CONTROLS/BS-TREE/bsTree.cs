@@ -311,15 +311,20 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
                 }
                 else
                 {
-                   Script.AppendLine("  td_tag.text(row['" + col.Field_Bind + "']);");
+                    Script.AppendLine("  td_tag.text(row['" + col.Field_Bind + "']);");
                 }
 
-                if (col.TextColor != null)
-                    Script.AppendLine("  td_tag.addClass('" + col.TextColor + "');");
-                if (col.BackColor != null)
-                    Script.AppendLine("  td_tag.addClass('" + col.BackColor + "');");
-                if (col.HtmlClass != null)
-                    Script.AppendLine("  td_tag.addClass('" + col.HtmlClass + "');");
+                //if (col.TextColorClass != null)
+                //    Script.AppendLine("  td_tag.addClass('" + col.TextColorClass + "');");
+                //if (col.BackColorClass != null)
+                //    Script.AppendLine("  td_tag.addClass('" + col.BackColorClass + "');");
+
+                foreach (string cls in col.Classes)
+                    Script.AppendLine("  td_tag.addClass('" + cls + "');");
+
+                foreach (var style in col.Styles)
+                    Script.AppendLine("  td_tag.css('" + style.Key + "','" + style.Value + "');");
+
                 if (col.Align == bsTreeColumnAlign.center)
                     Script.AppendLine("  td_tag.css('text-align','center');");
                 if (col.Align == bsTreeColumnAlign.right)

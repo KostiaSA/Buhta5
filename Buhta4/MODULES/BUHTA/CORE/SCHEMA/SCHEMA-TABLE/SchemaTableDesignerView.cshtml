@@ -206,7 +206,7 @@
                    {
                        c.Caption = "Имя колонки";
                        c.Field_Bind = nameof(SchemaTableColumn.Name);
-                       c.TextColor = TextColor.KeyField;
+                       c.AddClass(TextColor.KeyField);
                    });
 
                    grid.AddColumn(c =>
@@ -219,7 +219,7 @@
                    {
                        c.Caption = "Тип данных";
                        c.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
-                       c.BackColor = TextColor.DateTime;
+                       c.AddClass(TextColor.DateTime);
                        c.CellTemplate = @"<span style='font-size:1.2em'>{{GetDataTypeDisplay}}\n""</span>";
                    });
 

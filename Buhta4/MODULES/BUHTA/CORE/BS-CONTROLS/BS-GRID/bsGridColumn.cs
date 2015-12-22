@@ -26,9 +26,9 @@ namespace Buhta
 
         public string Field_Bind;
 
-        public string TextColor;
-        public string BackColor;
-        public string HtmlClass;
+        //public string TextColor;
+        //public string BackColor;
+        //public string HtmlClass;
 
         // пример "<small style='opacity:0.3'>{{ID}}</small>"
         public string CellTemplate;

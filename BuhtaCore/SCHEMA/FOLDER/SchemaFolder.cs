@@ -48,6 +48,19 @@ namespace Buhta
         {
             return null;
         }
+
+        public override string GetDesignerUrl()
+        {
+            return "/Buhta/SchemaFolderDesigner";
+        }
+
+        public override void PrepareNew()
+        {
+            if (Name == null)
+                Name = "Новая папка";
+            base.PrepareNew();
+        }
+
     }
 
 

@@ -21,7 +21,7 @@
            //   row._fontWeight='normal';
            //";
            //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
-           c.TextColor = TextColor.SchemaRole;
+           c.AddClass(TextColor.SchemaRole);
        });
 
        tree.AddColumn(c =>

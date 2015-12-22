@@ -17,11 +17,6 @@ namespace Buhta
 
         public bsGrid ColumnsGrid;
 
-        public void CloseColumnEditor(dynamic args)
-        {
-            Table.Name = "закрыто";
-        }
-
         public string SelectedColumnName;
 
         public void SelectedColumnByColumnName(string columnName)

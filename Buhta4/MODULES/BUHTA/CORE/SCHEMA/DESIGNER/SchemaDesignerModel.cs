@@ -40,6 +40,7 @@ namespace Buhta
 SELECT [ID]
       ,[ParentObjectID]
       ,[Name]
+      ,[Description]
       ,[RootClass]
       ,[RootType]
       ,[CreateDateTime]
@@ -52,7 +53,7 @@ SELECT [ID]
       ,'~/MODULES/BUHTA/CORE/Content/icon/'+RootClass+'_16.png' AS [__Icon__]
   FROM [SchemaObject]
 ");
-                    SelectedRows.Add("84ff8c4c-2c17-4af8-a2a1-02c958bd75bf");
+                    //SelectedRows.Add("84ff8c4c-2c17-4af8-a2a1-02c958bd75bf");
 
                     var objs = db.ExecuteDataTable();
                     return objs.AsDataView();
@@ -97,14 +98,14 @@ SELECT [ID]
             Guid parentFolder;
             if (ActiveRowId == null)
             {
-                ShowInfoMessageDialog("новый объект", "Сначала выберите каталог или модуль для добавления");
+                ShowInfoMessageDialog("новый объект", "Сначала выберите папку или модуль для добавления");
                 return;
             }
             parentFolder = Guid.Parse(ActiveRowId);
             var parentObject = App.Schema.GetSampleObject<SchemaObject>(parentFolder);
             if (!(parentObject is SchemaFolder || parentObject is SchemaModule))
             {
-                ShowErrorMessageDialog("новый объект", "Добавлять объекты можно только в модуль или каталог");
+                ShowErrorMessageDialog("новый объект", "Добавлять объекты можно только в модуль или папку");
                 return;
             }
 
@@ -138,9 +139,8 @@ SELECT [ID]
 
                     var newObject = (SchemaObject)Activator.CreateInstance(dt.Value.GetType());
                     newObject.ID = Guid.NewGuid();
-                    newObject.Name = "NewTableName";
-                    newObject.PrepareNew();
                     newObject.ParentObjectID = parentFolder;
+                    newObject.PrepareNew();
 
 
                     // добавляем в cache
@@ -170,8 +170,10 @@ SELECT [ID]
                 }
             }
 
+            var obj = App.Schema.GetObject<SchemaObject>(Guid.Parse(schemaObjectID));
+
             var action = new OpenChildWindowAction();
-            action.Url = "/Buhta/SchemaTableDesigner?ID=" + schemaObjectID + "&mode=" + mode;
+            action.Url = obj.GetDesignerUrl()+ "?ID=" + schemaObjectID + "&mode=" + mode;
             ExecuteJavaScript(action.GetJsCode());
         }
 

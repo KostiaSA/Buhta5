@@ -86,7 +86,9 @@
     <div class="page-container">
         @{ Html.RenderPartial("~/MODULES/BUHTA/CORE/BS-CONTROLS/BS-APPNAVBAR/AppNavBarView.cshtml", AppServer.CurrentAppNavBarModel); }
         @RenderBody()
-        @AppServer.GetDebugInfo()
+        <div class='container'>
+            @AppServer.GetDebugInfo()
+        </div>
     </div>
 </body>
 </html>

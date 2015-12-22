@@ -352,11 +352,18 @@ namespace Buhta
             }
         }
 
+        public override string GetDesignerUrl()
+        {
+            return "/Buhta/SchemaTableDesigner";
+        }
+
         public override void PrepareNew()
         {
             if (TableRoles.Count == 0)
                 TableRoles.Add(RoleConst.Таблица);  // таблица
-
+            if (Name == null)
+                Name = "НоваяТаблица";
+            base.PrepareNew();
         }
 
 

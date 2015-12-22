@@ -147,13 +147,21 @@ namespace Buhta
 
         public virtual void PrepareNew()
         {
-            ID = Guid.NewGuid();
+            if (ID == Guid.Empty)
+                ID = Guid.NewGuid();
+            if (Name == null)
+                Name = "НовыйОбъект";
         }
 
 
         public string GetEditedObjectName()
         {
             return Name;
+        }
+
+        public virtual string GetDesignerUrl()
+        {
+            return "undefined-schemaobject-designer-url";
         }
 
         public void StartEditing()

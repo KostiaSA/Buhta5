@@ -1,0 +1,61 @@
+﻿
+@model SchemaFolderDesignerModel
+
+@{ Layout = "~/MODULES/BUHTA/CORE/SHARED/_Layout.cshtml"; }
+
+<script>
+    window._buhtaModelName = "@Model.GetType().FullName";
+    window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
+</script>
+
+<div class="container body-content">
+    <div class="pull-right">
+        @Html.bsEditFormSaveButton((button) => { button.AddStyle("margin-left", "20px"); })
+        @Html.bsEditFormCancelButton((button) => { })
+    </div>
+    <h3>
+        <img src="~/MODULES/BUHTA/CORE/Content/icon/SchemaFolder_32.png" />
+        @Html.bsSpan((span) =>
+   {
+       span.Bind_Text(() => Model.GetEditedObjectName());
+   })
+        <small>(папка)</small>
+    </h3>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Прочее</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <h4 style="padding-top: 15px;">Основные свойства</h4>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    папка?
+                </div>
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal">
+                        <div class="row">
+
+                            @Html.bsInput(s =>
+                           {
+                               s.Bind_Value<String>(nameof(Model.Folder) + "." + nameof(Model.Folder.Name));
+                               s.Label = "Имя папки";
+                               s.AddStyle("max-width", "500px");
+                           })
+
+                            @Html.bsInput(s =>
+                           {
+                               s.Bind_Value<string>(nameof(Model.Folder) + "." + nameof(Model.Folder.Description));
+                               s.Label = "Описание";
+                           })
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

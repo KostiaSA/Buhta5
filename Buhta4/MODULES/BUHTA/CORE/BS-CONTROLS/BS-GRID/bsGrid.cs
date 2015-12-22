@@ -199,12 +199,18 @@ namespace Buhta
             int colIndex = 0;
             foreach (var col in Columns)
             {
-                if (col.TextColor != null)
-                    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.TextColor + "');");
-                if (col.BackColor != null)
-                    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.BackColor + "');");
-                if (col.HtmlClass != null)
-                    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.HtmlClass + "');");
+                //if (col.TextColor != null)
+                //    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.TextColor + "');");
+                //if (col.BackColor != null)
+                //    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.BackColor + "');");
+                //if (col.HtmlClass != null)
+                //    script.AppendLine("  td.eq(" + colIndex + ").addClass('" + col.HtmlClass + "');");
+                foreach (string cls in col.Classes)
+                    Script.AppendLine("  td.eq(" + colIndex + ").addClass('" + cls + "');");
+
+                foreach (var style in col.Styles)
+                    Script.AppendLine("  td.eq(" + colIndex + ").css('" + style.Key + "','" + style.Value + "');");
+
                 if (col.Align == bsGridColumnAlign.center)
                     script.AppendLine("  td.eq(" + colIndex + ").css('text-align','center');");
                 if (col.Align == bsGridColumnAlign.right)

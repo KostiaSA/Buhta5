@@ -240,11 +240,11 @@ WHERE ID=" + objectToDelete.ID.AsSQL());
 
             sql.AppendLine(@"
 INSERT [dbo].[SchemaObjectHistory](
-  [ID],[ParentObjectID],[Name],[JSON],
+  [ID],[ParentObjectID],[Name],[Description],[JSON],
   [RootClass],[RootType],[CreateDateTime],[UpdateDateTime],
   [CreateUser],[UpdateUser])
 SELECT 
-  [ID],[ParentObjectID],[Name],[JSON],
+  [ID],[ParentObjectID],[Name],[Description],[JSON],
   [RootClass],[RootType],[CreateDateTime],[UpdateDateTime],
   [CreateUser],[UpdateUser]
   FROM [dbo].[SchemaObject]
@@ -257,6 +257,9 @@ WHERE ID=" + objectToSave.ID.AsSQL());
             sql.AppendLine(@"UPDATE SchemaObject SET");
             if (objectToSave.Name != null)
                 sql.AppendLine(@"  Name=" + objectToSave.Name.AsSQL() + @",");
+
+            if (objectToSave.Description != null)
+                sql.AppendLine(@"  Description=" + objectToSave.Description.AsSQL() + @",");
 
             sql.AppendLine(@"  RootClass=" + objectToSave.GetType().Name.AsSQL() + @",");
             sql.AppendLine(@"  RootType=" + objectToSave.GetTypeDisplay.AsSQL() + @",");

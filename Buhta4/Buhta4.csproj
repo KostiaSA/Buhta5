@@ -192,6 +192,7 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeColumn.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-MODAL\bsModal.cs" />
     <Compile Include="MODULES\BUHTA\CORE\DIALOGS\SelectSchemaObjectTypeDialogModel.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\SCHEMA\SCHEMA-FOLDER\SchemaFolderDesignerModel.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\BindingHub.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\Colors.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\RenderView.cs" />
@@ -631,6 +632,7 @@
     <Content Include="MODULES\BUHTA\CORE\SCHEMA\DESIGNER\SchemaDesignerView.cshtml" />
     <Content Include="MODULES\BUHTA\CORE\DIALOGS\SelectSchemaObjectTypeDialogView.cshtml" />
     <Content Include="MODULES\BUHTA\CORE\DIALOGS\ExceptionMessageDialogView.cshtml" />
+    <Content Include="MODULES\BUHTA\CORE\SCHEMA\SCHEMA-FOLDER\SchemaFolderDesignerView.cshtml" />
     <None Include="Properties\PublishProfiles\buhta.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Properties\PublishProfiles\buhta.pubxml.user" />

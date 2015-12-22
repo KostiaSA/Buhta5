@@ -20,6 +20,16 @@ namespace Buhta.Controllers
             return View(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableDesignerView.cshtml", model);
         }
 
+        public ActionResult SchemaFolderDesigner(string ID, string mode = "edit")
+        {
+            var model = new SchemaFolderDesignerModel(this, null);
+            if (mode == "edit")
+                App.Schema.ReloadObjectCache(Guid.Parse(ID));
+            model.EditedObject = App.Schema.GetObject<SchemaFolder>(Guid.Parse(ID));
+            model.StartEditing();
+            return View(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-FOLDER\SchemaFolderDesignerView.cshtml", model);
+        }
+
         public ActionResult SchemaDesigner()
         {
             var model = new SchemaDesignerModel(this, null);

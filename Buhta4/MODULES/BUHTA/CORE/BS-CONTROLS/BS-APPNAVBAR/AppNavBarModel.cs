@@ -19,6 +19,7 @@ namespace Buhta
         [ThreadStatic]
         public static ChromeWindow CurrentChromeWindow;
 
+
         public static void SetCurrentAppNavBarModel(string sessionId, Controller controller)
         {
             CurrentAppNavBarModel = AppNavBars.GetOrAdd(sessionId, (_sessionId) =>
@@ -65,8 +66,8 @@ namespace Buhta
                 foreach (var win in navBar.ChromeWindows.Values)
                 {
                     sb.AppendLine("  window.name: " + win.Name + "<br>");
-                    if (win.SignalrCaller != null)
-                        sb.AppendLine("SignalrCaller: " + win.SignalrCaller.ToGuidOrNull() + "<br>");
+                    //if (win.SignalrCaller != null)
+                      //  sb.AppendLine("SignalrCaller: " + win.SignalrCaller.ToGuidOrNull() + "<br>");
                 }
             }
 
@@ -135,6 +136,23 @@ namespace Buhta
         }
 
         public void OpenSchemaDesigner(dynamic args)
+        {
+            foreach (var win in ChromeWindows.Values)
+            {
+                if (win.ModelName == typeof(SchemaDesignerModel).FullName)
+                {
+                    win.SetFocused();
+                    return;
+                }
+            }
+
+            var action = new OpenChildWindowAction();
+            action.Url = "/Buhta/SchemaDesigner";
+            ExecuteJavaScript(action.GetJsCode());
+
+        }
+
+        public void UpdateSchemaDesignerWindows(dynamic args)
         {
             foreach (var win in ChromeWindows.Values)
             {

@@ -85,7 +85,10 @@ namespace Buhta
                 var jsRow = new JsObject();
                 foreach (var col in Tree.Columns)
                 {
-                    jsRow.AddRawProperty(col.Field_Bind, row[col.Field_Bind].AsJavaScript());
+                    if (row[col.Field_Bind] is DBNull)
+                        jsRow.AddProperty(col.Field_Bind, "");
+                    else
+                        jsRow.AddRawProperty(col.Field_Bind, row[col.Field_Bind].AsJavaScript());
                 }
                 treeNode.AddProperty("row", jsRow);
 

@@ -46,6 +46,8 @@ namespace Buhta
         Dictionary<string, string> styles = new Dictionary<string, string>();
         Dictionary<string, string> attrs = new Dictionary<string, string>();
 
+        public Dictionary<string, string> Styles { get { return styles; } }
+
         string uniqueId;
         public string UniqueId
         {
@@ -67,6 +69,8 @@ namespace Buhta
         //public string ClassAttr;
         //public string StyleAttr;
         public List<bsWrapper> Wrappers = new List<bsWrapper>();
+
+        public List<string> Classes {  get { return classes; } }
 
         public void AddClass(string className)
         {

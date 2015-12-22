@@ -26,10 +26,6 @@ namespace Buhta
 
         public bsTreeColumnAlign Align;
 
-        public string TextColor;
-        public string BackColor;
-        public string HtmlClass;
-
         public string Field_Bind;
 
         // пример "<small style='opacity:0.3'>{{ID}}</small>"
