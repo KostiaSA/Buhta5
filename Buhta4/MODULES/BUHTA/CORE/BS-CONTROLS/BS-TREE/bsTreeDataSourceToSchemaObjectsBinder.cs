@@ -145,7 +145,9 @@ namespace Buhta
                 ret.AddObject(treeNode);
             }
 
-            return "$('#" + Control.UniqueId + "').fancytree('option','source',buhta.FancyTree.convertFlatDataToTree(" + ret.ToJson() + "));";
+            return Tree.GetLoadDataScript(ret, true);
+
+            //return "$('#" + Control.UniqueId + "').fancytree('option','source',buhta.FancyTree.convertFlatDataToTree(" + ret.ToJson() + "));";
 
 
         }

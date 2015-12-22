@@ -412,8 +412,8 @@ namespace Buhta
             {
                 if (bindingId == null)
                 {
-                    bindingId = Guid.NewGuid().ToString();
-                    BindingHub.BindingModelList.Add(bindingId, this);
+                    bindingId = GetType().FullName+"-"+Guid.NewGuid().ToString();
+                    AppServer.BindingModelList.TryAdd(bindingId, this);
                 }
                 return bindingId;
             }

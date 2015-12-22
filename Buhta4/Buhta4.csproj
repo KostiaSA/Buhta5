@@ -193,6 +193,7 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-MODAL\bsModal.cs" />
     <Compile Include="MODULES\BUHTA\CORE\DIALOGS\SelectSchemaObjectTypeDialogModel.cs" />
     <Compile Include="MODULES\BUHTA\CORE\SCHEMA\SCHEMA-FOLDER\SchemaFolderDesignerModel.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\SESSION\SessionState.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\BindingHub.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\Colors.cs" />
     <Compile Include="MODULES\BUHTA\CORE\UTILS\RenderView.cs" />

@@ -81,7 +81,7 @@ namespace Buhta
         public dynamic SignalrCaller;
         public String ChromeSessionId;
         public String Name;
-        public string ModelName;
+        public string ModelBindingId;
         public string RecordId;
         public DateTime CreateDate;
 
@@ -139,10 +139,14 @@ namespace Buhta
         {
             foreach (var win in ChromeWindows.Values)
             {
-                if (win.ModelName == typeof(SchemaDesignerModel).FullName)
+                if (!string.IsNullOrEmpty(win.ModelBindingId))
                 {
-                    win.SetFocused();
-                    return;
+                    var model = AppServer.BindingModelList[win.ModelBindingId];
+                    if (model is SchemaDesignerModel)
+                    {
+                        win.SetFocused();
+                        return;
+                    }
                 }
             }
 
@@ -156,17 +160,15 @@ namespace Buhta
         {
             foreach (var win in ChromeWindows.Values)
             {
-                if (win.ModelName == typeof(SchemaDesignerModel).FullName)
+                if (!string.IsNullOrEmpty(win.ModelBindingId))
                 {
-                    win.SetFocused();
-                    return;
+                    var model = AppServer.BindingModelList[win.ModelBindingId];
+                    if (model is SchemaDesignerModel)
+                    {
+                        model.UpdateDatasets();
+                    }
                 }
             }
-
-            var action = new OpenChildWindowAction();
-            action.Url = "/Buhta/SchemaDesigner";
-            ExecuteJavaScript(action.GetJsCode());
-
         }
 
         public void GotoNextWindow(dynamic args)

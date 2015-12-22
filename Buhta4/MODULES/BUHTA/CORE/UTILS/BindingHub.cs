@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Collections.Concurrent;
 
 namespace Buhta
 {
+    public partial class AppServer
+    {
+        public static ConcurrentDictionary<string, BaseModel> BindingModelList = new ConcurrentDictionary<string, BaseModel>();
+    }
 
     public class BindingHub : Hub
     {
-
-        public static Dictionary<string, BaseModel> BindingModelList = new Dictionary<string, BaseModel>();
-
         //public void UnloadChromeWindow(string sessionID, string chromeWindowName)
         //{
         //    AppServer.SetCurrentAppNavBarModel(sessionID);
@@ -23,7 +25,7 @@ namespace Buhta
         //        AppServer.CurrentAppNavBarModel.DestroyChromeWindow(chromeWindowName);
         //}
 
-        public void RegisterChromeWindow(string sessionID, string chromeWindowName, string modelName, string recordId)
+        public void RegisterChromeWindow(string sessionID, string chromeWindowName, string modelBindingId, string recordId)
         {
             try
             {
@@ -36,7 +38,7 @@ namespace Buhta
                 ChromeWindow win;
                 AppServer.CurrentAppNavBarModel.ChromeWindows.TryGetValue(chromeWindowName, out win);
                 win.SignalrCaller = Clients.Caller;
-                win.ModelName = modelName;
+                win.ModelBindingId = modelBindingId;
                 win.RecordId = recordId;
                 win.CreateDate = DateTime.Now;
                 if (!AppServer.ChromeWindows.TryAdd(Context.ConnectionId, win))
@@ -60,7 +62,7 @@ namespace Buhta
                 if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out AppServer.CurrentAppNavBarModel.FocusedWindow))
                     throw new Exception("internal error AppServer.ChromeWindows.TryGetValue");
 
-                BaseModel obj = BindingModelList[modelBindingID];
+                BaseModel obj = AppServer.BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
@@ -80,7 +82,7 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                var obj = BindingModelList[modelBindingID];
+                var obj = AppServer.BindingModelList[modelBindingID];
                 if (obj != null)
                 {
                     BaseBinder binder;
@@ -136,7 +138,7 @@ namespace Buhta
                 AppServer.SetCurrentAppNavBarModel(sessionID);
                 if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out AppServer.CurrentAppNavBarModel.FocusedWindow))
                     throw new Exception("internal error AppServer.ChromeWindows.TryGetValue");
-                BaseModel obj = BindingModelList[modelBindingID];
+                BaseModel obj = AppServer.BindingModelList[modelBindingID];
                 obj.Hub = this;
                 Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
 
@@ -153,7 +155,7 @@ namespace Buhta
             }
             catch (Exception e)
             {
-                var obj = BindingModelList[modelBindingID];
+                var obj = AppServer.BindingModelList[modelBindingID];
                 if (obj != null)
                 {
                     BaseBinder binder;

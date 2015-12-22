@@ -22,7 +22,7 @@ $(document).ready(function () {
     //});
 
     $.connection.hub.start().done(function () {
-        bindingHub.server.registerChromeWindow(localStorage.ChromeSessionId, window.name, window._buhtaModelName, window._buhtaRecordId);
+        bindingHub.server.registerChromeWindow(localStorage.ChromeSessionId, window.name, window._buhtaModelBindingId, window._buhtaRecordId);
 
         for (i = 0; i < _docReady.length; i++) {
             _docReady[i]();

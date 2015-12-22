@@ -163,7 +163,7 @@ SELECT [ID]
         {
             foreach (var win in AppServer.CurrentAppNavBarModel.ChromeWindows.Values)
             {
-                if (win.ModelName == typeof(SchemaTableDesignerModel).FullName && win.RecordId == schemaObjectID)
+                if (win.ModelBindingId == typeof(SchemaTableDesignerModel).FullName && win.RecordId == schemaObjectID)
                 {
                     win.SetFocused();
                     return;

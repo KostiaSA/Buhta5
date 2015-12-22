@@ -76,6 +76,9 @@ namespace Buhta
                 treeNode.AddProperty("parent", row[parentFieldName].ToString());
                 treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(row[iconFieldName].ToString()));
 
+                if (Tree.IsPersistNodeExpanded && Tree.sessionStateObject != null && Tree.sessionStateObject.ExpandedNodes.Contains(row[keyFieldName].ToString()))
+                    treeNode.AddProperty("expanded", true);
+
                 if (selectedRows != null && selectedRows.Contains(row[keyFieldName].ToString()))
                 {
                     treeNode.AddProperty("selected", true);
@@ -94,8 +97,51 @@ namespace Buhta
 
                 ret.AddObject(treeNode);
             }
-   
-            return "$('#" + Control.UniqueId + "').fancytree('option','source',buhta.FancyTree.convertFlatDataToTree(" + ret.ToJson() + "));";
+
+            return Tree.GetLoadDataScript(ret,true);
+
+//            return @"
+//(function(){
+
+//var expanded_state={};
+//var selected_state={};
+//var active_state={};
+
+//var rootNode=$('#" + Control.UniqueId + @"').fancytree('getRootNode');
+
+//if (rootNode)
+//  rootNode.visit(function(node){
+//     expanded_state[node.key]=node.isExpanded();
+//     selected_state[node.key]=node.isSelected();
+//     active_state[node.key]=node.isActive();
+//  });
+
+//$('#" + Control.UniqueId + @"').fancytree('getTree').clearFilter();
+
+//$('#" + Control.UniqueId + @"').fancytree('option','source',buhta.FancyTree.convertFlatDataToTree(" + ret.ToJson() + @"));
+
+//rootNode=$('#" + Control.UniqueId + @"').fancytree('getRootNode');
+
+//rootNode.visit(function(node){
+//     if (expanded_state[node.key]!=undefined)
+//        node.setExpanded(expanded_state[node.key]);
+//     if (selected_state[node.key]!=undefined)
+//        node.setSelected(selected_state[node.key]);
+//     if (active_state[node.key]!=undefined)
+//        node.setActive(active_state[node.key]);
+//});
+
+//var match=$('#" + Control.UniqueId + @"').fancytree('getTree').filter_match;
+//if (match) {
+//  var opts = {
+//   autoExpand: true,
+//   leavesOnly: true
+//  };
+//  $('#" + Control.UniqueId + @"').fancytree('getTree').filterNodes(match, opts);
+//}
+
+//})();
+//";
 
 
         }

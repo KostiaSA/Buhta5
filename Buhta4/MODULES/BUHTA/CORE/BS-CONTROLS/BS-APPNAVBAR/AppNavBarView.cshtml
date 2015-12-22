@@ -11,6 +11,13 @@
 
     navbar.AddButtonToLeftToolbar((tag) =>
     {
+        tag.Text = "@TEST1";
+        tag.Image = "~/MODULES/BUHTA/CORE/Content/icon/app-navbar-prev-X.png";
+        tag.Bind_OnClick(Model.UpdateSchemaDesignerWindows);
+    });
+
+    navbar.AddButtonToLeftToolbar((tag) =>
+    {
         tag.Text = "@окно<br>назад";
         tag.Image = "~/MODULES/BUHTA/CORE/Content/icon/app-navbar-prev-window.png";
         tag.Bind_OnClick(Model.GotoPrevWindow);

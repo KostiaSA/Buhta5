@@ -72,7 +72,9 @@ namespace Buhta
             var jstree = new JsArray();
             AddRoleNode(jstree, RootRole);
 
-            return "$('#" + Control.UniqueId + "').fancytree('option','source'," + jstree.ToJson() + ");";
+            return Tree.GetLoadDataScript(jstree, false);
+
+            //return "$('#" + Control.UniqueId + "').fancytree('option','source'," + jstree.ToJson() + ");";
 
         }
 

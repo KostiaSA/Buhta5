@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace Buhta
 {
@@ -25,6 +26,20 @@ namespace Buhta
 
     public enum bsTreeSize { Default, Large, Small, ExtraSmall }
 
+    public class bsTreeSessionState : BaseSessionStateObject
+    {
+        [JsonIgnore]
+        public bsTree Tree;
+
+        public HashSet<string> ExpandedNodes = new HashSet<string>();
+
+        public override void Save()
+        {
+
+            base.Save();
+        }
+
+    }
 
     public class bsTree : bsControl
     {
@@ -39,6 +54,10 @@ namespace Buhta
         public bool IsShowCheckboxes;
         public bool IsShowIcons;
         public bool IsShowTextFilter;
+
+        public string SessionStateId;
+        public bool IsPersistNodeExpanded;
+        public bool IsPersistNodeSelected;
 
         public BaseAction ClickAction;
 
@@ -57,6 +76,18 @@ namespace Buhta
         List<bsControl> rightToolbar = new List<bsControl>();
         public List<bsTreeColumn> Columns { get { return columns; } }
 
+
+        public bsTreeSessionState sessionStateObject;
+        public void SaveSessionState()
+        {
+            if (SessionStateId != null)
+            {
+                var stateObject = new bsTreeSessionState();
+                stateObject.Id = SessionStateId;
+                stateObject.Tree = this;
+                stateObject.Save();
+            }
+        }
 
         bsTreeDataSourceToSqlDataViewBinder dataSourceBinderToSqlDataView;
         public void Bind_DataSource_To_SqlDataView(string datasourceModelPropertyName, string displayFieldName, string keyFieldName, string parentFieldName = null, string iconFieldName = null, string selectedRowsModelPropertyName = null)
@@ -234,12 +265,68 @@ $('#" + UniqueId + @"-filter-input').keyup(function(e){
     $('#" + UniqueId + @"').fancytree('getTree').clearFilter();
     return;
  }
+ $('#" + UniqueId + @"').fancytree('getTree').filter_match=match;
  $('#" + UniqueId + @"').fancytree('getTree').filterNodes(match, opts);
 }).focus();");
         }
 
+
+        // при загрузке сохраняются и восстанавливаются состояния раскрытых и выбранных нод
+        public string GetLoadDataScript(JsArray data, bool isFlatData)
+        {
+            string flatToTreeConvertFunctionName = "buhta.FancyTree.convertFlatDataToTree";
+            if (!isFlatData)
+                flatToTreeConvertFunctionName = "";
+
+            return @"
+(function(){
+
+var expanded_state={};
+var selected_state={};
+var active_state={};
+
+var rootNode=$('#" + UniqueId + @"').fancytree('getRootNode');
+
+if (rootNode)
+  rootNode.visit(function(node){
+     expanded_state[node.key]=node.isExpanded();
+     selected_state[node.key]=node.isSelected();
+     active_state[node.key]=node.isActive();
+  });
+
+$('#" + UniqueId + @"').fancytree('getTree').clearFilter();
+
+$('#" + UniqueId + @"').fancytree('option','source',"+ flatToTreeConvertFunctionName + "(" + data.ToJson() + @"));
+
+rootNode=$('#" + UniqueId + @"').fancytree('getRootNode');
+
+rootNode.visit(function(node){
+     if (expanded_state[node.key]!=undefined)
+        node.setExpanded(expanded_state[node.key]);
+     if (selected_state[node.key]!=undefined)
+        node.setSelected(selected_state[node.key]);
+     if (active_state[node.key]!=undefined)
+        node.setActive(active_state[node.key]);
+});
+
+var match=$('#" + UniqueId + @"').fancytree('getTree').filter_match;
+if (match) {
+  var opts = {
+   autoExpand: true,
+   leavesOnly: true
+  };
+  $('#" + UniqueId + @"').fancytree('getTree').filterNodes(match, opts);
+}
+
+})();
+";
+
+        }
+
         public override string GetHtml()
         {
+            if (SessionStateId != null)
+                sessionStateObject = AppServer.GetStateObject<bsTreeSessionState>(SessionStateId);
 
             AddClass("table");
 
