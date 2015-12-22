@@ -352,6 +352,9 @@ if (match) {
                 init.AddProperty("checkbox", true);
             init.AddProperty("icon", IsShowIcons);
 
+            init.AddProperty("activeVisible", true);
+            init.AddProperty("debugLevel", 0);
+            init.AddProperty("keyboard", true);
 
             //ObservableCollection<string> selectedRows = null;
             //if (SelectedRows_Bind != null)

@@ -28,7 +28,11 @@ namespace Buhta
         public virtual void SaveChanges()
         {
             if (EditedObject != null)
+            {
                 EditedObject.SaveChanges();
+                if (AppServer.CurrentAppNavBarModel != null)
+                    AppServer.CurrentAppNavBarModel.UpdateSchemaDesignerWindows(null);
+            }
         }
 
         public virtual void CancelChanges()
