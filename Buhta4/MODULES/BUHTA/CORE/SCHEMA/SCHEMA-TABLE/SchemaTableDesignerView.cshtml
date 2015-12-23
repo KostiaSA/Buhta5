@@ -140,6 +140,7 @@
                    {
                        col.Caption = "Роль";
                        col.Field_Bind = nameof(SchemaTableColumn.RolesDisplayValue);
+                       col.AddClass(TextColor.SchemaRole);
                    });
 
                    grid.AddColumn(col =>
@@ -154,6 +155,7 @@
                    {
                        col.Caption = "Описание";
                        col.Field_Bind = nameof(SchemaTableColumn.Description);
+                       col.AddClass(TextColor.Description);
                        //                       c.CellTemplateJS = @"
                        // if (row.node.children) {
                        //   row._ee=' ('+row.node.children.length.toString()+')'
@@ -193,14 +195,14 @@
                            button.Size = bsButtonSize.Small;
                            button.Bind_OnClick(Model.AddColumnButtonClick);
                            button.Text = "Добавить колонку";
-                           button.AddClass("add-color");
+                           button.AddClass(TextColor.Add);
                        })
                             @Html.bsButton(button =>
                        {
                            button.Size = bsButtonSize.Small;
                            button.Bind_OnClick(Model.EditColumnButtonClick);
                            button.Text = "Изменить";
-                           button.AddClass("edit-color");
+                           button.AddClass(TextColor.Add);
                            button.AddStyle("margin-left", "5px");
                        })
                             @Html.bsButton(button =>
@@ -208,7 +210,7 @@
                            button.Size = bsButtonSize.Small;
                            button.Bind_OnClick(Model.DeleteColumnButtonClick);
                            button.Text = "Удалить";
-                           button.AddClass("delete-color");
+                           button.AddClass(TextColor.Delete);
                            button.AddStyle("margin-left", "5px");
                        })
 

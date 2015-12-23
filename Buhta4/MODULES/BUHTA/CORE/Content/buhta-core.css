@@ -60,6 +60,13 @@ input[type=text].jqx-input, input[type=password].jqx-input {
     padding: 4px;
 }
 
+table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
+    background-color: rgba(212, 212, 212, 0.38); /*!important;*/
+}
+
+table.dataTable tbody tr.selected, table.dataTable tbody th.selected, table.dataTable tbody td.selected {
+    color: inherit;
+}
 
 table.fancytree-ext-table tbody tr.fancytree-selected {
     background-color: transparent;
@@ -120,11 +127,13 @@ table.fancytree-ext-table tbody tr.fancytree-active, table.fancytree-ext-table t
 }
 
 .modal-edit-form .modal-title,
+.modal-edit-form .checkbox label,
 .modal-edit-form .control-label {
     color: #418BCA;
 }
 
 .modal-add-form .modal-title,
+.modal-add-form .checkbox label,
 .modal-add-form .control-label {
     color: #01BC8C;
 }
@@ -213,12 +222,17 @@ mark {
 
     }
 
+
 .edit-page .page-title,
+.edit-page  .nav-tabs>li>a,
+.edit-page .form-horizontal .checkbox label,
 .edit-page .control-label {
     color: #418BCA;
 }
 
 .add-page .page-title,
+.add-page .nav-tabs>li>a,
+.add-page .form-horizontal .checkbox label,
 .add-page .control-label {
     color: #01BC8C;
 }

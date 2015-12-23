@@ -357,7 +357,7 @@ namespace Buhta
                 Html.Append("<label>");
 
                 Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + "></input>");
-                Html.Append(Label != null ? Label.ToString().AsJavaScript() : "");
+                Html.Append(Label != null ? Label.AsHtmlEx() : "");
 
                 Html.Append("</label>");
                 Html.Append("</div>");
