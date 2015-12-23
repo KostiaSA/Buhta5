@@ -163,10 +163,14 @@ SELECT [ID]
         {
             foreach (var win in AppServer.CurrentAppNavBarModel.ChromeWindows.Values)
             {
-                if (win.ModelBindingId == typeof(SchemaTableDesignerModel).FullName && win.RecordId == schemaObjectID)
+                if (!string.IsNullOrEmpty(win.ModelBindingId))
                 {
-                    win.SetFocused();
-                    return;
+                    var model = AppServer.BindingModelList[win.ModelBindingId];
+                    if (model is BaseEditFormModel && win.RecordId == schemaObjectID)
+                    {
+                        win.SetFocused();
+                        return;
+                    }
                 }
             }
 

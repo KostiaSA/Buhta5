@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -81,6 +82,29 @@ namespace Buhta
             {
                 EditedObject.StartEditing();
             }
+        }
+
+        public void SqlSyncButtonClick(dynamic args)
+        {
+            var validateError = new ValidateErrorList();
+            Table.Validate(validateError);
+            if (!validateError.IsEmpty)
+            {
+                ShowErrorMessageDialog("синхронизация с SQL", validateError.ToString());
+                return;
+            }
+
+            Table.GetLogTable();
+            App.Schema.SaveObject(Table);
+            App.Schema.SqlDB.SynchronizeTable(Table);
+
+            if (Table.IsUserEditable && !Table.TableRoles.Contains(RoleConst.ВложеннаяТаблица) && !Table.TableRoles.Contains(RoleConst.Регистр))
+                App.Schema.SqlDB.SynchronizeTable(Table.GetLogTable());
+
+            if (Table.IsProvodkaOwner)
+                App.Schema.SqlDB.SynchronizeTable(Table.GetProvodkasTable());
+
+            ShowInfoMessageDialog("синхронизация с SQL", "Синхронизация выполнена успешно");
         }
 
         public void Test1ButtonClick(dynamic args)

@@ -157,12 +157,15 @@
     <Compile Include="MODULES\BUHTA\CORE\ACTIONS\SaveModelAction.cs" />
     <Compile Include="MODULES\BUHTA\CORE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="MODULES\BUHTA\CORE\ACTIONS\GotoParentWindowAction.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BINDERS\ToggleClassBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBarButton.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBar.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-INPUT\bsInputToSchemaObjectBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-SELECT\bsSelectOptionsToObjectsListBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-GRID\bsGridDataSourceToObjectsListBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-GRID\bsGridRowDblClickEventBinder.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTagEnd.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTagBegin.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaObjectsBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaRolesBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-GRID\bsGridDataSourceToSqlDataViewBinder.cs" />

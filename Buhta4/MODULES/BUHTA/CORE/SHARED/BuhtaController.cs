@@ -14,7 +14,13 @@ namespace Buhta.Controllers
         {
             var model = new SchemaTableDesignerModel(this, null);
             if (mode == "edit")
+            {
                 App.Schema.ReloadObjectCache(Guid.Parse(ID));
+                model.IsInsertMode = false;
+            }
+            else
+                model.IsInsertMode = true;
+
             model.EditedObject = App.Schema.GetObject<SchemaTable>(Guid.Parse(ID));
             model.StartEditing();
             return View(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-TABLE\SchemaTableDesignerView.cshtml", model);
@@ -24,7 +30,12 @@ namespace Buhta.Controllers
         {
             var model = new SchemaFolderDesignerModel(this, null);
             if (mode == "edit")
+            {
                 App.Schema.ReloadObjectCache(Guid.Parse(ID));
+                model.IsInsertMode = false;
+            }
+            else
+                model.IsInsertMode = true;
             model.EditedObject = App.Schema.GetObject<SchemaFolder>(Guid.Parse(ID));
             model.StartEditing();
             return View(@"~\MODULES\BUHTA\CORE\SCHEMA\SCHEMA-FOLDER\SchemaFolderDesignerView.cshtml", model);

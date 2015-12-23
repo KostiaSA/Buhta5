@@ -8,74 +8,22 @@
     window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
 </script>
 
-@*<style>
-        body {
-            position: relative;
-        }
-    </style>
-    <script> $('body').scrollspy({ target: '#bs-example-navbar-collapse', offset: 0 }) </script>
-    <nav class="navbar navbar-default 1navbar-fixed-top navbar-static-top1">
-        <div class="container container-fluid1">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
-
-                <form class="navbar-form navbar-left">
-                    <div href=# class="btn btn-default" id="aaaXXX">назад</div>
-                    <script>
-                        $("#aaaXXX").on('click', function () {
-                            if (window.opener) window.open('', window.opener.name).focus();
-                        });</script>
-
-                </form>
-
-
-
-                @*<ul class="nav navbar-nav">
-                    <li><a href="#">Таблица</a></li>
-                    <li><a href="#columns">Колонки</a></li>
-                    <li><a href="#">Индексы</a></li>
-                    <li><a href="#links">Уроды</a></li>
-                    <li><a href="#">Индексы</a></li>
-                    <li><a href="#" id="qq">Отчеты</a></li>
-                </ul>
-                <script> $("#qq").on('click', function () { window.open('', 'parent').focus(); });</script>
-
-                <form class="navbar-form navbar-right" role="search">
-                    @Html.bsButton(s =>
-               {
-                   s.Bind_OnClick(Model.SaveButtonClick);
-                   s.Bind_Disabled(() => !Model.NeedSave);
-                   s.Text = "Сохранить";
-                   s.ButtonStyle = bsButtonStyle.Success;
-                   // s.ClickAction = new CloseWindowAction();
-               })
-
-
-                    @Html.bsButton(s =>
-                        {
-                            s.Bind_OnClick(Model.Test1ButtonClick);
-                            s.Text = "Test-BS";
-                            s.ButtonStyle = bsButtonStyle.Danger;
-                            // s.ClickAction = new CloseWindowAction();
-                        })
-
-
-                    <div href=# class="btn btn-default" id="aaa">Закрыть</div>
-                    <script>
-                        $("#aaa").on('click', function () {
-                            if (window.opener)
-                                window.open('', window.opener.name).focus();
-                            window.close();
-                        });</script>
-
-                </form>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>*@
-<div class="container body-content">
+@Html.bsTagBegin((tag) =>
+{
+    tag.Tag = "div";
+    tag.AddClass("container body-content");
+    tag.Bind_OnTrueClass(() => Model.IsInsertMode, "add-page");
+    tag.Bind_OnFalseClass(() => Model.IsInsertMode, "edit-page");
+})
+@*<div class="container body-content edit-page">*@
     <div class="pull-right">
-        <button class="btn btn-default ">&lt;&lt;Назад</button>
-        @Html.bsEditFormSaveButton((button) => { button.AddStyle("margin-left", "20px"); })
-        @Html.bsEditFormCancelButton((button) => { })
+        @Html.bsButton((tag) =>
+       {
+           tag.Text = "Синхронизация с SQL";
+           tag.Bind_OnClick(Model.SqlSyncButtonClick);
+       })
+        @Html.bsEditFormSaveButton((tag) => { tag.AddStyle("margin-left", "20px"); })
+        @Html.bsEditFormCancelButton((tag) => { })
     </div>
     <h3>
         <img src="~/MODULES/BUHTA/CORE/Content/icon/SchemaTable_32.png" />
@@ -92,101 +40,80 @@
                 Колонки <sup>@Html.bsSpan(() => Model.Table.Columns.Count.ToNumberInRoundBrackets())</sup>
             </a>
         </li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Индексы</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="indexes" role="tab" data-toggle="tab">Индексы</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Прочее</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
-            <h4 style="padding-top: 15px;">Основные свойства <small>(только для тех, кто в танке)</small></h4>
+            <h4 class="page-title" style="padding-top: 15px;">Основные параметры</h4>
             <div class="panel panel-info">
-                <div class="panel-heading">
-                    таблица подключена к серверу
-                </div>
+                @*<div class="panel-heading">
+                        таблица подключена к серверу
+                    </div>*@
                 <div class="panel-body">
                     <form role="form" class="form-horizontal">
                         <div class="row">
-                            @Html.bsSelect(tag =>
+
+                            @Html.bsInput(tag =>
                        {
-                           tag.Bind_Options_To_ObjectsList("Table.Columns", "Position", "Name", "Position");
-                           tag.Label = "Тип данных";
+                           tag.Bind_Value<String>(nameof(Model.Table) + "." + nameof(Model.Table.Name));
+                           tag.Label = "Имя таблицы";
+                           tag.AddStyle("max-width", "500px");
                        })
 
-
-                            @Html.bsInput(s =>
+                            @Html.bsInput(tag =>
                        {
-                           s.Bind_Value<String>(nameof(Model.Table) + "." + nameof(Model.Table.Name));
-                           s.Label = "Имя таблицы";
-                           s.AddStyle("max-width", "500px");
+                           tag.Bind_Value<string>(nameof(Model.Table) + "." + nameof(Model.Table.Description));
+                           tag.Label = "Описание";
                        })
-                            @Html.bsInput(s =>
-               {
-                   s.Bind_Value<string>(() => "жопа-" + Model.Table.Name, (value) => { Model.Table.Description = value; });
-                   s.Label = "Test1";
-               })
+                            @Html.bsInput(tag =>
+                       {
+                           tag.Type = bsInputType.List;
+                           tag.Bind_Value_To_RolesList(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles), new Таблица_TableRole());
+                           tag.Label = "Роли";
+                       })
 
-                            @Html.bsInput(s =>
-               {
-                   s.Bind_Value<string>(nameof(Model.Table) + "." + nameof(Model.Table.Description));
-                   s.Label = "Описание";
-               })
-                            @Html.bsInput(input =>
-               {
-                   input.Type = bsInputType.List;
-                   input.Bind_Value_To_RolesList(nameof(Model.Table) + "." + nameof(Model.Table.TableRoles), new Таблица_TableRole());
-                   input.Label = "Роли";
-               })
-
-                            @Html.bsInput(s =>
-               {
-                   //s.Type = bsInputType.Checkbox;
-                   s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
-                   s.Label = "Редактируется пользователем (с сохранением истории)";
-               })
-                            @Html.bsInput(s =>
-               {
-                   //s.Type = bsInputType.Checkbox;
-                   s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
-                   s.Label = "Редактируется пользователем (с сохранением истории)";
-               })
-                            @Html.bsInput(s =>
-                    {
-                        //s.Type = bsInputType.Checkbox;
-                        s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsSubconto));
-                        s.Label = "Может использоваться как субконто";
-                    })
-                            @Html.bsInput(s =>
-                {
-                    //s.Type = bsInputType.Checkbox;
-                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsProvodkaOwner));
-                    s.Label = "Может производить движение по регистрам (например, бух. документ)";
-                })
-                            @Html.bsInput(s =>
-                {
-                    //s.Type = bsInputType.Checkbox;
-                    s.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsNotSyncronize));
-                    s.Label = "Не синхронизировать структуру таблицы на sql-сервере";
-                })
+                            @Html.bsInput(tag =>
+                       {
+                           //s.Type = bsInputType.Checkbox;
+                           tag.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsUserEditable));
+                           tag.Label = "Редактируется пользователем (с сохранением истории)";
+                       })
+                            @Html.bsInput(tag =>
+                       {
+                           //s.Type = bsInputType.Checkbox;
+                           tag.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsSubconto));
+                           tag.Label = "Может использоваться как субконто";
+                       })
+                            @Html.bsInput(tag =>
+                       {
+                           //s.Type = bsInputType.Checkbox;
+                           tag.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsProvodkaOwner));
+                           tag.Label = "Может производить движение по регистрам (например, бух. документ)";
+                       })
+                            @Html.bsInput(tag =>
+                       {
+                           //s.Type = bsInputType.Checkbox;
+                           tag.Bind_Value<bool>(nameof(Model.Table) + "." + nameof(Model.Table.IsNotSyncronize));
+                           tag.Label = "Не синхронизировать структуру таблицы на sql-сервере";
+                       })
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">
-            <h4 id="links" style="padding-top: 60px; margin-top: -40px;">Колонки</h4>
+            <h4 class="page-title" id="indexes" style="padding-top: 60px; margin-top: -40px;">Список индексов</h4>
             <div class="panel panel-primary">
-                <div class="panel-heading">
-                    @*<h3 class="panel-title">Свойства</h3>*@
-                    таблица подключена к серверу
-                </div>
+                @*<div class="panel-heading">
+                        таблица подключена к серверу
+                    </div>*@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="columns">
-            <h4 id="columns" style="padding-top: 60px; margin-top: -40px;">Колонки </h4>
+            <h4 class="page-title" id="columns" style="padding-top: 60px; margin-top: -40px;">Список колонок</h4>
             <div class="panel panel-warning">
-                <div class="panel-heading">
-                    <div>всего колонок: 8</div>
-                </div>
                 <div class="panel-body" style="background-color: rgba(214, 214, 214, 0.0)">
                     @Html.bsGrid(grid =>
                {
@@ -202,31 +129,31 @@
 
                    grid.Bind_OnRowDblClick(Model.ColumnGridRowDblClick);
 
-                   grid.AddColumn(c =>
+                   grid.AddColumn(col =>
                    {
-                       c.Caption = "Имя колонки";
-                       c.Field_Bind = nameof(SchemaTableColumn.Name);
-                       c.AddClass(TextColor.KeyField);
+                       col.Caption = "Имя колонки";
+                       col.Field_Bind = nameof(SchemaTableColumn.Name);
+                       col.AddClass(TextColor.KeyField);
                    });
 
-                   grid.AddColumn(c =>
+                   grid.AddColumn(col =>
                    {
-                       c.Caption = "Роль";
-                       c.Field_Bind = nameof(SchemaTableColumn.RolesDisplayValue);
+                       col.Caption = "Роль";
+                       col.Field_Bind = nameof(SchemaTableColumn.RolesDisplayValue);
                    });
 
-                   grid.AddColumn(c =>
+                   grid.AddColumn(col =>
                    {
-                       c.Caption = "Тип данных";
-                       c.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
-                       c.AddClass(TextColor.DateTime);
-                       c.CellTemplate = @"<span style='font-size:1.2em'>{{GetDataTypeDisplay}}\n""</span>";
+                       col.Caption = "Тип данных";
+                       col.Field_Bind = nameof(SchemaTableColumn.GetDataTypeDisplay);
+                       col.AddClass(TextColor.DateTime);
+                       //c.CellTemplate = @"<span style='font-size:1.2em'>{{GetDataTypeDisplay}}\n""</span>";
                    });
 
-                   grid.AddColumn(c =>
+                   grid.AddColumn(col =>
                    {
-                       c.Caption = "Описание";
-                       c.Field_Bind = nameof(SchemaTableColumn.Description);
+                       col.Caption = "Описание";
+                       col.Field_Bind = nameof(SchemaTableColumn.Description);
                        //                       c.CellTemplateJS = @"
                        // if (row.node.children) {
                        //   row._ee=' ('+row.node.children.length.toString()+')'
@@ -237,17 +164,17 @@
                        //";
                        //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>{{_ee}}";
 
-                       c.CellTemplate = "<span style='font-weight:bold'>{{Description}}</span>";
-                       c.Align = bsGridColumnAlign.center;
+                       //c.CellTemplate = "<span style='font-weight:bold'>{{Description}}</span>";
+                       col.Align = bsGridColumnAlign.center;
 
                    });
 
-                   grid.AddColumn(c =>
+                   grid.AddColumn(col =>
                    {
-                       c.Caption = "Позиция";
-                       c.Field_Bind = nameof(SchemaTableColumn.Position);
-                       c.Sort = bsGridColumnSort.asc1;
-                       c.Align = bsGridColumnAlign.right;
+                       col.Caption = "Позиция";
+                       col.Field_Bind = nameof(SchemaTableColumn.Position);
+                       col.Sort = bsGridColumnSort.asc1;
+                       col.Align = bsGridColumnAlign.right;
                        //  c.DataType = GridColumnDataType.Number;
                    });
 
@@ -291,19 +218,16 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="settings">
-            нет данных
-            <br>
-            @Html.bsButton(settings =>
-                {
-                    settings.Bind_Disabled(() => !Model.GetNeedSave());
-                    settings.Bind_OnClick(Model.SaveButtonClick);
-                    settings.Text = "Сохранить";
-                })
-            <br>
+            пусто
+            @*<br>
+                @Html.bsButton(settings =>
+                    {
+                        settings.Bind_Disabled(() => !Model.GetNeedSave());
+                        settings.Bind_OnClick(Model.SaveButtonClick);
+                        settings.Text = "Сохранить?";
+                    })
+                <br>*@
         </div>
     </div>
 
-
-</div>
-@section scripts {
-}
+@Html.bsTagEnd("div")

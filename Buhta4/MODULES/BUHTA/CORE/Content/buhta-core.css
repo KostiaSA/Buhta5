@@ -212,3 +212,13 @@ mark {
         margin-bottom: 2px; 
 
     }
+
+.edit-page .page-title,
+.edit-page .control-label {
+    color: #418BCA;
+}
+
+.add-page .page-title,
+.add-page .control-label {
+    color: #01BC8C;
+}
