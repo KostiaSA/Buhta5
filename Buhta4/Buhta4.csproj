@@ -160,6 +160,7 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BINDERS\ToggleClassBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBarButton.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBar.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-CODEMIRROR\bsCodeMirror.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-INPUT\bsInputToSchemaObjectBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-SELECT\bsSelectOptionsToObjectsListBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-GRID\bsGridDataSourceToObjectsListBinder.cs" />
@@ -232,6 +233,12 @@
     <Content Include="Content\vendors\Buttons-master\js\buttons.js" />
     <Content Include="Content\vendors\Buttons-master\js\main.js" />
     <Content Include="Content\vendors\Buttons-master\js\vendor\scrollto.js" />
+    <Content Include="Content\vendors\CodeMirror-master\lib\codemirror.css" />
+    <Content Include="Content\vendors\CodeMirror-master\lib\codemirror.js" />
+    <Content Include="Content\vendors\CodeMirror-master\mode\clike\clike.js" />
+    <Content Include="Content\vendors\CodeMirror-master\mode\css\css.js" />
+    <Content Include="Content\vendors\CodeMirror-master\mode\htmlmixed\htmlmixed.js" />
+    <Content Include="Content\vendors\CodeMirror-master\mode\sql\sql.js" />
     <Content Include="Content\vendors\DataTables-1.10.10\extensions\Select\css\select.bootstrap.css" />
     <Content Include="Content\vendors\DataTables-1.10.10\extensions\Select\css\select.bootstrap.min.css" />
     <Content Include="Content\vendors\DataTables-1.10.10\media\css\dataTables.bootstrap.css" />
