@@ -158,6 +158,7 @@
     <Compile Include="MODULES\BUHTA\CORE\ACTIONS\CloseWindowAction.cs" />
     <Compile Include="MODULES\BUHTA\CORE\ACTIONS\GotoParentWindowAction.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BINDERS\ToggleClassBinder.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-ACE\bsAce.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBarButton.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-APPNAVBAR\bsAppNavBar.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-CODEMIRROR\bsCodeMirror.cs" />
@@ -227,6 +228,7 @@
     <Content Include="Content\pages\buttons.css" />
     <Content Include="Content\pages\formelements.css" />
     <Content Include="Content\panel.css" />
+    <Content Include="Content\vendors\ace-builds-master\src-min\ace.js" />
     <Content Include="Content\vendors\Buttons-master\css\buttons.css" />
     <Content Include="Content\vendors\Buttons-master\css\main.css" />
     <Content Include="Content\vendors\Buttons-master\css\prettify.css" />

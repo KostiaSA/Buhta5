@@ -3,20 +3,12 @@
 
 @{ Layout = "~/MODULES/BUHTA/CORE/SHARED/_Layout.cshtml"; }
 
-<link href="~/Content/vendors/CodeMirror-master/lib/codemirror.css" rel="stylesheet" />
-<script src="~/Content/vendors/CodeMirror-master/lib/codemirror.js"></script>
-<script src="~/Content/vendors/CodeMirror-master/mode/javascript/javascript.js"></script>
-<script src="~/Content/vendors/CodeMirror-master/mode/sql/sql.js"></script>
-<script src="~/Content/vendors/CodeMirror-master/mode/css/css.js"></script>
-<script src="~/Content/vendors/CodeMirror-master/mode/clike/clike.js"></script>
-<script src="~/Content/vendors/CodeMirror-master/mode/htmlmixed/htmlmixed.js"></script>
+<script src="~/Content/vendors/ace-builds-master/src-min/ace.js"></script>
 
 <script>
     window._buhtaModelBindingId = "@Model.BindingId";
     window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
 </script>
-
-
 
 
 @Html.bsTagBegin((tag) =>
@@ -163,184 +155,188 @@
     <div role="tabpanel" class="tab-pane" id="sql">
         <h4 class="page-title" id="indexes" style="padding-top: 60px; margin-top: -40px;">Просмотр текста SQL </h4>
         <div class="panel panel-primary">
-            @Html.bsTag((tag) =>
+            @*@Html.bsTag((tag) =>
                {
                    tag.Bind_Text("SqlText");
-               })
+               })*@
 
-            @Html.bsCodeMirror((tag)=> {
+            @Html.bsAce((tag)=> {
+           tag.Bind_Text("SqlText");
+           tag.AddStyle("width", "100%");
+           tag.AddStyle("height", "300px");
+           tag.AddStyle("font-size", "14px");
            tag.IsReadOnly = true;
-           tag.Mode = CodeMirrorMode.Sql;
-           tag.Value = @"
-USE [MAG3506]
-GO
-/****** Object:  StoredProcedure [dbo].[_SAP_РегистрацияДоставки]    Script Date: 25.12.2015 17:46:53 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+           tag.Mode = AceMode.Sql;
+           //           tag.Value = @"
+           //USE [MAG3506]
+           //GO
+           ///****** Object:  StoredProcedure [dbo].[_SAP_РегистрацияДоставки]    Script Date: 25.12.2015 17:46:53 ******/
+           //SET ANSI_NULLS ON
+           //GO
+           //SET QUOTED_IDENTIFIER ON
+           //GO
 
-ALTER PROCEDURE [dbo].[_SAP_РегистрацияДоставки](@test int, @dogID int)
-AS
-BEGIN
-  DECLARE @RetTable table(error nvarchar(max)) 
+           //ALTER PROCEDURE [dbo].[_SAP_РегистрацияДоставки](@test int, @dogID int)
+           //AS
+           //BEGIN
+           //  DECLARE @RetTable table(error nvarchar(max)) 
 
-  -- теги платной доставки
-  DECLARE @paydost_xml NVARCHAR(max) 
-  DECLARE @dost_Summa MONEY
-  SET @dost_Summa= ISNULL((SELECT SUM(Сумма)+sum([Сумма без скидки]/*Сандал. Бесплатная доставка*/) FROM Догспец WHERE Вид=30021 AND Договор=@dogID),0)
-  IF (@dost_Summa>0)   -- спец. 21 с суммой доставки находится в самом договоре
-    SET @paydost_xml=
-      '<TPAY>1</TPAY>'+ -- признак платной доставки
-      '<TDOC>'+dbo._SAP_DocNumber((SELECT Номер FROM Договор WHERE Ключ=@dogID))+'</TDOC>'+ -- номер чека платной доставки
-      '<TCENA>'+LTRIM(STR(@dost_Summa,12,2))+'</TCENA>' -- сумма за платную доставку
-  ELSE
-  BEGIN
-         IF EXISTS(SELECT * FROM Догспец,Договор 
-                             WHERE Догспец.Договор=Договор.Ключ AND 
-                                   Догспец.Вид=30021 AND 
-                                   Догспец.[Тип субконто 2]='Дог' AND
-                                   Догспец.[субконто 2]=@dogID AND 
-                                   Договор.[признак 3]=0  -- оплачен
-                                   )
-         BEGIN
-           UPDATE Договор SET _Ошибка_обмена_SAP='Регистрация доставки: отдельный чек на оплату доставки не оплачен' where ключ=@dogID
-           RETURN
-         END
-
-
-    SET @dost_Summa= ISNULL((SELECT SUM(Догспец.Сумма) FROM Догспец,Договор 
-                             WHERE Догспец.Договор=Договор.Ключ AND 
-                                   Догспец.Вид=30021 AND 
-                                   Догспец.[Тип субконто 2]='Дог' AND
-                                   Догспец.[субконто 2]=@dogID AND 
-                                   Договор.[признак 3]=1  -- оплачен
-                                   ),0)
-
-    IF (@dost_Summa>0) -- спец. 21 с суммой доставки находится в привязанном договоре
-    BEGIN
-      declare @dost_dog_NUM varchar(50)
-      SET @dost_dog_NUM= ISNULL((SELECT Договор.Номер FROM Догспец,Договор 
-                                 WHERE Догспец.Договор=Договор.Ключ AND 
-                                   Догспец.Вид=30021 AND 
-                                   Догспец.[Тип субконто 2]='Дог' AND
-                                   Догспец.[субконто 2]=@dogID AND 
-                                   Договор.[признак 3]=1  -- оплачен
-                                   ),0)
-
-      SET @paydost_xml=
-        '<TPAY>1</TPAY>'+ -- признак платной доставки
-        '<TDOC>'+dbo._SAP_DocNumber(@dost_dog_NUM)+'</TDOC>'+ -- номер чека платной доставки
-        '<TCENA>'+LTRIM(STR(@dost_Summa,12,2))+'</TCENA>' -- сумма за платную доставку
-    END
-    ELSE
-      SET @paydost_xml=
-        '<TPAY>0</TPAY>'+ -- признак платной доставки
-        '<TDOC></TDOC>'+ -- номер чека платной доставки
-        '<TCENA></TCENA>' -- сумма за платную доставку
-  END
-
-  -- теги товара
-  DECLARE @dogspecID INT
-  DECLARE @tmcNum NVARCHAR(50)
-  DECLARE @tmcName NVARCHAR(500)
-  DECLARE @tmcEdIzm NVARCHAR(50)
-  DECLARE @dogspecKol MONEY
-  DECLARE @dogspecSumma MONEY
-  DECLARE @dogspecCena MONEY
-
-  DECLARE spec_cursor CURSOR LOCAL STATIC FOR 
-  SELECT Догспец.Ключ, ТМЦ.Номер, ТМЦ.Название, Догспец.Количество, CASE WHEN Догспец.[Сумма без скидки]<>0 THEN  Догспец.[Сумма без скидки] ELSE Догспец.Сумма END, Догспец.Цена,ТМЦ.[Ед.Изм.]
-  FROM Догспец JOIN ТМЦ ON Догспец.[Субконто 1]=ТМЦ.Ключ
-  WHERE Догспец.Договор=@dogID AND Догспец.Вид%1000=1 AND Догспец._НаДоставку=1
-
-  DECLARE @tov_xml NVARCHAR(max)
-  SET @tov_xml=''
-
-  OPEN spec_cursor
-  FETCH NEXT FROM spec_cursor INTO @dogspecID, @tmcNum, @tmcName, @dogspecKol, @dogspecSumma, @dogspecCena,@tmcEdIzm
-  WHILE @@FETCH_STATUS = 0
-  BEGIN
-
-    SET @tov_xml+='<GOOD>'
-    SET @tov_xml+='<NNUM>000'+@tmcNum+'</NNUM>'
-    SET @tov_xml+='<NAME>'+@tmcName+'</NAME>'
-    SET @tov_xml+='<ZNUM/>'
-    SET @tov_xml+='<QUANT>'+LTRIM(STR(@dogspecKol,12,2))+'</QUANT>'
-    SET @tov_xml+='<UNIT>'+CASE WHEN LTRIM(RTRIM(@tmcEdIzm))>'' THEN @tmcEdIzm ELSE 'шт' END +'</UNIT>'
-    SET @tov_xml+='<BASE_PRICE>'+LTRIM(STR(@dogspecCena,12,2))+'</BASE_PRICE>'
-    SET @tov_xml+='<PRICE>'+LTRIM(STR(@dogspecCena,12,2))+'</PRICE>'
-    SET @tov_xml+='<SALER>'+(SELECT [Кто создал] FROM Договор WHERE Ключ=@dogID)+'</SALER>'
-    SET @tov_xml+='<LINE_ID>'+LTRIM(STR(@dogspecID))+'</LINE_ID>'
-    SET @tov_xml+='<SET_ON>0</SET_ON>'
-    SET @tov_xml+='</GOOD>'
-
-    FETCH NEXT FROM spec_cursor INTO @dogspecID, @tmcNum, @tmcName, @dogspecKol, @dogspecSumma, @dogspecCena, @tmcEdIzm
-  END
-  CLOSE spec_cursor;
-  DEALLOCATE spec_cursor; 
-
-  -- основной текст XML-запроса 
-  
-  -- с 14.01.2015 в номер карточки доставки добавляется в последний знак так называемый номер попытки (поле договора 'Интервал доставки')
-  DECLARE @try_number VARCHAR(1)
-  IF(SELECT Дата FROM Договор WHERE Договор.Ключ = @dogID) >= convert(date, '20150114')
-    SET @try_number = LTRIM(STR((SELECT[Интервал доставки] FROM Договор WHERE Договор.Ключ = @dogID)))
-  ELSE
-    SET @try_number = ''
-
-  DECLARE @xml NVARCHAR(max)
-  SELECT @xml =
-  '<TRANSPORT>' +
- '<DEPART>' + LTRIM(STR((SELECT Номер FROM _Магазин WHERE Ключ = dbo._СвойМагазин()))) +'</DEPART>' + --магазин продавец
- '<REGIONAL>0</REGIONAL>' + --признак регионального магазина (Москва / регион) - сейчас не используется
-  '<CARD>' +
-   '<NUMBER>' + dbo._SAP_DocNumber(Договор.Номер) + @try_number + '</NUMBER>' + --номер карточки доставки
-    '<DOCDATE>' + dbo._SAP_Date(Договор.Дата) + '</DOCDATE>' + --ее дата
-
-   --'<TYPE>0</TYPE>' + --тип карточки доставки(0 - доставка / 1 - отмена - вывоз)
-
-  select
-    ref.value('Message[1]', 'nvarchar(max)') AS ERROR
-  from @xml_data.nodes('/error')
-  xmlData(ref )
-  WHERE ref.value('Message[1]', 'nvarchar(max)') IS NOT NULL
-
-  if EXISTS(SELECT * FROM @RetTable)
-  BEGIN
-    UPDATE Договор SET _Ошибка_обмена_SAP = 'Регистрация доставки: ' + (SELECT error FROM @RetTable) WHERE Ключ = @dogID
-    SELECT Error FROM @RetTable
-    RETURN
-  END
-
-  insert @RetTable(error)
-  select
-    ref.value('INFO[1]', 'nvarchar(128)') AS ERROR
-  from @xml_data.nodes('/ORDER')
-  xmlData(ref )
-
-  --if (SELECT error FROM @RetTable)= 'OK'
-  if (SELECT LEFT(error, 2) FROM @RetTable)= 'OK'
-  BEGIN
-     UPDATE Договор SET
-       _Дост_дата_регистрации_в_SAP = GETDATE(),
-       _Ошибка_обмена_SAP = ' ',
-       _Дост_SAP_NUM =
-       (select
-          ref.value('NUMBER[1]', 'nvarchar(128)') AS ERROR
-          from @xml_data.nodes('/ORDER')
-          xmlData(ref)
-       ) 
-     WHERE Ключ = @dogID
-  END
-  ELSE
-     UPDATE Договор SET _Ошибка_обмена_SAP = 'Регистрация доставки: ' + (SELECT error FROM @RetTable) WHERE Ключ = @dogID
-
-  SELECT* FROM @RetTable
-END
+           //  -- теги платной доставки
+           //  DECLARE @paydost_xml NVARCHAR(max) 
+           //  DECLARE @dost_Summa MONEY
+           //  SET @dost_Summa= ISNULL((SELECT SUM(Сумма)+sum([Сумма без скидки]/*Сандал. Бесплатная доставка*/) FROM Догспец WHERE Вид=30021 AND Договор=@dogID),0)
+           //  IF (@dost_Summa>0)   -- спец. 21 с суммой доставки находится в самом договоре
+           //    SET @paydost_xml=
+           //      '<TPAY>1</TPAY>'+ -- признак платной доставки
+           //      '<TDOC>'+dbo._SAP_DocNumber((SELECT Номер FROM Договор WHERE Ключ=@dogID))+'</TDOC>'+ -- номер чека платной доставки
+           //      '<TCENA>'+LTRIM(STR(@dost_Summa,12,2))+'</TCENA>' -- сумма за платную доставку
+           //  ELSE
+           //  BEGIN
+           //         IF EXISTS(SELECT * FROM Догспец,Договор 
+           //                             WHERE Догспец.Договор=Договор.Ключ AND 
+           //                                   Догспец.Вид=30021 AND 
+           //                                   Догспец.[Тип субконто 2]='Дог' AND
+           //                                   Догспец.[субконто 2]=@dogID AND 
+           //                                   Договор.[признак 3]=0  -- оплачен
+           //                                   )
+           //         BEGIN
+           //           UPDATE Договор SET _Ошибка_обмена_SAP='Регистрация доставки: отдельный чек на оплату доставки не оплачен' where ключ=@dogID
+           //           RETURN
+           //         END
 
 
-";
+           //    SET @dost_Summa= ISNULL((SELECT SUM(Догспец.Сумма) FROM Догспец,Договор 
+           //                             WHERE Догспец.Договор=Договор.Ключ AND 
+           //                                   Догспец.Вид=30021 AND 
+           //                                   Догспец.[Тип субконто 2]='Дог' AND
+           //                                   Догспец.[субконто 2]=@dogID AND 
+           //                                   Договор.[признак 3]=1  -- оплачен
+           //                                   ),0)
+
+           //    IF (@dost_Summa>0) -- спец. 21 с суммой доставки находится в привязанном договоре
+           //    BEGIN
+           //      declare @dost_dog_NUM varchar(50)
+           //      SET @dost_dog_NUM= ISNULL((SELECT Договор.Номер FROM Догспец,Договор 
+           //                                 WHERE Догспец.Договор=Договор.Ключ AND 
+           //                                   Догспец.Вид=30021 AND 
+           //                                   Догспец.[Тип субконто 2]='Дог' AND
+           //                                   Догспец.[субконто 2]=@dogID AND 
+           //                                   Договор.[признак 3]=1  -- оплачен
+           //                                   ),0)
+
+           //      SET @paydost_xml=
+           //        '<TPAY>1</TPAY>'+ -- признак платной доставки
+           //        '<TDOC>'+dbo._SAP_DocNumber(@dost_dog_NUM)+'</TDOC>'+ -- номер чека платной доставки
+           //        '<TCENA>'+LTRIM(STR(@dost_Summa,12,2))+'</TCENA>' -- сумма за платную доставку
+           //    END
+           //    ELSE
+           //      SET @paydost_xml=
+           //        '<TPAY>0</TPAY>'+ -- признак платной доставки
+           //        '<TDOC></TDOC>'+ -- номер чека платной доставки
+           //        '<TCENA></TCENA>' -- сумма за платную доставку
+           //  END
+
+           //  -- теги товара
+           //  DECLARE @dogspecID INT
+           //  DECLARE @tmcNum NVARCHAR(50)
+           //  DECLARE @tmcName NVARCHAR(500)
+           //  DECLARE @tmcEdIzm NVARCHAR(50)
+           //  DECLARE @dogspecKol MONEY
+           //  DECLARE @dogspecSumma MONEY
+           //  DECLARE @dogspecCena MONEY
+
+           //  DECLARE spec_cursor CURSOR LOCAL STATIC FOR 
+           //  SELECT Догспец.Ключ, ТМЦ.Номер, ТМЦ.Название, Догспец.Количество, CASE WHEN Догспец.[Сумма без скидки]<>0 THEN  Догспец.[Сумма без скидки] ELSE Догспец.Сумма END, Догспец.Цена,ТМЦ.[Ед.Изм.]
+           //  FROM Догспец JOIN ТМЦ ON Догспец.[Субконто 1]=ТМЦ.Ключ
+           //  WHERE Догспец.Договор=@dogID AND Догспец.Вид%1000=1 AND Догспец._НаДоставку=1
+
+           //  DECLARE @tov_xml NVARCHAR(max)
+           //  SET @tov_xml=''
+
+           //  OPEN spec_cursor
+           //  FETCH NEXT FROM spec_cursor INTO @dogspecID, @tmcNum, @tmcName, @dogspecKol, @dogspecSumma, @dogspecCena,@tmcEdIzm
+           //  WHILE @@FETCH_STATUS = 0
+           //  BEGIN
+
+           //    SET @tov_xml+='<GOOD>'
+           //    SET @tov_xml+='<NNUM>000'+@tmcNum+'</NNUM>'
+           //    SET @tov_xml+='<NAME>'+@tmcName+'</NAME>'
+           //    SET @tov_xml+='<ZNUM/>'
+           //    SET @tov_xml+='<QUANT>'+LTRIM(STR(@dogspecKol,12,2))+'</QUANT>'
+           //    SET @tov_xml+='<UNIT>'+CASE WHEN LTRIM(RTRIM(@tmcEdIzm))>'' THEN @tmcEdIzm ELSE 'шт' END +'</UNIT>'
+           //    SET @tov_xml+='<BASE_PRICE>'+LTRIM(STR(@dogspecCena,12,2))+'</BASE_PRICE>'
+           //    SET @tov_xml+='<PRICE>'+LTRIM(STR(@dogspecCena,12,2))+'</PRICE>'
+           //    SET @tov_xml+='<SALER>'+(SELECT [Кто создал] FROM Договор WHERE Ключ=@dogID)+'</SALER>'
+           //    SET @tov_xml+='<LINE_ID>'+LTRIM(STR(@dogspecID))+'</LINE_ID>'
+           //    SET @tov_xml+='<SET_ON>0</SET_ON>'
+           //    SET @tov_xml+='</GOOD>'
+
+           //    FETCH NEXT FROM spec_cursor INTO @dogspecID, @tmcNum, @tmcName, @dogspecKol, @dogspecSumma, @dogspecCena, @tmcEdIzm
+           //  END
+           //  CLOSE spec_cursor;
+           //  DEALLOCATE spec_cursor; 
+
+           //  -- основной текст XML-запроса 
+
+           //  -- с 14.01.2015 в номер карточки доставки добавляется в последний знак так называемый номер попытки (поле договора 'Интервал доставки')
+           //  DECLARE @try_number VARCHAR(1)
+           //  IF(SELECT Дата FROM Договор WHERE Договор.Ключ = @dogID) >= convert(date, '20150114')
+           //    SET @try_number = LTRIM(STR((SELECT[Интервал доставки] FROM Договор WHERE Договор.Ключ = @dogID)))
+           //  ELSE
+           //    SET @try_number = ''
+
+           //  DECLARE @xml NVARCHAR(max)
+           //  SELECT @xml =
+           //  '<TRANSPORT>' +
+           // '<DEPART>' + LTRIM(STR((SELECT Номер FROM _Магазин WHERE Ключ = dbo._СвойМагазин()))) +'</DEPART>' + --магазин продавец
+           // '<REGIONAL>0</REGIONAL>' + --признак регионального магазина (Москва / регион) - сейчас не используется
+           //  '<CARD>' +
+           //   '<NUMBER>' + dbo._SAP_DocNumber(Договор.Номер) + @try_number + '</NUMBER>' + --номер карточки доставки
+           //    '<DOCDATE>' + dbo._SAP_Date(Договор.Дата) + '</DOCDATE>' + --ее дата
+
+           //   --'<TYPE>0</TYPE>' + --тип карточки доставки(0 - доставка / 1 - отмена - вывоз)
+
+           //  select
+           //    ref.value('Message[1]', 'nvarchar(max)') AS ERROR
+           //  from @xml_data.nodes('/error')
+           //  xmlData(ref )
+           //  WHERE ref.value('Message[1]', 'nvarchar(max)') IS NOT NULL
+
+           //  if EXISTS(SELECT * FROM @RetTable)
+           //  BEGIN
+           //    UPDATE Договор SET _Ошибка_обмена_SAP = 'Регистрация доставки: ' + (SELECT error FROM @RetTable) WHERE Ключ = @dogID
+           //    SELECT Error FROM @RetTable
+           //    RETURN
+           //  END
+
+           //  insert @RetTable(error)
+           //  select
+           //    ref.value('INFO[1]', 'nvarchar(128)') AS ERROR
+           //  from @xml_data.nodes('/ORDER')
+           //  xmlData(ref )
+
+           //  --if (SELECT error FROM @RetTable)= 'OK'
+           //  if (SELECT LEFT(error, 2) FROM @RetTable)= 'OK'
+           //  BEGIN
+           //     UPDATE Договор SET
+           //       _Дост_дата_регистрации_в_SAP = GETDATE(),
+           //       _Ошибка_обмена_SAP = ' ',
+           //       _Дост_SAP_NUM =
+           //       (select
+           //          ref.value('NUMBER[1]', 'nvarchar(128)') AS ERROR
+           //          from @xml_data.nodes('/ORDER')
+           //          xmlData(ref)
+           //       ) 
+           //     WHERE Ключ = @dogID
+           //  END
+           //  ELSE
+           //     UPDATE Договор SET _Ошибка_обмена_SAP = 'Регистрация доставки: ' + (SELECT error FROM @RetTable) WHERE Ключ = @dogID
+
+           //  SELECT* FROM @RetTable
+           //END
+
+
+           //";
        })
         </div>
     </div>
