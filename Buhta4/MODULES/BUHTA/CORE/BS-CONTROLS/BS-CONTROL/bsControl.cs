@@ -183,6 +183,24 @@ namespace Buhta
             });
         }
 
+        public virtual void Bind_Text(string modelPropertyName)
+        {
+            AddBinder(new OneWayBinder<string>()
+            {
+                ModelPropertyName = modelPropertyName,
+                jsSetMethodName = "text"
+            });
+        }
+
+        public virtual void Bind_Text(BinderGetMethod<string> getValueMethod)
+        {
+            AddBinder(new OneWayBinder<string>()
+            {
+                ModelGetMethod = getValueMethod,
+                jsSetMethodName = "text"
+            });
+        }
+
 
         public virtual string GetHtml()
         {

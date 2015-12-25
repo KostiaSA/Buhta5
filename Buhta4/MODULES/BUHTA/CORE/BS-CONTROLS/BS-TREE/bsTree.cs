@@ -54,10 +54,11 @@ namespace Buhta
         public bool IsShowCheckboxes;
         public bool IsShowIcons;
         public bool IsShowTextFilter;
+        public bool IsExpandAllNodes;
 
         public string SessionStateId;
-        public bool IsPersistNodeExpanded;
-        public bool IsPersistNodeSelected;
+        public bool IsPersistNodeExpanded; // todo - пока не работает
+        public bool IsPersistNodeSelected; // todo - пока не работает
 
         public BaseAction ClickAction;
 

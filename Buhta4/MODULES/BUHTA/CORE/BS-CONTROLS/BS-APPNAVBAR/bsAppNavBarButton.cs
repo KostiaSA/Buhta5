@@ -34,16 +34,16 @@ namespace Buhta
 
         public bsAppNavBar NavBar;
 
-        public void Bind_Text(string modelPropertyName)
+        public override void Bind_Text(string modelPropertyName)
         {
             AddBinder(new OneWayBinder<string>()
             {
                 ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "text"
+                jsSetMethodName = "children('p').text"
             });
         }
 
-        public void Bind_Text(BinderGetMethod<string> getValueMethod)
+        public override void Bind_Text(BinderGetMethod<string> getValueMethod)
         {
             AddBinder(new OneWayBinder<string>()
             {

@@ -1,0 +1,169 @@
+﻿
+@model SchemaQueryDesignerModel
+
+@{ Layout = "~/MODULES/BUHTA/CORE/SHARED/_Layout.cshtml"; }
+
+<script>
+    window._buhtaModelBindingId = "@Model.BindingId";
+    window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
+</script>
+
+@Html.bsTagBegin((tag) =>
+{
+    tag.Tag = "div";
+    tag.AddClass("container body-content");
+    tag.Bind_OnTrueClass(() => Model.IsInsertMode, "add-page");
+    tag.Bind_OnFalseClass(() => Model.IsInsertMode, "edit-page");
+})
+@*<div class="container body-content edit-page">*@
+
+<div class="pull-right">
+    @Html.bsEditFormSaveButton((tag) => { tag.AddStyle("margin-left", "20px"); })
+    @Html.bsEditFormCancelButton((tag) => { })
+</div>
+<h3>
+    <img src="~/MODULES/BUHTA/CORE/Content/icon/SchemaQuery_32.png" />
+    @Html.bsSpan((span) =>
+   {
+       span.Bind_Text(() => Model.GetEditedObjectName());
+   })
+    <small>(запрос)</small>
+</h3>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Параметры</a></li>
+    <li>
+        <a href="#columns" aria-controls="columns" role="tab" data-toggle="tab">
+            Колонки
+        </a>
+    </li>
+
+    @Html.bsTagBegin((tag) =>
+    {
+        tag.Tag = "li";
+        tag.Bind_OnClick(Model.SqlTabClick);
+    })
+    <a href="#sql" aria-controls="sql" role="tab" data-toggle="tab">просмотр SQL</a>
+    @Html.bsTagEnd("li")
+
+    <li><a href="#test" aria-controls="test" role="tab" data-toggle="tab"> Тест </a></li>
+</ul>
+
+<!--Tab panes-->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+        <h4 class="page-title" style="padding-top: 15px;">Основные параметры</h4>
+        <div class="panel panel-info">
+            @*<div class="panel-heading">
+                    таблица подключена к серверу
+                </div>*@
+            <div class="panel-body">
+                <form role="form" class="form-horizontal">
+                    <div class="row">
+
+                        @Html.bsInput(tag =>
+                       {
+                           tag.Bind_Value<String>(nameof(Model.Query) + "." + nameof(Model.Query.Name));
+                           tag.Label = "Имя запроса";
+                           tag.AddStyle("max-width", "500px");
+                       })
+
+                        @Html.bsInput(tag =>
+                       {
+                           tag.Bind_Value<string>(nameof(Model.Query) + "." + nameof(Model.Query.Description));
+                           tag.Label = "Описание";
+                       })
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="columns">
+        <h4 class="page-title" id="columns" style="padding-top: 60px; margin-top: -40px;">Список колонок</h4>
+        <div class="panel panel-warning">
+            <div class="panel-body" style="background-color: rgba(214, 214, 214, 0.0)">
+                @Html.bsTree(tree =>
+           {
+               tree.IsExpandAllNodes = true;
+               tree.AddColumn(c =>
+               {
+                   c.Caption = "Тип";
+                   c.Field_Bind = "Title";
+                   //c.CellTemplateJS = @"
+                   //  if (row.node.isSelected())
+                   //    row._fontWeight='bold';
+                   //  else
+                   //   row._fontWeight='normal';
+                   //";
+                   //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
+               });
+
+               //tree.AddColumn(c =>
+               //{
+               //    c.Caption = "Описание";
+               //    c.Field_Bind = nameof(SchemaBaseRole.Description);
+
+               //});
+
+               tree.Bind_DataSource_To_ObjectList(nameof(Model.ColumnsList), "Title", "ID", "ParentID", null);
+               //tree.Bind_OnRowActivate(Model.RowActivate);
+               //tree.Bind_OnRowDblClick(Model.OkButtonClick);
+
+           })
+
+
+                <div class="panel-body">
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-sm">Отметить</button>
+                        <button class="btn btn-default btn-sm">Убрать</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-sm">импорт</button>
+                    </div>
+                    <div class="btn-group  pull-right">
+                        @Html.bsButton(button =>
+                   {
+                       button.Size = bsButtonSize.Small;
+                       //button.Bind_OnClick(Model.AddColumnButtonClick);
+                       button.Text = "Добавить колонку";
+                       button.AddClass(TextColor.Add);
+                   })
+                        @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           //button.Bind_OnClick(Model.EditColumnButtonClick);
+                           button.Text = "Изменить";
+                           button.AddClass(TextColor.Edit);
+                           button.AddStyle("margin-left", "5px");
+                       })
+                        @Html.bsButton(button =>
+                       {
+                           button.Size = bsButtonSize.Small;
+                           //button.Bind_OnClick(Model.DeleteColumnButtonClick);
+                           button.Text = "Удалить";
+                           button.AddClass(TextColor.Delete);
+                           button.AddStyle("margin-left", "5px");
+                       })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="sql">
+        <h4 class="page-title" id="indexes" style="padding-top: 60px; margin-top: -40px;">Просмотр текста SQL </h4>
+        <div class="panel panel-primary">
+            @Html.bsTag((tag) =>
+               {
+                   tag.Bind_Text("SqlText");
+               })
+        </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="test">
+        <div class="panel panel-primary">
+            TEST
+        </div>
+    </div>
+</div>
+
+@Html.bsTagEnd("div")

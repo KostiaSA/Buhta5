@@ -26,10 +26,12 @@ namespace Buhta
             var node = new JsObject();
             node.AddProperty("title", role.Name);
             node.AddProperty("key", role.ID);
-            node.AddProperty("expanded", true);
 
             if (selectedRows!=null && selectedRows.Contains(role.ID))
                 node.AddProperty("selected", true);
+
+            if (Tree.IsExpandAllNodes)
+                node.AddProperty("expanded", true);
 
             var row = new JsObject();
             row.AddProperty(nameof(SchemaBaseRole.ID), role.ID);

@@ -74,24 +74,51 @@ namespace Buhta
             {
                 var treeNode = new JsObject();
 
-                treeNode.AddProperty("title", row.GetPropertyValue(displayFieldName).ToString());
-                treeNode.AddProperty("id", row.GetPropertyValue(keyFieldName).ToString());
+                var _title_obj = row.GetPropertyValue(displayFieldName);
+                if (_title_obj != null)
+                    treeNode.AddProperty("title", _title_obj.ToString());
+                else
+                    treeNode.AddProperty("title", "");
+
+                var _id_obj = row.GetPropertyValue(keyFieldName);
+                if (_id_obj != null)
+                    treeNode.AddProperty("id", _id_obj.ToString());
+                else
+                    treeNode.AddProperty("id", "");
 
                 if (parentFieldName != null)
-                    treeNode.AddProperty("parent", row.GetPropertyValue(parentFieldName).ToString());
-                if (iconFieldName != null)
-                    treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(row.GetPropertyValue(iconFieldName).ToString()));
+                {
+                    var _parent_obj = row.GetPropertyValue(parentFieldName);
+                    if (_parent_obj != null)
+                        treeNode.AddProperty("parent", _parent_obj.ToString());
+                    else
+                        treeNode.AddProperty("parent", "");
+                }
 
-                if (selectedRows != null && selectedRows.Contains(row.GetPropertyValue(keyFieldName).ToString()))
+                if (iconFieldName != null)
+                {
+                    var _icon_obj = row.GetPropertyValue(iconFieldName);
+                    if (_icon_obj != null)
+                        treeNode.AddProperty("icon", new UrlHelper(HttpContext.Current.Request.RequestContext).Content(_icon_obj.ToString()));
+                }
+
+                if (selectedRows != null && _id_obj != null && selectedRows.Contains(_id_obj.ToString()))
                 {
                     treeNode.AddProperty("selected", true);
                     //  treeNode.AddProperty("expanded", true);
                 }
 
+                if (Tree.IsExpandAllNodes)
+                    treeNode.AddProperty("expanded", true);
+
                 var jsRow = new JsObject();
                 foreach (var col in Tree.Columns)
                 {
-                    jsRow.AddRawProperty(col.Field_Bind, row.GetPropertyValue(col.Field_Bind).AsJavaScript());
+                    var _obj = row.GetPropertyValue(col.Field_Bind);
+                    if (_obj != null)
+                        jsRow.AddRawProperty(col.Field_Bind, row.GetPropertyValue(col.Field_Bind).AsJavaScript());
+                    else
+                        jsRow.AddRawProperty(col.Field_Bind, "");
                 }
                 treeNode.AddProperty("row", jsRow);
 

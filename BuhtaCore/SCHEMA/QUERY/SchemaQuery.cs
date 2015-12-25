@@ -116,6 +116,10 @@ namespace Buhta
             return new BaseEdit_Page("SchemaQueryDesigner_page() { EditedRecord = this }");
         }
 
+        public override string GetDesignerUrl()
+        {
+            return "/Buhta/SchemaQueryDesigner";
+        }
 
         public IViewColumn GetParentViewColumn()
         {

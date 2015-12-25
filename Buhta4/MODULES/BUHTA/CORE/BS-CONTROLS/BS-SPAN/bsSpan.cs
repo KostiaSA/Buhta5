@@ -30,52 +30,9 @@ namespace Buhta
 
     }
 
-    public class bsSpan : bsControl
+    public class bsSpan : bsTag
     {
-        public bsSpan(BaseModel model) : base(model) { }
-
-        public string Text = "";
-        public void Bind_Text(string modelPropertyName)
-        {
-            AddBinder(new OneWayBinder<string>()
-            {
-                ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "text"
-            });
-        }
-
-        public void Bind_Text(BinderGetMethod<string> getValueMethod)
-        {
-            AddBinder(new OneWayBinder<string>()
-            {
-                ModelGetMethod = getValueMethod,
-                jsSetMethodName = "text"
-            });
-        }
-
-        public void Bind_OnClick(string modelEventMethodName)
-        {
-            AddBinder(new EventBinder()
-            {
-                ModelEventMethodName = modelEventMethodName,
-                jsEventName = "click"
-            });
-        }
-
-        public void Bind_OnClick(BinderEventMethod eventMethod)
-        {
-            AddBinder(new EventBinder()
-            {
-                ModelEventMethod = eventMethod,
-                jsEventName = "click"
-            });
-        }
-
-        public override string GetHtml()
-        {
-            Html.Append("<span id='" + UniqueId + "' " + GetAttrs() + ">" + Text.AsHtml() + "</span>");
-            return base.GetHtml();
-        }
+        public bsSpan(BaseModel model) : base(model) { Tag = "span"; }
     }
 
 

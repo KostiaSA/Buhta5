@@ -11,7 +11,7 @@ namespace Buhta
 {
     public enum QueryOrderBy { None = 0, Asc1 = 1, Asc2 = 3, Asc3 = 5, Asc4 = 7, Asc5 = 9, Asc6 = 11, Desc1 = 2, Desc2 = 4, Desc3 = 6, Desc4 = 8, Desc5 = 10, Desc6 = 12 }
 
-    public class SchemaQueryBaseColumn : IViewColumn, ISupportInitialize,  INotifyPropertyChanged
+    public class SchemaQueryBaseColumn : IViewColumn, ISupportInitialize, INotifyPropertyChanged
     {
         public const string Колонка_category = "  Колонка";
 
@@ -75,7 +75,21 @@ namespace Buhta
             if (!string.IsNullOrWhiteSpace(Alias))
                 return Alias;
             else
-                return (ParentColumn.GetJoinTableFillAlias2() + "_" + Name).Substring(1);
+            {
+                //if (ParentColumn == null)
+                //    return "";
+                //else
+                    return (ParentColumn.GetJoinTableFillAlias2() + "_" + Name).Substring(1);
+            }
+
+        }
+
+        public virtual string GetFullName()
+        {
+            if (ParentColumn == null)
+                return Name;
+            else
+                return ParentColumn.Name + "." + Name;
 
         }
 
@@ -159,10 +173,10 @@ namespace Buhta
                     return ret.GetNativeTableColumn();
                 else
                     if (ret.GetNativeVirtualTableColumn() != null)
-                        return ret.GetNativeVirtualTableColumn();
-                    else
+                    return ret.GetNativeVirtualTableColumn();
+                else
                         if (ret.GetNativeTableColumnRole() != null)
-                            return ret.GetNativeTableColumnRole();
+                    return ret.GetNativeTableColumnRole();
                 ret = ret.GetSourceViewColumn();
             }
         }
@@ -179,6 +193,11 @@ namespace Buhta
         }
 
         public string GetDisplayName()
+        {
+            return Name;
+        }
+
+        public virtual string GetQueryDesignerDisplayName()
         {
             return Name;
         }
@@ -269,12 +288,12 @@ namespace Buhta
                 return GetNativeTableColumn().DataType;
             else
                 if (GetNativeTableColumnRole() != null)
-                    return GetNativeTableColumnRole().DataType;
-                else
+                return GetNativeTableColumnRole().DataType;
+            else
                     if (GetNativeVirtualTableColumn() != null)
-                        return GetNativeVirtualTableColumn().DataType;
-                    else
-                        return null;
+                return GetNativeVirtualTableColumn().DataType;
+            else
+                return null;
         }
     }
 

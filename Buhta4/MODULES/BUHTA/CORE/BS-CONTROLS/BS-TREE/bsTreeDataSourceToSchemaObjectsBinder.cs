@@ -103,6 +103,9 @@ namespace Buhta
                     treeNode.AddProperty("selected", true);
                 }
 
+                if (Tree.IsExpandAllNodes)
+                    treeNode.AddProperty("expanded", true);
+
                 var jsRow = new JsObject();
                 foreach (var col in Tree.Columns)
                 {

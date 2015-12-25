@@ -65,6 +65,14 @@ namespace Buhta
         }
 
 
+        public override string GetQueryDesignerDisplayName()
+        {
+            if (GetJoinView() != null)
+                return Name + " -> " + GetJoinView().GetDisplayName();
+            else
+                return Name + " -> ?";
+        }
+
         ////public override void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
         ////{
         ////    if (foreingQueryTableID == null)
@@ -151,22 +159,22 @@ namespace Buhta
             }
             else
                 if (GetJoinView().GetNativeQuery() != null)
-                {
-                    var sb = new StringBuilder();
-                    sb.Append("[" + GetJoinView().Name + "](");
+            {
+                var sb = new StringBuilder();
+                sb.Append("[" + GetJoinView().Name + "](");
 
-                    foreach (var col in GetJoinView().GetColumns())
-                        if (col is SchemaQuerySelectColumn)
-                            sb.Append("[" + col.GetFullAlias() + "],");
-                    sb.Append("[__ID__],");
-                    sb.RemoveLastChar();
+                foreach (var col in GetJoinView().GetColumns())
+                    if (col is SchemaQuerySelectColumn)
+                        sb.Append("[" + col.GetFullAlias() + "],");
+                sb.Append("[__ID__],");
+                sb.RemoveLastChar();
 
-                    sb.Append(") AS");
-                    sb.AppendLine("(");
-                    sb.Append(GetJoinView().GetNativeQuery().GetSqlText(withCTE));
-                    sb.AppendLine("),");
-                    withCTE.Add(sb.ToString());
-                }
+                sb.Append(") AS");
+                sb.AppendLine("(");
+                sb.Append(GetJoinView().GetNativeQuery().GetSqlText(withCTE));
+                sb.AppendLine("),");
+                withCTE.Add(sb.ToString());
+            }
 
             sql.AppendLine(indent + "LEFT JOIN " + GetJoinView().Get4PartsTableName() + " AS [" + GetJoinTableFillAlias() + "]");
 

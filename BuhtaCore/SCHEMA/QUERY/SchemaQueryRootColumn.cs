@@ -44,6 +44,13 @@ namespace Buhta
         //    return SourceQueryTable;
         //}
 
+        public override string GetQueryDesignerDisplayName()
+        {
+            if (GetJoinView() != null)
+                return GetJoinView().GetDisplayName();
+            else
+                return "Root table or query";
+        }
 
         ////public override void VirtualTreeGetCellValue(VirtualTreeGetCellValueInfo info)
         ////{

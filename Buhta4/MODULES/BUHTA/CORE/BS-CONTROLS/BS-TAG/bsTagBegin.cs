@@ -30,23 +30,23 @@ namespace Buhta
 
         public string Tag = "div";
 
-        public void Bind_Text(string modelPropertyName)
-        {
-            AddBinder(new OneWayBinder<string>()
-            {
-                ModelPropertyName = modelPropertyName,
-                jsSetMethodName = "text"
-            });
-        }
+        //public void Bind_Text(string modelPropertyName)
+        //{
+        //    AddBinder(new OneWayBinder<string>()
+        //    {
+        //        ModelPropertyName = modelPropertyName,
+        //        jsSetMethodName = "text"
+        //    });
+        //}
 
-        public void Bind_Text(BinderGetMethod<string> getValueMethod)
-        {
-            AddBinder(new OneWayBinder<string>()
-            {
-                ModelGetMethod = getValueMethod,
-                jsSetMethodName = "text"
-            });
-        }
+        //public void Bind_Text(BinderGetMethod<string> getValueMethod)
+        //{
+        //    AddBinder(new OneWayBinder<string>()
+        //    {
+        //        ModelGetMethod = getValueMethod,
+        //        jsSetMethodName = "text"
+        //    });
+        //}
 
         public void Bind_Disabled(string modelPropertyName)
         {
