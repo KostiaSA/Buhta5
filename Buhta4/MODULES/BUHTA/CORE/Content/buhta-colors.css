@@ -26,3 +26,7 @@
 .textcolor-description {
     color: #D01585;
 }
+
+.backcolor-sql-editor {
+    background-color: rgba(255, 210, 88, 0.06) !important;
+}

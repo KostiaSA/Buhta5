@@ -87,10 +87,12 @@ namespace Buhta
      //       Script.AppendLine("editor.setOptions({maxLines: Infinity});");
             Script.AppendLine("editor.renderer.setShowGutter(false);");
 
-            Script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-20).toString()+'px');");
 
             if (Value != null)
                 Script.AppendLine("editor.setValue(" + Value.AsJavaScript() + ", 1);");
+
+            //Script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-10).toString()+'px');");
+            //Script.AppendLine("console.log('ace-height='+(document.documentElement.clientHeight- $('#" + UniqueId + "').parent.offset().top-10).toString()+'px');");
 
 
             //            Script.AppendLine(@"

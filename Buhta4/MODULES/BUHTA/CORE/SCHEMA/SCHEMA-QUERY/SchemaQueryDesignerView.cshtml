@@ -1,15 +1,11 @@
 ﻿
 @model SchemaQueryDesignerModel
-
 @{ Layout = "~/MODULES/BUHTA/CORE/SHARED/_Layout.cshtml"; }
-
 <script src="~/Content/vendors/ace-builds-master/src-min/ace.js"></script>
-
 <script>
     window._buhtaModelBindingId = "@Model.BindingId";
     window._buhtaRecordId = "@(Model.EditedObject!=null? Model.EditedObject.GetRecordId():string.Empty)";
 </script>
-
 
 @Html.bsTagBegin((tag) =>
 {
@@ -19,7 +15,6 @@
     tag.Bind_OnFalseClass(() => Model.IsInsertMode, "edit-page");
 })
 @*<div class="container body-content edit-page">*@
-
 <div class="pull-right">
     @Html.bsEditFormSaveButton((tag) => { tag.AddStyle("margin-left", "20px"); })
     @Html.bsEditFormCancelButton((tag) => { })
@@ -39,18 +34,15 @@
             Колонки
         </a>
     </li>
-
     @Html.bsTagBegin((tag) =>
     {
         tag.Tag = "li";
         tag.Bind_OnClick(Model.SqlTabClick);
     })
-    <a href="#sql" aria-controls="sql" role="tab" data-toggle="tab">просмотр SQL</a>
+    <a href="#sql" aria-controls="sql" role="tab" data-toggle="tab" id="sqltab-A7DEACF1FFC9">просмотр SQL</a>
     @Html.bsTagEnd("li")
-
     <li><a href="#test" aria-controls="test" role="tab" data-toggle="tab"> Тест </a></li>
 </ul>
-
 <!--Tab panes-->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="home">
@@ -62,14 +54,12 @@
             <div class="panel-body">
                 <form role="form" class="form-horizontal">
                     <div class="row">
-
                         @Html.bsInput(tag =>
                        {
                            tag.Bind_Value<String>(nameof(Model.Query) + "." + nameof(Model.Query.Name));
                            tag.Label = "Имя запроса";
                            tag.AddStyle("max-width", "500px");
                        })
-
                         @Html.bsInput(tag =>
                        {
                            tag.Bind_Value<string>(nameof(Model.Query) + "." + nameof(Model.Query.Description));
@@ -113,7 +103,6 @@
 
            })
 
-
                 <div class="panel-body">
                     <div class="btn-group">
                         <button class="btn btn-default btn-sm">Отметить</button>
@@ -146,27 +135,29 @@
                            button.AddClass(TextColor.Delete);
                            button.AddStyle("margin-left", "5px");
                        })
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div role="tabpanel" class="tab-pane" id="sql">
         <h4 class="page-title" id="indexes" style="padding-top: 60px; margin-top: -40px;">Просмотр текста SQL </h4>
         <div class="panel panel-primary">
             @*@Html.bsTag((tag) =>
-               {
-                   tag.Bind_Text("SqlText");
-               })*@
-
-            @Html.bsAce((tag)=> {
+                {
+                    tag.Bind_Text("SqlText");
+                })*@
+            @Html.bsAce((tag) =>
+       {
            tag.Bind_Text("SqlText");
            tag.AddStyle("width", "100%");
            tag.AddStyle("height", "300px");
            tag.AddStyle("font-size", "14px");
+           tag.AddClass(BackColor.SqlEditor);
            tag.IsReadOnly = true;
            tag.Mode = AceMode.Sql;
+           tag.ForceAutoHeightToScreenBottom(20, "sqltab-A7DEACF1FFC9");
            //           tag.Value = @"
            //USE [MAG3506]
            //GO
@@ -179,10 +170,10 @@
            //ALTER PROCEDURE [dbo].[_SAP_РегистрацияДоставки](@test int, @dogID int)
            //AS
            //BEGIN
-           //  DECLARE @RetTable table(error nvarchar(max)) 
+           //  DECLARE @RetTable table(error nvarchar(max))
 
            //  -- теги платной доставки
-           //  DECLARE @paydost_xml NVARCHAR(max) 
+           //  DECLARE @paydost_xml NVARCHAR(max)
            //  DECLARE @dost_Summa MONEY
            //  SET @dost_Summa= ISNULL((SELECT SUM(Сумма)+sum([Сумма без скидки]/*Сандал. Бесплатная доставка*/) FROM Догспец WHERE Вид=30021 AND Договор=@dogID),0)
            //  IF (@dost_Summa>0)   -- спец. 21 с суммой доставки находится в самом договоре
@@ -192,11 +183,11 @@
            //      '<TCENA>'+LTRIM(STR(@dost_Summa,12,2))+'</TCENA>' -- сумма за платную доставку
            //  ELSE
            //  BEGIN
-           //         IF EXISTS(SELECT * FROM Догспец,Договор 
-           //                             WHERE Догспец.Договор=Договор.Ключ AND 
-           //                                   Догспец.Вид=30021 AND 
+           //         IF EXISTS(SELECT * FROM Догспец,Договор
+           //                             WHERE Догспец.Договор=Договор.Ключ AND
+           //                                   Догспец.Вид=30021 AND
            //                                   Догспец.[Тип субконто 2]='Дог' AND
-           //                                   Догспец.[субконто 2]=@dogID AND 
+           //                                   Догспец.[субконто 2]=@dogID AND
            //                                   Договор.[признак 3]=0  -- оплачен
            //                                   )
            //         BEGIN
@@ -205,22 +196,22 @@
            //         END
 
 
-           //    SET @dost_Summa= ISNULL((SELECT SUM(Догспец.Сумма) FROM Догспец,Договор 
-           //                             WHERE Догспец.Договор=Договор.Ключ AND 
-           //                                   Догспец.Вид=30021 AND 
+           //    SET @dost_Summa= ISNULL((SELECT SUM(Догспец.Сумма) FROM Догспец,Договор
+           //                             WHERE Догспец.Договор=Договор.Ключ AND
+           //                                   Догспец.Вид=30021 AND
            //                                   Догспец.[Тип субконто 2]='Дог' AND
-           //                                   Догспец.[субконто 2]=@dogID AND 
+           //                                   Догспец.[субконто 2]=@dogID AND
            //                                   Договор.[признак 3]=1  -- оплачен
            //                                   ),0)
 
            //    IF (@dost_Summa>0) -- спец. 21 с суммой доставки находится в привязанном договоре
            //    BEGIN
            //      declare @dost_dog_NUM varchar(50)
-           //      SET @dost_dog_NUM= ISNULL((SELECT Договор.Номер FROM Догспец,Договор 
-           //                                 WHERE Догспец.Договор=Договор.Ключ AND 
-           //                                   Догспец.Вид=30021 AND 
+           //      SET @dost_dog_NUM= ISNULL((SELECT Договор.Номер FROM Догспец,Договор
+           //                                 WHERE Догспец.Договор=Договор.Ключ AND
+           //                                   Догспец.Вид=30021 AND
            //                                   Догспец.[Тип субконто 2]='Дог' AND
-           //                                   Догспец.[субконто 2]=@dogID AND 
+           //                                   Догспец.[субконто 2]=@dogID AND
            //                                   Договор.[признак 3]=1  -- оплачен
            //                                   ),0)
 
@@ -245,7 +236,7 @@
            //  DECLARE @dogspecSumma MONEY
            //  DECLARE @dogspecCena MONEY
 
-           //  DECLARE spec_cursor CURSOR LOCAL STATIC FOR 
+           //  DECLARE spec_cursor CURSOR LOCAL STATIC FOR
            //  SELECT Догспец.Ключ, ТМЦ.Номер, ТМЦ.Название, Догспец.Количество, CASE WHEN Догспец.[Сумма без скидки]<>0 THEN  Догспец.[Сумма без скидки] ELSE Догспец.Сумма END, Догспец.Цена,ТМЦ.[Ед.Изм.]
            //  FROM Догспец JOIN ТМЦ ON Догспец.[Субконто 1]=ТМЦ.Ключ
            //  WHERE Догспец.Договор=@dogID AND Догспец.Вид%1000=1 AND Догспец._НаДоставку=1
@@ -274,9 +265,9 @@
            //    FETCH NEXT FROM spec_cursor INTO @dogspecID, @tmcNum, @tmcName, @dogspecKol, @dogspecSumma, @dogspecCena, @tmcEdIzm
            //  END
            //  CLOSE spec_cursor;
-           //  DEALLOCATE spec_cursor; 
+           //  DEALLOCATE spec_cursor;
 
-           //  -- основной текст XML-запроса 
+           //  -- основной текст XML-запроса
 
            //  -- с 14.01.2015 в номер карточки доставки добавляется в последний знак так называемый номер попытки (поле договора 'Интервал доставки')
            //  DECLARE @try_number VARCHAR(1)
@@ -326,7 +317,7 @@
            //          ref.value('NUMBER[1]', 'nvarchar(128)') AS ERROR
            //          from @xml_data.nodes('/ORDER')
            //          xmlData(ref)
-           //       ) 
+           //       )
            //     WHERE Ключ = @dogID
            //  END
            //  ELSE
@@ -340,12 +331,10 @@
        })
         </div>
     </div>
-
     <div role="tabpanel" class="tab-pane" id="test">
         <div class="panel panel-primary">
             TEST
         </div>
     </div>
 </div>
-
 @Html.bsTagEnd("div")

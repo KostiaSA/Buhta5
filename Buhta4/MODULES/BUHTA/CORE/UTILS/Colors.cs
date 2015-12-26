@@ -16,4 +16,9 @@ namespace Buhta
         public static string Edit = "textcolor-edit";  // синий цвет редактирования
         public static string Delete = "textcolor-delete";  // красный цвет удаления
     }
+
+    public static class BackColor
+    {
+        public static string SqlEditor = "backcolor-sql-editor";  // светло-желтый фон редактора sql-кода
+    }
 }

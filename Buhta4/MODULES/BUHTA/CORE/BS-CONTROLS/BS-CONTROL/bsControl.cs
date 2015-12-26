@@ -67,7 +67,7 @@ namespace Buhta
 
         public List<bsWrapper> Wrappers = new List<bsWrapper>();
 
-        public List<string> Classes {  get { return classes; } }
+        public List<string> Classes { get { return classes; } }
 
         public void AddClass(string className)
         {
@@ -77,6 +77,16 @@ namespace Buhta
                 if (!classes.Contains(cls))
                     classes.Add(cls);
             }
+        }
+
+        bool isAutoHeightToScreenBottom;
+        string autoHeight_bootstrapTabId;
+        int autoHeight_bottomPadding;
+        public void ForceAutoHeightToScreenBottom(int bottomPadding, string bootstrapTabId = null)
+        {
+            isAutoHeightToScreenBottom = true;
+            autoHeight_bottomPadding = bottomPadding;
+            autoHeight_bootstrapTabId = bootstrapTabId;
         }
 
         public void AddStyle(string styleName, string styleValue)
@@ -143,7 +153,7 @@ namespace Buhta
             return sb.ToString();
         }
 
-        public void Bind_OnTrueClass(string modelPropertyName,string className)
+        public void Bind_OnTrueClass(string modelPropertyName, string className)
         {
             AddBinder(new ToggleClassBinder()
             {
@@ -205,6 +215,19 @@ namespace Buhta
         public virtual string GetHtml()
         {
             EmitBinders(Script);
+
+            if (isAutoHeightToScreenBottom)
+            {
+                // для невидимых(пока) закладок делаем установку height на событие Show, иначе позиция невидимого элемента вычисляется неверно
+                if (autoHeight_bootstrapTabId != null)
+                    Script.AppendLine("$('#" + autoHeight_bootstrapTabId + "').on('shown.bs.tab', function(e) {");
+
+                Script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-" + autoHeight_bottomPadding + ").toString()+'px');");
+
+                if (autoHeight_bootstrapTabId != null)
+                    Script.AppendLine("});");
+            }
+
             var wrapperBeg = new StringBuilder();
             var wrapperEnd = new StringBuilder();
 
@@ -262,5 +285,5 @@ namespace Buhta
         }
 
     }
-    
+
 }
