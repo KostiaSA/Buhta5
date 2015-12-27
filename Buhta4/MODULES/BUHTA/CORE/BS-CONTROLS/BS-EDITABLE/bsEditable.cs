@@ -26,6 +26,7 @@ namespace Buhta
     public class bsEditable : bsTagBegin
     {
         public bsEditableType Type = bsEditableType.Text;
+        public string Label;
 
         public bsEditable(BaseModel model) : base(model)
         {
@@ -80,7 +81,25 @@ namespace Buhta
         {
             AddClass("bs-editable");
 
-            return base.GetHtml() + "<span></span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">";
+            if (Label == null)
+                Label = "Введите значение";
+
+            Script.AppendLine(@"
+var tag=$('#" + UniqueId + @">span');
+
+tag.editable({
+    type: 'text',
+    title: "+Label.AsJavaScript()+@",
+    success: function(response, newValue) {
+                alert('username: '+newValue);
+            }
+});
+
+tag.on('shown', function(e, editable) {
+    editable.input.$input.val(tag.text());
+    });
+");
+            return base.GetHtml() + "<span>&nbsp;</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">";
         }
     }
 

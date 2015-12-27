@@ -252,6 +252,11 @@
     <Content Include="Content\vendors\DataTables-1.10.10\media\js\dataTables.bootstrap.min.js" />
     <Content Include="Content\vendors\DataTables-1.10.10\media\js\jquery.dataTables.min.js" />
     <Content Include="Content\vendors\selectize.js-master\dist\css\selectize.css" />
+    <Content Include="Content\vendors\x-editable-master\dist\bootstrap3-editable\css\bootstrap-editable.css" />
+    <Content Include="Content\vendors\x-editable-master\dist\bootstrap3-editable\img\clear.png" />
+    <Content Include="Content\vendors\x-editable-master\dist\bootstrap3-editable\img\loading.gif" />
+    <Content Include="Content\vendors\x-editable-master\dist\bootstrap3-editable\js\bootstrap-editable.js" />
+    <Content Include="Content\vendors\x-editable-master\dist\bootstrap3-editable\js\bootstrap-editable.min.js" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-applock.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-desktop.png" />
     <Content Include="MODULES\BUHTA\CORE\Content\icon\app-navbar-exit.png" />

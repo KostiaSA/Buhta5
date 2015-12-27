@@ -84,25 +84,14 @@ namespace Buhta
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
-            script.AppendLine("$('#" + Control.UniqueId + "').on('" + jsOnChangeEventName + "', function () {");
+            //script.AppendLine("$('#" + Control.UniqueId + "').on('" + jsOnChangeEventName + "', function () {");
 
-            var propName = UniqueId;
-            if (propName == null && ModelSetMethod != null)
-                throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
-
-            //var propName = ModelPropertyName;
-            //if (ModelSetMethod != null)
-            //    propName = UniqueId;
-            //if (propName == null)
+            //var propName = UniqueId;
+            //if (propName == null && ModelSetMethod != null)
             //    throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
-            if (jsGetPropertyName != null)
-            {
-                script.AppendLine("  bindingHub.server.sendBindedValueChanged(localStorage.ChromeSessionId, '" + Control.Model.BindingId + "', '" + propName + "',$('#" + Control.UniqueId + "')." + jsGetMethodName + "('" + jsGetPropertyName + "'));");
-            }
-            else
-                script.AppendLine("  bindingHub.server.sendBindedValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "',$('#" + Control.UniqueId + "')." + jsGetMethodName + "());");
-            script.AppendLine("}); ");
+            //script.AppendLine("  bindingHub.server.sendBindedValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "',$('#" + Control.UniqueId + "')." + jsGetMethodName + "());");
+            //script.AppendLine("}); ");
 
         }
 

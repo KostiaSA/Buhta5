@@ -236,24 +236,35 @@ mark {
     color: #01BC8C;
 }
 
-.bs-editable {
+.bs-editable>span{
     cursor: pointer;
 }
 
-    .bs-editable i {
+    .bs-editable>i {
         font-size: small;
         opacity: 0.3;
     }
 
-    .bs-editable:hover span {
+    .bs-editable:hover>span {
         border-bottom: dashed 1px;
     }
 
-    .bs-editable:active span {
+    .bs-editable:active>span {
         border-bottom: dashed 0px;
     }
 
-    .bs-editable:hover i {
+    .bs-editable:hover>i {
         font-size: inherit;
         opacity: 1;
     }
+
+.bs-editable .editable-click, 
+.bs-editable a.editable-click, 
+.bs-editable a.editable-click:hover {
+    text-decoration: none;
+    border-bottom: dashed 0px;
+}
+
+.bs-editable .editable-unsaved {
+    font-weight: inherit;
+}
