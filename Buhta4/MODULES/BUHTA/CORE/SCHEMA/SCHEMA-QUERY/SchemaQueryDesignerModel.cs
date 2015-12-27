@@ -29,6 +29,20 @@ namespace Buhta
             //  ColumnsTree.SelectRowById(columnName);
         }
 
+        class columnNode
+        {
+            public columnNode()
+            {
+                ParentID = "";
+                Alias = "";
+            }
+            public string ID { get; set; }
+            public string ParentID { get; set; }
+            public string Title { get; set; }
+            public string Alias { get; set; }
+
+        }
+
         public List<Object> ColumnsList
         {
             get
@@ -37,21 +51,23 @@ namespace Buhta
                 Query.RootColumn.Name = "*root*";
                 foreach (SchemaQueryBaseColumn col in Query.RootColumn.GetAllColumns())
                 {
-                    list.Add(new
-                    {
-                        ID = col.GetFullName(),
-                        //                        ParentID = col.ParentColumn != null ? col.ParentColumn.GetFullName() : "",
-                        ParentID = col.ParentColumn.GetFullName(),
-                        Title = col.GetQueryDesignerDisplayName()
-                    });
+                    var node = new columnNode();
+                    node.ID = col.GetFullName();
+                    node.ParentID = col.ParentColumn.GetFullName();
+                    node.Title = col.GetQueryDesignerDisplayName();
+                    if (col is SchemaQueryJoinColumn)
+                        node.Alias = "";
+                    else
+                        node.Alias = col.Alias ?? col.Name;
+                    list.Add(node);
+
                 }
 
                 // добавляем root
-                list.Add(new
+                list.Add(new columnNode()
                 {
                     ID = Query.RootColumn.GetFullName(),
-                    ParentID = "",
-                    Title = Query.RootColumn.GetQueryDesignerDisplayName()
+                    Title = Query.RootColumn.GetQueryDesignerDisplayName(),
                 });
 
 

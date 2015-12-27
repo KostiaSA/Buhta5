@@ -190,49 +190,70 @@ mark {
 }
 
 .navbar-nav.app-navbar > li:hover {
-    background-color:rgba(216, 216, 216, 0.54);
+    background-color: rgba(216, 216, 216, 0.54);
 }
 
 .navbar-nav.app-navbar > li:active {
-    background-color:rgba(216, 216, 216, 1);
+    background-color: rgba(216, 216, 216, 1);
 }
 
 .navbar-nav.app-navbar > li > a:hover {
     opacity: 1;
 }
 
-    .navbar-nav.app-navbar > li > a p {
-        padding-top: 2px;
-        padding-bottom: 0px;
-        font-size: 70%;
-        text-align: center;
-        line-height: 100%;
-        margin-bottom: 0px;
-    }
+.navbar-nav.app-navbar > li > a p {
+    padding-top: 2px;
+    padding-bottom: 0px;
+    font-size: 70%;
+    text-align: center;
+    line-height: 100%;
+    margin-bottom: 0px;
+}
 
-    .navbar-nav.app-navbar > li > a .org-name,
-    .navbar-nav.app-navbar > li > a .user-name  {
-        display:block;
-        padding-top: 2px;
-        padding-bottom: 0px;
-        font-size: 85%;
-        text-align: right;
-        line-height: 100%;
-        margin-bottom: 2px; 
-
-    }
+.navbar-nav.app-navbar > li > a .org-name,
+.navbar-nav.app-navbar > li > a .user-name {
+    display: block;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    font-size: 85%;
+    text-align: right;
+    line-height: 100%;
+    margin-bottom: 2px;
+}
 
 
 .edit-page .page-title,
-.edit-page  .nav-tabs>li>a,
+.edit-page .nav-tabs > li > a,
 .edit-page .form-horizontal .checkbox label,
 .edit-page .control-label {
     color: #418BCA;
 }
 
 .add-page .page-title,
-.add-page .nav-tabs>li>a,
+.add-page .nav-tabs > li > a,
 .add-page .form-horizontal .checkbox label,
 .add-page .control-label {
     color: #01BC8C;
 }
+
+.bs-editable {
+    cursor: pointer;
+}
+
+    .bs-editable i {
+        font-size: small;
+        opacity: 0.3;
+    }
+
+    .bs-editable:hover span {
+        border-bottom: dashed 1px;
+    }
+
+    .bs-editable:active span {
+        border-bottom: dashed 0px;
+    }
+
+    .bs-editable:hover i {
+        font-size: inherit;
+        opacity: 1;
+    }

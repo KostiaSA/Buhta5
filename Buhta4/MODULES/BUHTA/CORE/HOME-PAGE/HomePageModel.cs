@@ -10,6 +10,8 @@ namespace Buhta
     {
         public HomePageModel(Controller controller, BaseModel parentModel) : base(controller, parentModel) { }
 
+        public string TestStr1 { get; set; }
+
     }
 
     

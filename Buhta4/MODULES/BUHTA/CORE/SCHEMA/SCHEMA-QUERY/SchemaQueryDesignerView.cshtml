@@ -79,7 +79,7 @@
                tree.IsExpandAllNodes = true;
                tree.AddColumn(c =>
                {
-                   c.Caption = "Тип";
+                   c.Caption = "Таблица/колонка";
                    c.Field_Bind = "Title";
                    //c.CellTemplateJS = @"
                    //  if (row.node.isSelected())
@@ -90,12 +90,12 @@
                    //c.CellTemplate = "<span style='font-weight:{{_fontWeight}}'>{{Name}}</span>";
                });
 
-               //tree.AddColumn(c =>
-               //{
-               //    c.Caption = "Описание";
-               //    c.Field_Bind = nameof(SchemaBaseRole.Description);
+               tree.AddColumn(c =>
+               {
+                   c.Caption = "Имя колонки";
+                   c.Field_Bind = "Alias";
 
-               //});
+               });
 
                tree.Bind_DataSource_To_ObjectList(nameof(Model.ColumnsList), "Title", "ID", "ParentID", null);
                //tree.Bind_OnRowActivate(Model.RowActivate);
