@@ -16,10 +16,10 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
 
-            return new MvcHtmlString(tag.GetHtml(script, html));
+            return new MvcHtmlString(tag.GetHtml());
         }
 
         public static MvcHtmlString bsSpan(this HtmlHelper helper, BinderGetMethod<string> getTextMethod)
@@ -31,7 +31,7 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(tag.GetHtml(script, html));
+            return new MvcHtmlString(tag.GetHtml());
         }
 
     }

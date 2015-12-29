@@ -20,7 +20,8 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(tag.GetHtml(script, html));
+            return new MvcHtmlString(tag.GetHtml());
+            //return new MvcHtmlString(tag.EmitScriptAndHtml(script, html));
         }
 
     }
@@ -53,7 +54,7 @@ namespace Buhta
         }
 
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
 
             //JsObject init = new JsObject();
@@ -108,7 +109,7 @@ namespace Buhta
             //        ");
 
             html.Append("<div id='" + UniqueId + "' " + GetAttrs() + "></div>");
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
 
 

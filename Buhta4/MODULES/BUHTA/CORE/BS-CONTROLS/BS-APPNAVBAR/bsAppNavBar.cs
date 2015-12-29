@@ -16,9 +16,9 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
-            return new MvcHtmlString(tag.GetHtml(script, html));
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
+            return new MvcHtmlString(tag.GetHtml());
         }
 
     }
@@ -46,7 +46,7 @@ namespace Buhta
             leftToolbar.Add(button);
         }
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             html.Append("<nav id='" + UniqueId + "' " + GetAttrs() + " class='navbar navbar-default'>");
             html.Append("<div class='container' style='padding-left:0px;padding-right:0px'>");
@@ -57,7 +57,7 @@ namespace Buhta
             foreach (var control in leftToolbar)
             {
                 html.Append("<li>");
-                html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                html.Append(control.GetHtml());
                 html.Append("</li>");
             }
             html.Append("</ul>");
@@ -66,7 +66,7 @@ namespace Buhta
             foreach (var control in rightToolbar)
             {
                 html.Append("<li>");
-                html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                html.Append(control.GetHtml());
                 html.Append("</li>");
             }
             html.Append("</ul>");
@@ -78,7 +78,7 @@ namespace Buhta
             if (Model is AppNavBarModel)
                 Model.Update();
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
     }
 

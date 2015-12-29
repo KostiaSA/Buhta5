@@ -27,10 +27,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            return new MvcHtmlString(Settings.GetHtml());
         }
 
     }
@@ -115,7 +115,7 @@ namespace Buhta
         public bsButtonStyle ButtonStyle = bsButtonStyle.Default;
         public bsButtonSize Size = bsButtonSize.Default;
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             //EmitBinders(Script);
 
@@ -162,7 +162,7 @@ namespace Buhta
 
             html.Append("<button type='button' id='" + UniqueId + "' " + GetAttrs() + ">" + imageHtml + Text.AsHtmlEx() + "</button>");
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
     }
 

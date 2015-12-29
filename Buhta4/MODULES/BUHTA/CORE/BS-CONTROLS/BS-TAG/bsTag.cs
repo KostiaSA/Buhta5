@@ -16,10 +16,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            return new MvcHtmlString(Settings.GetHtml());
         }
 
     }
@@ -28,9 +28,10 @@ namespace Buhta
     {
         public bsTag(BaseModel model) : base(model) { }
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
-            return base.GetHtml(script, html) + "</" + Tag + ">";
+            base.EmitScriptAndHtml(script, html);
+            html.Append("</" + Tag + ">");
         }
     }
 

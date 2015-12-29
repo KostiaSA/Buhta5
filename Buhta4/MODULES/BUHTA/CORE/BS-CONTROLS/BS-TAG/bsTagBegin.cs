@@ -16,10 +16,11 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
+            return new MvcHtmlString(Settings.GetHtml());
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            //return new MvcHtmlString(Settings.EmitScriptAndHtml(script, html));
         }
 
     }
@@ -89,10 +90,10 @@ namespace Buhta
             });
         }
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             html.Append("<" + Tag + " id='" + UniqueId + "' " + GetAttrs() + ">");
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
     }
 

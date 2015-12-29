@@ -8,16 +8,16 @@ using System.Web;
 namespace Buhta
 {
 
-    public class bsEditableValueBinder<T> : BaseBinder, ITwoWayBinder<T>
+    public class bsTreeEditableValueBinder<T> : BaseBinder, ITwoWayBinder<T>
     {
         public bool Is2WayBinding;
-        //public string jsOnChangeEventName;
-        //public string jsGetPropertyName;
-        //public string jsGetMethodName;
+//        public string jsOnChangeEventName;
+  //      public string jsGetPropertyName;
+    //    public string jsGetMethodName;
         public string ModelPropertyName { get; set; }
         public BinderGetMethod<T> ModelGetMethod;
 
-        public bsEditableValueBinder()
+        public bsTreeEditableValueBinder()
         {
             ValueType = typeof(T);
         }
@@ -36,35 +36,9 @@ namespace Buhta
             bool isHtmlMode = false;
 
             string value = "";
-            if (ModelGetMethod != null)
-            {
-                var _value_obj = ModelGetMethod();
-
-                if (_value_obj.ToString().StartsWith("@") && !_value_obj.ToString().StartsWith("@@"))
-                {
-                    value = "'" + _value_obj.ToString().AsHtmlEx().Replace("'", "\'") + "'";
-                    isHtmlMode = true;
-                }
-                else
-                    value = _value_obj.AsJavaScript();
-            }
-            else
             if (ModelPropertyName != null)
             {
-                var value_obj = Control.Model.GetPropertyValue(ModelPropertyName);
-                if (value_obj == null)
-                    value = "null";
-                else
-                {
-                    if (value_obj.ToString().StartsWith("@") && !value_obj.ToString().StartsWith("@@"))
-                    {
-                        value = "'" + value_obj.ToString().AsHtmlEx().Replace("'", "\'") + "'";
-                        isHtmlMode = true;
-                    }
-                    else
-                        value = value_obj.AsJavaScript();
-                }
-
+                value = "row['" + ModelPropertyName + "']";
             }
 
             if (isHtmlMode)
@@ -72,7 +46,7 @@ namespace Buhta
                 return "$('#" + Control.UniqueId + ">span').html(" + value + ");";
             }
             else
-                return "$('#" + Control.UniqueId + ">span').text(" + value + ",true);";
+                return "$('#" + Control.UniqueId + ">span').text(" + value + ");";
 
         }
 

@@ -17,10 +17,11 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+  //          var script = new StringBuilder();
+    //        var html = new StringBuilder();
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            return new MvcHtmlString(Settings.GetHtml());
+//            return new MvcHtmlString(Settings.EmitScriptAndHtml(script, html));
         }
 
     }
@@ -100,7 +101,7 @@ namespace Buhta
 
         public BaseAction ClickAction;
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             if (ClickAction != null)
             {
@@ -116,7 +117,7 @@ namespace Buhta
 
             html.Append("<a id='" + UniqueId + "' " + GetAttrs() + " href='javascript:void(0)'>" + imageHtml + "<p>" + Text.AsHtmlEx() + "</p></a>");
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
     }
 

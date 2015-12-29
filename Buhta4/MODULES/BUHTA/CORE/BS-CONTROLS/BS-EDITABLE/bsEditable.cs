@@ -19,7 +19,7 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            return new MvcHtmlString(Settings.GetHtml());
         }
 
     }
@@ -52,8 +52,8 @@ namespace Buhta
                 binder.ModelGetMethod = getValueMethod;
 
                 binder.Is2WayBinding = true;
-                binder.jsOnChangeEventName = "change";
-                binder.jsGetMethodName = "val";
+                //binder.jsOnChangeEventName = "change";
+                //binder.jsGetMethodName = "val";
                 binder.ModelSetMethod = setValueMethod;
 
                 AddBinder(binder);
@@ -73,14 +73,14 @@ namespace Buhta
                 {
                     Is2WayBinding = true,
                     ModelPropertyName = modelPropertyName,
-                    jsOnChangeEventName = "change",
-                    jsGetMethodName = "val"
+                    //jsOnChangeEventName = "change",
+                    //jsGetMethodName = "val"
                 });
             }
             else
                 throw new Exception(nameof(bsEditable) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
         }
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             AddClass("bs-editable");
 
@@ -99,7 +99,8 @@ tag.on('shown', function(e, editable) {
     editable.input.$input.val(tag.text());
     });
 ");
-            return base.GetHtml(script, html) + "<span>&nbsp;</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">";
+            base.EmitScriptAndHtml(script, html);
+            html.Append("<span>&nbsp;</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">");
         }
     }
 

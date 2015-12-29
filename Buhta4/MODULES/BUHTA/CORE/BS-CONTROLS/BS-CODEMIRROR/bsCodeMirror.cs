@@ -19,7 +19,7 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(tag.GetHtml(script, html));
+            return new MvcHtmlString(tag.GetHtml());
         }
 
     }
@@ -33,7 +33,7 @@ namespace Buhta
         public CodeMirrorMode Mode;
         public bool IsReadOnly;
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
 
             JsObject init = new JsObject();
@@ -78,7 +78,7 @@ namespace Buhta
 </style>
 ");
             html.Append("<div id='" + UniqueId + "' " + GetAttrs() + ">");
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
 
 

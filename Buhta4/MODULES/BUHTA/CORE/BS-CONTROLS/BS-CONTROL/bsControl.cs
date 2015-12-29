@@ -209,8 +209,26 @@ namespace Buhta
             });
         }
 
+        public string GetHtml()
+        {
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+            EmitScriptAndHtml(script, html);
 
-        public virtual string GetHtml(StringBuilder script, StringBuilder html)
+            var wrapperBeg = new StringBuilder();
+            var wrapperEnd = new StringBuilder();
+
+            foreach (var w in Wrappers)
+                w.EmitHtml(wrapperBeg, wrapperEnd);
+
+
+            if (script.Length > 0)
+                return wrapperBeg.ToString() + "<script>\ndocReady(function(){\n" + script + "});\n</script>" + html + wrapperEnd.ToString();
+            else
+                return wrapperBeg.ToString() + html.ToString() + wrapperEnd.ToString();
+        }
+
+        public virtual void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
 
             EmitBinders(script);
@@ -227,18 +245,18 @@ namespace Buhta
                     script.AppendLine("});");
             }
 
-            var wrapperBeg = new StringBuilder();
-            var wrapperEnd = new StringBuilder();
+            //var wrapperBeg = new StringBuilder();
+            //var wrapperEnd = new StringBuilder();
 
-            foreach (var w in Wrappers)
-                w.EmitHtml(wrapperBeg, wrapperEnd);
+            //foreach (var w in Wrappers)
+            //    w.EmitHtml(wrapperBeg, wrapperEnd);
 
 
-            if (script.Length > 0)
-                //                return wrapperBeg.ToString() + "<script>\n$(document).ready( function(){\n $.connection.hub.start().done(function () { var tag =$('#" + UniqueId + "');\n" + Script + "})});\n</script>" + Html + wrapperEnd.ToString();
-                return wrapperBeg.ToString() + "<script>\ndocReady(function(){\n" + script + "});\n</script>" + html + wrapperEnd.ToString();
-            else
-                return wrapperBeg.ToString() + html.ToString() + wrapperEnd.ToString();
+            //if (script.Length > 0)
+            //    //                return wrapperBeg.ToString() + "<script>\n$(document).ready( function(){\n $.connection.hub.start().done(function () { var tag =$('#" + UniqueId + "');\n" + Script + "})});\n</script>" + Html + wrapperEnd.ToString();
+            //    return wrapperBeg.ToString() + "<script>\ndocReady(function(){\n" + script + "});\n</script>" + html + wrapperEnd.ToString();
+            //else
+            //    return wrapperBeg.ToString() + html.ToString() + wrapperEnd.ToString();
         }
 
 

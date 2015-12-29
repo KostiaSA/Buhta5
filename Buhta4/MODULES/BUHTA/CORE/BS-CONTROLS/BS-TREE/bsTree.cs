@@ -19,10 +19,11 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+//            var script = new StringBuilder();
+//            var html = new StringBuilder();
+            return new MvcHtmlString(Settings.GetHtml());
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+  //          return new MvcHtmlString(Settings.EmitScriptAndHtml(script, html));
         }
 
     }
@@ -300,7 +301,7 @@ if (rootNode)
 
 $('#" + UniqueId + @"').fancytree('getTree').clearFilter();
 
-$('#" + UniqueId + @"').fancytree('option','source',"+ flatToTreeConvertFunctionName + "(" + data.ToJson() + @"));
+$('#" + UniqueId + @"').fancytree('option','source'," + flatToTreeConvertFunctionName + "(" + data.ToJson() + @"));
 
 rootNode=$('#" + UniqueId + @"').fancytree('getRootNode');
 
@@ -327,7 +328,7 @@ if (match) {
 
         }
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             if (SessionStateId != null)
                 sessionStateObject = AppServer.GetStateObject<bsTreeSessionState>(SessionStateId);
@@ -404,6 +405,18 @@ if (match) {
                         script.AppendLine("  td_tag.html(f" + colIndex + "(row)); node.saveHtml=f" + colIndex + "(row);");
                 }
                 else
+                if (col.EditableType != bsEditableType.None)
+                {
+                    var edt = new bsTreeEditable(Model);
+                    edt.Tag = "small";
+                    edt.Bind_Value<string>(col.Field_Bind);
+                    var edt_html = new StringBuilder();
+                    edt.EmitScriptAndHtml(script, edt_html);
+
+                    script.AppendLine("  td_tag.html(" + edt_html.AsJavaScript() + ");");
+
+                }
+                else
                 {
                     script.AppendLine("  td_tag.text(row['" + col.Field_Bind + "']);");
                 }
@@ -457,7 +470,7 @@ if (match) {
                         html.Append(@"<input id='" + UniqueId + @"-filter-input' type='text' class='form-control input-sm' placeholder='строка для поиска' style='max-width:150px; margin-left1:-15px; display:inline-block'>");
 
                     foreach (var control in leftToolbar)
-                        html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                        html.Append(control.GetHtml());
 
                     html.Append(@"</div>");
                 }
@@ -467,7 +480,7 @@ if (match) {
                     html.Append("<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-right:0px'>");
                     html.Append("<div class='pull-right'>");
                     foreach (var control in rightToolbar)
-                        html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                        html.Append(control.GetHtml());
                     html.Append("</div>");
                     html.Append("</div>");
                 }
@@ -499,7 +512,7 @@ if (match) {
             html.Append("</table>");
             html.Append("</div>");  // end row
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
 
         public void JavaScript_ExpandAll(dynamic args)

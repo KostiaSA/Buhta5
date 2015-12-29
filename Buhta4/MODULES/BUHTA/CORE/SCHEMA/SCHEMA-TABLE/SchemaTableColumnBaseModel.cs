@@ -95,7 +95,7 @@ namespace Buhta
             dataTypeTag.Label = "Тип данных";
 
 
-            html.Append(dataTypeTag.GetHtml(new StringBuilder(), new StringBuilder()));
+            html.Append(dataTypeTag.GetHtml());
 
             var stringSizeTag = new bsInput(this);
             stringSizeTag.IsRequired = this is SchemaTableColumnAddDialogModel;
@@ -104,14 +104,14 @@ namespace Buhta
             stringSizeTag.Type = bsInputType.Text;
             stringSizeTag.Bind_Value<string>(nameof(ColumnStringDataType) + "." + nameof(StringDataType.MaxSize));
             stringSizeTag.Bind_Visible(() => Column.DataType.GetType() == typeof(StringDataType));
-            html.Append(stringSizeTag.GetHtml(new StringBuilder(), new StringBuilder()));
+            html.Append(stringSizeTag.GetHtml());
 
             var refTableTag = new bsInput(this);
             refTableTag.IsRequired = true;
             refTableTag.Bind_Value_To_SchemaObject(nameof(ColumnForeingKeyDataType) + "." + nameof(ColumnForeingKeyDataType.RefTableID), typeof(SchemaTable));
             refTableTag.Label = "Ссылка на таблицу";
             refTableTag.Bind_Visible(() => Column.DataType.GetType() == typeof(ForeingKeyDataType));
-            html.Append(refTableTag.GetHtml(new StringBuilder(), new StringBuilder()));
+            html.Append(refTableTag.GetHtml());
 
 
             return new MvcHtmlString(html.ToString());

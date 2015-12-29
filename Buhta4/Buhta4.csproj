@@ -16,7 +16,7 @@
     <RootNamespace>Buhta</RootNamespace>
     <AssemblyName>Buhta4</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <MvcBuildViews>true</MvcBuildViews>
+    <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -171,6 +171,8 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTag.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTagEnd.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTagBegin.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeEditableValueBinder.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeEditable.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaObjectsBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaRolesBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-GRID\bsGridDataSourceToSqlDataViewBinder.cs" />

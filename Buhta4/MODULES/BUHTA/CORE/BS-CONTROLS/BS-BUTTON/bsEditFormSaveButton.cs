@@ -29,10 +29,10 @@ namespace Buhta
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
 
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
 
-            return new MvcHtmlString(button.GetHtml(script, html));
+            return new MvcHtmlString(button.GetHtml());
         }
 
     }

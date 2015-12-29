@@ -15,10 +15,11 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            var script = new StringBuilder();
-            var html = new StringBuilder();
+            //var script = new StringBuilder();
+            //var html = new StringBuilder();
 
-            return new MvcHtmlString(tag.GetHtml(script, html));
+            return new MvcHtmlString(tag.GetHtml());
+            //return new MvcHtmlString(tag.EmitScriptAndHtml(script, html));
         }
     }
 
@@ -163,7 +164,7 @@ namespace Buhta
         }
 
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
 
             //if (Size == bsSelectSize.Large)
@@ -221,7 +222,7 @@ namespace Buhta
                 script.AppendLine("$('#" + UniqueId + "').parent().first().find('.selectize-control').css('max-width','" + MaxWidth + "px');");
 
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
     }
 

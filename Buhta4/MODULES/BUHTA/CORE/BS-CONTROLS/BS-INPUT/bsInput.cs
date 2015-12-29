@@ -30,7 +30,7 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            return new MvcHtmlString(Settings.GetHtml());
         }
     }
 
@@ -308,7 +308,7 @@ namespace Buhta
             return value.ToString();
         }
 
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
             if (MaxWidth != null)
                 AddAttr("max-width", MaxWidth + "px");
@@ -392,7 +392,7 @@ namespace Buhta
                 var selectButton = new bsButton(Model);
                 selectButton.Text = "Выбрать";
                 selectButton.Bind_OnClick(listBinder.SelectButtonClick);
-                html.Append(selectButton.GetHtml(new StringBuilder(), new StringBuilder()));
+                html.Append(selectButton.GetHtml());
 
 
                 html.Append("</span>");
@@ -429,7 +429,7 @@ namespace Buhta
                 var selectButton = new bsButton(Model);
                 selectButton.Text = "Поиск";
                 selectButton.Bind_OnClick(schemaObjectBinder.SelectButtonClick);
-                html.Append(selectButton.GetHtml(new StringBuilder(), new StringBuilder()));
+                html.Append(selectButton.GetHtml());
 
 
                 html.Append("</span>");
@@ -443,7 +443,7 @@ namespace Buhta
 
             html.Append("</div>"); // end form-group
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
     }
 

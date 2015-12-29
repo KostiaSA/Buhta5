@@ -28,7 +28,7 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(button.GetHtml(script, html));
+            return new MvcHtmlString(button.GetHtml());
         }
 
     }

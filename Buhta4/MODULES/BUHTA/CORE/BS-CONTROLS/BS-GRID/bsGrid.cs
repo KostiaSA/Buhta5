@@ -21,7 +21,7 @@ namespace Buhta
             var script = new StringBuilder();
             var html = new StringBuilder();
 
-            return new MvcHtmlString(Settings.GetHtml(script, html));
+            return new MvcHtmlString(Settings.GetHtml());
         }
 
     }
@@ -267,7 +267,7 @@ namespace Buhta
             public string AscDesc;
 
         }
-        public override string GetHtml(StringBuilder script, StringBuilder html)
+        public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
 
             AddClass("table");
@@ -405,7 +405,7 @@ namespace Buhta
 
             html.Append("</table>");
 
-            return base.GetHtml(script, html);
+            base.EmitScriptAndHtml(script, html);
         }
 
     }
