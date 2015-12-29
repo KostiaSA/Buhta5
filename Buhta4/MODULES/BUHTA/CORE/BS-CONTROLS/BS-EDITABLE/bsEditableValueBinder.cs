@@ -8,13 +8,13 @@ using System.Web;
 namespace Buhta
 {
 
-    public class bsEditableValueBinder<T> : BaseBinder
+    public class bsEditableValueBinder<T> : BaseBinder, ITwoWayBinder<T>
     {
         public bool Is2WayBinding;
         public string jsOnChangeEventName;
         public string jsGetPropertyName;
         public string jsGetMethodName;
-        public string ModelPropertyName;
+        public string ModelPropertyName { get; set; }
         public BinderGetMethod<T> ModelGetMethod;
 
         public bsEditableValueBinder()
@@ -69,10 +69,10 @@ namespace Buhta
 
             if (isHtmlMode)
             {
-                return "$('#" + Control.UniqueId + "').find('span').html(" + value + ");";
+                return "$('#" + Control.UniqueId + ">span').html(" + value + ");";
             }
             else
-                return "$('#" + Control.UniqueId + "').find('span').text(" + value + ",true);";
+                return "$('#" + Control.UniqueId + ">span').text(" + value + ",true);";
 
         }
 
@@ -84,14 +84,14 @@ namespace Buhta
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
-            //script.AppendLine("$('#" + Control.UniqueId + "').on('" + jsOnChangeEventName + "', function () {");
+            script.AppendLine("$('#" + Control.UniqueId + ">span').on('save', function(e,params) {");
 
-            //var propName = UniqueId;
-            //if (propName == null && ModelSetMethod != null)
-            //    throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
+            var propName = UniqueId;
+            if (propName == null && ModelSetMethod != null)
+                throw new Exception(nameof(bsEditableValueBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
-            //script.AppendLine("  bindingHub.server.sendBindedValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "',$('#" + Control.UniqueId + "')." + jsGetMethodName + "());");
-            //script.AppendLine("}); ");
+            script.AppendLine("  bindingHub.server.sendBindedValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "', params.newValue);");
+            script.AppendLine("}); ");
 
         }
 

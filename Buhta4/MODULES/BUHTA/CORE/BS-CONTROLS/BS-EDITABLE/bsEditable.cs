@@ -89,10 +89,7 @@ var tag=$('#" + UniqueId + @">span');
 
 tag.editable({
     type: 'text',
-    title: "+Label.AsJavaScript()+@",
-    success: function(response, newValue) {
-                alert('username: '+newValue);
-            }
+    title: "+Label.AsJavaScript()+@"
 });
 
 tag.on('shown', function(e, editable) {

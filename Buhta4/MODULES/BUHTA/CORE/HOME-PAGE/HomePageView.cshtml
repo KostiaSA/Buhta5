@@ -1,14 +1,23 @@
 ﻿
 @model HomePageModel
-
 @{ Layout = "~/MODULES/BUHTA/CORE/SHARED/_Layout.cshtml"; }
-
 <div class="container">
     <h1>Бухта 5.0</h1>
-    @Html.bsEditable((tag)=> {
-    tag.Label = "Название уродов";
+    @Html.bsEditable((tag) =>
+    {
+        tag.Label = "Название уродов";
 
-    Model.TestStr1 = "Привет уроды";
-    tag.Bind_Value<string>("TestStr1");
-})
+        Model.TestStr1 = "Привет уроды";
+        tag.Bind_Value<string>("TestStr1");
+
+    })
+
+    @Html.bsInput((tag) =>
+    {
+        tag.Label = "Название уродов2";
+
+        //Model.TestStr1 = "Привет уроды";
+        tag.Bind_Value<string>("TestStr1");
+
+    })
 </div>

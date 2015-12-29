@@ -61,7 +61,7 @@ namespace Buhta
             var binder = BindedBinders[binderId];
             if (binder.ValueType == typeof(string))
             {
-                var b = (binder as TwoWayBinder<string>);
+                var b = (binder as ITwoWayBinder<string>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else
@@ -70,7 +70,7 @@ namespace Buhta
             else
             if (binder.ValueType == typeof(int))
             {
-                var b = (binder as TwoWayBinder<int>);
+                var b = (binder as ITwoWayBinder<int>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else
@@ -79,7 +79,7 @@ namespace Buhta
             else
             if (binder.ValueType == typeof(Guid))
             {
-                var b = (binder as TwoWayBinder<Guid>);
+                var b = (binder as ITwoWayBinder<Guid>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else
@@ -88,7 +88,7 @@ namespace Buhta
             else
             if (binder.ValueType == typeof(bool))
             {
-                var b = (binder as TwoWayBinder<bool>);
+                var b = (binder as ITwoWayBinder<bool>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else
@@ -97,7 +97,7 @@ namespace Buhta
             else
             if (binder.ValueType == typeof(DateTime))
             {
-                var b = (binder as TwoWayBinder<DateTime>);
+                var b = (binder as ITwoWayBinder<DateTime>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else
@@ -106,7 +106,7 @@ namespace Buhta
             else
             if (binder.ValueType == typeof(decimal))
             {
-                var b = (binder as TwoWayBinder<decimal>);
+                var b = (binder as ITwoWayBinder<decimal>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else
@@ -115,7 +115,7 @@ namespace Buhta
             else
             if (binder.ValueType == typeof(float))
             {
-                var b = (binder as TwoWayBinder<float>);
+                var b = (binder as ITwoWayBinder<float>);
                 if (b.ModelPropertyName != null)
                     SetPropertyValue(b.ModelPropertyName, value);
                 else

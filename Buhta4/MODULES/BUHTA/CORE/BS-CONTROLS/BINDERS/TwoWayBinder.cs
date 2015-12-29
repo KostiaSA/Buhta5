@@ -8,7 +8,13 @@ using System.Web;
 namespace Buhta
 {
 
-    public class TwoWayBinder<T> : OneWayBinder<T>
+    public interface ITwoWayBinder<T>
+    {
+        BinderSetMethod<T> ModelSetMethod { get; set; }
+        string ModelPropertyName { get; set; }
+    }
+
+    public class TwoWayBinder<T> : OneWayBinder<T>, ITwoWayBinder<T>
     {
 
         public bool Is2WayBinding;

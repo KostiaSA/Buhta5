@@ -13,7 +13,7 @@ namespace Buhta
         public string jsSetMethodName;
         public string jsSetPropertyName;
         public bool jsSetIsValueAsObject;
-        public string ModelPropertyName;
+        public string ModelPropertyName { get; set; }
         public BinderGetMethod<T> ModelGetMethod;
 
         public OneWayBinder()
