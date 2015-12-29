@@ -15,7 +15,10 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(tag.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(tag.GetHtml(script, html));
         }
     }
 
@@ -160,7 +163,7 @@ namespace Buhta
         }
 
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
 
             //if (Size == bsSelectSize.Large)
@@ -175,28 +178,28 @@ namespace Buhta
             if (PlaceHolder != null)
                 AddAttr("placeholder", PlaceHolder);
 
-            Html.Append("<div class='form-group'>"); // begin form-group
+            html.Append("<div class='form-group'>"); // begin form-group
 
             AddClass("form-control");
 
             if (Label != null)
             {
-                Html.Append("<label class='col-sm-3 control-label' >" + Label.AsHtml());
+                html.Append("<label class='col-sm-3 control-label' >" + Label.AsHtml());
                 if (IsRequired)
-                    Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
-                Html.Append("</label>");
+                    html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                html.Append("</label>");
 
-                Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
+                html.Append("<div class='col-sm-9'>");  // begin col-sm-9
             }
 
-            Html.Append("<select id='" + UniqueId + "' " + GetAttrs() + "></select>");
+            html.Append("<select id='" + UniqueId + "' " + GetAttrs() + "></select>");
 
             if (Label != null)
             {
-                Html.Append("</div>");  // end col-sm-9
+                html.Append("</div>");  // end col-sm-9
             }
 
-            Html.Append("</div>"); // end form-group
+            html.Append("</div>"); // end form-group
 
 
             JsObject init = new JsObject();
@@ -213,12 +216,12 @@ namespace Buhta
                     init.AddProperty("sortField", "sort");
             }
 
-            Script.AppendLine("$('#" + UniqueId + "').selectize(" + init.ToJson() + ");");
+            script.AppendLine("$('#" + UniqueId + "').selectize(" + init.ToJson() + ");");
             if (MaxWidth != null)
-                Script.AppendLine("$('#" + UniqueId + "').parent().first().find('.selectize-control').css('max-width','" + MaxWidth + "px');");
+                script.AppendLine("$('#" + UniqueId + "').parent().first().find('.selectize-control').css('max-width','" + MaxWidth + "px');");
 
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
     }
 

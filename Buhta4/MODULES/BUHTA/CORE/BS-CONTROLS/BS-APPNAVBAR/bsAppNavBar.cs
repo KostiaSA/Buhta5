@@ -16,7 +16,9 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(tag.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+            return new MvcHtmlString(tag.GetHtml(script, html));
         }
 
     }
@@ -44,39 +46,39 @@ namespace Buhta
             leftToolbar.Add(button);
         }
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
-            Html.Append("<nav id='" + UniqueId + "' " + GetAttrs() + " class='navbar navbar-default'>");
-            Html.Append("<div class='container' style='padding-left:0px;padding-right:0px'>");
-            Html.Append("<div class='collapse navbar-collapse'>");
+            html.Append("<nav id='" + UniqueId + "' " + GetAttrs() + " class='navbar navbar-default'>");
+            html.Append("<div class='container' style='padding-left:0px;padding-right:0px'>");
+            html.Append("<div class='collapse navbar-collapse'>");
 
-            Html.Append("<ul class='nav navbar-nav app-navbar'>");
+            html.Append("<ul class='nav navbar-nav app-navbar'>");
 
             foreach (var control in leftToolbar)
             {
-                Html.Append("<li>");
-                Html.Append(control.GetHtml());
-                Html.Append("</li>");
+                html.Append("<li>");
+                html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                html.Append("</li>");
             }
-            Html.Append("</ul>");
+            html.Append("</ul>");
 
-            Html.Append("<ul class='nav navbar-nav app-navbar pull-right'>");
+            html.Append("<ul class='nav navbar-nav app-navbar pull-right'>");
             foreach (var control in rightToolbar)
             {
-                Html.Append("<li>");
-                Html.Append(control.GetHtml());
-                Html.Append("</li>");
+                html.Append("<li>");
+                html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                html.Append("</li>");
             }
-            Html.Append("</ul>");
+            html.Append("</ul>");
 
-            Html.Append("</div>");
-            Html.Append("</div>");
-            Html.Append("</nav>");
+            html.Append("</div>");
+            html.Append("</div>");
+            html.Append("</nav>");
 
             if (Model is AppNavBarModel)
                 Model.Update();
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
     }
 

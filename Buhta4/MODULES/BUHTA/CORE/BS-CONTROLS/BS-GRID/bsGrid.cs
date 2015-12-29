@@ -18,7 +18,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(Settings.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(Settings.GetHtml(script, html));
         }
 
     }
@@ -238,7 +241,7 @@ namespace Buhta
                     if (col.CellTemplateJS != null)
                     {
                         script.AppendLine("  var f" + i + "=function(row){");
-                        Script.AppendLine(col.CellTemplateJS);
+                        script.AppendLine(col.CellTemplateJS);
                         script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", row);");
                         script.AppendLine("  };");
                         script.AppendLine("  td.eq(" + i + ").html(f" + i + "(rec));");
@@ -264,7 +267,7 @@ namespace Buhta
             public string AscDesc;
 
         }
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
 
             AddClass("table");
@@ -329,80 +332,80 @@ namespace Buhta
             //    selectedRows = Model.GetPropertyValue<ObservableCollection<string>>(SelectedRows_Bind);
             //    init.AddProperty("checkbox", true);
 
-            //    Script.AppendLine("var " + SelectedRows_Bind + "=function(event, data) {");
-            //    Script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
-            //    Script.AppendLine("}");
+            //    script.AppendLine("var " + SelectedRows_Bind + "=function(event, data) {");
+            //    script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
+            //    script.AppendLine("}");
 
             //    init.AddRawProperty("select", SelectedRows_Bind);
 
             //}
 
-            //Script.AppendLine("var renderColumns=function(event, data) {");
-            //Script.AppendLine("  var node = data.node;");
-            //Script.AppendLine("  var row = node.data.row;");
-            //Script.AppendLine("  row.node = node;");
-            //Script.AppendLine("  var td = $(node.tr).find('>td');");
+            //script.AppendLine("var renderColumns=function(event, data) {");
+            //script.AppendLine("  var node = data.node;");
+            //script.AppendLine("  var row = node.data.row;");
+            //script.AppendLine("  row.node = node;");
+            //script.AppendLine("  var td = $(node.tr).find('>td');");
             //int i = -1;
             //foreach (var col in Columns.Where(c => c.Hidden != true))
             //{
             //    i++;
             //    if (col.CellTemplate != null)
             //    {
-            //        Script.AppendLine(@"  var f" + i + "=function(row){");
+            //        script.AppendLine(@"  var f" + i + "=function(row){");
             //        if (col.CellTemplateJS != null)
-            //            Script.AppendLine(col.CellTemplateJS);
-            //        Script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate + @""", row);");
-            //        Script.AppendLine(@"  };");
+            //            script.AppendLine(col.CellTemplateJS);
+            //        script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate + @""", row);");
+            //        script.AppendLine(@"  };");
             //        if (i != 0)
-            //            Script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");
+            //            script.AppendLine("  td.eq(" + i + ").html(f" + i + "(row));");
             //        else
-            //            Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row));");
+            //            script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').html(f" + i + "(row));");
             //    }
             //    else
             //    {
             //        if (i != 0)
-            //            Script.AppendLine("  td.eq(" + i + ").text(row['" + col.Field_Bind + "']);");
+            //            script.AppendLine("  td.eq(" + i + ").text(row['" + col.Field_Bind + "']);");
             //        else
-            //            Script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').text(row['" + col.Field_Bind + "']);");
+            //            script.AppendLine("  td.eq(" + i + ").find('.fancytree-title').text(row['" + col.Field_Bind + "']);");
             //    }
 
             //}
-            //Script.AppendLine("}");
+            //script.AppendLine("}");
             //init.AddRawProperty("renderColumns", "renderColumns");
 
-            Script.AppendLine("$('#" + UniqueId + "').DataTable(" + init.ToJson() + ");");
+            script.AppendLine("$('#" + UniqueId + "').DataTable(" + init.ToJson() + ");");
 
             //if (ClickAction != null)
             //{
-            //    Script.AppendLine("$('#" + UniqueId + "').on('click',function(event){");
+            //    script.AppendLine("$('#" + UniqueId + "').on('click',function(event){");
             //    ClickAction.EmitJsCode(Script);
-            //    Script.AppendLine("});");
+            //    script.AppendLine("});");
 
             //}
 
-            Html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
-            //Html.Append("<colgroup>");
+            html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
+            //html.Append("<colgroup>");
             //foreach (var col in Columns)
             //    col.EmitColgroupCol(Html, Script);
-            //Html.Append("</colgroup>");
+            //html.Append("</colgroup>");
 
-            //Html.Append("<thead>");
-            //Html.Append("<tr>");
+            //html.Append("<thead>");
+            //html.Append("<tr>");
             //foreach (var col in Columns.Where(c => c.Hidden != true))
-            //    Html.Append("<th>" + col.Caption + "</th>");
-            //Html.Append("</tr>");
-            //Html.Append("</thead>");
+            //    html.Append("<th>" + col.Caption + "</th>");
+            //html.Append("</tr>");
+            //html.Append("</thead>");
 
-            //Html.Append("<tbody>");
-            //Html.Append("<tr>");
+            //html.Append("<tbody>");
+            //html.Append("<tr>");
             //foreach (var col in Columns.Where(c => c.Hidden != true))
-            //    Html.Append("<td></td>");
-            //Html.Append("</tr>");
-            //Html.Append("</tbody>");
+            //    html.Append("<td></td>");
+            //html.Append("</tr>");
+            //html.Append("</tbody>");
 
-            Html.Append("</table>");
+            html.Append("</table>");
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
 
     }

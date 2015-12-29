@@ -28,7 +28,11 @@ namespace Buhta
             settings(button);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(button.GetHtml());
+
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(button.GetHtml(script, html));
         }
 
     }

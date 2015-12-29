@@ -15,7 +15,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(Settings.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(Settings.GetHtml(script, html));
         }
 
     }
@@ -30,7 +33,7 @@ namespace Buhta
 
         public bsTreeToolbarButtonRole Role = bsTreeToolbarButtonRole.None;
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
             AddStyle("margin-left", "5px");
          //   AddStyle("margin-bottom", "10px");
@@ -41,7 +44,7 @@ namespace Buhta
             if (Role == bsTreeToolbarButtonRole.CollapseAll)
                 Bind_OnClick(Tree.JavaScript_CollapseAll);
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
     }
 

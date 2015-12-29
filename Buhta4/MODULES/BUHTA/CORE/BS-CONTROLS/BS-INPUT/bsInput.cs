@@ -27,7 +27,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(Settings.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(Settings.GetHtml(script, html));
         }
     }
 
@@ -305,7 +308,7 @@ namespace Buhta
             return value.ToString();
         }
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
             if (MaxWidth != null)
                 AddAttr("max-width", MaxWidth + "px");
@@ -323,7 +326,7 @@ namespace Buhta
                 AddAttr("placeholder", PlaceHolder);
 
 
-            Html.Append("<div class='form-group'>"); // begin form-group
+            html.Append("<div class='form-group'>"); // begin form-group
 
             if (Type == bsInputType.Text)
             {
@@ -333,35 +336,35 @@ namespace Buhta
                 if (Label != null)
                 {
 
-                    Html.Append("<label class='col-sm-3 control-label' >" + Label.AsHtml());
+                    html.Append("<label class='col-sm-3 control-label' >" + Label.AsHtml());
                     if (IsRequired)
-                        Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
-                    Html.Append("</label>");
-                    Html.Append("<div class='col-sm-9'>");  // begin col-sm-9
+                        html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                    html.Append("</label>");
+                    html.Append("<div class='col-sm-9'>");  // begin col-sm-9
                 }
 
-                Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + ">" + /*GetDisplayText(Value) +*/ "</input>");
-                Html.Append("<small id='" + UniqueId + "-error-text' class='error-text hidden'></small>");
+                html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + ">" + /*GetDisplayText(Value) +*/ "</input>");
+                html.Append("<small id='" + UniqueId + "-error-text' class='error-text hidden'></small>");
 
                 if (Label != null)
                 {
-                    Html.Append("</div>");  // end col-sm-9
+                    html.Append("</div>");  // end col-sm-9
                 }
             }
             else
             if (Type == bsInputType.Checkbox)
             {
 
-                Html.Append("<div class='col-sm-offset-3 col-sm-9'>"); // beg col-sm-offset-3 col-sm-9
-                Html.Append("<div class='checkbox'>");
-                Html.Append("<label>");
+                html.Append("<div class='col-sm-offset-3 col-sm-9'>"); // beg col-sm-offset-3 col-sm-9
+                html.Append("<div class='checkbox'>");
+                html.Append("<label>");
 
-                Html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + "></input>");
-                Html.Append(Label != null ? Label.AsHtmlEx() : "");
+                html.Append("<input id='" + UniqueId + "' type='" + Type.ToString().ToLower() + "' " + GetAttrs() + "></input>");
+                html.Append(Label != null ? Label.AsHtmlEx() : "");
 
-                Html.Append("</label>");
-                Html.Append("</div>");
-                Html.Append("</div>");  // end col-sm-offset-3 col-sm-9
+                html.Append("</label>");
+                html.Append("</div>");
+                html.Append("</div>");  // end col-sm-offset-3 col-sm-9
             }
             else
             if (Type == bsInputType.List)
@@ -371,33 +374,33 @@ namespace Buhta
 
                 if (Label != null)
                 {
-                    //Html.Append("<div class='col-sm-3'>"); // begin col-sm-3
-                    Html.Append("<label class='col-sm-3 control-label'>"+ Label.AsHtml());
+                    //html.Append("<div class='col-sm-3'>"); // begin col-sm-3
+                    html.Append("<label class='col-sm-3 control-label'>"+ Label.AsHtml());
                     if (IsRequired)
-                        Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
-                    Html.Append("</label>");
-                    //Html.Append("</div>");  // end col-sm-3
-                    Html.Append("<div class='col-sm-8'>");  // begin col-sm-9
+                        html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                    html.Append("</label>");
+                    //html.Append("</div>");  // end col-sm-3
+                    html.Append("<div class='col-sm-8'>");  // begin col-sm-9
                 }
 
 
-                Html.Append("<div class='input-group bs-input'>");
-                Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value).AsHtml() + "</input>");
-                Html.Append("<span class='input-group-btn'>");
-                //Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
+                html.Append("<div class='input-group bs-input'>");
+                html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value).AsHtml() + "</input>");
+                html.Append("<span class='input-group-btn'>");
+                //html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
 
                 var selectButton = new bsButton(Model);
                 selectButton.Text = "Выбрать";
                 selectButton.Bind_OnClick(listBinder.SelectButtonClick);
-                Html.Append(selectButton.GetHtml());
+                html.Append(selectButton.GetHtml(new StringBuilder(), new StringBuilder()));
 
 
-                Html.Append("</span>");
-                Html.Append("</div>");
+                html.Append("</span>");
+                html.Append("</div>");
 
                 if (Label != null)
                 {
-                    Html.Append("</div>");  // end col-sm-9
+                    html.Append("</div>");  // end col-sm-9
                 }
             }
             else
@@ -408,39 +411,39 @@ namespace Buhta
 
                 if (Label != null)
                 {
-                    //Html.Append("<div class='col-sm-3'>"); // begin col-sm-3
-                    Html.Append("<label class='col-sm-3 control-label'>" + Label.AsHtml());
+                    //html.Append("<div class='col-sm-3'>"); // begin col-sm-3
+                    html.Append("<label class='col-sm-3 control-label'>" + Label.AsHtml());
                     if (IsRequired)
-                        Html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
-                    Html.Append("</label>");
-                    //Html.Append("</div>");  // end col-sm-3
-                    Html.Append("<div class='col-sm-8'>");  // begin col-sm-9
+                        html.Append("<span style='color:#EF6F6C'>&nbsp;*</span>");
+                    html.Append("</label>");
+                    //html.Append("</div>");  // end col-sm-3
+                    html.Append("<div class='col-sm-8'>");  // begin col-sm-9
                 }
 
 
-                Html.Append("<div class='input-group bs-input'>");
-                Html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value).AsHtml() + "</input>");
-                Html.Append("<span class='input-group-btn'>");
-                //Html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
+                html.Append("<div class='input-group bs-input'>");
+                html.Append("<input id='" + UniqueId + "' type='text' " + GetAttrs() + ">" + GetDisplayText(Value).AsHtml() + "</input>");
+                html.Append("<span class='input-group-btn'>");
+                //html.Append("<div id='" + UniqueId + "-select-btn' class='btn btn-default' type='button'>Выбрать</div>");
 
                 var selectButton = new bsButton(Model);
                 selectButton.Text = "Поиск";
                 selectButton.Bind_OnClick(schemaObjectBinder.SelectButtonClick);
-                Html.Append(selectButton.GetHtml());
+                html.Append(selectButton.GetHtml(new StringBuilder(), new StringBuilder()));
 
 
-                Html.Append("</span>");
-                Html.Append("</div>");
+                html.Append("</span>");
+                html.Append("</div>");
 
                 if (Label != null)
                 {
-                    Html.Append("</div>");  // end col-sm-9
+                    html.Append("</div>");  // end col-sm-9
                 }
             }
 
-            Html.Append("</div>"); // end form-group
+            html.Append("</div>"); // end form-group
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
     }
 

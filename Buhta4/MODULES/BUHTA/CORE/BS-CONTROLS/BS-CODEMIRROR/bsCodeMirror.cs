@@ -16,7 +16,10 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(tag.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(tag.GetHtml(script, html));
         }
 
     }
@@ -30,7 +33,7 @@ namespace Buhta
         public CodeMirrorMode Mode;
         public bool IsReadOnly;
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
 
             JsObject init = new JsObject();
@@ -59,10 +62,10 @@ namespace Buhta
                     throw new Exception(nameof(bsCodeMirror) + ": неизвестный " + nameof(Mode) + " '" + Mode.ToNameString() + "'");
             }
 
-            Script.AppendLine("var editor=CodeMirror( $('#" + UniqueId + "')[0]," + init.ToJson() + ");");
-            Script.AppendLine("setTimeout(editor.refresh, 0)");
+            script.AppendLine("var editor=CodeMirror( $('#" + UniqueId + "')[0]," + init.ToJson() + ");");
+            script.AppendLine("setTimeout(editor.refresh, 0)");
 
-            Html.Append(@"
+            html.Append(@"
 <style>
 .CodeMirror { 
   border:1px solid #eee; 
@@ -74,8 +77,8 @@ namespace Buhta
 }
 </style>
 ");
-            Html.Append("<div id='" + UniqueId + "' " + GetAttrs() + ">");
-            return base.GetHtml();
+            html.Append("<div id='" + UniqueId + "' " + GetAttrs() + ">");
+            return base.GetHtml(script, html);
         }
 
 

@@ -17,7 +17,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(Settings.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(Settings.GetHtml(script, html));
         }
 
     }
@@ -97,13 +100,13 @@ namespace Buhta
 
         public BaseAction ClickAction;
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
             if (ClickAction != null)
             {
-                Script.AppendLine("tag.on('click',function(event){");
-                ClickAction.EmitJsCode(Script);
-                Script.AppendLine("});");
+                script.AppendLine("tag.on('click',function(event){");
+                ClickAction.EmitJsCode(script);
+                script.AppendLine("});");
 
             }
 
@@ -111,9 +114,9 @@ namespace Buhta
             if (Image != null)
                 imageHtml = "<img src=" + new UrlHelper(HttpContext.Current.Request.RequestContext).Content(Image).AsJavaScript() + " width='30' height='30'/>";
 
-            Html.Append("<a id='" + UniqueId + "' " + GetAttrs() + " href='javascript:void(0)'>" + imageHtml + "<p>" + Text.AsHtmlEx() + "</p></a>");
+            html.Append("<a id='" + UniqueId + "' " + GetAttrs() + " href='javascript:void(0)'>" + imageHtml + "<p>" + Text.AsHtmlEx() + "</p></a>");
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
     }
 

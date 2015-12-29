@@ -12,8 +12,6 @@ namespace Buhta
 
     public class bsControl
     {
-        protected StringBuilder Script = new StringBuilder();
-        protected StringBuilder Html = new StringBuilder();
 
 
         BaseModel model;
@@ -212,20 +210,21 @@ namespace Buhta
         }
 
 
-        public virtual string GetHtml()
+        public virtual string GetHtml(StringBuilder script, StringBuilder html)
         {
-            EmitBinders(Script);
+
+            EmitBinders(script);
 
             if (isAutoHeightToScreenBottom)
             {
                 // для невидимых(пока) закладок делаем установку height на событие Show, иначе позиция невидимого элемента вычисляется неверно
                 if (autoHeight_bootstrapTabId != null)
-                    Script.AppendLine("$('#" + autoHeight_bootstrapTabId + "').on('shown.bs.tab', function(e) {");
+                    script.AppendLine("$('#" + autoHeight_bootstrapTabId + "').on('shown.bs.tab', function(e) {");
 
-                Script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-" + autoHeight_bottomPadding + ").toString()+'px');");
+                script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-" + autoHeight_bottomPadding + ").toString()+'px');");
 
                 if (autoHeight_bootstrapTabId != null)
-                    Script.AppendLine("});");
+                    script.AppendLine("});");
             }
 
             var wrapperBeg = new StringBuilder();
@@ -235,11 +234,11 @@ namespace Buhta
                 w.EmitHtml(wrapperBeg, wrapperEnd);
 
 
-            if (Script.Length > 0)
+            if (script.Length > 0)
                 //                return wrapperBeg.ToString() + "<script>\n$(document).ready( function(){\n $.connection.hub.start().done(function () { var tag =$('#" + UniqueId + "');\n" + Script + "})});\n</script>" + Html + wrapperEnd.ToString();
-                return wrapperBeg.ToString() + "<script>\ndocReady(function(){\n" + Script + "});\n</script>" + Html + wrapperEnd.ToString();
+                return wrapperBeg.ToString() + "<script>\ndocReady(function(){\n" + script + "});\n</script>" + html + wrapperEnd.ToString();
             else
-                return wrapperBeg.ToString() + Html.ToString() + wrapperEnd.ToString();
+                return wrapperBeg.ToString() + html.ToString() + wrapperEnd.ToString();
         }
 
 

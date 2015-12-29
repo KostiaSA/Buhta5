@@ -16,7 +16,11 @@ namespace Buhta
             settings(tag);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(tag.GetHtml());
+
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(tag.GetHtml(script, html));
         }
 
     }
@@ -49,7 +53,7 @@ namespace Buhta
         }
 
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
 
             //JsObject init = new JsObject();
@@ -78,24 +82,24 @@ namespace Buhta
             //        throw new Exception(nameof(bsAce) + ": неизвестный " + nameof(Mode) + " '" + Mode.ToNameString() + "'");
             //}
 
-            //  Script.AppendLine("var editor=Ace( $('#" + UniqueId + "')[0]," + init.ToJson() + ");");
+            //  script.AppendLine("var editor=Ace( $('#" + UniqueId + "')[0]," + init.ToJson() + ");");
 
-            Script.AppendLine("var editor = ace.edit('" + UniqueId + "');");
-            Script.AppendLine("$('#" + UniqueId + "')[0]['editor']=editor;");
-            Script.AppendLine("editor.setTheme('ace/theme/sqlserver');");
-            Script.AppendLine("editor.getSession().setMode('ace/mode/sqlserver');");
-     //       Script.AppendLine("editor.setOptions({maxLines: Infinity});");
-            Script.AppendLine("editor.renderer.setShowGutter(false);");
+            script.AppendLine("var editor = ace.edit('" + UniqueId + "');");
+            script.AppendLine("$('#" + UniqueId + "')[0]['editor']=editor;");
+            script.AppendLine("editor.setTheme('ace/theme/sqlserver');");
+            script.AppendLine("editor.getSession().setMode('ace/mode/sqlserver');");
+     //       script.AppendLine("editor.setOptions({maxLines: Infinity});");
+            script.AppendLine("editor.renderer.setShowGutter(false);");
 
 
             if (Value != null)
-                Script.AppendLine("editor.setValue(" + Value.AsJavaScript() + ", 1);");
+                script.AppendLine("editor.setValue(" + Value.AsJavaScript() + ", 1);");
 
-            //Script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-10).toString()+'px');");
-            //Script.AppendLine("console.log('ace-height='+(document.documentElement.clientHeight- $('#" + UniqueId + "').parent.offset().top-10).toString()+'px');");
+            //script.AppendLine("$('#" + UniqueId + "').css('height',(document.documentElement.clientHeight- $('#" + UniqueId + "').offset().top-10).toString()+'px');");
+            //script.AppendLine("console.log('ace-height='+(document.documentElement.clientHeight- $('#" + UniqueId + "').parent.offset().top-10).toString()+'px');");
 
 
-            //            Script.AppendLine(@"
+            //            script.AppendLine(@"
             //editor.on('change', function() {
             //  var lineHeight = 16; // assuming a 16px line height
             //  $('#" + UniqueId + @"')[0].style.height = lineHeight * editor.getSession().getDocument().getLength() + 'px';
@@ -103,8 +107,8 @@ namespace Buhta
             //});
             //        ");
 
-            Html.Append("<div id='" + UniqueId + "' " + GetAttrs() + "></div>");
-            return base.GetHtml();
+            html.Append("<div id='" + UniqueId + "' " + GetAttrs() + "></div>");
+            return base.GetHtml(script, html);
         }
 
 

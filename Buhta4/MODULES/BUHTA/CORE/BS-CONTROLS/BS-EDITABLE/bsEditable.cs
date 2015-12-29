@@ -16,12 +16,15 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(Settings.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(Settings.GetHtml(script, html));
         }
 
     }
 
-    public enum bsEditableType { Text }
+    public enum bsEditableType { None, Text }
 
     public class bsEditable : bsTagBegin
     {
@@ -77,26 +80,26 @@ namespace Buhta
             else
                 throw new Exception(nameof(bsEditable) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
         }
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
             AddClass("bs-editable");
 
             if (Label == null)
                 Label = "Введите значение";
 
-            Script.AppendLine(@"
+            script.AppendLine(@"
 var tag=$('#" + UniqueId + @">span');
 
 tag.editable({
     type: 'text',
-    title: "+Label.AsJavaScript()+@"
+    title: " + Label.AsJavaScript() + @"
 });
 
 tag.on('shown', function(e, editable) {
     editable.input.$input.val(tag.text());
     });
 ");
-            return base.GetHtml() + "<span>&nbsp;</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">";
+            return base.GetHtml(script, html) + "<span>&nbsp;</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">";
         }
     }
 

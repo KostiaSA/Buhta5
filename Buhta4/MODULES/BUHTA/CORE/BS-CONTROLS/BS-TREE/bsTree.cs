@@ -19,7 +19,10 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-            return new MvcHtmlString(Settings.GetHtml());
+            var script = new StringBuilder();
+            var html = new StringBuilder();
+
+            return new MvcHtmlString(Settings.GetHtml(script, html));
         }
 
     }
@@ -253,9 +256,9 @@ namespace Buhta
         }
 
 
-        void EmitFilterScript()
+        void EmitFilterScript(StringBuilder script)
         {
-            Script.Append(@"
+            script.Append(@"
 $('#" + UniqueId + @"-filter-input').keyup(function(e){
  var opts = {
   autoExpand: true,
@@ -324,7 +327,7 @@ if (match) {
 
         }
 
-        public override string GetHtml()
+        public override string GetHtml(StringBuilder script, StringBuilder html)
         {
             if (SessionStateId != null)
                 sessionStateObject = AppServer.GetStateObject<bsTreeSessionState>(SessionStateId);
@@ -363,140 +366,140 @@ if (match) {
             //    selectedRows = Model.GetPropertyValue<ObservableCollection<string>>(SelectedRows_Bind);
             //    init.AddProperty("checkbox", true);
 
-            //    Script.AppendLine("var " + SelectedRows_Bind + "=function(event, data) {");
-            //    Script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
-            //    Script.AppendLine("}");
+            //    script.AppendLine("var " + SelectedRows_Bind + "=function(event, data) {");
+            //    script.AppendLine("  bindingHub.server.sendSelectedRowsChanged('" + Model.BindingId + "', '" + SelectedRows_Bind + "', data.node.key, data.node.isSelected()); ");
+            //    script.AppendLine("}");
 
             //    init.AddRawProperty("select", SelectedRows_Bind);
 
             //}
 
-            Script.AppendLine("var renderColumns=function(event, data) {");
-            Script.AppendLine("  var node = data.node;");
-            Script.AppendLine("  var row = node.data.row || {};");
-            Script.AppendLine("  row.node = node;");
-            Script.AppendLine("  var td = $(node.tr).find('>td');");
+            script.AppendLine("var renderColumns=function(event, data) {");
+            script.AppendLine("  var node = data.node;");
+            script.AppendLine("  var row = node.data.row || {};");
+            script.AppendLine("  row.node = node;");
+            script.AppendLine("  var td = $(node.tr).find('>td');");
             int colIndex = -1;
             foreach (var col in Columns.Where(c => c.Hidden != true))
             {
                 colIndex++;
 
                 if (colIndex != 0)
-                    Script.AppendLine("  var td_tag=td.eq(" + colIndex + ");");
+                    script.AppendLine("  var td_tag=td.eq(" + colIndex + ");");
                 else
-                    Script.AppendLine("  var td_tag=td.eq(" + colIndex + ").find('.fancytree-title');");
+                    script.AppendLine("  var td_tag=td.eq(" + colIndex + ").find('.fancytree-title');");
 
 
                 if (col.CellTemplate != null)
                 {
-                    Script.AppendLine(@"  var f" + colIndex + "=function(row){");
+                    script.AppendLine(@"  var f" + colIndex + "=function(row){");
                     if (col.CellTemplateJS != null)
-                        Script.AppendLine(col.CellTemplateJS);
-                    Script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", row);");
-                    Script.AppendLine(@"  };");
+                        script.AppendLine(col.CellTemplateJS);
+                    script.AppendLine(@"    return Mustache.render(""" + col.CellTemplate.Replace("\n", "").Replace(@"""", @"\""") + @""", row);");
+                    script.AppendLine(@"  };");
                     if (colIndex != 0)
-                        Script.AppendLine("  td_tag.html(f" + colIndex + "(row));");
+                        script.AppendLine("  td_tag.html(f" + colIndex + "(row));");
                     else
                         // node.saveHtml ипользуется в jquery.fancytree.filter.js
-                        Script.AppendLine("  td_tag.html(f" + colIndex + "(row)); node.saveHtml=f" + colIndex + "(row);");
+                        script.AppendLine("  td_tag.html(f" + colIndex + "(row)); node.saveHtml=f" + colIndex + "(row);");
                 }
                 else
                 {
-                    Script.AppendLine("  td_tag.text(row['" + col.Field_Bind + "']);");
+                    script.AppendLine("  td_tag.text(row['" + col.Field_Bind + "']);");
                 }
 
                 //if (col.TextColorClass != null)
-                //    Script.AppendLine("  td_tag.addClass('" + col.TextColorClass + "');");
+                //    script.AppendLine("  td_tag.addClass('" + col.TextColorClass + "');");
                 //if (col.BackColorClass != null)
-                //    Script.AppendLine("  td_tag.addClass('" + col.BackColorClass + "');");
+                //    script.AppendLine("  td_tag.addClass('" + col.BackColorClass + "');");
 
                 foreach (string cls in col.Classes)
-                    Script.AppendLine("  td_tag.addClass('" + cls + "');");
+                    script.AppendLine("  td_tag.addClass('" + cls + "');");
 
                 foreach (var style in col.Styles)
-                    Script.AppendLine("  td_tag.css('" + style.Key + "','" + style.Value + "');");
+                    script.AppendLine("  td_tag.css('" + style.Key + "','" + style.Value + "');");
 
                 if (col.Align == bsTreeColumnAlign.center)
-                    Script.AppendLine("  td_tag.css('text-align','center');");
+                    script.AppendLine("  td_tag.css('text-align','center');");
                 if (col.Align == bsTreeColumnAlign.right)
-                    Script.AppendLine("  td_tag.css('text-align','right');");
+                    script.AppendLine("  td_tag.css('text-align','right');");
 
 
             }
-            Script.AppendLine("}");
+            script.AppendLine("}");
             init.AddRawProperty("renderColumns", "renderColumns");
 
-            Script.AppendLine("$('#" + UniqueId + "').fancytree(" + init.ToJson() + ");");
+            script.AppendLine("$('#" + UniqueId + "').fancytree(" + init.ToJson() + ");");
 
             if (ClickAction != null)
             {
-                Script.AppendLine("$('#" + UniqueId + "').on('click',function(event){");
-                ClickAction.EmitJsCode(Script);
-                Script.AppendLine("});");
+                script.AppendLine("$('#" + UniqueId + "').on('click',function(event){");
+                ClickAction.EmitJsCode(script);
+                script.AppendLine("});");
 
             }
 
             // toolbar
             if (IsShowTextFilter)
-                EmitFilterScript();
+                EmitFilterScript(script);
 
             if (rightToolbar.Count > 0 || leftToolbar.Count > 0 || IsShowTextFilter)
             {
-                Html.Append("<div class='row'>");  // begin row
+                html.Append("<div class='row'>");  // begin row
 
-                Html.Append(@"<form class='form-inline'>");
+                html.Append(@"<form class='form-inline'>");
 
                 if (leftToolbar.Count > 0 || IsShowTextFilter)
                 {
-                    Html.Append(@"<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-left:0px'>");
+                    html.Append(@"<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-left:0px'>");
 
                     if (IsShowTextFilter)
-                        Html.Append(@"<input id='" + UniqueId + @"-filter-input' type='text' class='form-control input-sm' placeholder='строка для поиска' style='max-width:150px; margin-left1:-15px; display:inline-block'>");
+                        html.Append(@"<input id='" + UniqueId + @"-filter-input' type='text' class='form-control input-sm' placeholder='строка для поиска' style='max-width:150px; margin-left1:-15px; display:inline-block'>");
 
                     foreach (var control in leftToolbar)
-                        Html.Append(control.GetHtml());
+                        html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
 
-                    Html.Append(@"</div>");
+                    html.Append(@"</div>");
                 }
 
                 if (rightToolbar.Count > 0)
                 {
-                    Html.Append("<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-right:0px'>");
-                    Html.Append("<div class='pull-right'>");
+                    html.Append("<div class='form-group col-xs-12 col-md-6' style='margin-bottom:10px; padding-right:0px'>");
+                    html.Append("<div class='pull-right'>");
                     foreach (var control in rightToolbar)
-                        Html.Append(control.GetHtml());
-                    Html.Append("</div>");
-                    Html.Append("</div>");
+                        html.Append(control.GetHtml(new StringBuilder(), new StringBuilder()));
+                    html.Append("</div>");
+                    html.Append("</div>");
                 }
-                Html.Append("</div>");  // end row
-                Html.Append("</form>");
+                html.Append("</div>");  // end row
+                html.Append("</form>");
             }
 
-            Html.Append("<div class='row'>");  // begin row
-            Html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
-            //Html.Append("<colgroup>");
+            html.Append("<div class='row'>");  // begin row
+            html.Append("<table id='" + UniqueId + "' " + GetAttrs() + ">");
+            //html.Append("<colgroup>");
             //foreach (var col in Columns)
             //    col.EmitColgroupCol(Html, Script);
-            //Html.Append("</colgroup>");
+            //html.Append("</colgroup>");
 
-            Html.Append("<thead>");
-            Html.Append("<tr>");
+            html.Append("<thead>");
+            html.Append("<tr>");
             foreach (var col in Columns.Where(c => c.Hidden != true))
-                Html.Append("<th>" + col.Caption + "</th>");
-            Html.Append("</tr>");
-            Html.Append("</thead>");
+                html.Append("<th>" + col.Caption + "</th>");
+            html.Append("</tr>");
+            html.Append("</thead>");
 
-            Html.Append("<tbody>");
-            Html.Append("<tr>");
+            html.Append("<tbody>");
+            html.Append("<tr>");
             foreach (var col in Columns.Where(c => c.Hidden != true))
-                Html.Append("<td></td>");
-            Html.Append("</tr>");
-            Html.Append("</tbody>");
+                html.Append("<td></td>");
+            html.Append("</tr>");
+            html.Append("</tbody>");
 
-            Html.Append("</table>");
-            Html.Append("</div>");  // end row
+            html.Append("</table>");
+            html.Append("</div>");  // end row
 
-            return base.GetHtml();
+            return base.GetHtml(script, html);
         }
 
         public void JavaScript_ExpandAll(dynamic args)
