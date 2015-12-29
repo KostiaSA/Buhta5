@@ -48,7 +48,7 @@ namespace Buhta
             get
             {
                 var list = new List<Object>();
-                Query.RootColumn.Name = "*root*";
+                Query.RootColumn.Name = "---root---";
                 foreach (SchemaQueryBaseColumn col in Query.RootColumn.GetAllColumns())
                 {
                     var node = new columnNode();

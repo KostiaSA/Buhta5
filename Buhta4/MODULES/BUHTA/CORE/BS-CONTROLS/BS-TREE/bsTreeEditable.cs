@@ -61,13 +61,17 @@ namespace Buhta
 
         public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
+          //  UniqueId = "AA2E0C8C4CA5E365";
             AddClass("bs-editable");
 
             if (Label == null)
                 Label = "Введите значение";
 
             script.AppendLine(@"
-var tag=$('#" + UniqueId + @">span');
+var tag=$('#'+node.key.replace('.','-')+'>span');
+
+console.log('key='+node.key.replace('.','-'));
+console.log('tag='+tag.toString());
 
 tag.editable({
     type: 'text',
@@ -79,7 +83,7 @@ tag.on('shown', function(e, editable) {
     });
 ");
             base.EmitScriptAndHtml(script, html);
-            html.Append("<span>&nbsp;</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">");
+            html.Append("<span>4D57BEAC0040F92312A4</span>&nbsp;<i class='fa fa-pencil-square-o'></i></" + Tag + ">");
         }
     }
 

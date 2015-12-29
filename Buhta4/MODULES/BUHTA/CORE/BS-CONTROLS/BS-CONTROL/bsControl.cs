@@ -53,7 +53,7 @@ namespace Buhta
             {
                 if (uniqueId == null)
                 {
-                    uniqueId = Guid.NewGuid().ToString().Substring(1, 6);
+                    uniqueId = Guid.NewGuid().ToString().Substring(0, 8);
                 }
                 return uniqueId;
             }

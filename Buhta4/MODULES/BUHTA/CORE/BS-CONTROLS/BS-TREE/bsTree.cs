@@ -19,11 +19,11 @@ namespace Buhta
             settings(Settings);
 
             (helper.ViewData.Model as BaseModel).Helper = helper;
-//            var script = new StringBuilder();
-//            var html = new StringBuilder();
+            //            var script = new StringBuilder();
+            //            var html = new StringBuilder();
             return new MvcHtmlString(Settings.GetHtml());
 
-  //          return new MvcHtmlString(Settings.EmitScriptAndHtml(script, html));
+            //          return new MvcHtmlString(Settings.EmitScriptAndHtml(script, html));
         }
 
     }
@@ -411,9 +411,13 @@ if (match) {
                     edt.Tag = "small";
                     edt.Bind_Value<string>(col.Field_Bind);
                     var edt_html = new StringBuilder();
-                    edt.EmitScriptAndHtml(script, edt_html);
+                    var edt_script = new StringBuilder();
+                    edt.EmitScriptAndHtml(edt_script, edt_html);
 
-                    script.AppendLine("  td_tag.html(" + edt_html.AsJavaScript() + ");");
+                    script.AppendLine("  td_tag.html(" + edt_html.AsJavaScript() + ".replace('4D57BEAC0040F92312A4',row['" + col.Field_Bind + "']).replace('"+ edt.UniqueId + "',node.key.replace('.','-')));");
+
+                    script.AppendLine("  setTimeout(function(){ " + edt_script.ToString() + " }, 100);");
+
 
                 }
                 else

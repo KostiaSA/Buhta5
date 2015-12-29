@@ -30,23 +30,24 @@ namespace Buhta
 
         public override string GetJsForSettingProperty()
         {
-            if (ModelGetMethod == null && ModelPropertyName == null)
-                throw new Exception(nameof(OneWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
+            return "/*GetJsForSettingProperty*/";
+            //if (ModelGetMethod == null && ModelPropertyName == null)
+            //    throw new Exception(nameof(OneWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для привязки нужно указать или имя свойства или get-метод");
 
-            bool isHtmlMode = false;
+            //bool isHtmlMode = false;
 
-            string value = "";
-            if (ModelPropertyName != null)
-            {
-                value = "row['" + ModelPropertyName + "']";
-            }
+            //string value = "";
+            //if (ModelPropertyName != null)
+            //{
+            //    value = "row['" + ModelPropertyName + "']";
+            //}
 
-            if (isHtmlMode)
-            {
-                return "$('#" + Control.UniqueId + ">span').html(" + value + ");";
-            }
-            else
-                return "$('#" + Control.UniqueId + ">span').text(" + value + ");";
+            //if (isHtmlMode)
+            //{
+            //    return "$('#'+node.key+'>span').html(" + value + ");";
+            //}
+            //else
+            //    return "$('#'+node.key+'>span').text(" + value + ");";
 
         }
 
@@ -58,7 +59,7 @@ namespace Buhta
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
-            script.AppendLine("$('#" + Control.UniqueId + ">span').on('save', function(e,params) {");
+            script.AppendLine("$('#'+node.key.replace('.','-')+'>span').on('save', function(e,params) {");
 
             var propName = UniqueId;
             if (propName == null && ModelSetMethod != null)
