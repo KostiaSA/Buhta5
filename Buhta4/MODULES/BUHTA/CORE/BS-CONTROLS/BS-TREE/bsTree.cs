@@ -408,13 +408,12 @@ if (match) {
                 if (col.EditableType != bsEditableType.None)
                 {
                     var edt = new bsTreeEditable(Model);
-                    edt.Tag = "small";
                     edt.Bind_Value<string>(col.Field_Bind);
                     var edt_html = new StringBuilder();
                     var edt_script = new StringBuilder();
                     edt.EmitScriptAndHtml(edt_script, edt_html);
 
-                    script.AppendLine("  td_tag.html(" + edt_html.AsJavaScript() + ".replace('4D57BEAC0040F92312A4',row['" + col.Field_Bind + "']).replace('"+ edt.UniqueId + "',node.key.replace('.','-')));");
+                    script.AppendLine("  td_tag.html(" + edt_html.AsJavaScript() + ".replace('4D57BEAC0040F92312A4',row['" + col.Field_Bind + "']).replace('"+ edt.UniqueId + "',node.key));");
 
                     script.AppendLine("  setTimeout(function(){ " + edt_script.ToString() + " }, 100);");
 

@@ -68,10 +68,10 @@ namespace Buhta
                 Label = "Введите значение";
 
             script.AppendLine(@"
-var tag=$('#'+node.key.replace('.','-')+'>span');
+var tag=$('[id=""'+node.key+'""]>span');
 
-console.log('key='+node.key.replace('.','-'));
-console.log('tag='+tag.toString());
+//console.log('key='+node.key.replace('.','-'));
+//console.log('tag='+tag.toString());
 
 tag.editable({
     type: 'text',

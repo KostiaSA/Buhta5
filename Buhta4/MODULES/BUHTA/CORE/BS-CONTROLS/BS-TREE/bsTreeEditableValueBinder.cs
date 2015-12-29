@@ -11,9 +11,6 @@ namespace Buhta
     public class bsTreeEditableValueBinder<T> : BaseBinder, ITwoWayBinder<T>
     {
         public bool Is2WayBinding;
-//        public string jsOnChangeEventName;
-  //      public string jsGetPropertyName;
-    //    public string jsGetMethodName;
         public string ModelPropertyName { get; set; }
         public BinderGetMethod<T> ModelGetMethod;
 
@@ -59,13 +56,13 @@ namespace Buhta
             LastSendedText = GetJsForSettingProperty();
             script.AppendLine(LastSendedText);
 
-            script.AppendLine("$('#'+node.key.replace('.','-')+'>span').on('save', function(e,params) {");
+            script.AppendLine(@"$('[id=""'+node.key+'""]>span').on('save', function(e,params) {");
 
             var propName = UniqueId;
-            if (propName == null && ModelSetMethod != null)
-                throw new Exception(nameof(bsEditableValueBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
+           // if (propName == null && ModelSetMethod != null)
+           //     throw new Exception(nameof(bsEditableValueBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
-            script.AppendLine("  bindingHub.server.sendBindedValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "', params.newValue);");
+            script.AppendLine("  bindingHub.server.sendBsTreeBindedEditableValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "', params.newValue);");
             script.AppendLine("}); ");
 
         }

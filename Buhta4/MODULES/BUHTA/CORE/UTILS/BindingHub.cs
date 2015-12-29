@@ -103,6 +103,57 @@ namespace Buhta
 
         }
 
+        public void SendBsTreeBindedEditableValueChanged(string sessionID, string modelBindingID, string propertyName, string newValue)
+        {
+            //Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
+            try
+            {
+                AppServer.CurrentAppNavBarModel = null;
+                AppServer.SetCurrentAppNavBarModel(sessionID);
+                if (!AppServer.ChromeWindows.TryGetValue(Context.ConnectionId, out AppServer.CurrentAppNavBarModel.FocusedWindow))
+                    throw new Exception("internal error AppServer.ChromeWindows.TryGetValue");
+
+                BaseModel obj = AppServer.BindingModelList[modelBindingID];
+                obj.Hub = this;
+                Groups.Add(Context.ConnectionId, modelBindingID /*это groupName*/);
+
+                if (propertyName.StartsWith("binder:"))
+                {
+                    //Debug.Print("obj.BinderSetValue: " + propertyName + ", " + newValue);
+                    obj.BinderSetValue(propertyName, newValue);
+                    obj.Update();
+                }
+                else
+                {
+                    throw new Exception("internal error BindingHub.SendBindedValueChanged");
+                    //obj.SetPropertyValue(propertyName, newValue);
+                    //obj.FireOnChangeByBrowser(obj, propertyName, newValue);
+                    //obj.Update();
+                }
+            }
+            catch (Exception e)
+            {
+                var obj = AppServer.BindingModelList[modelBindingID];
+                if (obj != null)
+                {
+                    BaseBinder binder;
+                    if (obj.BindedBinders.TryGetValue(propertyName, out binder) && binder.GetPropertyNameForErrorMessage() != null)
+                        propertyName = binder.GetPropertyNameForErrorMessage();
+                    obj.ShowExceptionMessageDialog("Сервер вернул ошибку", "@модель '" + obj.GetType().FullName + "', свойство '" + propertyName + "':<br>" + e.GetFullMessage().Replace("\n", "<br>"));
+                    //Clients.Caller.receiveServerError();
+                }
+                else
+                if (AppServer.CurrentAppNavBarModel != null)
+                {
+                    AppServer.CurrentAppNavBarModel.ShowExceptionMessageDialog("Сервер вернул ошибку", e.GetFullMessage().Replace("\n", "<br>"));
+                }
+                else
+                    Clients.Caller.receiveServerError(e.GetFullMessage().Replace("\n", "<br>"));
+
+            }
+
+        }
+
         //public void SendSelectedRowsChanged(string modelBindingID, string propertyName, string rowID, bool isSelected)
         //{
         //    try
