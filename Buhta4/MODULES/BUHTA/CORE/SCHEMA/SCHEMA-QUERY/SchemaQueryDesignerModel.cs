@@ -29,29 +29,16 @@ namespace Buhta
             //  ColumnsTree.SelectRowById(columnName);
         }
 
-        class columnNode
-        {
-            public columnNode()
-            {
-                ParentID = "";
-                Alias = "";
-            }
-            public string ID { get; set; }
-            public string ParentID { get; set; }
-            public string Title { get; set; }
-            public string Alias { get; set; }
 
-        }
-
-        public List<Object> ColumnsList
+        public bsTreeDataSourceFromObjectList<bsTreeDataSourceNode> ColumnsListDataSource
         {
             get
             {
-                var list = new List<Object>();
+                var list = new List<bsTreeDataSourceNode>();
                 Query.RootColumn.Name = "---root---";
                 foreach (SchemaQueryBaseColumn col in Query.RootColumn.GetAllColumns())
                 {
-                    var node = new columnNode();
+                    var node = new bsTreeDataSourceNode(col);
                     node.ID = col.GetFullName();
                     node.ParentID = col.ParentColumn.GetFullName();
                     node.Title = col.GetQueryDesignerDisplayName();
@@ -64,7 +51,45 @@ namespace Buhta
                 }
 
                 // добавляем root
-                list.Add(new columnNode()
+                list.Add(new bsTreeDataSourceNode(Query.RootColumn)
+                {
+                    ID = Query.RootColumn.GetFullName(),
+                    Title = Query.RootColumn.GetQueryDesignerDisplayName(),
+                });
+
+
+                var dataSource = new bsTreeDataSourceFromObjectList<bsTreeDataSourceNode>(); 
+                dataSource.KeyFieldName = "ID";
+                dataSource.ParentFieldName = "ParentID";
+                dataSource.DisplayFieldName = "Title";
+                dataSource.ObjectList = list;
+                return dataSource;
+
+            }
+        }
+
+        public List<Object> ColumnsList
+        {
+            get
+            {
+                var list = new List<Object>();
+                Query.RootColumn.Name = "---root---";
+                foreach (SchemaQueryBaseColumn col in Query.RootColumn.GetAllColumns())
+                {
+                    var node = new bsTreeDataSourceNode(col);
+                    node.ID = col.GetFullName();
+                    node.ParentID = col.ParentColumn.GetFullName();
+                    node.Title = col.GetQueryDesignerDisplayName();
+                    if (col is SchemaQueryJoinColumn)
+                        node.Alias = "";
+                    else
+                        node.Alias = col.Alias ?? col.Name;
+                    list.Add(node);
+
+                }
+
+                // добавляем root
+                list.Add(new bsTreeDataSourceNode(Query.RootColumn)
                 {
                     ID = Query.RootColumn.GetFullName(),
                     Title = Query.RootColumn.GetQueryDesignerDisplayName(),
@@ -74,6 +99,7 @@ namespace Buhta
                 return list;
             }
         }
+
 
 
         //public void ColumnGridRowDblClick(dynamic args)

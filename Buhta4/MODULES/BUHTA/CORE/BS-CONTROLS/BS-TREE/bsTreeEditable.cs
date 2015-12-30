@@ -10,6 +10,8 @@ namespace Buhta
 
     public class bsTreeEditable : bsTagBegin
     {
+        public bsTree Tree;
+        public bsTreeColumn TreeColumn;
         public bsEditableType Type = bsEditableType.Text;
         public string Label;
 
@@ -18,30 +20,32 @@ namespace Buhta
             Tag = "span";
         }
 
-        public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
-        {
-            Bind_Value<T>(getValueMethod, null);
-        }
+        //public void Bind_Value<T>(BinderGetMethod<T> getValueMethod)
+        //{
+        //    Bind_Value<T>(getValueMethod, null);
+        //}
 
-        public void Bind_Value<T>(BinderGetMethod<T> getValueMethod, BinderSetMethod<T> setValueMethod)
-        {
-            if (typeof(T) == typeof(string))
-            {
-                Type = bsEditableType.Text;
+        //public void Bind_Value<T>(BinderGetMethod<T> getValueMethod, BinderSetMethod<T> setValueMethod)
+        //{
+        //    if (typeof(T) == typeof(string))
+        //    {
+        //        Type = bsEditableType.Text;
 
-                var binder = new bsTreeEditableValueBinder<T>();
+        //        var binder = new bsTreeEditableValueBinder<T>();
+        //        binder.Tree = Tree;
+        //        binder.TreeColumn = TreeColumn;
 
-                binder.ModelGetMethod = getValueMethod;
+        //        binder.ModelGetMethod = getValueMethod;
 
-                binder.Is2WayBinding = true;
-                binder.ModelSetMethod = setValueMethod;
+        //        binder.Is2WayBinding = true;
+        //        binder.ModelSetMethod = setValueMethod;
 
-                AddBinder(binder);
-            }
-            else
-                throw new Exception(nameof(bsEditable) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
+        //        AddBinder(binder);
+        //    }
+        //    else
+        //        throw new Exception(nameof(bsEditable) + ": неизвестный тип привязки значения '" + typeof(T).FullName + "'");
 
-        }
+        //}
 
         public void Bind_Value<T>(string modelPropertyName)
         {
@@ -51,6 +55,8 @@ namespace Buhta
                 Type = bsEditableType.Text;
                 AddBinder(new bsTreeEditableValueBinder<T>()
                 {
+                    Tree = Tree,
+                    TreeColumn = TreeColumn,
                     Is2WayBinding = true,
                     ModelPropertyName = modelPropertyName
                 });
@@ -61,7 +67,7 @@ namespace Buhta
 
         public override void EmitScriptAndHtml(StringBuilder script, StringBuilder html)
         {
-          //  UniqueId = "AA2E0C8C4CA5E365";
+            //  UniqueId = "AA2E0C8C4CA5E365";
             AddClass("bs-editable");
 
             if (Label == null)

@@ -11,9 +11,6 @@ namespace Buhta
     public class bsEditableValueBinder<T> : BaseBinder, ITwoWayBinder<T>
     {
         public bool Is2WayBinding;
-        //public string jsOnChangeEventName;
-        //public string jsGetPropertyName;
-        //public string jsGetMethodName;
         public string ModelPropertyName { get; set; }
         public BinderGetMethod<T> ModelGetMethod;
 
@@ -95,7 +92,9 @@ namespace Buhta
 
         }
 
-
-
+        public void SetValue(T newValue, string recordID = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

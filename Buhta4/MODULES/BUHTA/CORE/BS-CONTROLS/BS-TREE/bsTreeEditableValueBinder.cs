@@ -12,7 +12,9 @@ namespace Buhta
     {
         public bool Is2WayBinding;
         public string ModelPropertyName { get; set; }
-        public BinderGetMethod<T> ModelGetMethod;
+        //public BinderGetMethod<T> ModelGetMethod;
+        public bsTree Tree;
+        public bsTreeColumn TreeColumn;
 
         public bsTreeEditableValueBinder()
         {
@@ -62,12 +64,14 @@ namespace Buhta
            // if (propName == null && ModelSetMethod != null)
            //     throw new Exception(nameof(bsEditableValueBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
-            script.AppendLine("  bindingHub.server.sendBsTreeBindedEditableValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "', params.newValue);");
+            script.AppendLine("  bindingHub.server.sendBsTreeBindedEditableValueChanged(localStorage.ChromeSessionId,'" + Control.Model.BindingId + "', '" + propName + "', params.newValue, node.key);");
             script.AppendLine("}); ");
 
         }
 
-
-
+        public void SetValue(T newValue, string recordID = null)
+        {
+            Tree.DataSource.SetValue(newValue, recordID, ModelPropertyName);
+        }
     }
 }

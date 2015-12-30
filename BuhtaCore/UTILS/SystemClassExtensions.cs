@@ -149,6 +149,58 @@ namespace Buhta
                 return formatter.Deserialize(stream);
             }
         }
+
+        public static void SetPropertyValue(this object obj, string propName, object value)
+        {
+            var names = propName.Split('.');
+            for (int i = 0; i < names.Length; i++)
+            {
+                Type _type = obj.GetType();
+                PropertyInfo _prop = _type.GetProperty(names[i]);
+                if (_prop == null)
+                    throw new Exception("model." + nameof(SetPropertyValue) + ": не найдено свойство '" + names[i] + "' в '" + propName + "'");
+                if (i < names.Length - 1)
+                {
+                    obj = _prop.GetValue(obj);
+                    if (obj == null)
+                        throw new Exception("model." + nameof(SetPropertyValue) + ": объект '" + names[i] + "'==null в '" + propName + "'");
+                }
+                else
+                {
+                    if (_prop.PropertyType == typeof(string))
+                        _prop.SetValue(obj, value.ToString(), null);
+                    else
+                    if (_prop.PropertyType == typeof(Boolean))
+                        _prop.SetValue(obj, Boolean.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(Guid))
+                        _prop.SetValue(obj, Guid.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(Guid?))
+                    {
+                        if (value == null)
+                            _prop.SetValue(obj, null, null);
+                        else
+                            _prop.SetValue(obj, Guid.Parse(value.ToString()), null);
+                    }
+                    else
+                    if (_prop.PropertyType == typeof(int))
+                        _prop.SetValue(obj, int.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(Decimal))
+                        _prop.SetValue(obj, Decimal.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(float))
+                        _prop.SetValue(obj, float.Parse(value.ToString()), null);
+                    else
+                    if (_prop.PropertyType == typeof(DateTime))
+                        _prop.SetValue(obj, DateTime.Parse(value.ToString()), null);
+                    else
+                        throw new Exception("object." + nameof(SetPropertyValue) + ": неизвестный тип '" + _prop.PropertyType.FullName + "'");
+                }
+
+            }
+        }
     }
 
 

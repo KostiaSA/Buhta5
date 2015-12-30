@@ -56,9 +56,15 @@ namespace Buhta
 
         }
 
-        public void BinderSetValue(string binderId, string value)
+        public void BinderSetValue(string binderId, string value, string recordId = null)
         {
             var binder = BindedBinders[binderId];
+
+            if (binder is bsTreeEditableValueBinder<string>)
+            {
+                (binder as ITwoWayBinder<string>).SetValue(value, recordId);
+            }
+            else
             if (binder.ValueType == typeof(string))
             {
                 var b = (binder as ITwoWayBinder<string>);
@@ -412,7 +418,7 @@ namespace Buhta
             {
                 if (bindingId == null)
                 {
-                    bindingId = GetType().FullName+"-"+Guid.NewGuid().ToString();
+                    bindingId = GetType().FullName + "-" + Guid.NewGuid().ToString();
                     AppServer.BindingModelList.TryAdd(bindingId, this);
                 }
                 return bindingId;

@@ -82,6 +82,24 @@ namespace Buhta
         public List<bsTreeColumn> Columns { get { return columns; } }
 
 
+        public bsTreeDataSource DataSource;
+        public bsTreeDataSourceBinder DataSourceBinder;
+        public void Bind_DataSource(string datasourceModelPropertyName)
+        {
+            DataSourceBinder = new bsTreeDataSourceBinder()
+            {
+                Tree = this,
+                DatasourceModelPropertyName = datasourceModelPropertyName,
+                //DisplayFieldName = displayFieldName,
+                //KeyFieldName = keyFieldName,
+                //ParentFieldName = parentFieldName,
+                //IconFieldName = iconFieldName,
+                //SelectedRowsModelPropertyName = selectedRowsModelPropertyName
+
+            };
+            AddBinder(DataSourceBinder);
+        }
+
         public bsTreeSessionState sessionStateObject;
         public void SaveSessionState()
         {
@@ -408,6 +426,8 @@ if (match) {
                 if (col.EditableType != bsEditableType.None)
                 {
                     var edt = new bsTreeEditable(Model);
+                    edt.Tree = this;
+                    edt.TreeColumn = col;
                     edt.Bind_Value<string>(col.Field_Bind);
                     var edt_html = new StringBuilder();
                     var edt_script = new StringBuilder();

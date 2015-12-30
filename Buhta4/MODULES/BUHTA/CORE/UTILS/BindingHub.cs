@@ -103,7 +103,7 @@ namespace Buhta
 
         }
 
-        public void SendBsTreeBindedEditableValueChanged(string sessionID, string modelBindingID, string propertyName, string newValue)
+        public void SendBsTreeBindedEditableValueChanged(string sessionID, string modelBindingID, string propertyName, string newValue, string recordId)
         {
             //Debug.Print("SendBindedValueChanged: " + propertyName + ", " + newValue);
             try
@@ -120,7 +120,7 @@ namespace Buhta
                 if (propertyName.StartsWith("binder:"))
                 {
                     //Debug.Print("obj.BinderSetValue: " + propertyName + ", " + newValue);
-                    obj.BinderSetValue(propertyName, newValue);
+                    obj.BinderSetValue(propertyName, newValue, recordId);
                     obj.Update();
                 }
                 else

@@ -74,7 +74,7 @@
         <h4 class="page-title" id="columns" style="padding-top: 60px; margin-top: -40px;">Список колонок</h4>
         <div class="panel panel-warning">
             <div class="panel-body" style="background-color: rgba(214, 214, 214, 0.0)">
-                @Html.bsTree(tree =>
+                @*@Html.bsTree(tree =>
            {
                tree.IsExpandAllNodes = true;
                tree.AddColumn(c =>
@@ -102,8 +102,30 @@
                //tree.Bind_OnRowActivate(Model.RowActivate);
                //tree.Bind_OnRowDblClick(Model.OkButtonClick);
 
-           })
+           })*@
 
+                @Html.bsTree(tree =>
+           {
+               tree.IsExpandAllNodes = true;
+               tree.AddColumn(c =>
+               {
+                   c.Caption = "Таблица/колонка1";
+                   c.Field_Bind = "Title";
+               });
+
+               tree.AddColumn(c =>
+               {
+                   c.Caption = "Имя колонки1";
+                   c.Field_Bind = "Alias";
+                   c.EditableType = bsEditableType.Text;
+
+               });
+
+               tree.Bind_DataSource(nameof(Model.ColumnsListDataSource));
+               //tree.Bind_OnRowActivate(Model.RowActivate);
+               //tree.Bind_OnRowDblClick(Model.OkButtonClick);
+
+           })
                 <div class="panel-body">
                     <div class="btn-group">
                         <button class="btn btn-default btn-sm">Отметить</button>

@@ -171,6 +171,8 @@
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTag.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTagEnd.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TAG\bsTagBegin.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSource.cs" />
+    <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeEditableValueBinder.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeEditable.cs" />
     <Compile Include="MODULES\BUHTA\CORE\BS-CONTROLS\BS-TREE\bsTreeDataSourceToSchemaObjectsBinder.cs" />

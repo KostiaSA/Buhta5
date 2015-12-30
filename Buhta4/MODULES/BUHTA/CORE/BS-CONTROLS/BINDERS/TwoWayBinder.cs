@@ -12,6 +12,7 @@ namespace Buhta
     {
         BinderSetMethod<T> ModelSetMethod { get; set; }
         string ModelPropertyName { get; set; }
+        void SetValue(T newValue, string recordID = null);
     }
 
     public class TwoWayBinder<T> : OneWayBinder<T>, ITwoWayBinder<T>
@@ -29,13 +30,16 @@ namespace Buhta
 
         public BinderSetMethod<T> ModelSetMethod { get; set; }
 
+
+
+
         public override void EmitBindingScript(StringBuilder script)
         {
             base.EmitBindingScript(script);
 
             script.AppendLine("$('#" + Control.UniqueId + "').on('" + jsOnChangeEventName + "', function () {");
 
-            var  propName = UniqueId;
+            var propName = UniqueId;
             if (propName == null && ModelSetMethod != null)
                 throw new Exception(nameof(TwoWayBinder<T>) + ": модель '" + Control.Model.GetType().FullName + "', control '" + Control.GetType().FullName + "' - для двухсторонней привязки нужно указать или имя свойства или set-метод");
 
@@ -55,6 +59,9 @@ namespace Buhta
 
         }
 
-
+        public void SetValue(T newValue, string recordID = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
